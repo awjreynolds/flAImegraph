@@ -70,11 +70,11 @@ flAImegraph is working toward an independent, open experimental contract that ca
 
 The practical sequence is [full work evidence](project-plan.md#1-record-full-work-evidence) → [versioned contract and conformance](project-plan.md#2-publish-the-contract-and-conformance-fixtures) → [native harness adapters](project-plan.md#3-add-and-verify-native-adapters) → [exact USD cost profiles](project-plan.md#4-produce-dollar-flame-graphs) → [scope and accepted-outcome data](project-plan.md#5-build-the-scope-and-outcome-dataset) → [Context Points calibration and forecasting](project-plan.md#6-calibrate-the-human-point-scale-and-forecast). The existing public prototype is a baseline demonstration: its enterprise scenario reports a partial $41.046242 model-token subtotal from a frozen capture. It does not validate a point scale or represent the whole project's cost.
 
-Implementation is in progress. The existing prototype links remain useful for review, while new CLI workflows and cross-harness claims await integration and verification by the project maintainers.
+The repository now contains a working experimental reference implementation, with its integration evidence documented in [the integration report](implementation-evidence/integration.md). Calibration and broader adoption remain future work; the existing prototype links remain useful for review while maintainers verify the new CLI workflows and cross-harness claims.
 
 ## GitHub issue draft
 
-The following text is ready for a maintainer to paste into a GitHub issue. It is included here for review and has not been posted by this documentation change.
+The proposal was published as [GitHub issue #25](https://github.com/awjreynolds/flAImegraph/issues/25). The draft below remains the design record for that issue.
 
 ### Suggested title
 

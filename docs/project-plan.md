@@ -1,6 +1,6 @@
 # Project plan: evidence-backed AI delivery measurement
 
-**Status: open experimental plan, checked 6 September 2026.** The immediate goal is an adoptable experimental standard with harness adapters, exact USD cost profiles and a visible demonstration using existing FlameGraph tooling. Context Points provide the human-facing planning layer; their scale and forecasting method remain to be calibrated from evidence. Implementation is in progress until the project maintainer verifies the integrated release.
+**Status: experimental contract and reference implementation, checked 6 September 2026.** The immediate deliverable is an adoptable experimental standard with harness adapters, exact USD cost profiles and a visible demonstration using existing FlameGraph tooling. See the [integration evidence](implementation-evidence/integration.md) for current verification. Context Points provide the human-facing planning layer; their scale and forecasting method remain to be calibrated from evidence.
 
 ## Intent and boundaries
 
@@ -65,6 +65,8 @@ Any points-to-resource or points-to-USD mapping is a versioned local forecast co
 - The maintainer verifies the integrated implementation and release artifacts before new CLI workflows are described as ready.
 
 ## Adoption and limits
+
+The 0.1 implementation supplies the contract, eight fixture-tested adapter names, exact valuation, standard profile exports, the visible frozen demo and initial Work Item/estimate/outcome records. Independent producer adoption, complete live capture and held-out point-scale calibration remain future evidence gates. The broader research issues retain those requirements; completing this experimental reference release does not close them automatically.
 
 Adopters can use Context Points immediately as a documented local planning convention, recording the scale version and preserving observed evidence for later calibration. The repository supplies an experimental vocabulary and contract, not a mandate for teams to replace their existing size measures. A team's points may be ordinal or numeric; the chosen anchors and comparisons must be explicit.
 

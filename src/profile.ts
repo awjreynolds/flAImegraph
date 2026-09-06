@@ -182,6 +182,14 @@ function validateInputs(evidence: EvidenceBundle, valuation: Valuation, options:
       }
     }
   }
+  for (const issue of valuation.issues) {
+    if (issue.observation_id !== undefined && !observationIds.has(issue.observation_id)) {
+      throw new ProfileError("invalid_valuation_issue_reference", `Valuation issue references unknown observation ${issue.observation_id}.`);
+    }
+    if (issue.source_id !== undefined && !sourceIds.has(issue.source_id)) {
+      throw new ProfileError("invalid_valuation_issue_reference", `Valuation issue references unknown source ${issue.source_id}.`);
+    }
+  }
   for (const relationship of evidence.relationships) {
     if (relationship.kind === "adjusts" && (!observationIds.has(relationship.from) || !observationIds.has(relationship.to))) {
       throw new ProfileError("invalid_relationship_reference", "A relationship references an unknown observation.");
@@ -273,6 +281,7 @@ function validateValuationShape(valuation: Valuation): void {
   }
   if (!Array.isArray(value.observations)) throw new ProfileError("invalid_valuation", "Valuation observations must be an array.");
   if (!Array.isArray(value.issues)) throw new ProfileError("invalid_valuation", "Valuation issues must be an array.");
+  validateIssueList(value.issues, "valuation.issues");
   if (typeof value.total_nanos !== "string") throw new ProfileError("invalid_valuation", "Valuation total_nanos must be an integer string.");
   parseInteger(value.total_nanos, "valuation total_nanos");
   if (typeof value.complete !== "boolean") throw new ProfileError("invalid_valuation", "Valuation complete must be a boolean.");
@@ -1569,9 +1578,9 @@ export function exportOtlp(evidence: EvidenceBundle): object {
       attributes.push(attribute("flAImegraph.recorded_cost.basis", observation.recorded_cost.basis));
     }
     for (const [key, value] of Object.entries(rawAttributes)) {
-      if (key !== "traceparent") {
-        attributes.push(attribute(sourceAttributeName(key), value));
-      }
+      // Preserve every source key under the local namespace, including
+      // traceparent and keys that resemble standard semantic conventions.
+      attributes.push(attribute(sourceAttributeName(key), value));
     }
 
     let parentSpanId: string | undefined;

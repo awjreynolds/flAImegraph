@@ -11,12 +11,13 @@ A sidecar MUST contain:
 - `schema_version`, exactly `0.1.0`;
 - the evidence `dataset_id` and stable `work_item_id`;
 - a `scope` with a non-empty `revision` and description;
+- optional `scope_history` snapshots for earlier revisions (the current `scope` is always retained);
 - one or more `acceptance_criteria` strings;
 - an `outcome.status`;
 - zero or more `attempts`; and
 - one or more immutable `estimates`.
 
-The scope revision identifies the specification and conditions for which the estimates apply. An optional specification description and repository revision may provide more context. A later scope change receives a new revision; the earlier estimate remains part of the record it described.
+The scope revision identifies the specification and conditions for which the estimates apply. An optional specification description and repository revision may provide more context. A later scope change receives a new revision; the earlier estimate remains part of the record it described. `scope_history`, when present, retains the other scope snapshots needed to resolve those earlier estimate revisions; its revisions must be unique, and it may repeat the current scope snapshot for a complete local history.
 
 Outcome status is one of `planned`, `in_progress`, `accepted`, `failed`, `interrupted`, `capped`, `cancelled` or `unknown`. Failed and incomplete work are first-class outcomes. An accepted outcome means the declared endpoint was met; it does not mean that every Attempt succeeded or that the evidence is complete.
 
@@ -55,7 +56,7 @@ When a point is available, `point_estimate` contains:
 
 An unavailable point is represented by `point_estimate: null` and a non-empty `unestimated_reason`. Producers MUST NOT fill in a plausible point for research or historical work merely to make a row look complete. The example [research sidecar](../../examples/work-items/research.json) intentionally uses a nullable, unestimated point.
 
-Estimate records are append-only versions. `estimate_id` and `estimate_version` are unique within the sidecar. Version 1 has no predecessor; each later version names a prior `supersedes_estimate_id` with a lower version. Estimates retain the scope revision they describe. A re-estimate after a scope, acceptance, repository, Harness, Model or policy change is a new version with a reason in the surrounding record or rationale.
+Estimate records are append-only versions. `estimate_id` and `estimate_version` are unique within the sidecar. Version 1 has no predecessor; each later version names the immediately preceding version in `supersedes_estimate_id`, and its `created_at` is no earlier than that predecessor. This gives the record one chronological chain and rejects gaps, branches and reversed timestamps. Estimates retain the scope revision they describe, which must resolve to `scope` or `scope_history`. A re-estimate after a scope, acceptance, repository, Harness, Model or policy change is a new version with a reason in the surrounding record or rationale.
 
 ## Joining evidence and valuation
 
@@ -64,10 +65,11 @@ The sidecar does not copy model usage, tool results or financial lines into its 
 1. validates the sidecar and the evidence bundle;
 2. requires matching `dataset_id` values;
 3. resolves every `attempt.observation_ids` reference, failing on a missing observation or an explicit observation belonging to another Work Item;
-4. retains the selected observations in attempt order and carries source coverage and evidence issues into the joined row; and
-5. optionally attaches a Valuation after checking its dataset and observation references.
+4. retains the selected observations in attempt order and carries source coverage and evidence issues into the joined row;
+5. optionally validates and attaches a dataset Valuation after checking its selection policy, signed amounts, unique lines, basis, completeness, issue references, total conservation and dataset/observation references; and
+6. derives a Work Item Valuation containing exactly the selected observation lines and recomputes its total.
 
-The resulting row keeps the original Work Item, every estimate including pre-execution estimates, linked observations, coverage, and the optional valuation. It also labels estimate timing so retrospective estimates cannot silently become forecasts. The row is shaped for a calibration/training dataset; it does not claim a calibrated Context Points scale, a universal points-to-token/$ mapping, or a complete provider bill.
+The resulting row keeps the original Work Item, every estimate including pre-execution estimates, linked observations, coverage, the original `dataset_valuation`, and the selected `valuation`. It also labels estimate timing so retrospective estimates cannot silently become forecasts. Each estimate has `temporal_status: "verified"` only when available Attempt or linked-observation boundaries support its declared timing; otherwise it has `temporal_status: "unknown"`. A known contradiction fails the join. The row is shaped for a calibration/training dataset; it does not claim a calibrated Context Points scale, a universal points-to-token/$ mapping, or a complete provider bill.
 
 Observed Resource Usage, Coverage and selected USD Valuation remain separate from Context Points. A selected enterprise scenario can value captured usage, while the original point estimate and original usage quantities remain unchanged. The same Work Item can therefore be compared against multiple valuation scenarios without rewriting its planning record.
 

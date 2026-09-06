@@ -57,6 +57,18 @@ Keep `profile.json`, `evidence.json` and `valuation.json` with any shared graph:
 
 Shared work can be apportioned with `export --allocations allocations.json`. The file maps observation IDs to arrays of `{ "work_item_id": "task-a", "weight": "2" }`. Positive integer weights and deterministic largest remainders conserve every nano-currency unit. Preserve the allocation input with the report. `--cost-view charges` is the default; `credits` shows credit magnitudes, and `net` requires explicitly linked adjustments with a nonnegative resulting stack. See the [profile contract](../spec/0.1/profiles.md).
 
+## Record Context Points and acceptance
+
+A Work Item sidecar preserves scope revisions, versioned estimates, Attempts and the Acceptance Outcome. Start with `examples/work-items/golden.json`, which is explicitly synthetic. Declare your local point scale and method; use `null` when an estimate is unavailable. Estimates retain their creation time and whether they were made before, during or after execution. Known timestamps must support that declaration, and missing timing evidence remains explicit.
+
+```sh
+node dist/cli.js validate --kind work-item --input examples/work-items/golden.json
+node dist/cli.js value --input examples/golden/evidence.json --mode recorded --out .local/golden-valuation.json
+node dist/cli.js work-item --input examples/work-items/golden.json --evidence examples/golden/evidence.json --valuation .local/golden-valuation.json --out .local/work-item-evidence.json
+```
+
+The joined record reports only the selected observations' valuation, preserving the full dataset valuation separately. The real Codex demo includes a retrospective Work Item record with an unavailable point estimate and unknown Acceptance Outcome; it is not a calibration example. See the [Work Item contract](../spec/0.1/work-items.md) for scope history, timing checks and interpretation.
+
 ## Use the library or implement another consumer
 
 ```ts

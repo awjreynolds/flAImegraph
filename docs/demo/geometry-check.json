@@ -1,0 +1,32 @@
+{
+  "total_nanos": "41046242000",
+  "positive_observation_leaves": 177,
+  "width_tolerance_px": 0.101,
+  "agents": [
+    {
+      "agent": "accounting",
+      "nanos": "9110380000",
+      "width": 306.3,
+      "expected_width": 306.2966007947816
+    },
+    {
+      "agent": "coordinator",
+      "nanos": "20669904000",
+      "width": 694.9,
+      "expected_width": 694.9349350910127
+    },
+    {
+      "agent": "profiles",
+      "nanos": "4735940000",
+      "width": 159.3,
+      "expected_width": 159.22522700129284
+    },
+    {
+      "agent": "telemetry",
+      "nanos": "6530018000",
+      "width": 219.5,
+      "expected_width": 219.5432371129128
+    }
+  ],
+  "valid": true
+}

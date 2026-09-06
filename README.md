@@ -4,7 +4,7 @@ flAImegraph is an open experimental project for understanding AI-assisted softwa
 
 The project also adopts **Context Points** as a human-facing way to size and compare anticipated AI effort, alongside the familiar ideas of T-shirt sizing, story points and function points. A Context Points estimate belongs to a specified Work Item and Acceptance Outcome. It remains separate from observed tokens, calls, context-related measurements, human or infrastructure resources, selected USD valuation and the result that was accepted. The scale and estimation method still need empirical calibration; this repository does not declare a universal points-to-token or points-to-dollar conversion.
 
-The work is an open experimental standard and implementation in progress. The [project plan](docs/project-plan.md) describes the route from complete work evidence to a calibrated planning measure. The [Context Points proposal](docs/context-points.md) explains the vocabulary and boundaries, and the [domain glossary](CONTEXT.md) keeps the terms consistent. No release claim is made until the integration is verified.
+The [experimental 0.1 contract](spec/0.1/README.md) has a working offline reference implementation. The [project plan](docs/project-plan.md) describes the route from complete work evidence to a calibrated planning measure. The [Context Points proposal](docs/context-points.md) explains the vocabulary and boundaries, and the [domain glossary](CONTEXT.md) keeps the terms consistent. See the [integration evidence](docs/implementation-evidence/integration.md) for verification and its limits.
 
 Start here:
 
@@ -31,6 +31,10 @@ Open `.local/demo/cost.svg` in a browser. Frame width represents cost; hover for
 
 The cost view represents a selected pricing scenario with incomplete capture. It is not an invoice or the cost of all work on this repository. The [fixture provenance](examples/dogfood/README.md) describes its frozen cutoff and sanitization.
 
+[![Dollar-weighted flame graph of the frozen four-agent capture](docs/demo/cost.png)](docs/demo/README.md)
+
+The [checked-in demonstration](docs/demo/README.md) includes the SVG, PNG and rendering evidence. Each agent's width is proportional to its selected dollar cost; the uppermost row contains individual observations.
+
 For a PNG, install `rsvg-convert` and append `--png true` to the demo command. An independent pprof viewer can inspect `.local/demo/cost.pprof`, for example `go tool pprof -top .local/demo/cost.pprof`. Nano-USD is the exact integer interchange unit; the SVG presents decimal USD in its title and tooltips.
 
 See the [usage and adoption guide](docs/usage.md) for other harnesses, rate cards, shared work allocations and the TypeScript API. Run `node dist/cli.js capabilities` for accepted formats and tested coverage. This release is experimental and has no independently maintained producer adoption claim.
@@ -53,4 +57,4 @@ Public prototypes and wayfinding:
 - [Throwaway capture-depth prototype](https://github.com/awjreynolds/flAImegraph/tree/codex/prototype-capture-depth/prototypes/capture-depth)
 - [GitHub wayfinding map](https://github.com/awjreynolds/flAImegraph/issues/1)
 
-Research checked on 6 September 2026. Reports distinguish observed records, source-code behavior, draft standards and unverified runtime coverage. The current public enterprise scenario is a partial, reproducible $41.046242 model-token subtotal; it is a demonstration baseline, not a total project cost or a calibrated dataset. Prototype calculations and syntax are checked, and the static Pi cost graph has been visually inspected; HTML browser rendering and interactions remain unverified. No raw conversations or tool-result contents are published.
+Research checked on 6 September 2026. Reports distinguish observed records, source-code behavior, draft standards and unverified runtime coverage. The current public enterprise scenario is a partial, reproducible $41.046242 model-token subtotal; it is a demonstration baseline, not a total project cost or a calibrated dataset. The reference CLI, independent pprof/OTLP decoding and static SVG/PNG rendering are verified. Browser interaction testing remains unverified. No raw conversations or tool-result contents are published.

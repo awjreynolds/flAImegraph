@@ -31,7 +31,8 @@ Manual work-item allocation uses positive integer weights and exact largest
 remainder arithmetic. Remainders are ordered descending, with equal remainders
 tied by ascending `work_item_id`; a 101-unit 1:1 allocation therefore assigns
 51 to the lexically first work item and 50 to the second. The metadata records
-this policy and tie rule.
+this policy and tie rule, plus a sorted allocation manifest retaining every
+observation-to-work-item weight used to derive the samples.
 
 Frame paths are synthetic attribution paths. A profile stack is root-first;
 the default dimensions are work item, agent, model, operation, and observation,
@@ -110,6 +111,6 @@ The focused suite `test/profile.test.ts` currently exercises:
 
 Each behavior was introduced through a failing assertion followed by the
 smallest implementation change that made that assertion pass. Independent Go
-pprof and FlameGraph consumer compatibility remains a release-gate check for
-the parent integration task; this module's tests only decode the official
-protobuf and verify the folded contract.
+pprof, Collector OTLP decoding and FlameGraph consumer compatibility are
+verified in the [integration report](integration.md); this module's own tests
+decode the official protobuf and verify the folded contract.

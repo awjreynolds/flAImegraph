@@ -2,7 +2,6 @@
 import { mkdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
-import { Ajv } from "ajv";
 import type { CostProfile, EvidenceBundle, Grouping, Harness, ProfileOptions, Valuation } from "./types.js";
 import { protectInputs, writeArtifact } from "./files.js";
 
@@ -11,7 +10,7 @@ const help = `flAImegraph — agent cost interchange (experimental 0.1.0)
 Offline workflow:
   import   --harness NAME --input FILE --out evidence.json
   merge    --inputs evidence-a.json,evidence-b.json --out evidence.json
-  validate --input evidence.json [--kind evidence|work-item|rate-card]
+  validate --input FILE [--kind evidence|valuation|profile|work-item|rate-card]
   value    --input evidence.json (--mode recorded | --rate-card rates.json) --out valuation.json
   export   --input evidence.json --valuation valuation.json --out-dir profile
   render   --input profile/profile.json --out-dir report
@@ -68,10 +67,8 @@ async function checkedArtifact<T>(name: "valuation" | "profile", value: unknown)
     const { validateProfile } = await import("./profile.js");
     return validateProfile(value) as T;
   }
-  const schema = JSON.parse(await readFile(new URL(`../spec/0.1/schemas/${name}.schema.json`, import.meta.url), "utf8"));
-  const validator = new Ajv({ allErrors: true, strict: false }).compile(schema);
-  if (!validator(value)) throw new CliError("SCHEMA_INVALID", `${name}: ${JSON.stringify(validator.errors)}`);
-  return value as T;
+  const { validateValuation } = await import("./work-items.js");
+  return validateValuation(value) as T;
 }
 
 async function exportFiles(evidence: EvidenceBundle, valuation: Valuation, options: ProfileOptions, directory: string): Promise<CostProfile> {
@@ -113,6 +110,11 @@ async function main(args: string[]): Promise<void> {
       const { validateRateCard } = await import("./core.js");
       const card = validateRateCard(await readJson(required(options, "--input")));
       process.stdout.write(JSON.stringify({ valid: true, schema_version: card.schema_version, rate_card_id: card.id, rules: card.rules.length }) + "\n");
+      return;
+    }
+    if (kind === "valuation" || kind === "profile") {
+      const artifact = await checkedArtifact<Valuation | CostProfile>(kind, await readJson(required(options, "--input")));
+      process.stdout.write(JSON.stringify({ valid: true, schema_version: artifact.schema_version, id: artifact.id, total_nanos: artifact.total_nanos }) + "\n");
       return;
     }
     if (kind !== "evidence") throw new CliError("USAGE", `Unsupported artifact kind: ${kind}`);

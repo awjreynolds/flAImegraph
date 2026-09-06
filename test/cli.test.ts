@@ -211,3 +211,17 @@ test("CLI rejects a mistyped PNG option before writing artifacts", () => {
     assert.deepEqual(readdirSync(directory), []);
   } finally { rmSync(directory, { recursive: true, force: true }); }
 });
+
+test("CLI valuation validation rejects a schema-valid but nonconserving total", () => {
+  const directory = mkdtempSync(join(tmpdir(), "flaimegraph-invalid-value-"));
+  try {
+    const file = join(directory, "valuation.json");
+    assert.equal(cli("value", "--input", "examples/golden/evidence.json", "--mode", "recorded", "--out", file).status, 0);
+    const value = JSON.parse(readFileSync(file, "utf8"));
+    value.total_nanos = "999";
+    writeFileSync(file, JSON.stringify(value));
+    const result = cli("validate", "--kind", "valuation", "--input", file);
+    assert.equal(result.status, 1);
+    assert.match(JSON.parse(result.stderr).code, /VALUATION/);
+  } finally { rmSync(directory, { recursive: true, force: true }); }
+});

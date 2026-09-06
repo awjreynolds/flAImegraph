@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 
 import { Ajv, type ErrorObject, type ValidateFunction } from "ajv";
@@ -164,6 +165,26 @@ function cloneJson<T>(value: T): T {
   return structuredClone(value);
 }
 
+function canonicalJson(value: unknown): string {
+  if (value === null) return "null";
+  if (Array.isArray(value)) return `[${value.map((item) => canonicalJson(item)).join(",")}]`;
+  if (isObject(value)) {
+    return `{${Object.keys(value)
+      .filter((key) => value[key] !== undefined)
+      .sort()
+      .map((key) => `${JSON.stringify(key)}:${canonicalJson(value[key])}`)
+      .join(",")}}`;
+  }
+  if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+    return JSON.stringify(value);
+  }
+  return "null";
+}
+
+function compareCanonicalStrings(left: string, right: string): number {
+  return left < right ? -1 : left > right ? 1 : 0;
+}
+
 function subsetValuation(valuation: Valuation, selectedObservationIds: string[], workItemId: string): Valuation {
   const selected = new Set(selectedObservationIds);
   const observations = valuation.observations.filter((line) => selected.has(line.observation_id));
@@ -189,9 +210,27 @@ function subsetValuation(valuation: Valuation, selectedObservationIds: string[],
     selected.size === known.size &&
     observations.every((line) => line.amount_nanos !== null) &&
     !issues.some((coverageIssue) => coverageIssue.severity !== "info");
+  const selectionDigest = createHash("sha256")
+    .update(
+      canonicalJson({
+        valuation_id: valuation.id,
+        dataset_id: valuation.dataset_id,
+        selection_policy: valuation.selection_policy,
+        currency: valuation.currency,
+        basis: valuation.basis,
+        rate_card_id: valuation.rate_card_id,
+        assumptions: [...valuation.assumptions].sort(),
+        selected_observation_ids: [...selected].sort(),
+        observations: [...observations].sort((left, right) => compareCanonicalStrings(left.observation_id, right.observation_id)),
+        total_nanos: total.toString(),
+        complete,
+        issues: [...issues].sort((left, right) => compareCanonicalStrings(canonicalJson(left), canonicalJson(right))),
+      }),
+    )
+    .digest("hex");
   return {
     ...cloneJson(valuation),
-    id: `${valuation.id}/work-item/${workItemId}`,
+    id: `${valuation.id}/work-item/${workItemId}/${selectionDigest}`,
     observations: cloneJson(observations),
     total_nanos: total.toString(),
     complete,
@@ -207,6 +246,15 @@ function assertDateTime(value: string, label: string): void {
   if (!DATE_TIME_RE.test(value) || !Number.isFinite(Date.parse(value))) {
     throw new CoreError("WORK_ITEM_INVALID_DATE", `${label} must be a valid RFC3339 date-time`);
   }
+}
+
+function scopesEqual(left: WorkScope, right: WorkScope): boolean {
+  return (
+    left.revision === right.revision &&
+    left.description === right.description &&
+    left.specification === right.specification &&
+    left.repository_revision === right.repository_revision
+  );
 }
 
 function semanticValidateValuation(input: Valuation): Valuation {
@@ -262,7 +310,13 @@ function semanticValidateValuation(input: Valuation): Valuation {
         `valued valuation line ${line.observation_id} must declare a basis`,
       );
     }
-    if (input.basis !== "mixed" && line.basis !== input.basis) {
+    if (input.basis === "mixed") {
+      throw new CoreError(
+        "VALUATION_BASIS_MISMATCH",
+        `valuation line ${line.observation_id} cannot carry a known amount under mixed basis`,
+      );
+    }
+    if (line.basis !== input.basis) {
       throw new CoreError(
         "VALUATION_BASIS_MISMATCH",
         `valuation line ${line.observation_id} basis ${line.basis} differs from ${input.basis}`,
@@ -304,14 +358,14 @@ function assertEstimateTimingAgainstAttemptBounds(input: WorkItem, estimate: Wor
   if (input.attempts.length === 0) return;
   const createdAt = Date.parse(estimate.created_at);
   if (estimate.timing === "pre_execution") {
-    if (input.attempts.every((attempt) => attempt.started_at !== undefined)) {
-      const firstStart = Math.min(...input.attempts.map((attempt) => Date.parse(attempt.started_at as string)));
-      if (createdAt >= firstStart) {
-        throw new CoreError(
-          "WORK_ITEM_ESTIMATE_TIMING_CONTRADICTION",
-          `pre-execution estimate ${estimate.estimate_id} was created at or after the first attempt started`,
-        );
-      }
+    const knownStarts = input.attempts
+      .filter((attempt) => attempt.started_at !== undefined)
+      .map((attempt) => Date.parse(attempt.started_at as string));
+    if (knownStarts.some((start) => createdAt >= start)) {
+      throw new CoreError(
+        "WORK_ITEM_ESTIMATE_TIMING_CONTRADICTION",
+        `pre-execution estimate ${estimate.estimate_id} was created at or after a known attempt start`,
+      );
     }
     return;
   }
@@ -331,14 +385,14 @@ function assertEstimateTimingAgainstAttemptBounds(input: WorkItem, estimate: Wor
     }
     return;
   }
-  if (input.attempts.every((attempt) => attempt.ended_at !== undefined)) {
-    const lastEnd = Math.max(...input.attempts.map((attempt) => Date.parse(attempt.ended_at as string)));
-    if (createdAt <= lastEnd) {
-      throw new CoreError(
-        "WORK_ITEM_ESTIMATE_TIMING_CONTRADICTION",
-        `post-execution estimate ${estimate.estimate_id} was created at or before the last attempt ended`,
-      );
-    }
+  const knownEnds = input.attempts
+    .filter((attempt) => attempt.ended_at !== undefined)
+    .map((attempt) => Date.parse(attempt.ended_at as string));
+  if (knownEnds.some((end) => createdAt <= end)) {
+    throw new CoreError(
+      "WORK_ITEM_ESTIMATE_TIMING_CONTRADICTION",
+      `post-execution estimate ${estimate.estimate_id} was created at or before a known attempt end`,
+    );
   }
 }
 
@@ -349,6 +403,21 @@ function assessEstimateTiming(
 ): EstimateTemporalStatus {
   const createdAt = Date.parse(estimate.created_at);
   if (estimate.timing === "pre_execution") {
+    const knownStarts = [
+      ...workItem.attempts
+        .filter((attempt) => attempt.started_at !== undefined)
+        .map((attempt) => Date.parse(attempt.started_at as string)),
+      ...observations
+        .map((observation) => observation.timestamp ?? observation.end_time)
+        .filter((timestamp): timestamp is string => timestamp !== undefined)
+        .map((timestamp) => Date.parse(timestamp)),
+    ];
+    if (knownStarts.some((start) => createdAt >= start)) {
+      throw new CoreError(
+        "WORK_ITEM_ESTIMATE_TIMING_CONTRADICTION",
+        `pre-execution estimate ${estimate.estimate_id} was created at or after known linked execution evidence`,
+      );
+    }
     if (workItem.attempts.length === 0 || !workItem.attempts.every((attempt) => attempt.started_at !== undefined)) {
       return "unknown";
     }
@@ -362,7 +431,10 @@ function assessEstimateTiming(
     return "verified";
   }
   if (estimate.timing === "during_execution") {
-    if (!workItem.attempts.every((attempt) => attempt.started_at !== undefined && attempt.ended_at !== undefined)) {
+    if (
+      workItem.attempts.length === 0 ||
+      !workItem.attempts.every((attempt) => attempt.started_at !== undefined && attempt.ended_at !== undefined)
+    ) {
       return "unknown";
     }
     const insideAttempt = workItem.attempts.some((attempt) => {
@@ -380,12 +452,27 @@ function assessEstimateTiming(
   }
 
   if (workItem.attempts.length === 0) return "unknown";
-  const attemptEndsKnown = workItem.attempts.every((attempt) => attempt.ended_at !== undefined);
+  const attemptEndTimes = workItem.attempts
+    .filter((attempt) => attempt.ended_at !== undefined)
+    .map((attempt) => Date.parse(attempt.ended_at as string));
+  const attemptEndsKnown = attemptEndTimes.length === workItem.attempts.length;
   const observationTimes = observations.map((observation) => observation.end_time ?? observation.timestamp);
   const observationEndsKnown = observations.length > 0 && observationTimes.every((timestamp) => timestamp !== undefined);
+  const knownEnds = [
+    ...attemptEndTimes,
+    ...observationTimes
+      .filter((timestamp): timestamp is string => timestamp !== undefined)
+      .map((timestamp) => Date.parse(timestamp)),
+  ];
+  if (knownEnds.some((end) => createdAt <= end)) {
+    throw new CoreError(
+      "WORK_ITEM_ESTIMATE_TIMING_CONTRADICTION",
+      `post-execution estimate ${estimate.estimate_id} was created at or before known linked execution evidence ended`,
+    );
+  }
   if (!attemptEndsKnown && !observationEndsKnown) return "unknown";
   const boundaries = [
-    ...(attemptEndsKnown ? workItem.attempts.map((attempt) => Date.parse(attempt.ended_at as string)) : []),
+    ...(attemptEndsKnown ? attemptEndTimes : []),
     ...(observationEndsKnown ? observationTimes.map((timestamp) => Date.parse(timestamp as string)) : []),
   ];
   const lastEnd = Math.max(...boundaries);
@@ -465,7 +552,7 @@ function semanticValidateWorkItem(input: WorkItem): WorkItem {
     }
     scopeHistoryRevisions.add(historicalScope.revision);
     const existing = scopesByRevision.get(historicalScope.revision);
-    if (existing !== undefined && JSON.stringify(existing) !== JSON.stringify(historicalScope)) {
+    if (existing !== undefined && !scopesEqual(existing, historicalScope)) {
       throw new CoreError(
         "WORK_ITEM_SCOPE_CONFLICT",
         `historical scope ${historicalScope.revision} differs from the current scope snapshot`,

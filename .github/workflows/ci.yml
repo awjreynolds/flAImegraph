@@ -29,6 +29,8 @@ jobs:
       - run: node dist/cli.js conformance
       - run: node dist/cli.js demo --out-dir .local/ci-demo
       - run: go tool pprof -top .local/ci-demo/cost.pprof
+      - run: go run . ../../.local/ci-demo/evidence.otlp.json 784
+        working-directory: tools/verify-otlp
       - run: npm pack --pack-destination .local
       - run: npm install --ignore-scripts --prefix .local/package-smoke .local/flaimegraph-0.1.0.tgz
       - run: node .local/package-smoke/node_modules/flaimegraph/dist/cli.js conformance

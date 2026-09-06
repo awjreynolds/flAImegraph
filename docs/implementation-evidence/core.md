@@ -11,12 +11,12 @@ The v0.1 core seams are implemented in `src/core.ts`:
 Validation evidence from this checkout:
 
 ```text
-node --import tsx --test test/core.test.ts       # 5 passing
-node --import tsx --test test/valuation.test.ts  # 7 passing
+node --import tsx --test test/core.test.ts
+node --import tsx --test test/valuation.test.ts
 npx tsc --noEmit --ignoreConfig --types node \
   --target ES2022 --module NodeNext --moduleResolution NodeNext \
   --strict --esModuleInterop --skipLibCheck --resolveJsonModule \
   --noUncheckedIndexedAccess src/core.ts         # passing
 ```
 
-The repository-wide check can include failures from modules owned by other implementation slices while those slices are still in progress.
+Both focused suites pass. The [independent accounting/adapter verification](../reviews/core-adapters-verification.md) records the subsequent subset-bound and relationship repairs. The full integrated checks and existing-consumer verification are recorded in the [integration report](integration.md).

@@ -5,6 +5,7 @@ import test from "node:test";
 
 import { joinWorkItemEvidence, validateValuation, validateWorkItem } from "../src/work-items.js";
 import type { EvidenceBundle, Valuation } from "../src/types.js";
+import { valueEvidence } from "../src/index.js";
 
 test("validateWorkItem accepts a versioned research item with an unestimated Context Points value", () => {
   const input = {
@@ -407,6 +408,107 @@ test("joinWorkItemEvidence marks timing verified only when execution bounds supp
     "verified",
     "verified",
   ]);
+});
+
+test("joinWorkItemEvidence keeps execution timing unknown when no attempt boundary exists", () => {
+  const item = {
+    schema_version: "0.1.0",
+    dataset_id: "dataset-timing-unknown",
+    work_item_id: "work-timing-unknown",
+    scope: { revision: "scope-1", description: "Unknown timing bounds" },
+    acceptance_criteria: ["Missing execution bounds remain explicit"],
+    outcome: { status: "planned" },
+    attempts: [],
+    estimates: [
+      {
+        estimate_id: "estimate-timing-unknown",
+        estimate_version: 1,
+        scope_revision: "scope-1",
+        created_at: "2026-09-06T09:00:00Z",
+        timing: "during_execution",
+        information_basis: "specification_only",
+        estimator: "human",
+        point_estimate: null,
+        unestimated_reason: "No calibrated point scale is available",
+      },
+    ],
+  };
+  const evidence: EvidenceBundle = {
+    schema_version: "0.1.0",
+    dataset_id: "dataset-timing-unknown",
+    sources: [],
+    observations: [],
+    relationships: [],
+    issues: [],
+  };
+
+  const result = joinWorkItemEvidence(item, evidence);
+
+  assert.equal(result.estimate_semantics[0]?.temporal_status, "unknown");
+});
+
+test("joinWorkItemEvidence rejects pre-execution timing disproved by a linked observation timestamp", () => {
+  const item = {
+    schema_version: "0.1.0",
+    dataset_id: "dataset-timing-observation-contradiction",
+    work_item_id: "work-timing-observation-contradiction",
+    scope: { revision: "scope-1", description: "Observation timing contradiction" },
+    acceptance_criteria: ["A pre-execution estimate predates linked execution evidence"],
+    outcome: { status: "accepted" },
+    attempts: [
+      {
+        attempt_id: "attempt-timing-observation-contradiction",
+        status: "accepted",
+        observation_ids: ["observation-timing-observation-contradiction"],
+      },
+    ],
+    estimates: [
+      {
+        estimate_id: "estimate-timing-observation-contradiction",
+        estimate_version: 1,
+        scope_revision: "scope-1",
+        created_at: "2026-09-06T12:00:00Z",
+        timing: "pre_execution",
+        information_basis: "specification_only",
+        estimator: "human",
+        point_estimate: null,
+        unestimated_reason: "No calibrated point scale is available",
+      },
+    ],
+  };
+  const evidence: EvidenceBundle = {
+    schema_version: "0.1.0",
+    dataset_id: "dataset-timing-observation-contradiction",
+    sources: [
+      {
+        id: "source-timing-observation-contradiction",
+        harness: "codex",
+        format: "fixture",
+        coverage: "complete",
+      },
+    ],
+    observations: [
+      {
+        id: "observation-timing-observation-contradiction",
+        source_refs: [{ source_id: "source-timing-observation-contradiction", record: "record-1" }],
+        kind: "activity",
+        operation: "review",
+        status: "ok",
+        accounting_scope: "unknown",
+        work_item_id: "work-timing-observation-contradiction",
+        timestamp: "2026-09-06T10:00:00Z",
+        usage: null,
+      },
+    ],
+    relationships: [],
+    issues: [],
+  };
+
+  assert.throws(
+    () => joinWorkItemEvidence(item, evidence),
+    (error: unknown) =>
+      error instanceof Error && "code" in error && error.code === "WORK_ITEM_ESTIMATE_TIMING_CONTRADICTION",
+  );
 });
 
 test("joinWorkItemEvidence retains observations, coverage, valuation, and estimate timing", () => {
@@ -900,4 +1002,110 @@ test("validateValuation enforces unique lines, basis consistency, issue referenc
     (error: unknown) =>
       error instanceof Error && "code" in error && error.code === "VALUATION_ISSUE_REFERENCE_MISSING",
   );
+  assert.throws(
+    () => validateValuation({ ...base, basis: "mixed" }),
+    (error: unknown) => error instanceof Error && "code" in error && error.code === "VALUATION_BASIS_MISMATCH",
+  );
+});
+
+test("selected valuation IDs preserve replay identity for distinct Unicode-equivalent identifiers", () => {
+  const evidence: EvidenceBundle = JSON.parse(
+    readFileSync(new URL("../examples/golden/evidence.json", import.meta.url), "utf8"),
+  );
+  const item = validateWorkItem(JSON.parse(
+    readFileSync(new URL("../examples/work-items/golden.json", import.meta.url), "utf8"),
+  ));
+  const ids = ["é", "e\u0301"];
+  evidence.observations.forEach((observation, index) => { observation.id = ids[index]!; });
+  item.attempts[0]!.observation_ids = ids;
+  const valuation = valueEvidence(evidence, { mode: "recorded" });
+  valuation.issues = ids.map((observation_id) => ({
+    code: "REPLAY_NOTE", message: "Observation retained", severity: "info", observation_id,
+  }));
+  const original = joinWorkItemEvidence(item, evidence, valuation).valuation!;
+
+  valuation.observations.reverse();
+  const reorderedLines = joinWorkItemEvidence(item, evidence, valuation).valuation!;
+  assert.equal(reorderedLines.id, original.id);
+
+  valuation.issues.reverse();
+  const reorderedIssues = joinWorkItemEvidence(item, evidence, valuation).valuation!;
+  assert.equal(reorderedIssues.id, original.id);
+  assert.equal(reorderedIssues.observations.length, 2);
+});
+
+test("selected valuation IDs distinguish subsets and ignore replay ordering", () => {
+  const itemFor = (observation_ids: string[]) => ({
+    schema_version: "0.1.0",
+    dataset_id: "dataset-valuation-id",
+    work_item_id: "ticket-7",
+    scope: { revision: "scope-1", description: "Selected valuation identity" },
+    acceptance_criteria: ["Selected valuation identities remain stable"],
+    outcome: { status: "accepted" },
+    attempts: [{ attempt_id: "attempt-ticket-7", status: "accepted", observation_ids }],
+    estimates: [
+      {
+        estimate_id: "estimate-ticket-7",
+        estimate_version: 1,
+        scope_revision: "scope-1",
+        created_at: "2026-09-06T09:00:00Z",
+        timing: "pre_execution",
+        information_basis: "specification_only",
+        estimator: "human",
+        point_estimate: null,
+        unestimated_reason: "No calibrated point scale is available",
+      },
+    ],
+  });
+  const evidence: EvidenceBundle = {
+    schema_version: "0.1.0",
+    dataset_id: "dataset-valuation-id",
+    sources: [{ id: "source-valuation-id", harness: "codex", format: "fixture", coverage: "complete" }],
+    observations: [
+      {
+        id: "example-call-a",
+        source_refs: [{ source_id: "source-valuation-id", record: "a" }],
+        kind: "model",
+        operation: "response",
+        status: "ok",
+        accounting_scope: "direct",
+        usage: null,
+      },
+      {
+        id: "example-call-b",
+        source_refs: [{ source_id: "source-valuation-id", record: "b" }],
+        kind: "model",
+        operation: "response",
+        status: "ok",
+        accounting_scope: "direct",
+        usage: null,
+      },
+    ],
+    relationships: [],
+    issues: [],
+  };
+  const valuation: Valuation = {
+    schema_version: "0.1.0",
+    id: "valuation-ticket-7",
+    dataset_id: "dataset-valuation-id",
+    selection_policy: "direct-only-v1",
+    currency: "USD",
+    basis: "enterprise_scenario",
+    assumptions: ["fixed test rate"],
+    observations: [
+      { observation_id: "example-call-a", amount_nanos: "125000000", basis: "enterprise_scenario" },
+      { observation_id: "example-call-b", amount_nanos: "75000000", basis: "enterprise_scenario" },
+    ],
+    total_nanos: "200000000",
+    complete: true,
+    issues: [],
+  };
+
+  const one = joinWorkItemEvidence(itemFor(["example-call-a"]), evidence, valuation);
+  const both = joinWorkItemEvidence(itemFor(["example-call-a", "example-call-b"]), evidence, valuation);
+  const bothReplayed = joinWorkItemEvidence(itemFor(["example-call-b", "example-call-a"]), evidence, valuation);
+
+  assert.notEqual(one.valuation?.id, both.valuation?.id);
+  assert.equal(both.valuation?.id, bothReplayed.valuation?.id);
+  assert.match(both.valuation?.id ?? "", /^valuation-ticket-7\/work-item\/ticket-7\//);
 });
