@@ -14,6 +14,7 @@ Establish a shared understanding of the existing and emerging standards for AI u
 - Existing workplace analysis is high-level. Its raw data and implementation have not been inspected.
 - Do not assume a new exchange format is necessary. OpenTelemetry, OpenInference, FOCUS, and profile formats are candidates to evaluate, not selected architecture.
 - User decision on 2026-09-06: avoiding duplication and understanding industry direction take priority over designing a new convention. A standards-based application or integration can fully satisfy this effort; a new standard is not a required outcome.
+- Follow-up candidates: Pi and Codex; the intended “MyPi” project is unconfirmed. Include ACP's existing session usage and draft end-turn accounting in the assessment; see the ecosystem research note. These are candidates, not selected integrations.
 - Consult wayfinder, research, grilling, and domain-modeling skills as appropriate. Research tickets can resolve in parallel; human decisions require the user's answer.
 - Local Markdown tracker conventions: one child issue per file in issues/; Type, Status, Assignee, and Blocked by metadata. Unclaimed open tickets use Status: open. Resolutions go under Answer. The frontier is open, unclaimed children whose blockers are resolved, in numeric order.
 - Research checked on 2026-09-06. Cite primary sources, identify draft/development status, and distinguish documented coverage, implementation limits, and unverified gaps.
