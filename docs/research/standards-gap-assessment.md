@@ -41,7 +41,7 @@ A flame graph can project those relationships into a chosen hierarchy, but the u
 
 **First, map one representative workflow onto existing and planned standards.** Preserve the user's ticket-to-epic accounting motivation, including conversations and subagents. Classify each requirement as covered by a released standard, covered by a draft, implemented with product-specific semantics, planned upstream, dependent on missing evidence, or unresolved. Do not choose an estimates-only scope or define new fields before this assessment.
 
-**Next, collect a small versioned validation corpus from two actual producers.** Include an ordinary call, delegated work, a resumed conversation, duplicate observations, cache/reasoning subsets, a retry, and missing final usage. Capture and version the source format and settings. No raw workplace or local session logs have been collected in this research phase.
+**Extend the versioned validation corpus across actual producers.** Include an ordinary call, delegated work, a resumed conversation, duplicate observations, cache/reasoning subsets, a retry, and missing final usage. Capture and version the source format and settings. Follow-up research inspected this conversation and its linked subagents, and public Pi fixtures; see [capture validation](codex-capture-validation.md). No workplace data or raw transcripts were published.
 
 **Compare existing rules against that corpus before drafting new ones.** Review AgentMeasure's conformance semantics, OpenTelemetry's reference cases and pending cost/aggregation work, and FOCUS's financial allocation meanings. Record an existing rule that passes, a reproducible disagreement, an implementation defect, or insufficient source evidence. Those are different outcomes.
 

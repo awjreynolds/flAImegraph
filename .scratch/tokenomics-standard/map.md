@@ -2,6 +2,7 @@
 
 Label: wayfinder:map
 Status: open
+GitHub: https://github.com/awjreynolds/flAImegraph/issues/1
 
 ## Destination
 
@@ -9,16 +10,16 @@ Establish a proven route to detailed tokenomics analysis: capture observable wor
 
 ## Notes
 
-- Planning effort; no production implementation or external publication is authorised by this map.
+- Planning and evidence prototypes. The user authorised independent progress on 2026-09-06 and publication to their GitHub with scoped tickets. Production deployment remains outside this effort.
 - User's motivating case: collect conversations, model usage, subagent work, retries, and resumed work under tickets and aggregate across epics; visualise tokenomics using flame graphs.
 - User clarified that per-agent spend totals are insufficient. The destination requires detail about what the agent did, with meaningful drill-down and aggregation. Standards research alone does not satisfy this destination.
-- Depth criteria and remaining evidence are recorded in [Detailed analysis readiness](../../docs/research/deep-analysis-readiness.md). No real capture or visual prototype has yet demonstrated them.
+- Depth criteria and remaining evidence are recorded in [Detailed analysis readiness](../../docs/research/deep-analysis-readiness.md). Current-session Codex records and public Pi fixtures are the representative evidence; capture reconciliation and a source-checked prototype are complete; user review and browser verification remain outstanding.
 - Existing workplace analysis is high-level. Its raw data and implementation have not been inspected.
 - Do not assume a new exchange format is necessary. OpenTelemetry, OpenInference, FOCUS, and profile formats are candidates to evaluate, not selected architecture.
 - User decision on 2026-09-06: avoiding duplication and understanding industry direction take priority over designing a new convention. A standards-based application or integration can fully satisfy this effort; a new standard is not a required outcome.
 - Follow-up candidates: Pi and Codex; the intended “MyPi” project is unconfirmed. Include ACP's existing session usage and draft end-turn accounting in the assessment; see the ecosystem research note. These are candidates, not selected integrations.
 - Consult wayfinder, research, grilling, and domain-modeling skills as appropriate. Research tickets can resolve in parallel; human decisions require the user's answer.
-- Local Markdown tracker conventions: one child issue per file in issues/; Type, Status, Assignee, and Blocked by metadata. Unclaimed open tickets use Status: open. Resolutions go under Answer. The frontier is open, unclaimed children whose blockers are resolved, in numeric order.
+- GitHub issues are now canonical, using native sub-issues and blocking relationships. Local Markdown files are a migration snapshot and context pointer, not an independently maintained tracker.
 - Research checked on 2026-09-06. Cite primary sources, identify draft/development status, and distinguish documented coverage, implementation limits, and unverified gaps.
 
 ## Decisions so far
@@ -27,6 +28,9 @@ Establish a proven route to detailed tokenomics analysis: capture observable wor
 - [What cost and work-allocation semantics already exist?](issues/02-accounting-coverage.md): FOCUS supplies cost bases and allocation/correction rules; execution-to-financial evidence correspondence remains a candidate bridge.
 - [Can existing profile formats faithfully visualise tokenomics?](issues/03-profile-projection.md): existing exporters can visualise selected measures; accounting meaning and projection losses require explicit treatment.
 - [Should adoption take priority over a new tokenomics convention?](issues/04-standardisation-boundary.md): establish industry direction and reuse first; an extension requires a demonstrated necessary gap outside existing and planned work.
+
+- [Which ticket workflow should test the existing standards?](issues/05-representative-workflow.md): this conversation and linked subagents plus public Pi evidence anchor the evaluation.
+- [What detailed activity can the selected harness actually expose?](issues/06-detailed-capture.md): response accounting and lineage are demonstrated; request composition, hidden attempts and some auxiliary usage remain bounded gaps.
 
 ## Not yet specified
 

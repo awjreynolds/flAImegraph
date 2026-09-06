@@ -3,6 +3,7 @@
 Type: research
 Label: wayfinder:research
 Status: resolved
+GitHub: https://github.com/awjreynolds/flAImegraph/issues/4
 Assignee: awjre (research investigator: profiles)
 Parent: ../map.md
 Blocked by: none

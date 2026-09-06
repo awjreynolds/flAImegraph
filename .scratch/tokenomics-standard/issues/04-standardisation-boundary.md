@@ -3,6 +3,7 @@
 Type: grilling
 Label: wayfinder:grilling
 Status: resolved
+GitHub: https://github.com/awjreynolds/flAImegraph/issues/5
 Assignee: awjre
 Parent: ../map.md
 Blocked by: 01, 02, 03
