@@ -1,0 +1,41 @@
+{
+  "costBasis": "recorded model-price estimate; not invoice or settled charge",
+  "currency": "USD",
+  "weightUnit": "nanodollars",
+  "nanodollarsPerUsd": 1000000000,
+  "exactSumOfSourceDecimalStringsUsd": "42.595907499999999555",
+  "projectedSubtotalNanodollars": 42595907500,
+  "projectedSubtotalUsd": "42.5959075",
+  "roundingDifferenceUsd": "4.45E-16",
+  "roundingPolicy": "Decimal ROUND_HALF_EVEN per observation to 1e-9 USD",
+  "observationCount": 484,
+  "renderedPositiveCostResponses": 471,
+  "nativeZeroCostRecords": 13,
+  "nativeZeroCostDoesNotProveZeroBilling": true,
+  "unreportedCompactionCount": 2,
+  "completeCostKnown": false,
+  "grouping": [
+    "illustrative work item",
+    "model",
+    "response"
+  ],
+  "modelSubtotalsNanodollars": {
+    "claude-opus-4-5": 42595907500
+  },
+  "evidenceSha256": "f605dd29b98a7c10ed91016bac62b197a6efc6b23426f0e9fc08a023ba6b895c",
+  "renderer": {
+    "name": "Brendan Gregg FlameGraph",
+    "commit": "41fee1f99f9276008b7cd112fca19dc3ea84ac32",
+    "sourceUrl": "https://raw.githubusercontent.com/brendangregg/FlameGraph/41fee1f99f9276008b7cd112fca19dc3ea84ac32/flamegraph.pl",
+    "sha256": "088f82e6848a4f12a56e1e8e8170ee6761fccf12e5615cd64630f6b087c99ea7",
+    "unmodified": true
+  },
+  "verification": {
+    "uniqueEvidenceIds": true,
+    "eachWidthMatchesDecimalConversion": true,
+    "modelTotalsConserveSubtotal": true,
+    "svgRootMatchesSubtotal": true,
+    "eachPositiveResponseAppearsOnce": true
+  },
+  "reproduce": "python3 render.py --renderer /absolute/path/to/pinned/flamegraph.pl"
+}
