@@ -1,10 +1,10 @@
 # Tokenomics interoperability: findings and proposed way forward
 
-Assessment date: 2026-09-06. Status: research synthesis for a human scope decision. This document proposes a route; it does not select an architecture or declare a new standard.
+Assessment date: 2026-09-06. Status: research synthesis, updated after the user's adoption-first decision. This document does not select an architecture or declare a new standard.
 
 ## Main finding
 
-Test a small accounting-and-attribution convention using existing telemetry and profile formats. The current evidence does not justify inventing a new transport, token vocabulary, or flame-graph renderer. The potential contribution is reproducibility: independent tools should produce the same work-attributed result from the same evidence and declared policies, including the same conclusion when evidence is insufficient.
+First establish and adopt the existing industry direction. The user explicitly prioritises a shared understanding of emerging standards and avoiding duplicated work. The current evidence does not justify inventing a new transport, token vocabulary, accounting convention, or flame-graph renderer. A standards-based integration and useful visualisation may be the complete outcome.
 
 This space already contains closely related standards work and implementations. Industry adoption remains an ambition, not an inference from finding a technical gap.
 
@@ -37,15 +37,15 @@ A flame graph can project those relationships into a chosen hierarchy, but the u
 - Token-weighted pprof and flame-graph exports already exist. Their existence reduces the case for format invention; it does not prove their accounting is appropriate for every workload. [AgentSight agentpprof](https://github.com/eunomia-bpf/agentsight/blob/master/docs/agentpprof.md).
 - A conformance-oriented measurement effort already exists in AgentMeasure. It requires a more detailed compatibility comparison before proposing another contract. [AgentMeasure core](https://github.com/roy-tong/AgentMeasure/blob/main/standard/CORE.md).
 
-## A concrete contribution route to evaluate
+## An adoption route to evaluate
 
-**First, select a small falsifiable promise.** A proposed initial scope is observed AI usage and explicitly identified cost estimates/reported amounts, attributed to work items. Invoice reconciliation could be a separate extension; the user has not yet chosen that boundary. Tickets and epics would be the first worked example of work-item attribution, not assumptions about every consumer's tracker.
+**First, map one representative workflow onto existing and planned standards.** Preserve the user's ticket-to-epic accounting motivation, including conversations and subagents. Classify each requirement as covered by a released standard, covered by a draft, implemented with product-specific semantics, planned upstream, dependent on missing evidence, or unresolved. Do not choose an estimates-only scope or define new fields before this assessment.
 
 **Next, collect a small versioned validation corpus from two actual producers.** Include an ordinary call, delegated work, a resumed conversation, duplicate observations, cache/reasoning subsets, a retry, and missing final usage. Capture and version the source format and settings. No raw workplace or local session logs have been collected in this research phase.
 
 **Compare existing rules against that corpus before drafting new ones.** Review AgentMeasure's conformance semantics, OpenTelemetry's reference cases and pending cost/aggregation work, and FOCUS's financial allocation meanings. Record an existing rule that passes, a reproducible disagreement, an implementation defect, or insufficient source evidence. Those are different outcomes.
 
-**Specify only demonstrated interoperability gaps.** Candidate issues include stable correspondence between observations and work allocation; self/inclusive interpretation; late usage; explicit count and cost basis; and declared projection losses. A fixture should include the expected result or why it cannot be determined. No encoding can recover usage that its source never exposed.
+**Use existing rules wherever they meet the requirement.** Candidate checks include stable correspondence between observations and work allocation; self/inclusive interpretation; late usage; explicit count and cost basis; and declared projection losses. A fixture should include the expected result or why it cannot be determined. No encoding can recover usage that its source never exposed. A new convention is an option only after checking whether a necessary gap is already addressed in planned upstream work.
 
 **Demonstrate with existing exporters, then seek external review.** A later reference implementation could emit folded stacks and pprof while preserving provenance elsewhere. Contributions should be scoped to the owning project rather than submitted as one large universal-standard proposal. External outreach is a later action requiring user authorisation; none has occurred.
 
@@ -53,6 +53,14 @@ Useful existing discussions: [Aggregated token usage attributes](https://github.
 
 ## Decision now available
 
-The next human decision is [Which interoperability gap should this effort pursue first?](../../.scratch/tokenomics-standard/issues/04-standardisation-boundary.md). Specifically, should the first guarantee cover reproducible usage attribution with labelled cost observations, or include reconciliation to actual billed/effective cost? The proposed first scope is the former because it can be demonstrated from execution evidence, while the latter needs billing evidence and allocation policy as additional prerequisites.
+The user resolved [Should adoption take priority over a new tokenomics convention?](../../.scratch/tokenomics-standard/issues/04-standardisation-boundary.md) in favour of understanding and adoption first. The next decision is [Which ticket workflow should test the existing standards?](../../.scratch/tokenomics-standard/issues/05-representative-workflow.md). No accounting scope or architecture has been selected.
+
+## Concrete industry direction checked on 2026-09-06
+
+FOCUS 1.4 is published; its official 1.5 roadmap targets ratification on 3 December and announcement on 10 December 2026. Model identity, price catalogs, AI billing examples and actor attribution are core planned work; cached/fresh token pricing dimensions are stretch work. Planned scope remains subject to review and is not released functionality. [FOCUS release scope](https://focus.finops.org/focus-1-5-release-scope/).
+
+OpenTelemetry GenAI is actively progressing conventions through its SIG, with cost proposals and aggregation questions still open. The aggregation issue is associated with a draft stable-v1 project; a firm stabilisation date was not established by this check. [Contributor process](https://github.com/open-telemetry/semantic-conventions-genai/blob/main/CONTRIBUTING.md), [Aggregation discussion](https://github.com/open-telemetry/semantic-conventions-genai/issues/19), [Cost proposal](https://github.com/open-telemetry/semantic-conventions-genai/pull/443).
+
+These are complementary efforts at different layers. This review has not verified a committed release of one specification covering the entire agent-execution-to-ticket-to-epic-to-bill workflow. That uncertainty is a reason to assess and align, not evidence that a competing standard is needed.
 
 This assessment does not choose ledger storage, a finalized schema, a new standard name, pricing policy, or a production architecture. Those decisions follow the selected guarantee and the evidence available in real records.

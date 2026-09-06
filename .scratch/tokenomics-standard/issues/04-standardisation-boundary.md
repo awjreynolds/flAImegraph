@@ -1,18 +1,26 @@
-# Which interoperability gap should this effort pursue first?
+# Should adoption take priority over a new tokenomics convention?
 
 Type: grilling
 Label: wayfinder:grilling
-Status: open
-Assignee: none
+Status: resolved
+Assignee: awjre
 Parent: ../map.md
 Blocked by: 01, 02, 03
 
 ## Question
 
-Given the research evidence and the user's workplace problem, which narrow cross-tool disagreement should a first tokenomics convention resolve, and what observable result would show an extension is useful rather than duplicative? Confirm the intended contribution boundary with the user before choosing an architecture or implementation.
+Given the existing research and the user's clarification, should the effort first establish and adopt the industry direction before proposing a new convention? What evidence would justify departing from existing or planned work?
 
 ## Discussion context
 
 The research has resolved this ticket's prerequisites. [Assessment and proposed route](../../../docs/research/standards-gap-assessment.md) and [existing implementations and validation cases](../../../docs/research/ecosystem-and-validation.md) provide the shared starting point.
 
-The first scope choice is between reproducible attribution of observed usage with explicitly labelled cost observations/estimates, and an initial guarantee that also reconciles actual billed/effective cost. The former can be tested with execution records; the latter additionally requires financial records and allocation policies. The current recommendation is the former, retaining compatibility with financial reconciliation as an extension. This is a recommendation, not a user decision.
+The earlier assistant proposal to choose a first accounting guarantee was premature. The user clarified that shared understanding of industry movement and avoiding duplication must precede that choice. No usage-versus-billing scope choice has been made.
+
+## Answer
+
+Resolved through the user's live clarification on 2026-09-06. Prioritise understanding and adopting existing or emerging standards. A new convention is conditional, not the destination. Before proposing one, demonstrate a necessary use-case failure, distinguish missing implementation/data from missing semantics, and check whether relevant planned work already addresses it.
+
+OpenTelemetry GenAI and FOCUS are leading candidates in different layers, not an architecture selection or a claim that one complete standard is about to ship. Existing OpenInference, AgentMeasure, and profiler implementations also remain reuse candidates. A standard-backed application or integration is a valid complete outcome.
+
+The next question is which representative ticket workflow to use for evaluating those candidates. Preserve the user's full-use-of-effort motivation; do not narrow it to estimates-only without a later decision.
