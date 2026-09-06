@@ -1,0 +1,178 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/awjreynolds/flAImegraph/v0.2.0/spec/0.2/schemas/harness-profile.schema.json",
+  "title": "flAImegraph Harness Profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "name",
+    "harness",
+    "harness_version",
+    "profile_version",
+    "model",
+    "instruction_sources",
+    "tools",
+    "policies",
+    "context_capabilities",
+    "artifacts"
+  ],
+  "properties": {
+    "schema_version": { "const": "0.2.0" },
+    "id": { "$ref": "#/$defs/id" },
+    "name": { "$ref": "#/$defs/nonEmptyString" },
+    "harness": { "$ref": "#/$defs/nonEmptyString" },
+    "harness_version": { "$ref": "#/$defs/harnessFact" },
+    "profile_version": { "$ref": "#/$defs/nonEmptyString" },
+    "model": { "$ref": "#/$defs/model" },
+    "instruction_sources": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/instructionSource" }
+    },
+    "tools": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/tool" }
+    },
+    "policies": { "$ref": "#/$defs/policies" },
+    "context_capabilities": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/contextCapability" }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/source" }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1 },
+    "nonEmptyString": { "type": "string", "minLength": 1 },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "harness", "format", "coverage"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "harness": { "$ref": "#/$defs/id" },
+        "format": { "$ref": "#/$defs/id" },
+        "version": { "$ref": "#/$defs/id" },
+        "sha256": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" },
+        "coverage": { "enum": ["complete", "partial", "unknown"] },
+        "description": { "type": "string" }
+      }
+    },
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "record"],
+      "properties": {
+        "source_id": { "$ref": "#/$defs/id" },
+        "record": { "$ref": "#/$defs/id" }
+      }
+    },
+    "harnessFact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "evidence", "source_refs"],
+      "properties": {
+        "value": { "type": ["string", "number", "boolean", "null"] },
+        "evidence": { "enum": ["observed", "declared", "unknown"] },
+        "source_refs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/sourceRef" }
+        }
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "name", "settings"],
+      "properties": {
+        "provider": { "$ref": "#/$defs/harnessFact" },
+        "name": { "$ref": "#/$defs/harnessFact" },
+        "settings": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/harnessFact" }
+        }
+      }
+    },
+    "instructionSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["origin", "label", "delivery", "evidence", "source_refs"],
+      "properties": {
+        "origin": { "$ref": "#/$defs/origin" },
+        "label": { "$ref": "#/$defs/nonEmptyString" },
+        "delivery": { "enum": ["always", "conditional", "on_demand", "unknown"] },
+        "evidence": { "enum": ["observed", "declared", "unknown"] },
+        "source_refs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/sourceRef" }
+        }
+      }
+    },
+    "tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "definition_sha256", "definition_evidence", "definition_method", "evidence", "source_refs"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "definition_sha256": { "anyOf": [{ "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" }, { "type": "null" }] },
+        "definition_evidence": { "enum": ["derived", "declared", "unknown"] },
+        "definition_method": { "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }] },
+        "evidence": { "enum": ["observed", "declared", "unknown"] },
+        "source_refs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/sourceRef" }
+        }
+      }
+    },
+    "policies": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assembly", "truncation", "compaction", "caching"],
+      "properties": {
+        "assembly": { "$ref": "#/$defs/harnessFact" },
+        "truncation": { "$ref": "#/$defs/harnessFact" },
+        "compaction": { "$ref": "#/$defs/harnessFact" },
+        "caching": { "$ref": "#/$defs/harnessFact" }
+      }
+    },
+    "contextCapability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["origin", "capture", "evidence", "source_refs", "note"],
+      "properties": {
+        "origin": { "$ref": "#/$defs/origin" },
+        "capture": { "enum": ["direct", "reconstructed", "unavailable", "unknown"] },
+        "evidence": { "enum": ["observed", "declared", "unknown"] },
+        "source_refs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/sourceRef" }
+        },
+        "note": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "origin": {
+      "enum": [
+        "system_instruction",
+        "developer_instruction",
+        "user_prompt",
+        "repository_instruction",
+        "skill",
+        "repository_file",
+        "retrieved_document",
+        "tool_result",
+        "tool_schema",
+        "output_schema",
+        "conversation_history",
+        "assistant_output",
+        "memory",
+        "delegated_context",
+        "attachment",
+        "unknown"
+      ]
+    }
+  }
+}

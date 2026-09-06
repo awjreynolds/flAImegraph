@@ -79,3 +79,37 @@ _Avoid_: model, provider.
 **Projection**:
 A declared grouping of evidence into a report or view, with its selected paths, allocation rules and known losses kept visible.
 _Avoid_: ground truth, complete ledger.
+
+## Context and harness behavior
+
+**Harness Profile**:
+A versioned description of a harness configuration, its instruction and tool sources, context policies and capture capabilities. A run references the profile it used and retains any observed overrides.
+_Avoid_: adapter, model profile, proof of effective configuration.
+
+**Context Source**:
+An identified origin of material made available to an agent, such as an instruction, skill, repository file, tool result or earlier model output. Identical content does not by itself establish identical provenance.
+_Avoid_: message role, billed category.
+
+**Context Revision**:
+A particular representation of a Context Source, with a declared fingerprint and measurements where available. Truncation or summarization creates a new revision or source with explicit transformation lineage.
+_Avoid_: the original file when only an excerpt or summary is present.
+
+**Context Occurrence**:
+One ordered appearance of a Context Revision in a particular request context. Repeated appearances describe repeated exposure, not duplicate evidence or proof of a cache hit.
+_Avoid_: unique source, additional model call.
+
+**Request Context**:
+The ordered material recorded at a stated request boundary, with its Harness Profile, measurement provenance and Coverage. A client request, assembled harness context and transcript reconstruction are distinct boundaries.
+_Avoid_: complete provider prompt, billed partition.
+
+**Context Transformation**:
+A recorded relation between input and output Context Revisions, such as truncation, compaction, summarization or delegation. It preserves lineage without assigning exact output shares to its inputs.
+_Avoid_: measured token savings, causal attribution.
+
+**Context Treatment**:
+The declared processing or caching treatment of a Context Occurrence, separately evidenced from its origin and representation.
+_Avoid_: source type, cache hit inferred from repetition.
+
+**Context Cost Allocation**:
+An explicitly estimated, conserving distribution of a request's selected cost under a declared allocation method. It does not establish per-source billing or the effect of removing a source.
+_Avoid_: exact source cost, causal savings.

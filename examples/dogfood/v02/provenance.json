@@ -1,0 +1,523 @@
+{
+  "schema_version": "0.2.0",
+  "dataset_id": "context-producer-proof-v02",
+  "description": "Bounded real-work Codex v0.2 capture. Only allowlisted native metadata, hashed identifiers and numeric usage counters are published.",
+  "cutoff": "2026-09-06T21:03:01.300Z",
+  "root_goal_start": "2026-09-06T19:51:07.000Z",
+  "independent_producer_reported_bounds": {
+    "started_at": "2026-09-06T20:46:09.000Z",
+    "ended_at": "2026-09-06T20:56:13.000Z"
+  },
+  "streams": {
+    "root-accounting": {
+      "start": "2026-09-06T19:51:07.000Z",
+      "cutoff": "2026-09-06T21:03:01.300Z",
+      "source_prefix_rows": 4939,
+      "source_prefix_sha256": "46436a66d92baa821398959d69ade978578b1595266656d17312d222b355a11d",
+      "selected_usage_rows": 134,
+      "excluded_usage_rows_before_start": 552,
+      "first_selected_usage_timestamp": "2026-09-06T19:51:07.217Z",
+      "last_selected_usage_timestamp": "2026-09-06T21:01:30.839Z",
+      "sanitized_rows": 286,
+      "sanitized_sha256": "ed93bb0108475237658bf3790203c301a24b4d7e6d7614d2e8e73e399104cf5a",
+      "selected_token_count_rows": 148,
+      "selected_compaction_rows": 1,
+      "captures": [
+        {
+          "id": "capture:codex:63f77537d33bd4e87143d520108e7794",
+          "sequence": "0",
+          "source_id": "codex:c491ad3659045bf0",
+          "record_count": "143",
+          "observation_count": "210",
+          "prefix_bytes": "106464"
+        },
+        {
+          "id": "capture:codex:dcabf2d988dec9022e4febd65af426cb",
+          "sequence": "1",
+          "source_id": "codex:ed93bb0108475237",
+          "record_count": "286",
+          "observation_count": "430",
+          "prefix_bytes": "212924"
+        }
+      ],
+      "final_source_id": "codex:ed93bb0108475237",
+      "direct_observation_ids": [
+        "codex:capture:observation:01dbd55ee38643547d24bfd1205fbfa1",
+        "codex:capture:observation:02ed7e1f70048281db3afa879006ddb6",
+        "codex:capture:observation:037275570f052a5caeebd58e1a3ac3bc",
+        "codex:capture:observation:0535b3adeccce49573d6827011883779",
+        "codex:capture:observation:077c7bcf5723df1010350380e5913426",
+        "codex:capture:observation:079d2158e0b926954018346583bfc816",
+        "codex:capture:observation:0c59f0605bc38de5173f762df45805f2",
+        "codex:capture:observation:0d8abacffafe7d4d496e56ac64495e3d",
+        "codex:capture:observation:107c6e6647b162bafb192b945e3490c7",
+        "codex:capture:observation:118ee17b452ca6d236a5993b22c1c67f",
+        "codex:capture:observation:13e4e35aeda0920fffa78badd7dd4f8d",
+        "codex:capture:observation:144ceb65073f863f7ecdd25b934f2b44",
+        "codex:capture:observation:144dd8620cb6998c2ebdf258bf2e7093",
+        "codex:capture:observation:1491d4c2000a14f3cc5135e4acd98450",
+        "codex:capture:observation:1617631809dfdee8d0fd6c62a5099b6b",
+        "codex:capture:observation:171e6efc53b77f9c256ade1501599e3d",
+        "codex:capture:observation:1867d47a71cc25f601116d27550a3099",
+        "codex:capture:observation:202d1f5eea0744d6a0c7dfc0a66738cb",
+        "codex:capture:observation:22f1f9a9612287cf32db4b92b4b82bde",
+        "codex:capture:observation:24788b41026b18acd51cbc059ae9416e",
+        "codex:capture:observation:261d582741ccdb06e4a18a7063d81d24",
+        "codex:capture:observation:27b7cf00b8162a9241e3a186dc2a9149",
+        "codex:capture:observation:2b276d0511eaf2e1cace5a43bef00727",
+        "codex:capture:observation:2ef28ffba75c7490382cb2343cc78357",
+        "codex:capture:observation:3279c8dfa21e01993f72d7bcd54e545f",
+        "codex:capture:observation:32e05bfc59232a1959295896f4e4a27c",
+        "codex:capture:observation:3372e989ce4a0b1c641e8f3fbd358275",
+        "codex:capture:observation:3380d9be6829b4380473a40789ebe7f6",
+        "codex:capture:observation:3547d74fabf84f358430ca4c57c7fb5d",
+        "codex:capture:observation:3590550438b940c055a1ce70363c1aed",
+        "codex:capture:observation:37496ed4e87abd6af7ff705627f1c56b",
+        "codex:capture:observation:3ab78d4c89ba8e33f0679db81233e293",
+        "codex:capture:observation:3b8d26d774488e8236aceab19cb70f1f",
+        "codex:capture:observation:3e25d39600bad3445c5d43483aef5bad",
+        "codex:capture:observation:3e3ff27589d15bba7822dc14faa67fe4",
+        "codex:capture:observation:4266668004c884ef52f33591d63f1e79",
+        "codex:capture:observation:460a99d645feef8eeb77311637322704",
+        "codex:capture:observation:477a153c9919b93e2a8408402a18661f",
+        "codex:capture:observation:47a74b4792c9acc2f9719b47022b2a20",
+        "codex:capture:observation:49f68960d66115eed05f9de6a26c1217",
+        "codex:capture:observation:4fb2933c9bba04ea16abc39948ecc859",
+        "codex:capture:observation:5085b0adfdd5c6a15f789136ab2714e2",
+        "codex:capture:observation:50aa417a582f02a90fd2d81cc61f84d2",
+        "codex:capture:observation:54dec93cce29a64f540d4e218236c405",
+        "codex:capture:observation:551c100f46a77d3b94365767ab6dd227",
+        "codex:capture:observation:587f943c181f9e237771b3e916f6b081",
+        "codex:capture:observation:5a2abd36b2368ad1a65621f55049fb87",
+        "codex:capture:observation:5a74b7a01985aa161a7c4162b0de05e9",
+        "codex:capture:observation:5b3a6587461ae68adce84cc8246077f8",
+        "codex:capture:observation:5be217a9c756eba56be943efb7b0b9d8",
+        "codex:capture:observation:5c6164677669b805070b58e86b4435aa",
+        "codex:capture:observation:5da39aec71ac1f100070af6a7697b722",
+        "codex:capture:observation:6323c5415c2921642e8eadf7ca3ccab8",
+        "codex:capture:observation:66443f8669094b089ccefbff2962ebde",
+        "codex:capture:observation:6657eb428c32fb588095c13142b60315",
+        "codex:capture:observation:694fe5600632c0aa7c64b6215dea333a",
+        "codex:capture:observation:6d76d2f991295962fd3f5708c3610929",
+        "codex:capture:observation:72de1f7481c59b4d0de652ebd037de11",
+        "codex:capture:observation:75593e1fc2350ca8536ee078328a7aff",
+        "codex:capture:observation:75c4b9bbab05df34248ecba9d3cd8f29",
+        "codex:capture:observation:7a8f2d291b047deba25f50e11e7f1750",
+        "codex:capture:observation:7ab4ba3ab319f11ea085e4b716fb39b7",
+        "codex:capture:observation:7b19d5437d17b6e6a6d476ddad93b04b",
+        "codex:capture:observation:80afe37dd65921ee378e2341701eed8b",
+        "codex:capture:observation:82c6e5ce94817e1f9399f0fcb080ed8a",
+        "codex:capture:observation:85fbc3296cf491bbab1048bc4028217b",
+        "codex:capture:observation:87b98d9a2dc99f550be559040ebc613b",
+        "codex:capture:observation:88337847923dfcc4bb61425bcb755acf",
+        "codex:capture:observation:89a12891fd6c910c81da9f0c0d8376dc",
+        "codex:capture:observation:89d1ecf66f93409bda5a4d5c8145ccf7",
+        "codex:capture:observation:89d9d22aedf2eff216716305abc699c4",
+        "codex:capture:observation:8c66098a78daa0de4cc6428a92815aae",
+        "codex:capture:observation:8d3d77ac09285022043d4b22eb964cad",
+        "codex:capture:observation:950cb01d9cee1a73602b39ab58f22d85",
+        "codex:capture:observation:952f0b75ef23fd753f9618ea9a2dfddb",
+        "codex:capture:observation:964ec6f68e77d5103bbd01dcccacf416",
+        "codex:capture:observation:9781cccf01a6484b143d8f59fc975d73",
+        "codex:capture:observation:97b5fdea1a919f91e52147cfde21a637",
+        "codex:capture:observation:9ac609a63cf01eb1bd4fef093216be43",
+        "codex:capture:observation:9d7ebb957094920c036c02ee10fc6978",
+        "codex:capture:observation:9f2abfe5f70408b9806bfd8b1ba7cf9f",
+        "codex:capture:observation:9f9d6e9b1e212cd3bb53cffe97f36959",
+        "codex:capture:observation:a28b747e18a2f1c9edb019f5aedb16d6",
+        "codex:capture:observation:a6e5984c7be7441317a9f9cae811b7bd",
+        "codex:capture:observation:a7df7dea8560186a63daa2f9bcb4e469",
+        "codex:capture:observation:a8ec973dcb2cd7af09155086002c45c5",
+        "codex:capture:observation:aaf0f2056b97bdf5151af3c459e5f459",
+        "codex:capture:observation:ac663b9c44f06533f566f0a5c8950806",
+        "codex:capture:observation:b155581b79994b98064c555d3936d4cf",
+        "codex:capture:observation:b17d4f7c7fd1e26a6683739dc44d990e",
+        "codex:capture:observation:b2e5d6d552c28d683af1ba2457a73080",
+        "codex:capture:observation:b4bea656b42f69eae6caa54127cc3af7",
+        "codex:capture:observation:b4d945a70dbc99916383f8da4e5b1636",
+        "codex:capture:observation:b625e4eb8a3bafb61e8ae659732af8ff",
+        "codex:capture:observation:b8eefc2fa77129e72c7f50e00313d304",
+        "codex:capture:observation:b941d9cee41e9714ca2858f5bae353b0",
+        "codex:capture:observation:bd0b4950aacace16a05ee2fcc81472f2",
+        "codex:capture:observation:be9ec51e3bf0bcb4cf8526d47e3fccdb",
+        "codex:capture:observation:bed21f9afeb986e27345d9014ddcd3e7",
+        "codex:capture:observation:c1b5917ecb6093ccbbe548b7f996aaca",
+        "codex:capture:observation:c22952e4c3a820f59d843a1588d8952b",
+        "codex:capture:observation:c34acfabc93b802d42a7e082882c98ce",
+        "codex:capture:observation:c3bb484ad1ca55678e832fe586023122",
+        "codex:capture:observation:c4bcc06a07e8404f32af5f97f3bc4843",
+        "codex:capture:observation:c52c826956c3925d6ec3f2fd006d3577",
+        "codex:capture:observation:c8d366b75579f3d7d5f26b0cb46b7e5f",
+        "codex:capture:observation:c99e4e0723d156ed0079a107a1726aeb",
+        "codex:capture:observation:c9c130f3dc1acf87ce81061ac86ec391",
+        "codex:capture:observation:ca5161d3c3ab4fe1f02a8bd79972de30",
+        "codex:capture:observation:ca95b9c394ea7c51f7ed273d699a6cc2",
+        "codex:capture:observation:caca7ead7b6f7b5efabdef28c462e11f",
+        "codex:capture:observation:cbc09f034845798993226faf0298e7bc",
+        "codex:capture:observation:d22c068149e0d08044a32405dec0ba43",
+        "codex:capture:observation:d4aef729b95872f07f131570563e387a",
+        "codex:capture:observation:dc5961f060ba86938e6ea88ee4afe363",
+        "codex:capture:observation:de04bae258de4d03e4e80d92de989c3f",
+        "codex:capture:observation:de0b6cf6135e6876a016fbf78314babd",
+        "codex:capture:observation:e0e7b9b33439dddbe7614e8d770539d7",
+        "codex:capture:observation:e27444e6eef752e5de2d6d25f8421b8a",
+        "codex:capture:observation:e40252e3a6f33b2d4aab0cd7bc0e5208",
+        "codex:capture:observation:e4cec31ad08f24b2ac376576ba61a530",
+        "codex:capture:observation:e9143a86d1e13687be523d9f5ce4d07c",
+        "codex:capture:observation:e9549fdeabb4789e8a0c83131f0a8e16",
+        "codex:capture:observation:ec61f086984dad386f40bb4e2092db47",
+        "codex:capture:observation:ed36ce77e3a6a93bf3be736a39d020a7",
+        "codex:capture:observation:f00645ad4e4beac8f01b6a507c4a7919",
+        "codex:capture:observation:f14ed13964bb82a9d8c6c51552f4fb99",
+        "codex:capture:observation:f4dedc36905a8d27f0aa2b90805765de",
+        "codex:capture:observation:f6e275d39f35ef35174a19dde63de41f",
+        "codex:capture:observation:f81744e63fe207783020769732007f4a",
+        "codex:capture:observation:f8beb0911fc599918097b7fc5995ed05",
+        "codex:capture:observation:fccf513e4ed681b55c6fccaf41a2f657",
+        "codex:capture:observation:fd14c54fa2d825f8439b8d22ee464b98",
+        "codex:capture:observation:feb243a490950f8efcfc418995ad3a6d"
+      ],
+      "direct": {
+        "count": 134,
+        "category_sums": {
+          "input_tokens": "17224994",
+          "output_tokens": "89139",
+          "cache_read_input_tokens": "16815488",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "31749",
+          "native_total_tokens": "17314133"
+        },
+        "accounting_scope_counts": {
+          "direct": 134,
+          "snapshot": 148,
+          "aggregate": 148,
+          "unknown": 0
+        },
+        "model_counts": {
+          "gpt-6-astra": 134
+        },
+        "source_ids": [
+          "codex:c491ad3659045bf0",
+          "codex:ed93bb0108475237"
+        ]
+      },
+      "one_shot_direct": {
+        "count": 134,
+        "category_sums": {
+          "input_tokens": "17224994",
+          "output_tokens": "89139",
+          "cache_read_input_tokens": "16815488",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "31749",
+          "native_total_tokens": "17314133"
+        },
+        "accounting_scope_counts": {
+          "direct": 134,
+          "snapshot": 148,
+          "aggregate": 148,
+          "unknown": 0
+        },
+        "model_counts": {
+          "gpt-6-astra": 134
+        },
+        "source_ids": [
+          "codex:ed93bb0108475237"
+        ]
+      },
+      "duplicate_response_ids": 0,
+      "replay_capture_count": 2,
+      "one_shot_matches": true,
+      "recorded_valuation": {
+        "currency": "USD",
+        "basis": "mixed",
+        "total_nanos": "0",
+        "complete": false,
+        "priced_direct_lines": 0,
+        "direct_lines": 134,
+        "issue_codes": [
+          "NON_DIRECT_EXCLUDED",
+          "RECORDED_COST_UNAVAILABLE",
+          "SOURCE_COVERAGE_PARTIAL",
+          "legacy_snapshot_non_additive",
+          "partial_source_coverage"
+        ]
+      },
+      "context": {
+        "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+        "requests": 134,
+        "linked_observations": 134,
+        "unavailable_boundaries": 134,
+        "issue_codes": [
+          "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+          "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE"
+        ]
+      },
+      "report": {
+        "status": "available",
+        "artifact": "root-accounting-context-report.json",
+        "public_api_error_code": null
+      },
+      "artifact_sizes_bytes": {
+        "root-accounting.jsonl": 212924,
+        "root-accounting-capture-state.json": 751162,
+        "root-accounting-evidence.json": 713469,
+        "root-accounting-context.json": 177228,
+        "root-accounting-context-report.json": 1282572
+      }
+    },
+    "independent-producer": {
+      "start": "2026-09-06T20:46:09.000Z",
+      "cutoff": "2026-09-06T21:03:01.300Z",
+      "source_prefix_rows": 404,
+      "source_prefix_sha256": "9a8db2d09be542dfc9603a8b0d7f9d18c7683845344ec3585a609a0e95495ba7",
+      "selected_usage_rows": 33,
+      "excluded_usage_rows_before_start": 3,
+      "attempt_bounds": {
+        "attempt_id": "independent-producer-2026-09-06",
+        "status": "accepted",
+        "started_at": "2026-09-06T20:46:09.000Z",
+        "ended_at": "2026-09-06T20:56:45.879Z",
+        "observation_ids": [
+          "codex:capture:observation:0d06f93033d813239b59a237628df076",
+          "codex:capture:observation:0f3bfc8bb000d19041803e41dab53b26",
+          "codex:capture:observation:15cec6aee7c05c5a2ac4fd5e3127d9c0",
+          "codex:capture:observation:190a030f2f6e361ae15b99d355634a0c",
+          "codex:capture:observation:1a99de20842013e8c583bf070ff0e0e6",
+          "codex:capture:observation:23d896a2272985fb936b4163a639c2b0",
+          "codex:capture:observation:37b1d873f08707708aeeeb392d16d489",
+          "codex:capture:observation:38924f1bea6a3d03875faaf5617806ed",
+          "codex:capture:observation:3a3833dd4c824a2ca394c19b5e95af67",
+          "codex:capture:observation:440db7bc463650c9fbd724315f6e7d86",
+          "codex:capture:observation:47c3538fdbb3ab305e405d7a8b4749c1",
+          "codex:capture:observation:54f32102e7d885db7dec1163e382f662",
+          "codex:capture:observation:5903e74a3dc3c14d899e4636c6f9e060",
+          "codex:capture:observation:612920843e33878952a5d043de0e0a9f",
+          "codex:capture:observation:65b1cb715286ac2a4c812f7e0be22d7a",
+          "codex:capture:observation:66a8ed613befe75aee7fb674e622ee51",
+          "codex:capture:observation:6d1945d4c6b74d02da1e12c0877aa345",
+          "codex:capture:observation:759a3f1cf2c0aa2495670bf90fd9fcaa",
+          "codex:capture:observation:75fd692aa7b39d37058effbea7097f25",
+          "codex:capture:observation:8242a0c3cba564fc714b8eb945ea3bd7",
+          "codex:capture:observation:8a67a17fab696141347ccb470e5b23e1",
+          "codex:capture:observation:8b4322adf080f469feb5864b2f2d4138",
+          "codex:capture:observation:a4f706c3db0abba3883dc555fc4b97ae",
+          "codex:capture:observation:bc28d12b87eba1e439d1c156006ed3c4",
+          "codex:capture:observation:c2269dfe44df3ec7c0102ddc0009ee96",
+          "codex:capture:observation:ce0eaa5cb74c4445496480bc09c6be34",
+          "codex:capture:observation:ce2da0b48d1d00d5c7c2d9fa6bdc2268",
+          "codex:capture:observation:d02aaf657ecdfa490cd879d7e02e7146",
+          "codex:capture:observation:e25be8c555ba66288807bb78f46acaca",
+          "codex:capture:observation:eb805fa84795a3e0f38d9ee3f9958442",
+          "codex:capture:observation:f5cc5cafb6ae872eb94bb34043dbae08",
+          "codex:capture:observation:fb0885de5dc3877cf639c17b6c669d00",
+          "codex:capture:observation:feb239a86337a3ab522fb8b0ba8782ff"
+        ],
+        "end_basis": "derived as last observed selected usage timestamp; producer self-reported end is retained separately"
+      },
+      "first_selected_usage_timestamp": "2026-09-06T20:46:09.996Z",
+      "last_selected_usage_timestamp": "2026-09-06T20:56:45.879Z",
+      "sanitized_rows": 68,
+      "sanitized_sha256": "8d63a66d95efd2b12904ecd387418d30e94b17ad9ca66a5c0d2606922788b97f",
+      "selected_token_count_rows": 33,
+      "selected_compaction_rows": 0,
+      "captures": [
+        {
+          "id": "capture:codex:4d9a2cb71e1875aabee650740576c2bf",
+          "sequence": "0",
+          "source_id": "codex:dc0cf6a542e5e8ae",
+          "record_count": "34",
+          "observation_count": "48",
+          "prefix_bytes": "24752"
+        },
+        {
+          "id": "capture:codex:53637854f94d91a2cb7fabaa965abc3c",
+          "sequence": "1",
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record_count": "68",
+          "observation_count": "99",
+          "prefix_bytes": "50629"
+        }
+      ],
+      "final_source_id": "codex:8d63a66d95efd2b1",
+      "direct_observation_ids": [
+        "codex:capture:observation:0d06f93033d813239b59a237628df076",
+        "codex:capture:observation:0f3bfc8bb000d19041803e41dab53b26",
+        "codex:capture:observation:15cec6aee7c05c5a2ac4fd5e3127d9c0",
+        "codex:capture:observation:190a030f2f6e361ae15b99d355634a0c",
+        "codex:capture:observation:1a99de20842013e8c583bf070ff0e0e6",
+        "codex:capture:observation:23d896a2272985fb936b4163a639c2b0",
+        "codex:capture:observation:37b1d873f08707708aeeeb392d16d489",
+        "codex:capture:observation:38924f1bea6a3d03875faaf5617806ed",
+        "codex:capture:observation:3a3833dd4c824a2ca394c19b5e95af67",
+        "codex:capture:observation:440db7bc463650c9fbd724315f6e7d86",
+        "codex:capture:observation:47c3538fdbb3ab305e405d7a8b4749c1",
+        "codex:capture:observation:54f32102e7d885db7dec1163e382f662",
+        "codex:capture:observation:5903e74a3dc3c14d899e4636c6f9e060",
+        "codex:capture:observation:612920843e33878952a5d043de0e0a9f",
+        "codex:capture:observation:65b1cb715286ac2a4c812f7e0be22d7a",
+        "codex:capture:observation:66a8ed613befe75aee7fb674e622ee51",
+        "codex:capture:observation:6d1945d4c6b74d02da1e12c0877aa345",
+        "codex:capture:observation:759a3f1cf2c0aa2495670bf90fd9fcaa",
+        "codex:capture:observation:75fd692aa7b39d37058effbea7097f25",
+        "codex:capture:observation:8242a0c3cba564fc714b8eb945ea3bd7",
+        "codex:capture:observation:8a67a17fab696141347ccb470e5b23e1",
+        "codex:capture:observation:8b4322adf080f469feb5864b2f2d4138",
+        "codex:capture:observation:a4f706c3db0abba3883dc555fc4b97ae",
+        "codex:capture:observation:bc28d12b87eba1e439d1c156006ed3c4",
+        "codex:capture:observation:c2269dfe44df3ec7c0102ddc0009ee96",
+        "codex:capture:observation:ce0eaa5cb74c4445496480bc09c6be34",
+        "codex:capture:observation:ce2da0b48d1d00d5c7c2d9fa6bdc2268",
+        "codex:capture:observation:d02aaf657ecdfa490cd879d7e02e7146",
+        "codex:capture:observation:e25be8c555ba66288807bb78f46acaca",
+        "codex:capture:observation:eb805fa84795a3e0f38d9ee3f9958442",
+        "codex:capture:observation:f5cc5cafb6ae872eb94bb34043dbae08",
+        "codex:capture:observation:fb0885de5dc3877cf639c17b6c669d00",
+        "codex:capture:observation:feb239a86337a3ab522fb8b0ba8782ff"
+      ],
+      "direct": {
+        "count": 33,
+        "category_sums": {
+          "input_tokens": "3568501",
+          "output_tokens": "29857",
+          "cache_read_input_tokens": "3446528",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "16002",
+          "native_total_tokens": "3598358"
+        },
+        "accounting_scope_counts": {
+          "direct": 33,
+          "snapshot": 33,
+          "aggregate": 33,
+          "unknown": 0
+        },
+        "model_counts": {
+          "gpt-5.6-luna": 33
+        },
+        "source_ids": [
+          "codex:8d63a66d95efd2b1",
+          "codex:dc0cf6a542e5e8ae"
+        ]
+      },
+      "one_shot_direct": {
+        "count": 33,
+        "category_sums": {
+          "input_tokens": "3568501",
+          "output_tokens": "29857",
+          "cache_read_input_tokens": "3446528",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "16002",
+          "native_total_tokens": "3598358"
+        },
+        "accounting_scope_counts": {
+          "direct": 33,
+          "snapshot": 33,
+          "aggregate": 33,
+          "unknown": 0
+        },
+        "model_counts": {
+          "gpt-5.6-luna": 33
+        },
+        "source_ids": [
+          "codex:8d63a66d95efd2b1"
+        ]
+      },
+      "duplicate_response_ids": 0,
+      "replay_capture_count": 2,
+      "one_shot_matches": true,
+      "recorded_valuation": {
+        "currency": "USD",
+        "basis": "mixed",
+        "total_nanos": "0",
+        "complete": false,
+        "priced_direct_lines": 0,
+        "direct_lines": 33,
+        "issue_codes": [
+          "NON_DIRECT_EXCLUDED",
+          "RECORDED_COST_UNAVAILABLE",
+          "SOURCE_COVERAGE_PARTIAL",
+          "legacy_snapshot_non_additive",
+          "partial_source_coverage"
+        ]
+      },
+      "context": {
+        "profile_id": "harness-profile:0683bf49d0b4f14f06754235d042d5bf22fe6bf36a2080d0fd884900a7b32d17",
+        "requests": 33,
+        "linked_observations": 33,
+        "unavailable_boundaries": 33,
+        "issue_codes": [
+          "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+          "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE"
+        ]
+      },
+      "report": {
+        "status": "available",
+        "artifact": "independent-producer-context-report.json",
+        "public_api_error_code": null
+      },
+      "artifact_sizes_bytes": {
+        "independent-producer.jsonl": 50629,
+        "independent-producer-capture-state.json": 184952,
+        "independent-producer-evidence.json": 174919,
+        "independent-producer-context.json": 48583,
+        "independent-producer-context-report.json": 316760,
+        "independent-producer-work-item-record.json": 175614
+      }
+    }
+  },
+  "work_item": {
+    "path": "examples/work-items/context-producer-proof.json",
+    "dataset_id": "context-producer-proof-v02",
+    "work_item_id": "context-producer-proof",
+    "accepted": true,
+    "estimate_preserved": {
+      "estimate_id": "initial",
+      "created_at": "2026-09-06T20:16:42Z",
+      "point_value": "3",
+      "timing": "pre_execution"
+    },
+    "selected_observation_count": 33,
+    "selected_observation_ids": [
+      "codex:capture:observation:0d06f93033d813239b59a237628df076",
+      "codex:capture:observation:0f3bfc8bb000d19041803e41dab53b26",
+      "codex:capture:observation:15cec6aee7c05c5a2ac4fd5e3127d9c0",
+      "codex:capture:observation:190a030f2f6e361ae15b99d355634a0c",
+      "codex:capture:observation:1a99de20842013e8c583bf070ff0e0e6",
+      "codex:capture:observation:23d896a2272985fb936b4163a639c2b0",
+      "codex:capture:observation:37b1d873f08707708aeeeb392d16d489",
+      "codex:capture:observation:38924f1bea6a3d03875faaf5617806ed",
+      "codex:capture:observation:3a3833dd4c824a2ca394c19b5e95af67",
+      "codex:capture:observation:440db7bc463650c9fbd724315f6e7d86",
+      "codex:capture:observation:47c3538fdbb3ab305e405d7a8b4749c1",
+      "codex:capture:observation:54f32102e7d885db7dec1163e382f662",
+      "codex:capture:observation:5903e74a3dc3c14d899e4636c6f9e060",
+      "codex:capture:observation:612920843e33878952a5d043de0e0a9f",
+      "codex:capture:observation:65b1cb715286ac2a4c812f7e0be22d7a",
+      "codex:capture:observation:66a8ed613befe75aee7fb674e622ee51",
+      "codex:capture:observation:6d1945d4c6b74d02da1e12c0877aa345",
+      "codex:capture:observation:759a3f1cf2c0aa2495670bf90fd9fcaa",
+      "codex:capture:observation:75fd692aa7b39d37058effbea7097f25",
+      "codex:capture:observation:8242a0c3cba564fc714b8eb945ea3bd7",
+      "codex:capture:observation:8a67a17fab696141347ccb470e5b23e1",
+      "codex:capture:observation:8b4322adf080f469feb5864b2f2d4138",
+      "codex:capture:observation:a4f706c3db0abba3883dc555fc4b97ae",
+      "codex:capture:observation:bc28d12b87eba1e439d1c156006ed3c4",
+      "codex:capture:observation:c2269dfe44df3ec7c0102ddc0009ee96",
+      "codex:capture:observation:ce0eaa5cb74c4445496480bc09c6be34",
+      "codex:capture:observation:ce2da0b48d1d00d5c7c2d9fa6bdc2268",
+      "codex:capture:observation:d02aaf657ecdfa490cd879d7e02e7146",
+      "codex:capture:observation:e25be8c555ba66288807bb78f46acaca",
+      "codex:capture:observation:eb805fa84795a3e0f38d9ee3f9958442",
+      "codex:capture:observation:f5cc5cafb6ae872eb94bb34043dbae08",
+      "codex:capture:observation:fb0885de5dc3877cf639c17b6c669d00",
+      "codex:capture:observation:feb239a86337a3ab522fb8b0ba8782ff"
+    ],
+    "temporal_join": "verified pre-execution estimate before reported independent-producer attempt start",
+    "coverage": "partial usage and cost coverage; accepted workload outcome is separate"
+  },
+  "proof": {
+    "incremental_capture": "advanceCapture prefix then full extension, exact replay, and one-shot import all agree on direct counts/category sums",
+    "context": "reconstructNativeContext(codex, sanitized, mergedEvidence, honestProfile, {source_id:lastCaptureSource}) returns unavailable request boundaries",
+    "valuation": "recorded USD mode retains all-null direct costs; no model price or provider billing is invented",
+    "acceptance_reference": "test/context-producer.test.ts public seam assertions were used as acceptance evidence; its synthetic fixture is not joined"
+  }
+}

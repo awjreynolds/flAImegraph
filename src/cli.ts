@@ -5,12 +5,12 @@ import { createHash } from "node:crypto";
 import type { CostProfile, EvidenceBundle, Grouping, Harness, ProfileOptions, Valuation } from "./types.js";
 import { protectInputs, writeArtifact } from "./files.js";
 
-const help = `flAImegraph — agent cost interchange (experimental 0.1.0)
+const help = `flAImegraph — agent cost and context interchange (experimental 0.2.0)
 
 Offline workflow:
   import   --harness NAME --input FILE --out evidence.json
   merge    --inputs evidence-a.json,evidence-b.json --out evidence.json
-  validate --input FILE [--kind evidence|valuation|profile|work-item|rate-card]
+  validate --input FILE [--kind evidence|valuation|profile|work-item|rate-card|context|context-report|harness-profile|capture-state]
   value    --input evidence.json (--mode recorded | --rate-card rates.json) --out valuation.json
   export   --input evidence.json --valuation valuation.json --out-dir profile
   render   --input profile/profile.json --out-dir report
@@ -18,6 +18,16 @@ Offline workflow:
   conformance
   capabilities
   work-item --input work-item.json --evidence evidence.json --valuation valuation.json --out joined.json
+
+Context workflow (0.2 composes with frozen 0.1 cost evidence):
+  harness-profile --harness NAME [--version VERSION] [--model MODEL] --out profile.json
+  capture --harness codex|pi --input session.jsonl --namespace NAME --dataset-id ID --out state.json [--evidence-out evidence.json]
+  capture --input session.jsonl --state state.json --out state.json [--evidence-out evidence.json]
+  context-capture --input descriptor.json --out context.json
+  context-capture --format openai-responses|anthropic-messages|gemini-content --input request.json --options capture-options.json --out context.json
+  context-merge --inputs context-a.json,context-b.json [--evidence evidence.json] --out context.json
+  context-import --harness codex|pi --input session.jsonl --evidence evidence.json --profile profile.json --source-id ID --out context.json
+  context-report --evidence evidence.json --valuation valuation.json --context context.json [--allocate-requests request-a,request-b] --out report.json
 
 Use --help to show this workflow. No command sends data to a provider.
 `;
@@ -100,6 +110,25 @@ async function main(args: string[]): Promise<void> {
   if (command === "validate") {
     const options = flags(rest, ["--input", "--kind"]);
     const kind = options.get("--kind") ?? "evidence";
+    if (kind === "capture-state") {
+      const { validateCaptureState } = await import("./capture.js");
+      const state = validateCaptureState(await readJson(required(options, "--input")));
+      process.stdout.write(JSON.stringify({ valid: true, schema_version: state.schema_version, captures: state.captures.length, sequence: state.cursor.sequence }) + "\n");
+      return;
+    }
+    if (kind === "context-report") {
+      const { validateContextReport } = await import("./context-report.js");
+      const report = validateContextReport(await readJson(required(options, "--input")));
+      process.stdout.write(JSON.stringify({ valid: true, ...report.summary }) + "\n");
+      return;
+    }
+    if (kind === "harness-profile" || kind === "context") {
+      const { validateHarnessProfile, validateContextBundle } = await import("./context.js");
+      const value = await readJson(required(options, "--input"));
+      const artifact = kind === "harness-profile" ? validateHarnessProfile(value) : validateContextBundle(value);
+      process.stdout.write(JSON.stringify({ valid: true, schema_version: artifact.schema_version, kind }) + "\n");
+      return;
+    }
     if (kind === "work-item") {
       const { validateWorkItem } = await import("./work-items.js");
       const item = validateWorkItem(await readJson(required(options, "--input")));
@@ -122,6 +151,110 @@ async function main(args: string[]): Promise<void> {
     const evidence = validateEvidence(await readJson(required(options, "--input")));
     process.stdout.write(JSON.stringify({ valid: true, schema_version: evidence.schema_version,
       dataset_id: evidence.dataset_id, observations: evidence.observations.length, sources: evidence.sources.length }) + "\n");
+    return;
+  }
+  if (command === "harness-profile") {
+    const options = flags(rest, ["--harness", "--version", "--model", "--provider", "--name", "--out"]);
+    const { createHarnessProfile } = await import("./context-capture.js");
+    const { validateHarnessProfile } = await import("./context.js");
+    const profile = validateHarnessProfile(createHarnessProfile({ harness: required(options, "--harness"), harness_version: options.get("--version"), model: options.get("--model"), provider: options.get("--provider"), name: options.get("--name") }));
+    const out = required(options, "--out");
+    await saveJson(out, profile);
+    process.stdout.write(JSON.stringify({ output: out, profile_id: profile.id }) + "\n");
+    return;
+  }
+  if (command === "capture") {
+    const options = flags(rest, ["--harness", "--input", "--namespace", "--dataset-id", "--state", "--out", "--evidence-out", "--sequence", "--version", "--work-item", "--agent"]);
+    const input = required(options, "--input");
+    const out = required(options, "--out");
+    const evidenceOut = options.get("--evidence-out");
+    const statePath = options.get("--state");
+    // A caller may explicitly advance its derived state in place; raw input is always protected.
+    await protectInputs([out, ...(evidenceOut ? [evidenceOut] : [])], [input]);
+    if (evidenceOut) await protectInputs([evidenceOut], [out, ...(statePath ? [statePath] : [])]);
+    const { advanceCapture, validateCaptureState } = await import("./capture.js");
+    const previous = statePath ? validateCaptureState(await readJson(statePath)) : undefined;
+    const harness = options.get("--harness") ?? previous?.harness;
+    if (harness !== "codex" && harness !== "pi") throw new CliError("USAGE", "Capture requires --harness codex or pi");
+    const state = advanceCapture(await readFile(input, "utf8"), { harness,
+      capture_namespace: options.get("--namespace") ?? previous?.capture_namespace ?? required(options, "--namespace"),
+      dataset_id: options.get("--dataset-id") ?? previous?.dataset_id ?? required(options, "--dataset-id"),
+      sequence: options.get("--sequence"), version: options.get("--version") ?? previous?.import_options.version,
+      work_item_id: options.get("--work-item") ?? previous?.import_options.work_item_id,
+      agent_id: options.get("--agent") ?? previous?.import_options.agent_id,
+    }, previous);
+    if (evidenceOut) await saveJson(evidenceOut, state.evidence);
+    await saveJson(out, state);
+    process.stdout.write(JSON.stringify({ output: out, evidence_output: evidenceOut, captures: state.captures.length, sequence: state.cursor.sequence, observations: state.evidence.observations.length }) + "\n");
+    return;
+  }
+  if (command === "context-report") {
+    const options = flags(rest, ["--evidence", "--valuation", "--context", "--allocate-requests", "--out"]);
+    const evidencePath = required(options, "--evidence");
+    const valuationPath = required(options, "--valuation");
+    const contextPath = required(options, "--context");
+    const out = required(options, "--out");
+    await protectInputs([out], [evidencePath, valuationPath, contextPath]);
+    const { validateEvidence } = await import("./core.js");
+    const { validateContextBundle } = await import("./context.js");
+    const { createContextReport } = await import("./context-report.js");
+    const evidence = validateEvidence(await readJson(evidencePath));
+    const valuation = await checkedArtifact<Valuation>("valuation", await readJson(valuationPath));
+    const context = validateContextBundle(await readJson(contextPath), evidence);
+    const report = createContextReport(evidence, valuation, context, { allocation_request_ids: options.get("--allocate-requests")?.split(",") });
+    await saveJson(out, report);
+    process.stdout.write(JSON.stringify({ output: out, ...report.summary, estimated_allocations: report.allocations.length }) + "\n");
+    return;
+  }
+  if (command === "context-capture") {
+    const options = flags(rest, ["--format", "--input", "--options", "--out"]);
+    const input = required(options, "--input");
+    const out = required(options, "--out");
+    const format = options.get("--format") ?? "generic";
+    const optionsPath = options.get("--options");
+    await protectInputs([out], [input, ...(optionsPath ? [optionsPath] : [])]);
+    const { captureRequestContext, captureProviderRequest } = await import("./request-context.js");
+    const value = await readJson(input);
+    if (format === "generic" && optionsPath) throw new CliError("USAGE", "Generic capture takes its full descriptor in --input; omit --options");
+    if (format !== "generic" && !optionsPath) throw new CliError("USAGE", "Provider request capture requires --options FILE");
+    const context = format === "generic"
+      ? captureRequestContext(value as import("./context-types.js").CaptureContextInput)
+      : captureProviderRequest(format, value, await readJson(optionsPath!) as import("./request-context.js").CaptureProviderOptions);
+    await saveJson(out, context);
+    process.stdout.write(JSON.stringify({ output: out, requests: context.requests.length, sources: context.sources.length, issues: context.issues.length }) + "\n");
+    return;
+  }
+  if (command === "context-import") {
+    const options = flags(rest, ["--harness", "--input", "--evidence", "--profile", "--source-id", "--out"]);
+    const input = required(options, "--input");
+    const evidencePath = required(options, "--evidence");
+    const profilePath = required(options, "--profile");
+    const out = required(options, "--out");
+    const harness = required(options, "--harness");
+    if (harness !== "codex" && harness !== "pi") throw new CliError("USAGE", "Native context requires --harness codex or pi");
+    await protectInputs([out], [input, evidencePath, profilePath]);
+    const { validateEvidence } = await import("./core.js");
+    const { validateHarnessProfile } = await import("./context.js");
+    const { reconstructNativeContext } = await import("./native-context.js");
+    const context = reconstructNativeContext(harness, await readFile(input, "utf8"), validateEvidence(await readJson(evidencePath)), validateHarnessProfile(await readJson(profilePath)), { source_id: required(options, "--source-id") });
+    await saveJson(out, context);
+    process.stdout.write(JSON.stringify({ output: out, requests: context.requests.length, sources: context.sources.length, issues: context.issues.length }) + "\n");
+    return;
+  }
+  if (command === "context-merge") {
+    const options = flags(rest, ["--inputs", "--evidence", "--out"]);
+    const inputs = required(options, "--inputs").split(",");
+    const evidencePath = options.get("--evidence");
+    const out = required(options, "--out");
+    await protectInputs([out], [...inputs, ...(evidencePath ? [evidencePath] : [])]);
+    const { validateContextBundle, reconcileContextBundles } = await import("./context.js");
+    const { validateEvidence } = await import("./core.js");
+    const evidence = evidencePath ? validateEvidence(await readJson(evidencePath)) : undefined;
+    const bundles = [];
+    for (const input of inputs) bundles.push(validateContextBundle(await readJson(input), evidence));
+    const context = reconcileContextBundles(bundles, evidence);
+    await saveJson(out, context);
+    process.stdout.write(JSON.stringify({ output: out, requests: context.requests.length, sources: context.sources.length }) + "\n");
     return;
   }
   if (command === "import") {

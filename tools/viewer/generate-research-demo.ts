@@ -1,0 +1,14 @@
+import { readFileSync, writeFileSync } from 'node:fs';
+import { importEvidence } from '../../src/adapters/index.js';
+import { reconcileEvidence, valueEvidence, validateRateCard } from '../../src/core.js';
+import { createContextReport } from '../../src/context-report.js';
+import { createHarnessProfile } from '../../src/context-capture.js';
+import type { ContextBundle } from '../../src/context-types.js';
+const agents = ['coordinator', 'telemetry', 'accounting', 'profiles'];
+const evidence = reconcileEvidence(agents.map(agent => importEvidence('codex', readFileSync(`examples/dogfood/codex/${agent}.jsonl`, 'utf8'), { dataset_id: 'flaimegraph-dogfood-2026-09-06', source_id: `dogfood-${agent}`, agent_id: agent, work_item_id: 'flaimegraph-research' })));
+const valuation = valueEvidence(evidence, {mode: 'rate_card', rate_card: validateRateCard(JSON.parse(readFileSync('examples/rates/enterprise-astra-scenario.json','utf8')))});
+const artifact=evidence.sources.find(source=>source.id==='dogfood-coordinator')!;
+const profile=createHarnessProfile({harness:'codex',name:'Codex native accounting capture',harness_version:{value:'0.153.4',evidence:'observed',source_refs:[{source_id:artifact.id,record:'line:1:/payload/cli_version'}]},model:{value:'gpt-6-astra',evidence:'observed',source_refs:[{source_id:artifact.id,record:'line:2:/payload/model'}]},artifacts:[artifact]});
+const context: ContextBundle = {schema_version:'0.2.0', dataset_id:evidence.dataset_id, evidence_schema_version:'0.1.0', artifacts:evidence.sources,profiles:[profile],sources:[],revisions:[],transformations:[],issues:[{code:'FINAL_REQUEST_NOT_CAPTURED',severity:'warning',message:'This real-work capture contains accounting telemetry. The final assembled request and per-source context composition were not captured.'}],requests:evidence.observations.filter(o=>o.kind==='model'&&o.accounting_scope==='direct').map(o=>({id:`context:${o.id}`,observation_id:o.id,profile_id:profile.id,captured_at:o.timestamp??null,boundary:'unavailable',coverage:'unknown',coverage_evidence:'unknown',occurrences:[],overrides:{},source_refs:o.source_refs}))};
+writeFileSync('examples/context/research-report.json',JSON.stringify(createContextReport(evidence,valuation,context),null,2)+'\n');
+console.log({requests:context.requests.length,total_nanos:valuation.total_nanos});

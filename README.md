@@ -4,12 +4,15 @@ flAImegraph is an open experimental project for understanding AI-assisted softwa
 
 The project also adopts **Context Points** as a human-facing way to size and compare anticipated AI effort, alongside the familiar ideas of T-shirt sizing, story points and function points. A Context Points estimate belongs to a specified Work Item and Acceptance Outcome. It remains separate from observed tokens, calls, context-related measurements, human or infrastructure resources, selected USD valuation and the result that was accepted. The scale and estimation method still need empirical calibration; this repository does not declare a universal points-to-token or points-to-dollar conversion.
 
-The [experimental 0.1 contract](spec/0.1/README.md) has a working offline reference implementation. The [project plan](docs/project-plan.md) describes the route from complete work evidence to a calibrated planning measure. The [Context Points proposal](docs/context-points.md) explains the vocabulary and boundaries, and the [domain glossary](CONTEXT.md) keeps the terms consistent. See the [integration evidence](docs/implementation-evidence/integration.md) for verification and its limits.
+The [experimental 0.2 context contract](spec/0.2/README.md) and frozen [0.1 cost contract](spec/0.1/README.md) have a working offline reference implementation. The [project plan](docs/project-plan.md) describes the route from complete work evidence to a calibrated planning measure. The [Context Points proposal](docs/context-points.md) explains the vocabulary and boundaries, and the [domain glossary](CONTEXT.md) keeps the terms consistent. See the [integration evidence](docs/implementation-evidence/integration.md) for verification and its limits.
+
+Version 0.2 adds ordered context manifests, source/revision reuse, summary lineage, versioned harness profiles, provider request capture and incremental Codex/Pi capture. Exact cost stays separate from estimated context allocation. The Context Explorer lets you load metadata reports locally in the browser and inspect context, profiles, coverage and request costs. Its [source and local build instructions](viewer/README.md) and [report examples](examples/context/README.md) are included.
 
 Start here:
 
 - [Context Points proposal and GitHub issue draft](docs/context-points.md)
 - [Project plan and acceptance gates](docs/project-plan.md)
+- [Context Interchange experimental specification 0.2](spec/0.2/README.md)
 - [Agent Cost Interchange experimental specification 0.1](spec/0.1/README.md)
 - [Implementation contract](docs/implementation-contract.md)
 - [Dogfooding on this project's own work](docs/dogfooding.md)

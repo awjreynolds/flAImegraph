@@ -143,7 +143,7 @@ function parseInteger(value: string, field: string): bigint {
   }
 }
 
-function validateInputs(evidence: EvidenceBundle, valuation: Valuation, options: ProfileOptions): void {
+function validateInputs(evidence: EvidenceBundle, valuation: Valuation, options: ProfileOptions, allowUnvalued = false): void {
   if (evidence.schema_version !== SCHEMA_VERSION) {
     throw new ProfileError("unsupported_schema_version", `Evidence schema version must be ${SCHEMA_VERSION}.`);
   }
@@ -159,10 +159,11 @@ function validateInputs(evidence: EvidenceBundle, valuation: Valuation, options:
   if (valuation.selection_policy !== "direct-only-v1") {
     throw new ProfileError("selection_policy", "Profiles require the direct-only-v1 valuation selection policy.");
   }
-  if (valuation.basis === "mixed") {
+  const unvaluedReport = allowUnvalued && valuation.observations.every((line) => line.amount_nanos === null);
+  if (valuation.basis === "mixed" && !unvaluedReport) {
     throw new ProfileError("mixed_basis", "A monetary profile cannot combine valuation bases.");
   }
-  if (!/^[A-Z]{3}$/u.test(valuation.currency)) {
+  if (!/^[A-Z]{3}$/u.test(valuation.currency) && !(unvaluedReport && valuation.currency === "UNKNOWN")) {
     throw new ProfileError("invalid_currency", "Profile currency must be an uppercase ISO-like three-letter code.");
   }
   const sourceIds = new Set<string>();
@@ -826,6 +827,20 @@ export function validateProfile(value: unknown): CostProfile {
   return value as CostProfile;
 }
 
+/** Validate a valuation against its evidence without constructing or hashing a profile. */
+export function validateProfileInputs(evidence: EvidenceBundle, valuation: Valuation, options: ProfileOptions = {}): void {
+  validateEvidence(evidence);
+  validateValuationShape(valuation);
+  validateInputs(evidence, valuation, options);
+}
+
+/** Context-only inspection permits fully unvalued evidence; monetary profiles stay strict. */
+export function validateContextReportInputs(evidence: EvidenceBundle, valuation: Valuation): void {
+  validateEvidence(evidence);
+  validateValuationShape(valuation);
+  validateInputs(evidence, valuation, {}, true);
+}
+
 export function createCostProfile(
   evidence: EvidenceBundle,
   valuation: Valuation,
@@ -833,9 +848,7 @@ export function createCostProfile(
 ): CostProfile {
   // Keep runtime callers on the same evidence contract as the valuation
   // pipeline; TypeScript annotations alone do not protect JSON entry points.
-  validateEvidence(evidence);
-  validateValuationShape(valuation);
-  validateInputs(evidence, valuation, options);
+  validateProfileInputs(evidence, valuation, options);
   const groupBy = options.group_by ?? DEFAULT_GROUP_BY;
   const costView = options.cost_view ?? "charges";
   const samples: ProfileSample[] = [];

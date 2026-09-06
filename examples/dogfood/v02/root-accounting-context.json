@@ -1,0 +1,3972 @@
+{
+  "schema_version": "0.2.0",
+  "dataset_id": "context-producer-proof-v02",
+  "evidence_schema_version": "0.1.0",
+  "artifacts": [
+    {
+      "id": "codex:ed93bb0108475237",
+      "harness": "codex",
+      "format": "codex-rollout-jsonl",
+      "version": "0.153.4",
+      "sha256": "ed93bb0108475237658bf3790203c301a24b4d7e6d7614d2e8e73e399104cf5a",
+      "coverage": "partial",
+      "description": "Codex rollout JSONL with additive response usage and legacy token snapshots."
+    }
+  ],
+  "profiles": [
+    {
+      "schema_version": "0.2.0",
+      "id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "name": "Codex root-accounting accounting profile",
+      "harness": "codex",
+      "harness_version": {
+        "value": "0.153.4",
+        "evidence": "observed",
+        "source_refs": [
+          {
+            "source_id": "codex:ed93bb0108475237",
+            "record": "line:1/payload/cli_version"
+          }
+        ]
+      },
+      "profile_version": "0.2.0",
+      "model": {
+        "provider": {
+          "value": null,
+          "evidence": "unknown",
+          "source_refs": []
+        },
+        "name": {
+          "value": "gpt-6-astra",
+          "evidence": "observed",
+          "source_refs": [
+            {
+              "source_id": "codex:ed93bb0108475237",
+              "record": "line:61/payload/model"
+            }
+          ]
+        },
+        "settings": {
+          "effort": {
+            "value": "high",
+            "evidence": "observed",
+            "source_refs": [
+              {
+                "source_id": "codex:ed93bb0108475237",
+                "record": "line:61/payload/model"
+              }
+            ]
+          }
+        }
+      },
+      "instruction_sources": [],
+      "tools": [],
+      "policies": {
+        "assembly": {
+          "value": null,
+          "evidence": "unknown",
+          "source_refs": []
+        },
+        "truncation": {
+          "value": null,
+          "evidence": "unknown",
+          "source_refs": []
+        },
+        "compaction": {
+          "value": null,
+          "evidence": "unknown",
+          "source_refs": []
+        },
+        "caching": {
+          "value": null,
+          "evidence": "unknown",
+          "source_refs": []
+        }
+      },
+      "context_capabilities": [
+        {
+          "origin": "system_instruction",
+          "capture": "unknown",
+          "evidence": "unknown",
+          "source_refs": [],
+          "note": "No capture capability has been established for this profile."
+        },
+        {
+          "origin": "developer_instruction",
+          "capture": "unknown",
+          "evidence": "unknown",
+          "source_refs": [],
+          "note": "No capture capability has been established for this profile."
+        },
+        {
+          "origin": "user_prompt",
+          "capture": "unknown",
+          "evidence": "unknown",
+          "source_refs": [],
+          "note": "No capture capability has been established for this profile."
+        },
+        {
+          "origin": "repository_instruction",
+          "capture": "unknown",
+          "evidence": "unknown",
+          "source_refs": [],
+          "note": "No capture capability has been established for this profile."
+        },
+        {
+          "origin": "skill",
+          "capture": "unknown",
+          "evidence": "unknown",
+          "source_refs": [],
+          "note": "No capture capability has been established for this profile."
+        },
+        {
+          "origin": "repository_file",
+          "capture": "unknown",
+          "evidence": "unknown",
+          "source_refs": [],
+          "note": "No capture capability has been established for this profile."
+        },
+        {
+          "origin": "retrieved_document",
+          "capture": "unknown",
+          "evidence": "unknown",
+          "source_refs": [],
+          "note": "No capture capability has been established for this profile."
+        },
+        {
+          "origin": "tool_result",
+          "capture": "unknown",
+          "evidence": "unknown",
+          "source_refs": [],
+          "note": "No capture capability has been established for this profile."
+        },
+        {
+          "origin": "tool_schema",
+          "capture": "unknown",
+          "evidence": "unknown",
+          "source_refs": [],
+          "note": "No capture capability has been established for this profile."
+        },
+        {
+          "origin": "output_schema",
+          "capture": "unknown",
+          "evidence": "unknown",
+          "source_refs": [],
+          "note": "No capture capability has been established for this profile."
+        },
+        {
+          "origin": "conversation_history",
+          "capture": "unknown",
+          "evidence": "unknown",
+          "source_refs": [],
+          "note": "No capture capability has been established for this profile."
+        },
+        {
+          "origin": "assistant_output",
+          "capture": "unknown",
+          "evidence": "unknown",
+          "source_refs": [],
+          "note": "No capture capability has been established for this profile."
+        },
+        {
+          "origin": "memory",
+          "capture": "unknown",
+          "evidence": "unknown",
+          "source_refs": [],
+          "note": "No capture capability has been established for this profile."
+        },
+        {
+          "origin": "delegated_context",
+          "capture": "unknown",
+          "evidence": "unknown",
+          "source_refs": [],
+          "note": "No capture capability has been established for this profile."
+        },
+        {
+          "origin": "attachment",
+          "capture": "unknown",
+          "evidence": "unknown",
+          "source_refs": [],
+          "note": "No capture capability has been established for this profile."
+        },
+        {
+          "origin": "unknown",
+          "capture": "unknown",
+          "evidence": "unknown",
+          "source_refs": [],
+          "note": "No capture capability has been established for this profile."
+        }
+      ],
+      "artifacts": [
+        {
+          "id": "codex:ed93bb0108475237",
+          "harness": "codex",
+          "format": "codex-rollout-jsonl",
+          "version": "0.153.4",
+          "sha256": "ed93bb0108475237658bf3790203c301a24b4d7e6d7614d2e8e73e399104cf5a",
+          "coverage": "partial",
+          "description": "Codex rollout JSONL with additive response usage and legacy token snapshots."
+        }
+      ]
+    }
+  ],
+  "sources": [],
+  "revisions": [],
+  "requests": [
+    {
+      "id": "native-request:codex:codex:capture:observation:b941d9cee41e9714ca2858f5bae353b0",
+      "observation_id": "codex:capture:observation:b941d9cee41e9714ca2858f5bae353b0",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:c4a47a21e6e8c3f08dc69eefb57e434ec7d010b0d13ceed6bec580756129924a:line:3"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:077c7bcf5723df1010350380e5913426",
+      "observation_id": "codex:capture:observation:077c7bcf5723df1010350380e5913426",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:1700c95f87487974fddac2bc8ace1bdffd3ce6468c6ecfc40c2f7249d0eab48e:line:5"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:587f943c181f9e237771b3e916f6b081",
+      "observation_id": "codex:capture:observation:587f943c181f9e237771b3e916f6b081",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:9a590ef0870a1336e38868483ace750f7bd27b8241d436ad1eb39530d939406f:line:7"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:d22c068149e0d08044a32405dec0ba43",
+      "observation_id": "codex:capture:observation:d22c068149e0d08044a32405dec0ba43",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:308d934a30c9f47f9184575e834e32a2c3355dec4d89463074a06035923f2ba5:line:9"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:b2e5d6d552c28d683af1ba2457a73080",
+      "observation_id": "codex:capture:observation:b2e5d6d552c28d683af1ba2457a73080",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:627cff1a1a649e33f2f66ff47a03d092f981b1db007ebf307b3a4ed634170c23:line:11"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:f14ed13964bb82a9d8c6c51552f4fb99",
+      "observation_id": "codex:capture:observation:f14ed13964bb82a9d8c6c51552f4fb99",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:506ca8825c56388690dd3dbd51df8ae3269c0ee41b1aab95210e51dd74646521:line:13"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:a8ec973dcb2cd7af09155086002c45c5",
+      "observation_id": "codex:capture:observation:a8ec973dcb2cd7af09155086002c45c5",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:a1f926af97148858f31b482ceab383bf9ae4fb621b6bc52aed95f6215284fd6c:line:15"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:87b98d9a2dc99f550be559040ebc613b",
+      "observation_id": "codex:capture:observation:87b98d9a2dc99f550be559040ebc613b",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:28590bd1adc906914464fad5c15c4fd5f6e5be34b9bae814cebfb4997a81da32:line:17"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:0d8abacffafe7d4d496e56ac64495e3d",
+      "observation_id": "codex:capture:observation:0d8abacffafe7d4d496e56ac64495e3d",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:5b03c006d0224c9d4712653162708e1cf6e768328be5788a5163aecf8e8beeff:line:19"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:97b5fdea1a919f91e52147cfde21a637",
+      "observation_id": "codex:capture:observation:97b5fdea1a919f91e52147cfde21a637",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:4b9dba69bf6d5de7698aada6354066f8bea99aaaa08c86d9c017e5245e821201:line:21"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:9f2abfe5f70408b9806bfd8b1ba7cf9f",
+      "observation_id": "codex:capture:observation:9f2abfe5f70408b9806bfd8b1ba7cf9f",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:1f8a9f871442919bf117a4d6eb73b36ccaa036c44f817aa0264d868c0c58f11e:line:23"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:3279c8dfa21e01993f72d7bcd54e545f",
+      "observation_id": "codex:capture:observation:3279c8dfa21e01993f72d7bcd54e545f",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:89de53c6859866444ba25bfd0af2499c70f9cbb9ba7f53b7440b4741f0405dcf:line:25"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:8c66098a78daa0de4cc6428a92815aae",
+      "observation_id": "codex:capture:observation:8c66098a78daa0de4cc6428a92815aae",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:6a53c12bd6485e66a2c14fe50b7a3f40cfb608f2fb9aec5a8ce2c3b4eabb5e03:line:27"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:4266668004c884ef52f33591d63f1e79",
+      "observation_id": "codex:capture:observation:4266668004c884ef52f33591d63f1e79",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:7ec035ed58b0a2f4b805adf4e07813d2b9c9a2b009233000dc5554f976d5df84:line:29"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:c22952e4c3a820f59d843a1588d8952b",
+      "observation_id": "codex:capture:observation:c22952e4c3a820f59d843a1588d8952b",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:ef4df07d3917d01b94db5842a7ee853c42a24ee2641157a484e686a063177887:line:31"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:3380d9be6829b4380473a40789ebe7f6",
+      "observation_id": "codex:capture:observation:3380d9be6829b4380473a40789ebe7f6",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:f35277a2380f99464ab1d9d6266a8c1e278c791e81913fdba081617c2bf75186:line:33"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:e0e7b9b33439dddbe7614e8d770539d7",
+      "observation_id": "codex:capture:observation:e0e7b9b33439dddbe7614e8d770539d7",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:ba711568ba62a37ec412ab479cd6c8c430181f7f48aba38814f076f7e32d31b5:line:36"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:5a2abd36b2368ad1a65621f55049fb87",
+      "observation_id": "codex:capture:observation:5a2abd36b2368ad1a65621f55049fb87",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:5d4d5d2d02409a9aafb6260512b948fbc05a80789d90ddef74e5fc0c1500a7e7:line:39"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:50aa417a582f02a90fd2d81cc61f84d2",
+      "observation_id": "codex:capture:observation:50aa417a582f02a90fd2d81cc61f84d2",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:7a1fc2170a4be533a4a25b007fd61a1e35cd1964e4b2b9d55f3fa5a8a05f9981:line:41"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:80afe37dd65921ee378e2341701eed8b",
+      "observation_id": "codex:capture:observation:80afe37dd65921ee378e2341701eed8b",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:d51f42a5dc786482bfe2ba7648883b2e53b264153dfafadde9dace05aede93f8:line:43"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:3e3ff27589d15bba7822dc14faa67fe4",
+      "observation_id": "codex:capture:observation:3e3ff27589d15bba7822dc14faa67fe4",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:fec14441f4473351d96bc4471e5698059d0f3f6b0579f1f0a8da7d6ebea581b0:line:46"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:118ee17b452ca6d236a5993b22c1c67f",
+      "observation_id": "codex:capture:observation:118ee17b452ca6d236a5993b22c1c67f",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:5f294b9781840f0fee585289b8f9590b7bbc6adda9c89b52683936b9d8a2a9f0:line:48"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:3e25d39600bad3445c5d43483aef5bad",
+      "observation_id": "codex:capture:observation:3e25d39600bad3445c5d43483aef5bad",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:2da24990315a329ad1ae4f49dccc1be0ad0eeb2c4f0ac0bf57fa7d297b361b19:line:50"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:c8d366b75579f3d7d5f26b0cb46b7e5f",
+      "observation_id": "codex:capture:observation:c8d366b75579f3d7d5f26b0cb46b7e5f",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:f002443d73ed2b4d6661a21814f417bb28778ea560b70897d0da2ceb0e243136:line:52"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:feb243a490950f8efcfc418995ad3a6d",
+      "observation_id": "codex:capture:observation:feb243a490950f8efcfc418995ad3a6d",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:7d34a482343a9e5414a7ad51b3cec9e702585e8529d570b91570616b2826c66d:line:54"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:dc5961f060ba86938e6ea88ee4afe363",
+      "observation_id": "codex:capture:observation:dc5961f060ba86938e6ea88ee4afe363",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:e10f8f23d4ff41914c543b58c34f044fd5441ce38c3ef289127b9540d41a67a0:line:56"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:e9143a86d1e13687be523d9f5ce4d07c",
+      "observation_id": "codex:capture:observation:e9143a86d1e13687be523d9f5ce4d07c",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:071e23ae9ee2f4d43603d3611b108b005b6b7f77fa3341bbb1455e20fa9b2199:line:58"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:a7df7dea8560186a63daa2f9bcb4e469",
+      "observation_id": "codex:capture:observation:a7df7dea8560186a63daa2f9bcb4e469",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:cc5ac113f98145f6a7d737ff53a16b0cde1caf853a70fae9d14e37898e3fc39a:line:63"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:9f9d6e9b1e212cd3bb53cffe97f36959",
+      "observation_id": "codex:capture:observation:9f9d6e9b1e212cd3bb53cffe97f36959",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:d30d7760098226c7e2a680d4b340fb30ed5f153664d3232e8e55966a994a139d:line:65"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:460a99d645feef8eeb77311637322704",
+      "observation_id": "codex:capture:observation:460a99d645feef8eeb77311637322704",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:4e6327d3977a1747c0d6b5c966bf70eab864724f900e2883913f4ad28a167c3f:line:67"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:144dd8620cb6998c2ebdf258bf2e7093",
+      "observation_id": "codex:capture:observation:144dd8620cb6998c2ebdf258bf2e7093",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:a21ae619150f158a32de348d11f2794e362f75703f055a96563eb20eac4a72ec:line:69"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:f00645ad4e4beac8f01b6a507c4a7919",
+      "observation_id": "codex:capture:observation:f00645ad4e4beac8f01b6a507c4a7919",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:22048cc38934a6232c3d9d9323a9d9be268638fa3b0344d16c0df4cf775c7ce5:line:71"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:2b276d0511eaf2e1cace5a43bef00727",
+      "observation_id": "codex:capture:observation:2b276d0511eaf2e1cace5a43bef00727",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:1c27124a33b01b74f081ff896b839f2b8579b8458716f97e7bbbb1fce6f4e136:line:73"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:c4bcc06a07e8404f32af5f97f3bc4843",
+      "observation_id": "codex:capture:observation:c4bcc06a07e8404f32af5f97f3bc4843",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:96ac3fce0c374e4ee67787354825a6b865ed5cc8bb7efd55b2c0394551c06ae7:line:75"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:37496ed4e87abd6af7ff705627f1c56b",
+      "observation_id": "codex:capture:observation:37496ed4e87abd6af7ff705627f1c56b",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:a9de037549ee18913c5448eddee02c3ed4f0dd85865aad6ae1a4e3b0fb60cb1c:line:77"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:ec61f086984dad386f40bb4e2092db47",
+      "observation_id": "codex:capture:observation:ec61f086984dad386f40bb4e2092db47",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:88592f059e9aa927f22a0c2fea8aaf77c48eb8afe072122f9b08d4486d00f81a:line:79"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:c1b5917ecb6093ccbbe548b7f996aaca",
+      "observation_id": "codex:capture:observation:c1b5917ecb6093ccbbe548b7f996aaca",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:4f874d4fe4a35ee8616ff02802fcdf0015e53d3c4be23fc3dc4cc5e060e583ff:line:81"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:47a74b4792c9acc2f9719b47022b2a20",
+      "observation_id": "codex:capture:observation:47a74b4792c9acc2f9719b47022b2a20",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:4ba13f985cef85b8b8a8d60a80dd23809e3e79e87ad3f2be3cd76a6dae53ee1c:line:83"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:202d1f5eea0744d6a0c7dfc0a66738cb",
+      "observation_id": "codex:capture:observation:202d1f5eea0744d6a0c7dfc0a66738cb",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:14fc9e56fa74f6947096af28d159cfdcc6ed698df9e538dbd30a7c123847d6d8:line:85"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:22f1f9a9612287cf32db4b92b4b82bde",
+      "observation_id": "codex:capture:observation:22f1f9a9612287cf32db4b92b4b82bde",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:59153e0a0dcd35c86abb715713ab9e9cced1b6d4d5b7da567c5f735f401012d0:line:87"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:b4d945a70dbc99916383f8da4e5b1636",
+      "observation_id": "codex:capture:observation:b4d945a70dbc99916383f8da4e5b1636",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:cbae32ad70a94fc4b06723ec6fe676116d47e9f67c06bb86e0609280ca9c82f1:line:89"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:3547d74fabf84f358430ca4c57c7fb5d",
+      "observation_id": "codex:capture:observation:3547d74fabf84f358430ca4c57c7fb5d",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:8f8f02af7c50237794b4d1558115cf188581519ecb23d5a8234e15e7e360a87c:line:91"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:bd0b4950aacace16a05ee2fcc81472f2",
+      "observation_id": "codex:capture:observation:bd0b4950aacace16a05ee2fcc81472f2",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:ccf75b54dd5b16baff9850b3c841a25d8bee0f62d74a0a819cfe8ab76ddc58cd:line:93"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:f8beb0911fc599918097b7fc5995ed05",
+      "observation_id": "codex:capture:observation:f8beb0911fc599918097b7fc5995ed05",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:01d75645d6ef7cf830a7ce33993c943e12157633366f896a00dc4e85fc1607f1:line:95"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:75c4b9bbab05df34248ecba9d3cd8f29",
+      "observation_id": "codex:capture:observation:75c4b9bbab05df34248ecba9d3cd8f29",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:b29b959aeedc12dba2a26227251ea9a4965c727d13c5ed17f351385a90e6c970:line:97"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:7ab4ba3ab319f11ea085e4b716fb39b7",
+      "observation_id": "codex:capture:observation:7ab4ba3ab319f11ea085e4b716fb39b7",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:5ea6a5e52222449fe22ede066d3a978483cb0d5b3597974970f7335a748a38eb:line:99"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:107c6e6647b162bafb192b945e3490c7",
+      "observation_id": "codex:capture:observation:107c6e6647b162bafb192b945e3490c7",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:37ea7d16c028d8f3f5fefba23acbe76ca66248979550f332ebf4a3daaa11fe02:line:101"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:ed36ce77e3a6a93bf3be736a39d020a7",
+      "observation_id": "codex:capture:observation:ed36ce77e3a6a93bf3be736a39d020a7",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:cfaf3ee075f03154c28e8fb92fac3a9ccdf2ddb015affed9801e30f950a21d94:line:103"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:1491d4c2000a14f3cc5135e4acd98450",
+      "observation_id": "codex:capture:observation:1491d4c2000a14f3cc5135e4acd98450",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:fab0df4618c7ca608c55e58f69faecd71a93411a738d2c0259f2f4e16d10bf25:line:105"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:477a153c9919b93e2a8408402a18661f",
+      "observation_id": "codex:capture:observation:477a153c9919b93e2a8408402a18661f",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:b3eaa251ef88de810d110cc500be753a0d2d5df0c1c91040b9809719af14bced:line:107"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:f81744e63fe207783020769732007f4a",
+      "observation_id": "codex:capture:observation:f81744e63fe207783020769732007f4a",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:880da30687e80e28b61ae93bd4650ef20ecaf72426f31d18a47586d05e632a3b:line:109"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:c3bb484ad1ca55678e832fe586023122",
+      "observation_id": "codex:capture:observation:c3bb484ad1ca55678e832fe586023122",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:07681007437cb159e66dde42a07532fc1230b02ed102e33b567c8b6990ed6f44:line:111"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:7b19d5437d17b6e6a6d476ddad93b04b",
+      "observation_id": "codex:capture:observation:7b19d5437d17b6e6a6d476ddad93b04b",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:3706dab2977d6e12028326065c064216271fd3bebb5a5166c9b9dc6980712194:line:113"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:6323c5415c2921642e8eadf7ca3ccab8",
+      "observation_id": "codex:capture:observation:6323c5415c2921642e8eadf7ca3ccab8",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:c037e8d8361dbe2d8caf04a78c9bc3b043a197ac01615a20c2416c90f2a40d03:line:115"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:27b7cf00b8162a9241e3a186dc2a9149",
+      "observation_id": "codex:capture:observation:27b7cf00b8162a9241e3a186dc2a9149",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:9cf313f0ebf29d8657bb452c0a833081749d6cff247bea5f1aaa213198f8182b:line:117"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:144ceb65073f863f7ecdd25b934f2b44",
+      "observation_id": "codex:capture:observation:144ceb65073f863f7ecdd25b934f2b44",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:5f819d53b1d9b4e30efed3b271e1f8139f7c526863cba4098f5c4b9467a7856e:line:119"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:5da39aec71ac1f100070af6a7697b722",
+      "observation_id": "codex:capture:observation:5da39aec71ac1f100070af6a7697b722",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:b6c9d8b862377395e4639f303632a52c5e645f6a0b9680da8521c315d1c057a3:line:121"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:32e05bfc59232a1959295896f4e4a27c",
+      "observation_id": "codex:capture:observation:32e05bfc59232a1959295896f4e4a27c",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:cf003f2a2a33db47f38560bfd7e40d2472f1f3cde86ef43600d00fb520d00e7c:line:123"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:72de1f7481c59b4d0de652ebd037de11",
+      "observation_id": "codex:capture:observation:72de1f7481c59b4d0de652ebd037de11",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:8b8b7037e6635918ba944b21fdd60e45c7328ceb8ab61a8bead83dc170cd987f:line:125"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:7a8f2d291b047deba25f50e11e7f1750",
+      "observation_id": "codex:capture:observation:7a8f2d291b047deba25f50e11e7f1750",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:68a031724b048c76923e67ebf40ce48353e362bf48968629f3418a03706bb258:line:127"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:a28b747e18a2f1c9edb019f5aedb16d6",
+      "observation_id": "codex:capture:observation:a28b747e18a2f1c9edb019f5aedb16d6",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:66bc28e2d4d2c7e1bd73e599402d18380f1c53298f1abf0fbd5192b1213b2394:line:129"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:89a12891fd6c910c81da9f0c0d8376dc",
+      "observation_id": "codex:capture:observation:89a12891fd6c910c81da9f0c0d8376dc",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:24f0d30dc538e5ee49d6ac52d88a8113e57c202f4f55921319af7fe80f6f1a70:line:131"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:5c6164677669b805070b58e86b4435aa",
+      "observation_id": "codex:capture:observation:5c6164677669b805070b58e86b4435aa",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:76a1939ccd0574734ae9294343529c9d9266cb042f1dc0cc6934c794084ee08f:line:133"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:f4dedc36905a8d27f0aa2b90805765de",
+      "observation_id": "codex:capture:observation:f4dedc36905a8d27f0aa2b90805765de",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:f8f707c80fec9478fe8770b5f390ca5b72a9e72c03989560ffb5cd8f3d7558d8:line:135"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:b155581b79994b98064c555d3936d4cf",
+      "observation_id": "codex:capture:observation:b155581b79994b98064c555d3936d4cf",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:1fdc8f264dca9c4f3c0d02f9adffb9f8f686b4b168f013cef25e462fcdf92355:line:137"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:5a74b7a01985aa161a7c4162b0de05e9",
+      "observation_id": "codex:capture:observation:5a74b7a01985aa161a7c4162b0de05e9",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:69dbe56ed20662f6f74cc1d6ea7ae2f06a94ac9594fb0d391a826588cc674e05:line:139"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:079d2158e0b926954018346583bfc816",
+      "observation_id": "codex:capture:observation:079d2158e0b926954018346583bfc816",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:2a2922f14d4625c59a7c822f93a6fe04040320c15146cc58c1e54baa090d2024:line:141"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:171e6efc53b77f9c256ade1501599e3d",
+      "observation_id": "codex:capture:observation:171e6efc53b77f9c256ade1501599e3d",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:7122f3b3767b1a6196a536c93a0dc2be2dd30a684d75d2aac1635582d94e345b:line:143"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:b625e4eb8a3bafb61e8ae659732af8ff",
+      "observation_id": "codex:capture:observation:b625e4eb8a3bafb61e8ae659732af8ff",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:f52a3ec394c6acca39e7f6ed5cad035a6849edfc5c7120cd446977e6d4ed1391:line:145"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:75593e1fc2350ca8536ee078328a7aff",
+      "observation_id": "codex:capture:observation:75593e1fc2350ca8536ee078328a7aff",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:617505def9364352717f21fcda5192c816a5ce8dd48036756f76b7d4a318acb5:line:147"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:e9549fdeabb4789e8a0c83131f0a8e16",
+      "observation_id": "codex:capture:observation:e9549fdeabb4789e8a0c83131f0a8e16",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:423b883a0b5d102edfef35ec40461fa76d1a698b73f27437b8c3885ce50ce3fd:line:149"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:6d76d2f991295962fd3f5708c3610929",
+      "observation_id": "codex:capture:observation:6d76d2f991295962fd3f5708c3610929",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:a14e1b0e9db092863162bbf8194c32d76299077ff275cd87c6517cea0cba7b21:line:151"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:c52c826956c3925d6ec3f2fd006d3577",
+      "observation_id": "codex:capture:observation:c52c826956c3925d6ec3f2fd006d3577",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:7880964c3a4e81fdc64cbdb473c9c28550a24bbd6f0bbac18267cd909db05762:line:153"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:037275570f052a5caeebd58e1a3ac3bc",
+      "observation_id": "codex:capture:observation:037275570f052a5caeebd58e1a3ac3bc",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:7a9aaf06802d4d98bdd81c646c1478049fb04aca783876b88422f0568b2359ec:line:155"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:82c6e5ce94817e1f9399f0fcb080ed8a",
+      "observation_id": "codex:capture:observation:82c6e5ce94817e1f9399f0fcb080ed8a",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:9cd74d27c680a659cadeb2af44a40a21a70e795150da1fd1e9f009f988de080b:line:157"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:b17d4f7c7fd1e26a6683739dc44d990e",
+      "observation_id": "codex:capture:observation:b17d4f7c7fd1e26a6683739dc44d990e",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:84a9fcfa3470d3bd64c5d136753c981a583d7cc54e203267b276d4ae48e7799a:line:159"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:261d582741ccdb06e4a18a7063d81d24",
+      "observation_id": "codex:capture:observation:261d582741ccdb06e4a18a7063d81d24",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:b942a49f85aa98e57e71f699615f9cf804f36a4b6d987b53572736d7dbe8e233:line:161"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:bed21f9afeb986e27345d9014ddcd3e7",
+      "observation_id": "codex:capture:observation:bed21f9afeb986e27345d9014ddcd3e7",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:7b42a4ec0f60819f3c4707de6ab548ec3e185d17cf0deab2e0a1f2846945a5d8:line:163"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:fccf513e4ed681b55c6fccaf41a2f657",
+      "observation_id": "codex:capture:observation:fccf513e4ed681b55c6fccaf41a2f657",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:eb3fadf2009eded39711249200e47891fae016dc577ac68e6d9adcd378abc88d:line:165"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:24788b41026b18acd51cbc059ae9416e",
+      "observation_id": "codex:capture:observation:24788b41026b18acd51cbc059ae9416e",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:e05e5dec78e45e5722123d74ca4c01ff41124df849d83c125116544cc3eab28e:line:167"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:be9ec51e3bf0bcb4cf8526d47e3fccdb",
+      "observation_id": "codex:capture:observation:be9ec51e3bf0bcb4cf8526d47e3fccdb",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:8039ac713901748d02dc9f06a4d90fac3d3ffe13c611b033bb324f498d00633e:line:169"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:6657eb428c32fb588095c13142b60315",
+      "observation_id": "codex:capture:observation:6657eb428c32fb588095c13142b60315",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:837ad9e4415a1e02230add1e12c161412bbe07a116fef666d2d85d2f2d8dd496:line:171"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:c9c130f3dc1acf87ce81061ac86ec391",
+      "observation_id": "codex:capture:observation:c9c130f3dc1acf87ce81061ac86ec391",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:bb111dfa4c38ecc6d1c145dea0a9f93f4eb17fe1d92770e781da21a94b36b1d4:line:173"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:e27444e6eef752e5de2d6d25f8421b8a",
+      "observation_id": "codex:capture:observation:e27444e6eef752e5de2d6d25f8421b8a",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:2444567d7ece16a6552413c8fc623ee968f15812011a38e97b8eb1c87438a784:line:175"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:b8eefc2fa77129e72c7f50e00313d304",
+      "observation_id": "codex:capture:observation:b8eefc2fa77129e72c7f50e00313d304",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:f198f2ad5d91a52e87e66ba6f0b832e8c50a91608e2096cd4486673e57881413:line:177"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:13e4e35aeda0920fffa78badd7dd4f8d",
+      "observation_id": "codex:capture:observation:13e4e35aeda0920fffa78badd7dd4f8d",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:77ea2157f2d34fd87d107181fbdb6bb4d3cbc5c2a81b9caf4896ba9ade029f7e:line:179"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:89d1ecf66f93409bda5a4d5c8145ccf7",
+      "observation_id": "codex:capture:observation:89d1ecf66f93409bda5a4d5c8145ccf7",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:cf2637be1ed3f2e631495a51fc721a263dbd9fdc12b86a7759c00e836a40274f:line:181"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:caca7ead7b6f7b5efabdef28c462e11f",
+      "observation_id": "codex:capture:observation:caca7ead7b6f7b5efabdef28c462e11f",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:e7fae4da4b83b30d3e888ce63cb849e8839e02c3fe9a4e70ee388425949f2d50:line:183"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:cbc09f034845798993226faf0298e7bc",
+      "observation_id": "codex:capture:observation:cbc09f034845798993226faf0298e7bc",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:54cd34cb964f71ffa7e0cc639cc48a7f0f2b94233df6027549dcd7dd0d9846fb:line:186"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:2ef28ffba75c7490382cb2343cc78357",
+      "observation_id": "codex:capture:observation:2ef28ffba75c7490382cb2343cc78357",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:2d1194aeb157d6594027036040d441a71b82e585aeec5f70669899890641c40f:line:188"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:0535b3adeccce49573d6827011883779",
+      "observation_id": "codex:capture:observation:0535b3adeccce49573d6827011883779",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:2b7426118689041d23035923f380821fd03b371f08864f09ed389ecb9f1e843d:line:190"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:ac663b9c44f06533f566f0a5c8950806",
+      "observation_id": "codex:capture:observation:ac663b9c44f06533f566f0a5c8950806",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:0648fa830923e5887b2905727e381ee5bc23c42472173488144e33a4e1860453:line:192"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:e4cec31ad08f24b2ac376576ba61a530",
+      "observation_id": "codex:capture:observation:e4cec31ad08f24b2ac376576ba61a530",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:c82c37567254418e05fb855f36fb3beb26008e00a75e7e8775198eed1ed3fc21:line:194"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:de0b6cf6135e6876a016fbf78314babd",
+      "observation_id": "codex:capture:observation:de0b6cf6135e6876a016fbf78314babd",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:ce109c3f831fda3a1973d1231b01ffd41a09bc6afedb05de16f34802bb0ef1b8:line:196"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:66443f8669094b089ccefbff2962ebde",
+      "observation_id": "codex:capture:observation:66443f8669094b089ccefbff2962ebde",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:770c79e4985f26e7c44eac3c8ff907134b96fc892df860c2418eff54aa891e3b:line:198"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:85fbc3296cf491bbab1048bc4028217b",
+      "observation_id": "codex:capture:observation:85fbc3296cf491bbab1048bc4028217b",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:de33cb62e99ee71cf5f6900f356d1780e259b0645971b820a4bb0c9bc0b057ef:line:200"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:950cb01d9cee1a73602b39ab58f22d85",
+      "observation_id": "codex:capture:observation:950cb01d9cee1a73602b39ab58f22d85",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:e22e8f7b82affd3e3241cbf497cb89543f23abbe2582528c514af4a516e7f2c3:line:202"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:1617631809dfdee8d0fd6c62a5099b6b",
+      "observation_id": "codex:capture:observation:1617631809dfdee8d0fd6c62a5099b6b",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:bfdb290228a317f222cebdd6862afc66efd407af9d4cf457416f09054395f2e0:line:204"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:964ec6f68e77d5103bbd01dcccacf416",
+      "observation_id": "codex:capture:observation:964ec6f68e77d5103bbd01dcccacf416",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:04172bde8d2f6fdf7363f0cc42f803bf82db38921a3a5bd680e4ba38e517a2ba:line:206"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:3590550438b940c055a1ce70363c1aed",
+      "observation_id": "codex:capture:observation:3590550438b940c055a1ce70363c1aed",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:496ac15118cdb024a8c32491f402aa23c7314a8ff5f9a49c96eb48ec8b1cab39:line:208"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:3372e989ce4a0b1c641e8f3fbd358275",
+      "observation_id": "codex:capture:observation:3372e989ce4a0b1c641e8f3fbd358275",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:8bd1495b00f227e2621a1b44d9ea24f9ec7b91483e9f430445efd64a66683f03:line:210"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:5be217a9c756eba56be943efb7b0b9d8",
+      "observation_id": "codex:capture:observation:5be217a9c756eba56be943efb7b0b9d8",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:880fa23a6e56a80db7f362629f4ae3f11592a7f34f3eed3f0a45d2b8d404f741:line:212"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:c34acfabc93b802d42a7e082882c98ce",
+      "observation_id": "codex:capture:observation:c34acfabc93b802d42a7e082882c98ce",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:d8647a1a22bbe247a697be80fa4908c2429112464e3eb51390e5b39b53512200:line:214"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:ca95b9c394ea7c51f7ed273d699a6cc2",
+      "observation_id": "codex:capture:observation:ca95b9c394ea7c51f7ed273d699a6cc2",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:4e82d20ab498d71039920a395375e8c6c9f5c7f5c1f6892dc1f123af33c53dbf:line:216"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:5b3a6587461ae68adce84cc8246077f8",
+      "observation_id": "codex:capture:observation:5b3a6587461ae68adce84cc8246077f8",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:13cf297d758c13cc7542088062f2bed1a5a90046e29868097aceadfb8271b2ac:line:218"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:1867d47a71cc25f601116d27550a3099",
+      "observation_id": "codex:capture:observation:1867d47a71cc25f601116d27550a3099",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:5073f5d6345ed98343e01012cee7297a6efb95d8ccd3a8a44b30ec55085354fe:line:220"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:88337847923dfcc4bb61425bcb755acf",
+      "observation_id": "codex:capture:observation:88337847923dfcc4bb61425bcb755acf",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:2be07207d26c7200f9b6de3c36beee79a8acd50c450b448b3c2e49d02ef7c551:line:222"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:9781cccf01a6484b143d8f59fc975d73",
+      "observation_id": "codex:capture:observation:9781cccf01a6484b143d8f59fc975d73",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:c3d8d46731036e3adb10b08f04add01c538d54ca53e2e5fad0f2cd6b514a0b33:line:224"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:02ed7e1f70048281db3afa879006ddb6",
+      "observation_id": "codex:capture:observation:02ed7e1f70048281db3afa879006ddb6",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:0934de6025b9ec602f3bfaa4f8deb2c839742f894a571e31cfe31731d644942f:line:226"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:aaf0f2056b97bdf5151af3c459e5f459",
+      "observation_id": "codex:capture:observation:aaf0f2056b97bdf5151af3c459e5f459",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:daed04ceee4c64103c3b5cc1261b77ca16c29846cb4ab48c1bc97e617e0c2fa7:line:229"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:3ab78d4c89ba8e33f0679db81233e293",
+      "observation_id": "codex:capture:observation:3ab78d4c89ba8e33f0679db81233e293",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:e078fa5f83924bd6694a11089e5807f9003da0ca83522abfb256cbaa032163a3:line:231"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:f6e275d39f35ef35174a19dde63de41f",
+      "observation_id": "codex:capture:observation:f6e275d39f35ef35174a19dde63de41f",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:ab7e5b374bbb0051d26476f486e3a4e851ad686533a9abc687a10fc4fd1ccef9:line:233"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:ca5161d3c3ab4fe1f02a8bd79972de30",
+      "observation_id": "codex:capture:observation:ca5161d3c3ab4fe1f02a8bd79972de30",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:358130a05ef7dd62c8f27f458e58ab445cfde05464595e0805c8eb8a4b817567:line:236"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:49f68960d66115eed05f9de6a26c1217",
+      "observation_id": "codex:capture:observation:49f68960d66115eed05f9de6a26c1217",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:e09f916e2e3de868c2972faeb6812b3be3998eea7359725518e9d5dbfed4b8be:line:238"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:01dbd55ee38643547d24bfd1205fbfa1",
+      "observation_id": "codex:capture:observation:01dbd55ee38643547d24bfd1205fbfa1",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:5b4f84ccc299fd5a30787eb2958150fbeb38bfab94d951cee652464d639919b4:line:240"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:89d9d22aedf2eff216716305abc699c4",
+      "observation_id": "codex:capture:observation:89d9d22aedf2eff216716305abc699c4",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:bb74b3df9d4ae8b69df260578a4aae46221c59c01f6af6b8fe0b4fcf63aee4e1:line:242"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:694fe5600632c0aa7c64b6215dea333a",
+      "observation_id": "codex:capture:observation:694fe5600632c0aa7c64b6215dea333a",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:1144c80e3eec5134d4a9c927f1cc93a6b8981bc3ed12d568369512cef9989ac4:line:244"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:54dec93cce29a64f540d4e218236c405",
+      "observation_id": "codex:capture:observation:54dec93cce29a64f540d4e218236c405",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:7813f16f66ffd3b225ebbc904a53285358ea80ebe7230ec003c70235462e207c:line:246"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:5085b0adfdd5c6a15f789136ab2714e2",
+      "observation_id": "codex:capture:observation:5085b0adfdd5c6a15f789136ab2714e2",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:ca3e3210e6b010e7dba63f1942f421fd7f9a1db64e4e1c1bdf7f5dc461f78cab:line:248"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:3b8d26d774488e8236aceab19cb70f1f",
+      "observation_id": "codex:capture:observation:3b8d26d774488e8236aceab19cb70f1f",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:c211160531252b4b08d10761564c56378c4687ba306b84801e9bfde2261b1ad1:line:251"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:c99e4e0723d156ed0079a107a1726aeb",
+      "observation_id": "codex:capture:observation:c99e4e0723d156ed0079a107a1726aeb",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:e511271f6e9113447592c24e56d468dc6853a0ed0e13425dc8003bf7b0fa145f:line:253"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:9d7ebb957094920c036c02ee10fc6978",
+      "observation_id": "codex:capture:observation:9d7ebb957094920c036c02ee10fc6978",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:e21022989750fea4e0d714c5509d455b5478ea37019c0574ac8eccbeb9b1c4f0:line:255"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:b4bea656b42f69eae6caa54127cc3af7",
+      "observation_id": "codex:capture:observation:b4bea656b42f69eae6caa54127cc3af7",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:3bdf6bacac5a5d2aba5ed3334125bc2e8522563b73a2b2a8bebc5a268d2828a8:line:258"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:952f0b75ef23fd753f9618ea9a2dfddb",
+      "observation_id": "codex:capture:observation:952f0b75ef23fd753f9618ea9a2dfddb",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:7a50e77ff55aaacb6c06f31aa706acb650ecdfe4971139865281fb7eea7bbf6a:line:261"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:551c100f46a77d3b94365767ab6dd227",
+      "observation_id": "codex:capture:observation:551c100f46a77d3b94365767ab6dd227",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:fd3a9144559378dc4f253f1b01ce7476323cc2a23855953aceb60ed37a78a3fc:line:263"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:e40252e3a6f33b2d4aab0cd7bc0e5208",
+      "observation_id": "codex:capture:observation:e40252e3a6f33b2d4aab0cd7bc0e5208",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:2170fdecdb554e23ea806c1b495ca246de10ff4aae44f8faa66e4b853960639e:line:265"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:4fb2933c9bba04ea16abc39948ecc859",
+      "observation_id": "codex:capture:observation:4fb2933c9bba04ea16abc39948ecc859",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:e405d879046f8a2dff5773407db7c86a9881fad31ee068bd4e89e8223fc44666:line:267"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:8d3d77ac09285022043d4b22eb964cad",
+      "observation_id": "codex:capture:observation:8d3d77ac09285022043d4b22eb964cad",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:40d3163befe1556d9fca9929b540bbf691056b575e816b254965e1f9c24dd33f:line:271"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:0c59f0605bc38de5173f762df45805f2",
+      "observation_id": "codex:capture:observation:0c59f0605bc38de5173f762df45805f2",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:4b92db75f14d7fd5c73c5491227b032fabd3ab9702bfcaaf9724cd0b55f6f12a:line:274"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:9ac609a63cf01eb1bd4fef093216be43",
+      "observation_id": "codex:capture:observation:9ac609a63cf01eb1bd4fef093216be43",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:c3501d89d6a5fac131dc816a58f31f95533ca894e08669e711c1726153fc9502:line:276"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:de04bae258de4d03e4e80d92de989c3f",
+      "observation_id": "codex:capture:observation:de04bae258de4d03e4e80d92de989c3f",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:896673e0e0b3601ed26a29e8b2ad6f44607047cd28a10bac25bc51eaa9ddeaaf:line:278"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:fd14c54fa2d825f8439b8d22ee464b98",
+      "observation_id": "codex:capture:observation:fd14c54fa2d825f8439b8d22ee464b98",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:a6441810428df1fcd083a4b82c967738b09d71f56ce31f20464550583f958d2f:line:281"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:d4aef729b95872f07f131570563e387a",
+      "observation_id": "codex:capture:observation:d4aef729b95872f07f131570563e387a",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:59315fb7c96d602796f039b32411ba7703ff4bf46b6fae4557b3417b3ac3bb0f:line:283"
+        }
+      ]
+    },
+    {
+      "id": "native-request:codex:codex:capture:observation:a6e5984c7be7441317a9f9cae811b7bd",
+      "observation_id": "codex:capture:observation:a6e5984c7be7441317a9f9cae811b7bd",
+      "profile_id": "harness-profile:0bef064ea349091c20a47641971a90bab9f8a22f07670e57ef2b91f9487297da",
+      "captured_at": null,
+      "boundary": "unavailable",
+      "coverage": "unknown",
+      "coverage_evidence": "unknown",
+      "occurrences": [],
+      "overrides": {},
+      "source_refs": [
+        {
+          "source_id": "codex:ed93bb0108475237",
+          "record": "response:sha256:ac94ac96a6b86dbbfde03cb8a786f676f1c584786dae4c8fa024c6e7691b0a09:line:285"
+        }
+      ]
+    }
+  ],
+  "transformations": [],
+  "issues": [
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:01dbd55ee38643547d24bfd1205fbfa1 references source line 240, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:02ed7e1f70048281db3afa879006ddb6 references source line 226, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:037275570f052a5caeebd58e1a3ac3bc references source line 155, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:0535b3adeccce49573d6827011883779 references source line 190, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:077c7bcf5723df1010350380e5913426 references source line 5, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:079d2158e0b926954018346583bfc816 references source line 141, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:0c59f0605bc38de5173f762df45805f2 references source line 274, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:0d8abacffafe7d4d496e56ac64495e3d references source line 19, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:107c6e6647b162bafb192b945e3490c7 references source line 101, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:118ee17b452ca6d236a5993b22c1c67f references source line 48, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:13e4e35aeda0920fffa78badd7dd4f8d references source line 179, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:144ceb65073f863f7ecdd25b934f2b44 references source line 119, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:144dd8620cb6998c2ebdf258bf2e7093 references source line 69, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:1491d4c2000a14f3cc5135e4acd98450 references source line 105, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:1617631809dfdee8d0fd6c62a5099b6b references source line 204, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:171e6efc53b77f9c256ade1501599e3d references source line 143, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:1867d47a71cc25f601116d27550a3099 references source line 220, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:202d1f5eea0744d6a0c7dfc0a66738cb references source line 85, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:22f1f9a9612287cf32db4b92b4b82bde references source line 87, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:24788b41026b18acd51cbc059ae9416e references source line 167, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:261d582741ccdb06e4a18a7063d81d24 references source line 161, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:27b7cf00b8162a9241e3a186dc2a9149 references source line 117, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:2b276d0511eaf2e1cace5a43bef00727 references source line 73, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:2ef28ffba75c7490382cb2343cc78357 references source line 188, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:3279c8dfa21e01993f72d7bcd54e545f references source line 25, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:32e05bfc59232a1959295896f4e4a27c references source line 123, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:3372e989ce4a0b1c641e8f3fbd358275 references source line 210, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:3380d9be6829b4380473a40789ebe7f6 references source line 33, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:3547d74fabf84f358430ca4c57c7fb5d references source line 91, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:3590550438b940c055a1ce70363c1aed references source line 208, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:37496ed4e87abd6af7ff705627f1c56b references source line 77, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:3ab78d4c89ba8e33f0679db81233e293 references source line 231, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:3b8d26d774488e8236aceab19cb70f1f references source line 251, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:3e25d39600bad3445c5d43483aef5bad references source line 50, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:3e3ff27589d15bba7822dc14faa67fe4 references source line 46, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:4266668004c884ef52f33591d63f1e79 references source line 29, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:460a99d645feef8eeb77311637322704 references source line 67, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:477a153c9919b93e2a8408402a18661f references source line 107, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:47a74b4792c9acc2f9719b47022b2a20 references source line 83, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:49f68960d66115eed05f9de6a26c1217 references source line 238, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:4fb2933c9bba04ea16abc39948ecc859 references source line 267, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:5085b0adfdd5c6a15f789136ab2714e2 references source line 248, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:50aa417a582f02a90fd2d81cc61f84d2 references source line 41, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:54dec93cce29a64f540d4e218236c405 references source line 246, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:551c100f46a77d3b94365767ab6dd227 references source line 263, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:587f943c181f9e237771b3e916f6b081 references source line 7, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:5a2abd36b2368ad1a65621f55049fb87 references source line 39, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:5a74b7a01985aa161a7c4162b0de05e9 references source line 139, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:5b3a6587461ae68adce84cc8246077f8 references source line 218, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:5be217a9c756eba56be943efb7b0b9d8 references source line 212, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:5c6164677669b805070b58e86b4435aa references source line 133, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:5da39aec71ac1f100070af6a7697b722 references source line 121, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:6323c5415c2921642e8eadf7ca3ccab8 references source line 115, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:66443f8669094b089ccefbff2962ebde references source line 198, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:6657eb428c32fb588095c13142b60315 references source line 171, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:694fe5600632c0aa7c64b6215dea333a references source line 244, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:6d76d2f991295962fd3f5708c3610929 references source line 151, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:72de1f7481c59b4d0de652ebd037de11 references source line 125, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:75593e1fc2350ca8536ee078328a7aff references source line 147, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:75c4b9bbab05df34248ecba9d3cd8f29 references source line 97, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:7a8f2d291b047deba25f50e11e7f1750 references source line 127, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:7ab4ba3ab319f11ea085e4b716fb39b7 references source line 99, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:7b19d5437d17b6e6a6d476ddad93b04b references source line 113, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:80afe37dd65921ee378e2341701eed8b references source line 43, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:82c6e5ce94817e1f9399f0fcb080ed8a references source line 157, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:85fbc3296cf491bbab1048bc4028217b references source line 200, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:87b98d9a2dc99f550be559040ebc613b references source line 17, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:88337847923dfcc4bb61425bcb755acf references source line 222, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:89a12891fd6c910c81da9f0c0d8376dc references source line 131, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:89d1ecf66f93409bda5a4d5c8145ccf7 references source line 181, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:89d9d22aedf2eff216716305abc699c4 references source line 242, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:8c66098a78daa0de4cc6428a92815aae references source line 27, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:8d3d77ac09285022043d4b22eb964cad references source line 271, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:950cb01d9cee1a73602b39ab58f22d85 references source line 202, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:952f0b75ef23fd753f9618ea9a2dfddb references source line 261, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:964ec6f68e77d5103bbd01dcccacf416 references source line 206, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:9781cccf01a6484b143d8f59fc975d73 references source line 224, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:97b5fdea1a919f91e52147cfde21a637 references source line 21, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:9ac609a63cf01eb1bd4fef093216be43 references source line 276, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:9d7ebb957094920c036c02ee10fc6978 references source line 255, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:9f2abfe5f70408b9806bfd8b1ba7cf9f references source line 23, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:9f9d6e9b1e212cd3bb53cffe97f36959 references source line 65, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:a28b747e18a2f1c9edb019f5aedb16d6 references source line 129, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:a6e5984c7be7441317a9f9cae811b7bd references source line 285, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:a7df7dea8560186a63daa2f9bcb4e469 references source line 63, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:a8ec973dcb2cd7af09155086002c45c5 references source line 15, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:aaf0f2056b97bdf5151af3c459e5f459 references source line 229, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:ac663b9c44f06533f566f0a5c8950806 references source line 192, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:b155581b79994b98064c555d3936d4cf references source line 137, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:b17d4f7c7fd1e26a6683739dc44d990e references source line 159, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:b2e5d6d552c28d683af1ba2457a73080 references source line 11, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:b4bea656b42f69eae6caa54127cc3af7 references source line 258, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:b4d945a70dbc99916383f8da4e5b1636 references source line 89, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:b625e4eb8a3bafb61e8ae659732af8ff references source line 145, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:b8eefc2fa77129e72c7f50e00313d304 references source line 177, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:b941d9cee41e9714ca2858f5bae353b0 references source line 3, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:bd0b4950aacace16a05ee2fcc81472f2 references source line 93, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:be9ec51e3bf0bcb4cf8526d47e3fccdb references source line 169, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:bed21f9afeb986e27345d9014ddcd3e7 references source line 163, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:c1b5917ecb6093ccbbe548b7f996aaca references source line 81, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:c22952e4c3a820f59d843a1588d8952b references source line 31, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:c34acfabc93b802d42a7e082882c98ce references source line 214, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:c3bb484ad1ca55678e832fe586023122 references source line 111, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:c4bcc06a07e8404f32af5f97f3bc4843 references source line 75, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:c52c826956c3925d6ec3f2fd006d3577 references source line 153, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:c8d366b75579f3d7d5f26b0cb46b7e5f references source line 52, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:c99e4e0723d156ed0079a107a1726aeb references source line 253, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:c9c130f3dc1acf87ce81061ac86ec391 references source line 173, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:ca5161d3c3ab4fe1f02a8bd79972de30 references source line 236, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:ca95b9c394ea7c51f7ed273d699a6cc2 references source line 216, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:caca7ead7b6f7b5efabdef28c462e11f references source line 183, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:cbc09f034845798993226faf0298e7bc references source line 186, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:d22c068149e0d08044a32405dec0ba43 references source line 9, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:d4aef729b95872f07f131570563e387a references source line 283, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:dc5961f060ba86938e6ea88ee4afe363 references source line 56, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:de04bae258de4d03e4e80d92de989c3f references source line 278, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:de0b6cf6135e6876a016fbf78314babd references source line 196, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:e0e7b9b33439dddbe7614e8d770539d7 references source line 36, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:e27444e6eef752e5de2d6d25f8421b8a references source line 175, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:e40252e3a6f33b2d4aab0cd7bc0e5208 references source line 265, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:e4cec31ad08f24b2ac376576ba61a530 references source line 194, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:e9143a86d1e13687be523d9f5ce4d07c references source line 58, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:e9549fdeabb4789e8a0c83131f0a8e16 references source line 149, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:ec61f086984dad386f40bb4e2092db47 references source line 79, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:ed36ce77e3a6a93bf3be736a39d020a7 references source line 103, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:f00645ad4e4beac8f01b6a507c4a7919 references source line 71, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:f14ed13964bb82a9d8c6c51552f4fb99 references source line 13, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:f4dedc36905a8d27f0aa2b90805765de references source line 135, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:f6e275d39f35ef35174a19dde63de41f references source line 233, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:f81744e63fe207783020769732007f4a references source line 109, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:f8beb0911fc599918097b7fc5995ed05 references source line 95, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:fccf513e4ed681b55c6fccaf41a2f657 references source line 165, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:fd14c54fa2d825f8439b8d22ee464b98 references source line 281, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_OBSERVATION_ROW_UNAVAILABLE",
+      "message": "direct model observation codex:capture:observation:feb243a490950f8efcfc418995ad3a6d references source line 54, but no usable native row was found",
+      "severity": "warning"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:b941d9cee41e9714ca2858f5bae353b0"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:077c7bcf5723df1010350380e5913426"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:587f943c181f9e237771b3e916f6b081"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:d22c068149e0d08044a32405dec0ba43"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:b2e5d6d552c28d683af1ba2457a73080"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:f14ed13964bb82a9d8c6c51552f4fb99"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:a8ec973dcb2cd7af09155086002c45c5"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:87b98d9a2dc99f550be559040ebc613b"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:0d8abacffafe7d4d496e56ac64495e3d"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:97b5fdea1a919f91e52147cfde21a637"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:9f2abfe5f70408b9806bfd8b1ba7cf9f"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:3279c8dfa21e01993f72d7bcd54e545f"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:8c66098a78daa0de4cc6428a92815aae"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:4266668004c884ef52f33591d63f1e79"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:c22952e4c3a820f59d843a1588d8952b"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:3380d9be6829b4380473a40789ebe7f6"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:e0e7b9b33439dddbe7614e8d770539d7"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:5a2abd36b2368ad1a65621f55049fb87"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:50aa417a582f02a90fd2d81cc61f84d2"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:80afe37dd65921ee378e2341701eed8b"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:3e3ff27589d15bba7822dc14faa67fe4"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:118ee17b452ca6d236a5993b22c1c67f"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:3e25d39600bad3445c5d43483aef5bad"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:c8d366b75579f3d7d5f26b0cb46b7e5f"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:feb243a490950f8efcfc418995ad3a6d"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:dc5961f060ba86938e6ea88ee4afe363"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:e9143a86d1e13687be523d9f5ce4d07c"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:a7df7dea8560186a63daa2f9bcb4e469"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:9f9d6e9b1e212cd3bb53cffe97f36959"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:460a99d645feef8eeb77311637322704"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:144dd8620cb6998c2ebdf258bf2e7093"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:f00645ad4e4beac8f01b6a507c4a7919"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:2b276d0511eaf2e1cace5a43bef00727"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:c4bcc06a07e8404f32af5f97f3bc4843"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:37496ed4e87abd6af7ff705627f1c56b"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:ec61f086984dad386f40bb4e2092db47"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:c1b5917ecb6093ccbbe548b7f996aaca"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:47a74b4792c9acc2f9719b47022b2a20"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:202d1f5eea0744d6a0c7dfc0a66738cb"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:22f1f9a9612287cf32db4b92b4b82bde"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:b4d945a70dbc99916383f8da4e5b1636"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:3547d74fabf84f358430ca4c57c7fb5d"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:bd0b4950aacace16a05ee2fcc81472f2"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:f8beb0911fc599918097b7fc5995ed05"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:75c4b9bbab05df34248ecba9d3cd8f29"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:7ab4ba3ab319f11ea085e4b716fb39b7"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:107c6e6647b162bafb192b945e3490c7"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:ed36ce77e3a6a93bf3be736a39d020a7"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:1491d4c2000a14f3cc5135e4acd98450"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:477a153c9919b93e2a8408402a18661f"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:f81744e63fe207783020769732007f4a"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:c3bb484ad1ca55678e832fe586023122"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:7b19d5437d17b6e6a6d476ddad93b04b"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:6323c5415c2921642e8eadf7ca3ccab8"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:27b7cf00b8162a9241e3a186dc2a9149"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:144ceb65073f863f7ecdd25b934f2b44"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:5da39aec71ac1f100070af6a7697b722"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:32e05bfc59232a1959295896f4e4a27c"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:72de1f7481c59b4d0de652ebd037de11"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:7a8f2d291b047deba25f50e11e7f1750"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:a28b747e18a2f1c9edb019f5aedb16d6"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:89a12891fd6c910c81da9f0c0d8376dc"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:5c6164677669b805070b58e86b4435aa"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:f4dedc36905a8d27f0aa2b90805765de"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:b155581b79994b98064c555d3936d4cf"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:5a74b7a01985aa161a7c4162b0de05e9"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:079d2158e0b926954018346583bfc816"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:171e6efc53b77f9c256ade1501599e3d"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:b625e4eb8a3bafb61e8ae659732af8ff"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:75593e1fc2350ca8536ee078328a7aff"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:e9549fdeabb4789e8a0c83131f0a8e16"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:6d76d2f991295962fd3f5708c3610929"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:c52c826956c3925d6ec3f2fd006d3577"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:037275570f052a5caeebd58e1a3ac3bc"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:82c6e5ce94817e1f9399f0fcb080ed8a"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:b17d4f7c7fd1e26a6683739dc44d990e"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:261d582741ccdb06e4a18a7063d81d24"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:bed21f9afeb986e27345d9014ddcd3e7"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:fccf513e4ed681b55c6fccaf41a2f657"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:24788b41026b18acd51cbc059ae9416e"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:be9ec51e3bf0bcb4cf8526d47e3fccdb"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:6657eb428c32fb588095c13142b60315"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:c9c130f3dc1acf87ce81061ac86ec391"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:e27444e6eef752e5de2d6d25f8421b8a"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:b8eefc2fa77129e72c7f50e00313d304"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:13e4e35aeda0920fffa78badd7dd4f8d"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:89d1ecf66f93409bda5a4d5c8145ccf7"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:caca7ead7b6f7b5efabdef28c462e11f"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:cbc09f034845798993226faf0298e7bc"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:2ef28ffba75c7490382cb2343cc78357"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:0535b3adeccce49573d6827011883779"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:ac663b9c44f06533f566f0a5c8950806"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:e4cec31ad08f24b2ac376576ba61a530"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:de0b6cf6135e6876a016fbf78314babd"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:66443f8669094b089ccefbff2962ebde"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:85fbc3296cf491bbab1048bc4028217b"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:950cb01d9cee1a73602b39ab58f22d85"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:1617631809dfdee8d0fd6c62a5099b6b"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:964ec6f68e77d5103bbd01dcccacf416"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:3590550438b940c055a1ce70363c1aed"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:3372e989ce4a0b1c641e8f3fbd358275"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:5be217a9c756eba56be943efb7b0b9d8"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:c34acfabc93b802d42a7e082882c98ce"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:ca95b9c394ea7c51f7ed273d699a6cc2"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:5b3a6587461ae68adce84cc8246077f8"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:1867d47a71cc25f601116d27550a3099"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:88337847923dfcc4bb61425bcb755acf"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:9781cccf01a6484b143d8f59fc975d73"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:02ed7e1f70048281db3afa879006ddb6"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:aaf0f2056b97bdf5151af3c459e5f459"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:3ab78d4c89ba8e33f0679db81233e293"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:f6e275d39f35ef35174a19dde63de41f"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:ca5161d3c3ab4fe1f02a8bd79972de30"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:49f68960d66115eed05f9de6a26c1217"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:01dbd55ee38643547d24bfd1205fbfa1"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:89d9d22aedf2eff216716305abc699c4"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:694fe5600632c0aa7c64b6215dea333a"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:54dec93cce29a64f540d4e218236c405"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:5085b0adfdd5c6a15f789136ab2714e2"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:3b8d26d774488e8236aceab19cb70f1f"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:c99e4e0723d156ed0079a107a1726aeb"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:9d7ebb957094920c036c02ee10fc6978"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:b4bea656b42f69eae6caa54127cc3af7"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:952f0b75ef23fd753f9618ea9a2dfddb"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:551c100f46a77d3b94365767ab6dd227"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:e40252e3a6f33b2d4aab0cd7bc0e5208"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:4fb2933c9bba04ea16abc39948ecc859"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:8d3d77ac09285022043d4b22eb964cad"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:0c59f0605bc38de5173f762df45805f2"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:9ac609a63cf01eb1bd4fef093216be43"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:de04bae258de4d03e4e80d92de989c3f"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:fd14c54fa2d825f8439b8d22ee464b98"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:d4aef729b95872f07f131570563e387a"
+    },
+    {
+      "code": "NATIVE_REQUEST_BOUNDARY_UNAVAILABLE",
+      "message": "Codex accounting evidence does not expose a final request boundary; context was not inferred from nearby events",
+      "severity": "warning",
+      "request_id": "native-request:codex:codex:capture:observation:a6e5984c7be7441317a9f9cae811b7bd"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+# Context report examples
+
+All files are metadata-only reports; no raw prompt or tool-result text is included.
+
+- `research-report.json`: frozen, sanitized four-agent Codex capture from the 0.1 demonstration. It preserves 177 direct observations and the declared enterprise valuation of $41.046242. Native Codex accounting does not expose an ordered input manifest; every request says context unavailable. Harness version and model facts cite the frozen artifact.
+- `lifecycle-report.json`: explicitly synthetic three-request lifecycle with repository instructions, a skill, files, user input, tool results, repeated occurrences and summary lineage. Tokens and model-price valuation are illustrative estimates, not observed billing.
+- `independent-producer-report.json`: synthetic output from a standalone Python producer. Validated by the TypeScript runtime, including exact allocation conservation. The producer does not import the SDK.
+
+Regenerate the first two reports with `node --import tsx tools/viewer/generate-research-demo.ts` and `node --import tsx tools/viewer/generate-lifecycle-demo.ts`. See [independent producer evidence](../../docs/implementation-evidence/independent-producer.md) for its command and limitations. The live v0.2 work capture is documented separately in [v0.2 dogfood evidence](../../docs/implementation-evidence/v02-dogfood.md).
+
+`pi-transcript-report.json` is a metadata-only derivation from the first 32 physical rows of the [public Pi fixture](https://github.com/earendil-works/pi/blob/9767ba275f3e9a5ee0f5c5342249b629ab1b2282/packages/coding-agent/test/fixtures/before-compaction.jsonl). It contains 13 partial transcript-reconstruction requests, 26 context sources and 231 ordered occurrences, with transient content hashes and derived UTF-8 byte counts. Its recorded $1.590658 subtotal retains the native **model-price-estimate** basis; it is not an invoice. Context token measurements and cache treatment remain unavailable/unknown. The source has no reliable harness version. This prefix does not exercise the later compactions. The full input digest is recorded in [Pi capture research](../../docs/research/pi-capture-fidelity.md); the exact normalized prefix digest is embedded in the report. Regenerate with `node --import tsx tools/viewer/generate-pi-demo.ts /path/to/before-compaction.jsonl`. No raw fixture text is included.

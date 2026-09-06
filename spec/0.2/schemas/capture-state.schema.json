@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/awjreynolds/flAImegraph/v0.2.0/spec/0.2/schemas/capture-state.schema.json",
+  "title": "flAImegraph append-only capture state",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "dataset_id", "capture_namespace", "harness", "import_options", "cursor", "captures", "evidence"],
+  "properties": {
+    "schema_version": { "const": "0.2.0" },
+    "dataset_id": { "$ref": "#/$defs/id" },
+    "capture_namespace": { "$ref": "#/$defs/id" },
+    "harness": { "enum": ["codex", "pi"] },
+    "import_options": { "$ref": "#/$defs/importOptions" },
+    "cursor": { "$ref": "#/$defs/cursor" },
+    "captures": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/capture" }
+    },
+    "evidence": { "$ref": "#/$defs/evidence" }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1 },
+    "quantity": { "type": "string", "pattern": "^(0|[1-9][0-9]*)$" },
+    "sha256": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" },
+    "importOptions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "version": { "$ref": "#/$defs/id" },
+        "work_item_id": { "$ref": "#/$defs/id" },
+        "agent_id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "cursor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sequence", "prefix_bytes", "prefix_sha256", "record_count"],
+      "properties": {
+        "sequence": { "$ref": "#/$defs/quantity" },
+        "prefix_bytes": { "$ref": "#/$defs/quantity" },
+        "prefix_sha256": { "$ref": "#/$defs/sha256" },
+        "record_count": { "$ref": "#/$defs/quantity" }
+      }
+    },
+    "capture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "sequence", "source_id", "sha256", "prefix_bytes", "prefix_sha256", "record_count", "observation_count"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "sequence": { "$ref": "#/$defs/quantity" },
+        "source_id": { "$ref": "#/$defs/id" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "prefix_bytes": { "$ref": "#/$defs/quantity" },
+        "prefix_sha256": { "$ref": "#/$defs/sha256" },
+        "record_count": { "$ref": "#/$defs/quantity" },
+        "observation_count": { "$ref": "#/$defs/quantity" }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "dataset_id", "sources", "observations", "relationships", "issues"],
+      "properties": {
+        "schema_version": { "const": "0.1.0" },
+        "dataset_id": { "$ref": "#/$defs/id" },
+        "sources": { "type": "array", "items": { "type": "object" } },
+        "observations": { "type": "array", "items": { "type": "object" } },
+        "relationships": { "type": "array", "items": { "type": "object" } },
+        "issues": { "type": "array", "items": { "type": "object" } }
+      }
+    }
+  }
+}

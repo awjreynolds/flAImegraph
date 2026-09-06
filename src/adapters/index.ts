@@ -27,7 +27,12 @@ const CODEX_VERSION = "0.153.4-capture-contract";
 const PI_LEGACY_VERSION = "legacy-session-jsonl";
 const PI_V4_VERSION = "v4-storage-jsonl";
 
-type PiLine = { value: Record<string, unknown>; line: number };
+/** A physical JSONL line plus a stable nested-write coordinate for v4 transactions. */
+type PiLine = { value: Record<string, unknown>; line: number; ordinal?: string };
+
+function piFallbackCoordinate(line: number, ordinal?: string): string {
+  return ordinal && ordinal !== "0" ? `line:${line}:${ordinal}` : `line:${line}`;
+}
 
 function piUsage(raw: Record<string, unknown> | undefined, issues: import("../types.js").CoverageIssue[], context: string) {
   return usageFromFields(raw, {
@@ -677,25 +682,25 @@ function pi(input: string, options?: ImportOptions): EvidenceBundle {
   const sourceId = bundle.sources[0]?.id ?? "source";
   const lines: PiLine[] = [];
   const headers: Record<string, unknown>[] = [];
-  const appendPiWrite = (write: unknown, line: number): void => {
+  const appendPiWrite = (write: unknown, line: number, ordinal = "0"): void => {
     if (Array.isArray(write)) {
-      for (const child of write) appendPiWrite(child, line);
+      for (const [index, child] of write.entries()) appendPiWrite(child, line, `${ordinal}.${index}`);
       return;
     }
     const record = asRecord(write);
-    if (record) lines.push({ value: record, line });
+    if (record) lines.push({ value: record, line, ordinal });
     else bundle.issues.push({ code: "invalid_pi_transaction_write", message: `Pi transaction on line ${line} contains a non-object write.`, severity: "error", source_id: sourceId });
   };
   for (const item of parsed.records) {
     if (item.value.kind === "transaction" && Array.isArray(item.value.writes)) {
       appendPiWrite(item.value.writes, item.line);
     } else {
-      lines.push(item);
+      lines.push({ ...item, ordinal: "0" });
     }
     if (item.value.kind === "header" || item.value.v === 4) headers.push(item.value);
   }
   const sessionId = firstString(...headers.map((header) => firstString(header.sessionId, header.session_id, header.id)));
-  const durableRows = new Map<string, { row: Record<string, unknown>; line: number; entryId?: string; signature: string }>();
+  const durableRows = new Map<string, { row: Record<string, unknown>; line: number; ordinal: string; entryId?: string; signature: string }>();
   const durableTotals: Array<{ totals: Record<string, unknown>; line: number }> = [];
   const entries = new Map<string, { entry: Record<string, unknown>; line: number; signature: string }>();
   for (const item of lines) {
@@ -715,10 +720,10 @@ function pi(input: string, options?: ImportOptions): EvidenceBundle {
     }
     if (kind === "usage" || kind === "usage_row" || kind === "usage_added" || keyKind.includes("usage")) {
       const row = asRecord(record.row) ?? asRecord(record.usage) ?? asRecord(record.value) ?? asRecord(record.payload) ?? record;
-      const id = firstString(row.id, row.usageId, row.usage_id, row.entryId, row.entry_id) ?? `line:${item.line}`;
+      const id = firstString(row.id, row.usageId, row.usage_id, row.entryId, row.entry_id) ?? piFallbackCoordinate(item.line, item.ordinal);
       const signature = stableJson(row);
       const previous = durableRows.get(id);
-      if (!previous) durableRows.set(id, { row, line: item.line, entryId: firstString(row.entryId, row.entry_id), signature });
+      if (!previous) durableRows.set(id, { row, line: item.line, ordinal: item.ordinal ?? "0", entryId: firstString(row.entryId, row.entry_id), signature });
       else if (previous.signature !== signature) bundle.issues.push({ code: "conflicting_duplicate_usage", message: `Pi durable usage identity ${id} has conflicting payloads.`, severity: "error", source_id: sourceId });
       else bundle.issues.push({ code: "duplicate_usage_identity", message: `Pi durable usage identity ${id} was repeated and counted once.`, severity: "info", source_id: sourceId });
       const totals = asRecord(record.totals) ?? asRecord(row.totals);
@@ -771,10 +776,10 @@ function pi(input: string, options?: ImportOptions): EvidenceBundle {
   };
 
   if (isV4 && durableRows.size > 0) {
-    for (const { row, line, entryId } of durableRows.values()) {
+    for (const { row, line, ordinal, entryId } of durableRows.values()) {
       const entry = entryId ? entries.get(entryId)?.entry : undefined;
       const rawUsage = asRecord(row.usage) ?? asRecord(row);
-      const identity = firstString(row.id, row.usageId, row.usage_id, entryId) ?? `line:${line}`;
+      const identity = firstString(row.id, row.usageId, row.usage_id, entryId) ?? piFallbackCoordinate(line, ordinal);
       addPiDirect({ rawUsage, identity: `usage:${identity}`, line, entry, sourceRecord: `usage:${identity}`, attributes: { ledger_row_id_hash: identity } });
       if (asRecord(row.adjustment)) bundle.issues.push({ code: "pi_adjustment_unresolved", message: `Pi usage adjustment on line ${line} is retained as direct ledger evidence but its correction semantics are not inferred.`, severity: "warning", source_id: sourceId });
     }
@@ -800,27 +805,29 @@ function pi(input: string, options?: ImportOptions): EvidenceBundle {
       if (role === "assistant") {
         if (!message) continue;
         const rawUsage = asRecord(message?.usage) ?? asRecord(entry.usage);
-        const identity = firstString(entry.id, message?.responseId, message?.response_id) ?? `line:${item.line}`;
+        const identity = firstString(entry.id, message?.responseId, message?.response_id) ?? piFallbackCoordinate(item.line, item.ordinal);
         addPiDirect({ rawUsage, identity: `message:${identity}`, line: item.line, entry, sourceRecord: `message:${identity}` });
         const content = Array.isArray(message?.content) ? message.content : [];
-        for (const block of content) {
+        for (const [blockIndex, block] of content.entries()) {
           const toolCall = asRecord(block);
           if (!toolCall || !["toolcall", "tool_call"].includes((firstString(toolCall.type) ?? "").toLowerCase())) continue;
-          const callId = firstString(toolCall.id, toolCall.callId, toolCall.call_id) ?? `line:${item.line}`;
+          const callId = firstString(toolCall.id, toolCall.callId, toolCall.call_id) ?? `${piFallbackCoordinate(item.line, item.ordinal)}:${blockIndex}`;
           addToolObservation({ bundle, harness: "pi", line: item.line, identity: `tool:${callId}`, operation: `pi.tool.${firstString(toolCall.name) ?? "unknown"}`, usage: null, sourceRecord: `tool:${callId}`, sessionId: firstString(message.sessionId, message.session_id, sessionId), parentId: firstString(entry.id), product: "pi", workItemId: options?.work_item_id, attributes: { tool_name: firstString(toolCall.name) ?? "unknown", tool_call_id_hash: callId } });
         }
       } else if (role === "toolresult" || role === "tool_result") {
         const details = asRecord(message?.details);
         const nestedUsage = asRecord(details?.usage) ?? asRecord(message?.usage);
         if (nestedUsage) {
-          const callId = firstString(message?.toolCallId, message?.tool_call_id) ?? `line:${item.line}`;
+          const callId = firstString(message?.toolCallId, message?.tool_call_id) ?? piFallbackCoordinate(item.line, item.ordinal);
           addToolObservation({ bundle, harness: "pi", line: item.line, identity: `tool-result:${callId}`, operation: `pi.tool.${firstString(message?.toolName, message?.tool_name) ?? "unknown"}`, usage: piDirectUsage(nestedUsage, bundle.issues, `Pi tool result line ${item.line}`), sourceRecord: `tool-result:${callId}`, status: message?.isError === true ? "error" : "ok", sessionId: firstString(message?.sessionId, message?.session_id, sessionId), product: "pi", attributes: { tool_name: firstString(message?.toolName, message?.tool_name) ?? "unknown", tool_call_id_hash: callId } });
         }
       } else if ((record.type === "compaction" || record.kind === "compaction" || record.type === "branch_summary") && !asRecord(record.usage)) {
-        addActivityObservation({ bundle, harness: "pi", line: item.line, identity: firstString(record.id) ?? `compaction:${item.line}`, operation: "pi.compaction", sourceRecord: `compaction:${item.line}`, accountingScope: "unknown", sessionId, product: "pi", attributes: { compaction_usage: "unknown" } });
+        const identity = firstString(record.id) ?? (item.ordinal && item.ordinal !== "0" ? `compaction:${item.line}:${item.ordinal}` : `compaction:${item.line}`);
+        addActivityObservation({ bundle, harness: "pi", line: item.line, identity, operation: "pi.compaction", sourceRecord: `compaction:${item.line}`, accountingScope: "unknown", sessionId, product: "pi", attributes: { compaction_usage: "unknown" } });
         bundle.issues.push({ code: "compaction_usage_unknown", message: `Pi compaction on line ${item.line} has no model usage record.`, severity: "warning", source_id: sourceId });
       } else if ((record.type === "compaction" || record.kind === "compaction" || record.type === "branch_summary") && asRecord(record.usage)) {
-        addModelObservation({ bundle, harness: "pi", line: item.line, identity: firstString(record.id) ?? `compaction:${item.line}`, operation: "pi.compaction", usage: piDirectUsage(asRecord(record.usage), bundle.issues, `Pi compaction line ${item.line}`), sourceRecord: `compaction:${item.line}`, accountingScope: "aggregate", subjectId: firstString(record.id) ?? `compaction:${item.line}`, grain: "operation", countBasis: "provider_native", product: "pi", sessionId, attributes: { compaction_usage: "aggregate" } });
+        const identity = firstString(record.id) ?? (item.ordinal && item.ordinal !== "0" ? `compaction:${item.line}:${item.ordinal}` : `compaction:${item.line}`);
+        addModelObservation({ bundle, harness: "pi", line: item.line, identity, operation: "pi.compaction", usage: piDirectUsage(asRecord(record.usage), bundle.issues, `Pi compaction line ${item.line}`), sourceRecord: `compaction:${item.line}`, accountingScope: "aggregate", subjectId: identity, grain: "operation", countBasis: "provider_native", product: "pi", sessionId, attributes: { compaction_usage: "aggregate" } });
       }
     }
   }
