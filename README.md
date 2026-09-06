@@ -15,6 +15,7 @@ The project is in research and implementation planning. The aim is detailed dril
 - [Enterprise-rate scenario applied to this conversation's frozen capture](https://github.com/awjreynolds/flAImegraph/tree/codex/prototype-capture-depth/prototypes/enterprise-valuation)
 - [Cross-harness profiler landscape](docs/research/cross-harness-profiler-landscape.md)
 - [Implementation backlog](docs/implementation-backlog.md)
+- [Dogfooding on this project's own work](docs/dogfooding.md)
 - [Implementation route and scope](docs/research/implementation-route.md)
 - [GitHub wayfinding map](https://github.com/awjreynolds/flAImegraph/issues/1)
 - [Actual Codex capture: 177 response records across four agents](docs/research/codex-capture-validation.md)
