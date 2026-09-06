@@ -1,0 +1,11 @@
+{
+  "renderer": "brendangregg/FlameGraph",
+  "renderer_commit": "41fee1f99f9276008b7cd112fca19dc3ea84ac32",
+  "profile_id": "profile:7ba7e41587aefc28d0dfba2f60e8c50e8792143aa6fb6c2c05b7297b59b77902",
+  "total_nanos": "41046242000",
+  "currency": "USD",
+  "complete": false,
+  "svg_sha256": "a934d89ff7a7ef40e03e1734821d64dd43c667dd17aeede43214f0129e339b83",
+  "tooltip_method": "upstream nameattr; exact decimal currency per attribution prefix",
+  "png": true
+}

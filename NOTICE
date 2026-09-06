@@ -1,0 +1,11 @@
+flAImegraph's original code and documentation are MIT licensed.
+
+Third-party files retain their original licenses:
+- vendor/FlameGraph/flamegraph.pl: Brendan Gregg and contributors; CDDL 1.0.
+  This is an unmodified, separately invoked renderer. See its header and LICENSE.
+- vendor/pprof/: Google pprof schema and associated license, as identified there.
+
+OpenTelemetry, FOCUS, pprof, FlameGraph, and harness/product names identify
+external projects. This project is not endorsed by their maintainers.
+The Agent Cost Interchange specification is an experimental interoperability
+profile and does not change the definitions of those external standards.

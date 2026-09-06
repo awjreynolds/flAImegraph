@@ -1,0 +1,28 @@
+{
+  "schema_version": "0.1.0",
+  "id": "public-enterprise-astra-codex-2026-09-06-standard",
+  "currency": "USD",
+  "basis": "enterprise_scenario",
+  "source_url": "https://help.openai.com/en/articles/20001415-chatgpt-rate-card-enterprise-token-based-pricing",
+  "retrieved_at": "2026-09-06T00:00:00Z",
+  "assumptions": [
+    "Selected public Enterprise rate scenario, not an actual bill or negotiated contract.",
+    "Assume the recorded model setting identifies the executing model.",
+    "Assume standard speed and no regional-processing uplift.",
+    "Rate validity dates and historical applicability are not established; null intervals are scenario wildcards.",
+    "Astra Codex has no additional long-context or cache-write charge under the selected card.",
+    "Separate feature/tool fees, hidden usage, later work, credits and commitment allocations are excluded and unknown."
+  ],
+  "rules": [
+    {
+      "id": "astra-codex-standard",
+      "model": "gpt-6-astra",
+      "provider": "openai",
+      "product": "codex",
+      "valid_from": null,
+      "valid_to": null,
+      "unit_tokens": "1000000",
+      "rates": { "input": "10", "cache_read": "1", "cache_write": "0", "output": "50" }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": "0.1.0",
+  "id": "core-rate-card",
+  "currency": "USD",
+  "basis": "enterprise_scenario",
+  "source_url": "https://example.test/rates/core",
+  "retrieved_at": "2026-03-01T00:00:00Z",
+  "assumptions": [
+    "Fixture schedule with unbounded validity."
+  ],
+  "rules": [
+    {
+      "id": "core-rate",
+      "model": "fixture-model",
+      "provider": "fixture-provider",
+      "product": "fixture-product",
+      "valid_from": null,
+      "valid_to": null,
+      "rates": {
+        "input": "1.25",
+        "cache_read": "0.1",
+        "cache_write": "0.2",
+        "output": "2.5"
+      },
+      "unit_tokens": "1000"
+    }
+  ]
+}

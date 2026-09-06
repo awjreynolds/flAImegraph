@@ -1,0 +1,817 @@
+{
+  "specification": "0.1.0",
+  "description": "Portable hand-worked accounting vectors. Amount list follows canonical observation ID order. Expected values are literals, not computed by the reference implementation.",
+  "cases": [
+    {
+      "id": "recorded-two-costs",
+      "evidence": {
+        "schema_version": "0.1.0",
+        "dataset_id": "golden-two-costs",
+        "sources": [
+          {
+            "id": "worked-example",
+            "harness": "example",
+            "format": "agent-cost-evidence",
+            "coverage": "complete",
+            "description": "Synthetic hand-worked conformance example; no actual provider bill."
+          }
+        ],
+        "observations": [
+          {
+            "id": "example-call-a",
+            "source_refs": [
+              {
+                "source_id": "worked-example",
+                "record": "1"
+              }
+            ],
+            "kind": "model",
+            "operation": "inference",
+            "status": "ok",
+            "accounting_scope": "direct",
+            "agent_id": "agent-a",
+            "model": "example-model",
+            "work_item_id": "ticket-7",
+            "usage": null,
+            "recorded_cost": {
+              "amount": "0.125",
+              "currency": "USD",
+              "basis": "model_price_estimate"
+            }
+          },
+          {
+            "id": "example-call-b",
+            "source_refs": [
+              {
+                "source_id": "worked-example",
+                "record": "2"
+              }
+            ],
+            "kind": "model",
+            "operation": "inference",
+            "status": "ok",
+            "accounting_scope": "direct",
+            "agent_id": "agent-b",
+            "model": "example-model",
+            "work_item_id": "ticket-7",
+            "usage": null,
+            "recorded_cost": {
+              "amount": "0.075",
+              "currency": "USD",
+              "basis": "model_price_estimate"
+            }
+          }
+        ],
+        "relationships": [],
+        "issues": []
+      },
+      "options": {
+        "mode": "recorded"
+      },
+      "expected": {
+        "total_nanos": "200000000",
+        "complete": true,
+        "amounts": [
+          "125000000",
+          "75000000"
+        ]
+      }
+    },
+    {
+      "id": "inclusive-cache-reasoning",
+      "evidence": {
+        "schema_version": "0.1.0",
+        "dataset_id": "core-fixture",
+        "sources": [
+          {
+            "id": "core-source",
+            "harness": "fixture",
+            "format": "agent-cost-json",
+            "coverage": "complete"
+          }
+        ],
+        "observations": [
+          {
+            "id": "core-direct",
+            "source_refs": [
+              {
+                "source_id": "core-source",
+                "record": "direct-1"
+              }
+            ],
+            "kind": "model",
+            "operation": "inference",
+            "status": "ok",
+            "accounting_scope": "direct",
+            "timestamp": "2026-03-01T00:00:00Z",
+            "provider": "fixture-provider",
+            "product": "fixture-product",
+            "model": "fixture-model",
+            "model_identity": "response",
+            "usage": {
+              "input_tokens": "100",
+              "output_tokens": "40",
+              "cache_read_input_tokens": "10",
+              "cache_write_input_tokens": "5",
+              "reasoning_output_tokens": "20",
+              "unclassified_tokens": "0"
+            }
+          }
+        ],
+        "relationships": [],
+        "issues": []
+      },
+      "options": {
+        "mode": "rate_card",
+        "rate_card": {
+          "schema_version": "0.1.0",
+          "id": "core-rate-card",
+          "currency": "USD",
+          "basis": "enterprise_scenario",
+          "source_url": "https://example.test/rates/core",
+          "retrieved_at": "2026-03-01T00:00:00Z",
+          "assumptions": [
+            "Fixture schedule with unbounded validity."
+          ],
+          "rules": [
+            {
+              "id": "core-rate",
+              "model": "fixture-model",
+              "provider": "fixture-provider",
+              "product": "fixture-product",
+              "valid_from": null,
+              "valid_to": null,
+              "rates": {
+                "input": "1.25",
+                "cache_read": "0.1",
+                "cache_write": "0.2",
+                "output": "2.5"
+              },
+              "unit_tokens": "1000"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "total_nanos": "208250000",
+        "complete": true,
+        "amounts": [
+          "208250000"
+        ]
+      }
+    },
+    {
+      "id": "aggregate-excluded",
+      "evidence": {
+        "schema_version": "0.1.0",
+        "dataset_id": "core-fixture",
+        "sources": [
+          {
+            "id": "core-source",
+            "harness": "fixture",
+            "format": "agent-cost-json",
+            "coverage": "complete"
+          }
+        ],
+        "observations": [
+          {
+            "id": "core-direct",
+            "source_refs": [
+              {
+                "source_id": "core-source",
+                "record": "direct-1"
+              }
+            ],
+            "kind": "model",
+            "operation": "inference",
+            "status": "ok",
+            "accounting_scope": "direct",
+            "timestamp": "2026-03-01T00:00:00Z",
+            "provider": "fixture-provider",
+            "product": "fixture-product",
+            "model": "fixture-model",
+            "model_identity": "response",
+            "usage": {
+              "input_tokens": "100",
+              "output_tokens": "40",
+              "cache_read_input_tokens": "10",
+              "cache_write_input_tokens": "5",
+              "reasoning_output_tokens": "20",
+              "unclassified_tokens": "0"
+            }
+          },
+          {
+            "id": "aggregate",
+            "source_refs": [
+              {
+                "source_id": "core-source",
+                "record": "direct-1"
+              }
+            ],
+            "kind": "model",
+            "operation": "inference",
+            "status": "ok",
+            "accounting_scope": "aggregate",
+            "timestamp": "2026-03-01T00:00:00Z",
+            "provider": "fixture-provider",
+            "product": "fixture-product",
+            "model": "fixture-model",
+            "model_identity": "response",
+            "usage": {
+              "input_tokens": "100",
+              "output_tokens": "40",
+              "cache_read_input_tokens": "10",
+              "cache_write_input_tokens": "5",
+              "reasoning_output_tokens": "20",
+              "unclassified_tokens": "0"
+            }
+          }
+        ],
+        "relationships": [],
+        "issues": []
+      },
+      "options": {
+        "mode": "rate_card",
+        "rate_card": {
+          "schema_version": "0.1.0",
+          "id": "core-rate-card",
+          "currency": "USD",
+          "basis": "enterprise_scenario",
+          "source_url": "https://example.test/rates/core",
+          "retrieved_at": "2026-03-01T00:00:00Z",
+          "assumptions": [
+            "Fixture schedule with unbounded validity."
+          ],
+          "rules": [
+            {
+              "id": "core-rate",
+              "model": "fixture-model",
+              "provider": "fixture-provider",
+              "product": "fixture-product",
+              "valid_from": null,
+              "valid_to": null,
+              "rates": {
+                "input": "1.25",
+                "cache_read": "0.1",
+                "cache_write": "0.2",
+                "output": "2.5"
+              },
+              "unit_tokens": "1000"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "total_nanos": "208250000",
+        "complete": false,
+        "amounts": [
+          null,
+          "208250000"
+        ]
+      }
+    },
+    {
+      "id": "missing-input-is-not-zero",
+      "evidence": {
+        "schema_version": "0.1.0",
+        "dataset_id": "core-fixture",
+        "sources": [
+          {
+            "id": "core-source",
+            "harness": "fixture",
+            "format": "agent-cost-json",
+            "coverage": "complete"
+          }
+        ],
+        "observations": [
+          {
+            "id": "core-direct",
+            "source_refs": [
+              {
+                "source_id": "core-source",
+                "record": "direct-1"
+              }
+            ],
+            "kind": "model",
+            "operation": "inference",
+            "status": "ok",
+            "accounting_scope": "direct",
+            "timestamp": "2026-03-01T00:00:00Z",
+            "provider": "fixture-provider",
+            "product": "fixture-product",
+            "model": "fixture-model",
+            "model_identity": "response",
+            "usage": {
+              "input_tokens": null,
+              "output_tokens": "40",
+              "cache_read_input_tokens": "10",
+              "cache_write_input_tokens": "5",
+              "reasoning_output_tokens": "20",
+              "unclassified_tokens": "0"
+            }
+          }
+        ],
+        "relationships": [],
+        "issues": []
+      },
+      "options": {
+        "mode": "rate_card",
+        "rate_card": {
+          "schema_version": "0.1.0",
+          "id": "core-rate-card",
+          "currency": "USD",
+          "basis": "enterprise_scenario",
+          "source_url": "https://example.test/rates/core",
+          "retrieved_at": "2026-03-01T00:00:00Z",
+          "assumptions": [
+            "Fixture schedule with unbounded validity."
+          ],
+          "rules": [
+            {
+              "id": "core-rate",
+              "model": "fixture-model",
+              "provider": "fixture-provider",
+              "product": "fixture-product",
+              "valid_from": null,
+              "valid_to": null,
+              "rates": {
+                "input": "1.25",
+                "cache_read": "0.1",
+                "cache_write": "0.2",
+                "output": "2.5"
+              },
+              "unit_tokens": "1000"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "total_nanos": "0",
+        "complete": false,
+        "amounts": [
+          null
+        ]
+      }
+    },
+    {
+      "id": "unknown-rate-is-not-zero",
+      "evidence": {
+        "schema_version": "0.1.0",
+        "dataset_id": "core-fixture",
+        "sources": [
+          {
+            "id": "core-source",
+            "harness": "fixture",
+            "format": "agent-cost-json",
+            "coverage": "complete"
+          }
+        ],
+        "observations": [
+          {
+            "id": "core-direct",
+            "source_refs": [
+              {
+                "source_id": "core-source",
+                "record": "direct-1"
+              }
+            ],
+            "kind": "model",
+            "operation": "inference",
+            "status": "ok",
+            "accounting_scope": "direct",
+            "timestamp": "2026-03-01T00:00:00Z",
+            "provider": "fixture-provider",
+            "product": "fixture-product",
+            "model": "unlisted",
+            "model_identity": "response",
+            "usage": {
+              "input_tokens": "100",
+              "output_tokens": "40",
+              "cache_read_input_tokens": "10",
+              "cache_write_input_tokens": "5",
+              "reasoning_output_tokens": "20",
+              "unclassified_tokens": "0"
+            }
+          }
+        ],
+        "relationships": [],
+        "issues": []
+      },
+      "options": {
+        "mode": "rate_card",
+        "rate_card": {
+          "schema_version": "0.1.0",
+          "id": "core-rate-card",
+          "currency": "USD",
+          "basis": "enterprise_scenario",
+          "source_url": "https://example.test/rates/core",
+          "retrieved_at": "2026-03-01T00:00:00Z",
+          "assumptions": [
+            "Fixture schedule with unbounded validity."
+          ],
+          "rules": [
+            {
+              "id": "core-rate",
+              "model": "fixture-model",
+              "provider": "fixture-provider",
+              "product": "fixture-product",
+              "valid_from": null,
+              "valid_to": null,
+              "rates": {
+                "input": "1.25",
+                "cache_read": "0.1",
+                "cache_write": "0.2",
+                "output": "2.5"
+              },
+              "unit_tokens": "1000"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "total_nanos": "0",
+        "complete": false,
+        "amounts": [
+          null
+        ]
+      }
+    },
+    {
+      "id": "unknown-extra-category",
+      "evidence": {
+        "schema_version": "0.1.0",
+        "dataset_id": "core-fixture",
+        "sources": [
+          {
+            "id": "core-source",
+            "harness": "fixture",
+            "format": "agent-cost-json",
+            "coverage": "complete"
+          }
+        ],
+        "observations": [
+          {
+            "id": "core-direct",
+            "source_refs": [
+              {
+                "source_id": "core-source",
+                "record": "direct-1"
+              }
+            ],
+            "kind": "model",
+            "operation": "inference",
+            "status": "ok",
+            "accounting_scope": "direct",
+            "timestamp": "2026-03-01T00:00:00Z",
+            "provider": "fixture-provider",
+            "product": "fixture-product",
+            "model": "fixture-model",
+            "model_identity": "response",
+            "usage": {
+              "input_tokens": "100",
+              "output_tokens": "40",
+              "cache_read_input_tokens": "10",
+              "cache_write_input_tokens": "5",
+              "reasoning_output_tokens": "20",
+              "unclassified_tokens": null
+            }
+          }
+        ],
+        "relationships": [],
+        "issues": []
+      },
+      "options": {
+        "mode": "rate_card",
+        "rate_card": {
+          "schema_version": "0.1.0",
+          "id": "core-rate-card",
+          "currency": "USD",
+          "basis": "enterprise_scenario",
+          "source_url": "https://example.test/rates/core",
+          "retrieved_at": "2026-03-01T00:00:00Z",
+          "assumptions": [
+            "Fixture schedule with unbounded validity."
+          ],
+          "rules": [
+            {
+              "id": "core-rate",
+              "model": "fixture-model",
+              "provider": "fixture-provider",
+              "product": "fixture-product",
+              "valid_from": null,
+              "valid_to": null,
+              "rates": {
+                "input": "1.25",
+                "cache_read": "0.1",
+                "cache_write": "0.2",
+                "output": "2.5"
+              },
+              "unit_tokens": "1000"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "total_nanos": "0",
+        "complete": false,
+        "amounts": [
+          null
+        ]
+      }
+    },
+    {
+      "id": "half-even-nanocurrency",
+      "evidence": {
+        "schema_version": "0.1.0",
+        "dataset_id": "golden-two-costs",
+        "sources": [
+          {
+            "id": "worked-example",
+            "harness": "example",
+            "format": "agent-cost-evidence",
+            "coverage": "complete",
+            "description": "Synthetic hand-worked conformance example; no actual provider bill."
+          }
+        ],
+        "observations": [
+          {
+            "id": "example-call-a",
+            "source_refs": [
+              {
+                "source_id": "worked-example",
+                "record": "1"
+              }
+            ],
+            "kind": "model",
+            "operation": "inference",
+            "status": "ok",
+            "accounting_scope": "direct",
+            "agent_id": "agent-a",
+            "model": "example-model",
+            "work_item_id": "ticket-7",
+            "usage": null,
+            "recorded_cost": {
+              "amount": "0.0000000005",
+              "currency": "USD",
+              "basis": "model_price_estimate"
+            }
+          },
+          {
+            "id": "example-call-b",
+            "source_refs": [
+              {
+                "source_id": "worked-example",
+                "record": "2"
+              }
+            ],
+            "kind": "model",
+            "operation": "inference",
+            "status": "ok",
+            "accounting_scope": "direct",
+            "agent_id": "agent-b",
+            "model": "example-model",
+            "work_item_id": "ticket-7",
+            "usage": null,
+            "recorded_cost": {
+              "amount": "0.0000000015",
+              "currency": "USD",
+              "basis": "model_price_estimate"
+            }
+          }
+        ],
+        "relationships": [],
+        "issues": []
+      },
+      "options": {
+        "mode": "recorded"
+      },
+      "expected": {
+        "total_nanos": "2",
+        "complete": true,
+        "amounts": [
+          "0",
+          "2"
+        ]
+      }
+    },
+    {
+      "id": "mixed-currency-rejected",
+      "evidence": {
+        "schema_version": "0.1.0",
+        "dataset_id": "golden-two-costs",
+        "sources": [
+          {
+            "id": "worked-example",
+            "harness": "example",
+            "format": "agent-cost-evidence",
+            "coverage": "complete",
+            "description": "Synthetic hand-worked conformance example; no actual provider bill."
+          }
+        ],
+        "observations": [
+          {
+            "id": "example-call-a",
+            "source_refs": [
+              {
+                "source_id": "worked-example",
+                "record": "1"
+              }
+            ],
+            "kind": "model",
+            "operation": "inference",
+            "status": "ok",
+            "accounting_scope": "direct",
+            "agent_id": "agent-a",
+            "model": "example-model",
+            "work_item_id": "ticket-7",
+            "usage": null,
+            "recorded_cost": {
+              "amount": "0.125",
+              "currency": "USD",
+              "basis": "model_price_estimate"
+            }
+          },
+          {
+            "id": "example-call-b",
+            "source_refs": [
+              {
+                "source_id": "worked-example",
+                "record": "2"
+              }
+            ],
+            "kind": "model",
+            "operation": "inference",
+            "status": "ok",
+            "accounting_scope": "direct",
+            "agent_id": "agent-b",
+            "model": "example-model",
+            "work_item_id": "ticket-7",
+            "usage": null,
+            "recorded_cost": {
+              "amount": "0.075",
+              "currency": "GBP",
+              "basis": "model_price_estimate"
+            }
+          }
+        ],
+        "relationships": [],
+        "issues": []
+      },
+      "options": {
+        "mode": "recorded"
+      },
+      "expected": {
+        "error": "MIXED_CURRENCY"
+      }
+    },
+    {
+      "id": "invalid-cache-subset",
+      "evidence": {
+        "schema_version": "0.1.0",
+        "dataset_id": "core-fixture",
+        "sources": [
+          {
+            "id": "core-source",
+            "harness": "fixture",
+            "format": "agent-cost-json",
+            "coverage": "complete"
+          }
+        ],
+        "observations": [
+          {
+            "id": "core-direct",
+            "source_refs": [
+              {
+                "source_id": "core-source",
+                "record": "direct-1"
+              }
+            ],
+            "kind": "model",
+            "operation": "inference",
+            "status": "ok",
+            "accounting_scope": "direct",
+            "timestamp": "2026-03-01T00:00:00Z",
+            "provider": "fixture-provider",
+            "product": "fixture-product",
+            "model": "fixture-model",
+            "model_identity": "response",
+            "usage": {
+              "input_tokens": "100",
+              "output_tokens": "40",
+              "cache_read_input_tokens": "101",
+              "cache_write_input_tokens": "5",
+              "reasoning_output_tokens": "20",
+              "unclassified_tokens": "0"
+            }
+          }
+        ],
+        "relationships": [],
+        "issues": []
+      },
+      "options": {
+        "mode": "rate_card",
+        "rate_card": {
+          "schema_version": "0.1.0",
+          "id": "core-rate-card",
+          "currency": "USD",
+          "basis": "enterprise_scenario",
+          "source_url": "https://example.test/rates/core",
+          "retrieved_at": "2026-03-01T00:00:00Z",
+          "assumptions": [
+            "Fixture schedule with unbounded validity."
+          ],
+          "rules": [
+            {
+              "id": "core-rate",
+              "model": "fixture-model",
+              "provider": "fixture-provider",
+              "product": "fixture-product",
+              "valid_from": null,
+              "valid_to": null,
+              "rates": {
+                "input": "1.25",
+                "cache_read": "0.1",
+                "cache_write": "0.2",
+                "output": "2.5"
+              },
+              "unit_tokens": "1000"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "error": "SUBSET_OVERFLOW"
+      }
+    },
+    {
+      "id": "conflicting-identity",
+      "evidence": {
+        "schema_version": "0.1.0",
+        "dataset_id": "golden-two-costs",
+        "sources": [
+          {
+            "id": "worked-example",
+            "harness": "example",
+            "format": "agent-cost-evidence",
+            "coverage": "complete",
+            "description": "Synthetic hand-worked conformance example; no actual provider bill."
+          }
+        ],
+        "observations": [
+          {
+            "id": "example-call-a",
+            "source_refs": [
+              {
+                "source_id": "worked-example",
+                "record": "1"
+              }
+            ],
+            "kind": "model",
+            "operation": "inference",
+            "status": "ok",
+            "accounting_scope": "direct",
+            "agent_id": "agent-a",
+            "model": "example-model",
+            "work_item_id": "ticket-7",
+            "usage": null,
+            "recorded_cost": {
+              "amount": "0.125",
+              "currency": "USD",
+              "basis": "model_price_estimate"
+            }
+          },
+          {
+            "id": "example-call-a",
+            "source_refs": [
+              {
+                "source_id": "worked-example",
+                "record": "2"
+              }
+            ],
+            "kind": "model",
+            "operation": "inference",
+            "status": "ok",
+            "accounting_scope": "direct",
+            "agent_id": "agent-b",
+            "model": "example-model",
+            "work_item_id": "ticket-7",
+            "usage": null,
+            "recorded_cost": {
+              "amount": "0.075",
+              "currency": "USD",
+              "basis": "model_price_estimate"
+            }
+          }
+        ],
+        "relationships": [],
+        "issues": []
+      },
+      "options": {
+        "mode": "recorded"
+      },
+      "expected": {
+        "error": "OBSERVATION_CONFLICT"
+      }
+    }
+  ]
+}

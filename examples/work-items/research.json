@@ -1,0 +1,40 @@
+{
+  "schema_version": "0.1.0",
+  "dataset_id": "research-example",
+  "work_item_id": "research-context-points",
+  "title": "Context Points research example",
+  "scope": {
+    "revision": "2026-09-06",
+    "description": "Synthetic illustration of a research Work Item; these dates and acceptance records do not describe the actual project capture",
+    "specification": "Illustrative bounded literature and project research review"
+  },
+  "acceptance_criteria": [
+    "Publish a bounded research record without inventing a point estimate"
+  ],
+  "outcome": {
+    "status": "accepted",
+    "recorded_at": "2026-09-06T12:00:00Z",
+    "summary": "The research record is available for later calibration work"
+  },
+  "attempts": [
+    {
+      "attempt_id": "research-attempt-1",
+      "status": "accepted",
+      "observation_ids": []
+    }
+  ],
+  "estimates": [
+    {
+      "estimate_id": "research-context-points-estimate-1",
+      "estimate_version": 1,
+      "scope_revision": "2026-09-06",
+      "created_at": "2026-09-06T09:00:00Z",
+      "timing": "pre_execution",
+      "information_basis": "specification_only",
+      "estimator": "human",
+      "confidence": "unknown",
+      "point_estimate": null,
+      "unestimated_reason": "No local Context Points scale has been calibrated for this research item"
+    }
+  ]
+}

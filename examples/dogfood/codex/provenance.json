@@ -1,0 +1,46 @@
+{
+  "description": "Allowlisted native-shaped Codex 0.153.4 records from this project conversation. IDs are hashed; prompts, results, commands, paths and reasoning content omitted. Frozen partial capture.",
+  "cutoff": "2026-09-06T16:36:00.000Z",
+  "sources": [
+    {
+      "alias": "coordinator",
+      "cutoff": "2026-09-06T16:36:00.000Z",
+      "source_prefix_sha256": "6f9664c57f024214015c96c801d080c0744cdf3c2639e0314ab4b6aad4a91990",
+      "sanitized_sha256": "69a607b75bcfdf4522025baa8168723568a1e7cd6537cbaa9f37cea49a1e72b4",
+      "source_rows": 736,
+      "sanitized_rows": 300,
+      "direct_calls": 88,
+      "total_tokens": 10811928
+    },
+    {
+      "alias": "telemetry",
+      "cutoff": "2026-09-06T16:36:00.000Z",
+      "source_prefix_sha256": "710dbe5eb689963d9c4750d5698b401a7d165720e1e49d095209b865a04258cb",
+      "sanitized_sha256": "513dd65b9d8cd12f52ed0379149e447e8768356358231b355e12b0ad1e6f54de",
+      "source_rows": 239,
+      "sanitized_rows": 108,
+      "direct_calls": 28,
+      "total_tokens": 3147637
+    },
+    {
+      "alias": "accounting",
+      "cutoff": "2026-09-06T16:36:00.000Z",
+      "source_prefix_sha256": "07b31cc2cc42a1105794f7d2fa9413b8d514a979e685b04678776df0050e950e",
+      "sanitized_sha256": "dd68ef5ecc03556755785fffde7076e33c613e51677fab4a1eb4ad0da9a0f9bf",
+      "source_rows": 290,
+      "sanitized_rows": 136,
+      "direct_calls": 33,
+      "total_tokens": 4475390
+    },
+    {
+      "alias": "profiles",
+      "cutoff": "2026-09-06T16:36:00.000Z",
+      "source_prefix_sha256": "f89ff0f5b74a93f3d490b07386062fba942731e6f82f50b25132320207fc504d",
+      "sanitized_sha256": "ca54bcb0166c1800eb6e81ef72dd5a18fead4c4bd75ce6bf3b1f2aa3d957bffc",
+      "source_rows": 227,
+      "sanitized_rows": 100,
+      "direct_calls": 28,
+      "total_tokens": 2720186
+    }
+  ]
+}

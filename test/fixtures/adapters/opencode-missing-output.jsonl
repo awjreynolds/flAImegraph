@@ -1,0 +1,1 @@
+{"type":"step-finish","sessionID":"oc-missing-output","messageID":"oc-missing-output","modelID":"openai/gpt-test","part":{"id":"oc-step-missing-output","reason":"stop","tokens":{"input":400,"reasoning":50,"cache":{"read":600,"write":10}}}}

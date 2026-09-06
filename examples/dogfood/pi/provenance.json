@@ -1,0 +1,10 @@
+{
+  "source_url": "https://github.com/earendil-works/pi/blob/9767ba275f3e9a5ee0f5c5342249b629ab1b2282/packages/coding-agent/test/fixtures/before-compaction.jsonl",
+  "source_sha256": "56f9cf221541c09091cf082ad2ed0c4b4931ef5e8857a42dc623afae35a2e59c",
+  "sanitized_sha256": "d8c2482c776b1392027f84a62207193e519c8097b771b4b7e0c010a2c44f69c0",
+  "source_records": 1003,
+  "assistant_records": 484,
+  "expected_model_price_estimate_nanoUSD": "42595907500",
+  "source_format": "legacy-unversioned-transcript",
+  "transformation": "All physical rows retained; allowlisted structural/usage/model/time fields only; IDs hashed; exact numeric cost lexemes represented as decimal strings; no conversation/tool content or local paths."
+}

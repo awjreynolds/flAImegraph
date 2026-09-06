@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/awjreynolds/flAImegraph/v0.1.0/spec/0.1/schemas/valuation.schema.json",
+  "title": "Agent Cost Interchange valuation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "dataset_id",
+    "selection_policy",
+    "currency",
+    "basis",
+    "assumptions",
+    "observations",
+    "total_nanos",
+    "complete",
+    "issues"
+  ],
+  "properties": {
+    "schema_version": { "const": "0.1.0" },
+    "id": { "$ref": "#/$defs/id" },
+    "dataset_id": { "$ref": "#/$defs/id" },
+    "selection_policy": { "const": "direct-only-v1" },
+    "currency": { "$ref": "#/$defs/id" },
+    "basis": {
+      "enum": [
+        "model_price_estimate",
+        "provider_reported",
+        "billed",
+        "enterprise_scenario",
+        "contract_estimate",
+        "mixed"
+      ]
+    },
+    "rate_card_id": { "$ref": "#/$defs/id" },
+    "assumptions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "observations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/valuedObservation" }
+    },
+    "total_nanos": { "$ref": "#/$defs/signedInteger" },
+    "complete": { "type": "boolean" },
+    "issues": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/issue" }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1 },
+    "signedInteger": {
+      "type": "string",
+      "pattern": "^-?(0|[1-9][0-9]*)$"
+    },
+    "valuedObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observation_id", "amount_nanos", "basis"],
+      "properties": {
+        "observation_id": { "$ref": "#/$defs/id" },
+        "amount_nanos": {
+          "anyOf": [{ "$ref": "#/$defs/signedInteger" }, { "type": "null" }]
+        },
+        "basis": {
+          "anyOf": [
+            {
+              "enum": [
+                "model_price_estimate",
+                "provider_reported",
+                "billed",
+                "enterprise_scenario",
+                "contract_estimate"
+              ]
+            },
+            { "type": "null" }
+          ]
+        },
+        "rate_rule_id": { "$ref": "#/$defs/id" },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message", "severity"],
+      "properties": {
+        "code": { "$ref": "#/$defs/id" },
+        "message": { "$ref": "#/$defs/id" },
+        "severity": { "enum": ["info", "warning", "error"] },
+        "observation_id": { "$ref": "#/$defs/id" },
+        "source_id": { "$ref": "#/$defs/id" }
+      }
+    }
+  }
+}

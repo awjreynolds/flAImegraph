@@ -1,0 +1,4 @@
+{"type":"step-finish","sessionID":"oc-session","parentID":"oc-parent","messageID":"oc-message-1","modelID":"openai/gpt-test","part":{"id":"oc-step-1","reason":"stop","tokens":{"input":400,"output":100,"reasoning":50,"cache":{"read":600,"write":10}},"cost":"0.0075"}}
+{"type":"step-finish","sessionID":"oc-session","parentID":"oc-parent","messageID":"oc-message-2","modelID":"openai/gpt-test","part":{"id":"oc-step-2","reason":"tool-calls","tokens":{"input":50,"output":20,"reasoning":0,"cache":{"read":0,"write":0}},"cost":"0.0008"}}
+{"type":"session-total","sessionID":"oc-session","tokens":{"input":450,"output":120,"reasoning":50,"cache":{"read":600,"write":10}},"cost":"0.0083"}
+{"type":"tool-use","sessionID":"oc-session","callID":"tool-1","name":"bash","status":"ok"}

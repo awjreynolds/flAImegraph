@@ -1,0 +1,6 @@
+{"type":"message","sessionId":"gemini-session","id":"gem-1","message":{"role":"model","model":"gemini-2.5","usage":{"input":100,"cached":30,"output":20,"thoughts":5,"total":120},"finishReason":"STOP"}}
+{"type":"message","sessionId":"gemini-session","id":"gem-1","message":{"role":"model","model":"gemini-2.5","usage":{"input":100,"cached":30,"output":22,"thoughts":6,"total":122},"finishReason":"STOP"}}
+{"type":"message","sessionId":"gemini-session","id":"gem-2","message":{"role":"model","model":"gemini-2.5","usageMetadata":{"promptTokenCount":100,"cachedContentTokenCount":30,"candidatesTokenCount":22,"thoughtsTokenCount":6,"totalTokenCount":122},"finishReason":"STOP"}}
+{"type":"toolCall","sessionId":"gemini-session","id":"tool-1","name":"search"}
+{"type":"subagent","sessionId":"gemini-session","parentSessionId":"gemini-parent","id":"child-session","status":"completed"}
+{"type":"contextBreakdown","sessionId":"gemini-session","estimate":{"system":10,"tools":20}}

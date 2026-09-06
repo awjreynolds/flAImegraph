@@ -1,0 +1,21 @@
+{
+  "schema_version": "0.1.0",
+  "dataset_id": "golden-two-costs",
+  "sources": [{ "id": "worked-example", "harness": "example", "format": "agent-cost-evidence", "coverage": "complete", "description": "Synthetic hand-worked conformance example; no actual provider bill." }],
+  "observations": [
+    {
+      "id": "example-call-a", "source_refs": [{ "source_id": "worked-example", "record": "1" }],
+      "kind": "model", "operation": "inference", "status": "ok", "accounting_scope": "direct",
+      "agent_id": "agent-a", "model": "example-model", "work_item_id": "ticket-7", "usage": null,
+      "recorded_cost": { "amount": "0.125", "currency": "USD", "basis": "model_price_estimate" }
+    },
+    {
+      "id": "example-call-b", "source_refs": [{ "source_id": "worked-example", "record": "2" }],
+      "kind": "model", "operation": "inference", "status": "ok", "accounting_scope": "direct",
+      "agent_id": "agent-b", "model": "example-model", "work_item_id": "ticket-7", "usage": null,
+      "recorded_cost": { "amount": "0.075", "currency": "USD", "basis": "model_price_estimate" }
+    }
+  ],
+  "relationships": [],
+  "issues": []
+}
