@@ -177,6 +177,35 @@ The report contains 13 partial requests, 26 context sources, 32 revisions and
 claimed. None of the 21 non-empty source text segments in that prefix occurs in
 the report JSON.
 
+## Real-work dogfood verification
+
+The bounded artifacts under `examples/dogfood/v02/` regenerate from
+`tools/dogfood-v02.ts`. The two successive-capture states agree exactly with
+replay, and their direct counts and category sums agree with one-shot import.
+The root stream contains 134 direct observations and the independent-producer
+stream contains 33. Every one of the 167 reconstructed Codex request boundaries
+is unavailable, and both report valuations remain honest all-null, zero-subtotal,
+incomplete mixed-basis records rather than receiving an invented price.
+
+The independent-producer Work Item joins exactly the 33 direct observations.
+The initial three-point estimate predates the attempt, and acceptance remains a
+separate recorded outcome. A temporal mismatch found during review was corrected:
+the accounting attempt now ends at `2026-09-06T20:56:45.879Z`, the timestamp of
+its last selected native usage row, while the producer's earlier self-reported
+completion at `2026-09-06T20:56:13.000Z` remains separately disclosed. An
+independent row-by-row check resolved every selected observation back to its
+hashed response and sanitized source coordinate, confirmed that all 33 rows fall
+inside the corrected attempt, and confirmed that the maximum row timestamp equals
+the attempt end.
+
+The published provenance digests and row counts match the two bounded raw source
+prefixes and their sanitized projections. A scan of content-bearing source values
+found no exact value in the published artifacts; native identifiers are hashed,
+and the JSONL projection contains only the documented metadata and numeric
+counters. Both capture states, evidence bundles, harness profiles, context
+bundles, reports, valuations and the joined Work Item validate through their
+public APIs.
+
 ## Packaging and checks
 
 The in-progress root integration now exports `reconstructNativeContext` through
@@ -190,5 +219,5 @@ test/native-context.test.ts test/context-producer.test.ts` passes 14/14;
 the context-report/profile regression suite passes 25/25;
 `npm run typecheck` passes; public-root import exposes the native function and
 validates the independent context/profile; and `git diff --check` reports no
-whitespace errors in the reviewed surfaces. No native or independent-producer
-finding remains open.
+whitespace errors in the reviewed surfaces. The integrated repository suite
+passes all 161 tests. No native or independent-producer finding remains open.

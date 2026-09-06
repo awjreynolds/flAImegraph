@@ -79,4 +79,4 @@ context measurements and monetary line are illustrative. They do not assert a
 provider bill, real workload, accepted user task, tokenizer truth, cache hit,
 complete assembled prompt, hidden server context or causal source cost.
 
-Integrated release verification subsequently passed the full TypeScript check and all 160 reference tests, including the two independent-producer cases. This supersedes the transient concurrent type errors noted above. The integrated run does not change the Python producer's independence: its process still emits the contract without importing the TypeScript capture implementation.
+Integrated release verification subsequently passed the full TypeScript check and all 161 reference tests, including the two independent-producer cases. This supersedes the transient concurrent type errors noted above. The integrated run does not change the Python producer's independence: its process still emits the contract without importing the TypeScript capture implementation.

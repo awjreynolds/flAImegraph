@@ -83,4 +83,4 @@ published.
 Focused validation passed for both capture states, evidence bundles, profiles,
 context bundles, reports, valuations, and the Work Item join. Integrated
 repository verification subsequently passed the full TypeScript check and all
-160 reference tests.
+161 reference tests.
