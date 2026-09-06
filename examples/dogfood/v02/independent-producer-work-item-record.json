@@ -1,0 +1,4161 @@
+{
+  "schema_version": "0.1.0",
+  "dataset_id": "context-producer-proof-v02",
+  "work_item": {
+    "schema_version": "0.1.0",
+    "dataset_id": "context-producer-proof-v02",
+    "work_item_id": "context-producer-proof",
+    "title": "Independent context manifest producer proof",
+    "scope": {
+      "revision": "1",
+      "description": "Implement a separate-language producer from the published 0.2 context contract, validate its output with the TypeScript consumer, and document provenance and limitations."
+    },
+    "acceptance_criteria": [
+      "Producer does not call the TypeScript capture implementation",
+      "Ordered repeated context and a summary transformation pass the public validator",
+      "A generated report preserves the fixture's exact request cost"
+    ],
+    "outcome": {
+      "status": "accepted",
+      "recorded_at": "2026-09-06T21:03:01.300Z",
+      "summary": "Accepted after the independent producer crossed the public context and report seams; usage and cost coverage remain partial because provider billing and hidden calls are unavailable."
+    },
+    "attempts": [
+      {
+        "attempt_id": "independent-producer-2026-09-06",
+        "status": "accepted",
+        "started_at": "2026-09-06T20:46:09.000Z",
+        "ended_at": "2026-09-06T20:56:45.879Z",
+        "observation_ids": [
+          "codex:capture:observation:0d06f93033d813239b59a237628df076",
+          "codex:capture:observation:0f3bfc8bb000d19041803e41dab53b26",
+          "codex:capture:observation:15cec6aee7c05c5a2ac4fd5e3127d9c0",
+          "codex:capture:observation:190a030f2f6e361ae15b99d355634a0c",
+          "codex:capture:observation:1a99de20842013e8c583bf070ff0e0e6",
+          "codex:capture:observation:23d896a2272985fb936b4163a639c2b0",
+          "codex:capture:observation:37b1d873f08707708aeeeb392d16d489",
+          "codex:capture:observation:38924f1bea6a3d03875faaf5617806ed",
+          "codex:capture:observation:3a3833dd4c824a2ca394c19b5e95af67",
+          "codex:capture:observation:440db7bc463650c9fbd724315f6e7d86",
+          "codex:capture:observation:47c3538fdbb3ab305e405d7a8b4749c1",
+          "codex:capture:observation:54f32102e7d885db7dec1163e382f662",
+          "codex:capture:observation:5903e74a3dc3c14d899e4636c6f9e060",
+          "codex:capture:observation:612920843e33878952a5d043de0e0a9f",
+          "codex:capture:observation:65b1cb715286ac2a4c812f7e0be22d7a",
+          "codex:capture:observation:66a8ed613befe75aee7fb674e622ee51",
+          "codex:capture:observation:6d1945d4c6b74d02da1e12c0877aa345",
+          "codex:capture:observation:759a3f1cf2c0aa2495670bf90fd9fcaa",
+          "codex:capture:observation:75fd692aa7b39d37058effbea7097f25",
+          "codex:capture:observation:8242a0c3cba564fc714b8eb945ea3bd7",
+          "codex:capture:observation:8a67a17fab696141347ccb470e5b23e1",
+          "codex:capture:observation:8b4322adf080f469feb5864b2f2d4138",
+          "codex:capture:observation:a4f706c3db0abba3883dc555fc4b97ae",
+          "codex:capture:observation:bc28d12b87eba1e439d1c156006ed3c4",
+          "codex:capture:observation:c2269dfe44df3ec7c0102ddc0009ee96",
+          "codex:capture:observation:ce0eaa5cb74c4445496480bc09c6be34",
+          "codex:capture:observation:ce2da0b48d1d00d5c7c2d9fa6bdc2268",
+          "codex:capture:observation:d02aaf657ecdfa490cd879d7e02e7146",
+          "codex:capture:observation:e25be8c555ba66288807bb78f46acaca",
+          "codex:capture:observation:eb805fa84795a3e0f38d9ee3f9958442",
+          "codex:capture:observation:f5cc5cafb6ae872eb94bb34043dbae08",
+          "codex:capture:observation:fb0885de5dc3877cf639c17b6c669d00",
+          "codex:capture:observation:feb239a86337a3ab522fb8b0ba8782ff"
+        ]
+      }
+    ],
+    "estimates": [
+      {
+        "estimate_id": "initial",
+        "estimate_version": 1,
+        "scope_revision": "1",
+        "created_at": "2026-09-06T20:16:42Z",
+        "timing": "pre_execution",
+        "information_basis": "repository_inspection",
+        "estimator": "coordinator",
+        "confidence": "low",
+        "point_estimate": {
+          "scale_id": "local-contract-proof",
+          "scale_version": "1",
+          "kind": "ordinal",
+          "value": "3"
+        },
+        "rationale": "A declared local three-point anchor for one producer, one consumer integration and one provenance record. This scale is uncalibrated; the estimate is collected before this bounded implementation begins, not before the surrounding v0.2 project."
+      }
+    ]
+  },
+  "observation_ids": [
+    "codex:capture:observation:0d06f93033d813239b59a237628df076",
+    "codex:capture:observation:0f3bfc8bb000d19041803e41dab53b26",
+    "codex:capture:observation:15cec6aee7c05c5a2ac4fd5e3127d9c0",
+    "codex:capture:observation:190a030f2f6e361ae15b99d355634a0c",
+    "codex:capture:observation:1a99de20842013e8c583bf070ff0e0e6",
+    "codex:capture:observation:23d896a2272985fb936b4163a639c2b0",
+    "codex:capture:observation:37b1d873f08707708aeeeb392d16d489",
+    "codex:capture:observation:38924f1bea6a3d03875faaf5617806ed",
+    "codex:capture:observation:3a3833dd4c824a2ca394c19b5e95af67",
+    "codex:capture:observation:440db7bc463650c9fbd724315f6e7d86",
+    "codex:capture:observation:47c3538fdbb3ab305e405d7a8b4749c1",
+    "codex:capture:observation:54f32102e7d885db7dec1163e382f662",
+    "codex:capture:observation:5903e74a3dc3c14d899e4636c6f9e060",
+    "codex:capture:observation:612920843e33878952a5d043de0e0a9f",
+    "codex:capture:observation:65b1cb715286ac2a4c812f7e0be22d7a",
+    "codex:capture:observation:66a8ed613befe75aee7fb674e622ee51",
+    "codex:capture:observation:6d1945d4c6b74d02da1e12c0877aa345",
+    "codex:capture:observation:759a3f1cf2c0aa2495670bf90fd9fcaa",
+    "codex:capture:observation:75fd692aa7b39d37058effbea7097f25",
+    "codex:capture:observation:8242a0c3cba564fc714b8eb945ea3bd7",
+    "codex:capture:observation:8a67a17fab696141347ccb470e5b23e1",
+    "codex:capture:observation:8b4322adf080f469feb5864b2f2d4138",
+    "codex:capture:observation:a4f706c3db0abba3883dc555fc4b97ae",
+    "codex:capture:observation:bc28d12b87eba1e439d1c156006ed3c4",
+    "codex:capture:observation:c2269dfe44df3ec7c0102ddc0009ee96",
+    "codex:capture:observation:ce0eaa5cb74c4445496480bc09c6be34",
+    "codex:capture:observation:ce2da0b48d1d00d5c7c2d9fa6bdc2268",
+    "codex:capture:observation:d02aaf657ecdfa490cd879d7e02e7146",
+    "codex:capture:observation:e25be8c555ba66288807bb78f46acaca",
+    "codex:capture:observation:eb805fa84795a3e0f38d9ee3f9958442",
+    "codex:capture:observation:f5cc5cafb6ae872eb94bb34043dbae08",
+    "codex:capture:observation:fb0885de5dc3877cf639c17b6c669d00",
+    "codex:capture:observation:feb239a86337a3ab522fb8b0ba8782ff"
+  ],
+  "observations": [
+    {
+      "id": "codex:capture:observation:0d06f93033d813239b59a237628df076",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:7e61dbeac3591cb910f221851dfeec9b487e014c3663715b2ddbf64af5083673:line:31"
+        },
+        {
+          "source_id": "codex:dc0cf6a542e5e8ae",
+          "record": "response:sha256:7e61dbeac3591cb910f221851dfeec9b487e014c3663715b2ddbf64af5083673:line:31"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "116894",
+        "output_tokens": "79",
+        "cache_read_input_tokens": "110336",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "10"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:7e61dbeac3591cb910f221851dfeec9b487e014c3663715b2ddbf64af5083673",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "116973",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "9d55ed39dcd52c755ed073c3906c714d",
+        "flAImegraph.lineage.native_id_hashes": "9d55ed39dcd52c755ed073c3906c714d",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:0f3bfc8bb000d19041803e41dab53b26",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:d5987a103ed4975917d78996646277bf552be14dbe85e08a5339577f55256bea:line:57"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "136657",
+        "output_tokens": "949",
+        "cache_read_input_tokens": "135936",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "698"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:d5987a103ed4975917d78996646277bf552be14dbe85e08a5339577f55256bea",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "137606",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "a8850387b1ab898db0c719c39072760c",
+        "flAImegraph.lineage.native_id_hashes": "a8850387b1ab898db0c719c39072760c",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:15cec6aee7c05c5a2ac4fd5e3127d9c0",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:dce28feb36c9fb45b95660c5e3d189e7f020d6f8b8dc2b9a01e72c4444d275a0:line:23"
+        },
+        {
+          "source_id": "codex:dc0cf6a542e5e8ae",
+          "record": "response:sha256:dce28feb36c9fb45b95660c5e3d189e7f020d6f8b8dc2b9a01e72c4444d275a0:line:23"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "99160",
+        "output_tokens": "537",
+        "cache_read_input_tokens": "96000",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "417"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:dce28feb36c9fb45b95660c5e3d189e7f020d6f8b8dc2b9a01e72c4444d275a0",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "99697",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "cacaa16651970bb0da49222dc33006ba",
+        "flAImegraph.lineage.native_id_hashes": "cacaa16651970bb0da49222dc33006ba",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:190a030f2f6e361ae15b99d355634a0c",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:cf52d4a761919f5b4c38fdb9cc8530270cd299a98b0590011895227a211d5642:line:17"
+        },
+        {
+          "source_id": "codex:dc0cf6a542e5e8ae",
+          "record": "response:sha256:cf52d4a761919f5b4c38fdb9cc8530270cd299a98b0590011895227a211d5642:line:17"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "83165",
+        "output_tokens": "260",
+        "cache_read_input_tokens": "73472",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "49"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:cf52d4a761919f5b4c38fdb9cc8530270cd299a98b0590011895227a211d5642",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "83425",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "c97a5bf631d5d74fb03b25182246412b",
+        "flAImegraph.lineage.native_id_hashes": "c97a5bf631d5d74fb03b25182246412b",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:1a99de20842013e8c583bf070ff0e0e6",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:6b24bd997f491355052b1fb348d70110ec1e9feee3c3f38e2591ee5ca62060c6:line:37"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "124749",
+        "output_tokens": "562",
+        "cache_read_input_tokens": "122624",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "23"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:6b24bd997f491355052b1fb348d70110ec1e9feee3c3f38e2591ee5ca62060c6",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "125311",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "6628f7bc2f930956200399707339043c",
+        "flAImegraph.lineage.native_id_hashes": "6628f7bc2f930956200399707339043c",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:23d896a2272985fb936b4163a639c2b0",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:98d2b22bcbb5b1046efa83dd3b0a3f4c4003b5e81c4f73120b3f70007b228383:line:59"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "137630",
+        "output_tokens": "341",
+        "cache_read_input_tokens": "135936",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "16"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:98d2b22bcbb5b1046efa83dd3b0a3f4c4003b5e81c4f73120b3f70007b228383",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "137971",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "de3c7b6e64026b78b5b5dc009e418087",
+        "flAImegraph.lineage.native_id_hashes": "de3c7b6e64026b78b5b5dc009e418087",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:37b1d873f08707708aeeeb392d16d489",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:165da8c6bb28c10ab05bd79aaf021ced00244151a226b65d7abf4b630b49c2d7:line:21"
+        },
+        {
+          "source_id": "codex:dc0cf6a542e5e8ae",
+          "record": "response:sha256:165da8c6bb28c10ab05bd79aaf021ced00244151a226b65d7abf4b630b49c2d7:line:21"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "96478",
+        "output_tokens": "119",
+        "cache_read_input_tokens": "91904",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "48"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:165da8c6bb28c10ab05bd79aaf021ced00244151a226b65d7abf4b630b49c2d7",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "96597",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "fe1a629be792ad888382ce6b64950caf",
+        "flAImegraph.lineage.native_id_hashes": "fe1a629be792ad888382ce6b64950caf",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:38924f1bea6a3d03875faaf5617806ed",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:98c6bcfe428d35a4b36ef7c3a17474ff9eda5936e337d8362781bdcadab4a5f7:line:29"
+        },
+        {
+          "source_id": "codex:dc0cf6a542e5e8ae",
+          "record": "response:sha256:98c6bcfe428d35a4b36ef7c3a17474ff9eda5936e337d8362781bdcadab4a5f7:line:29"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "111397",
+        "output_tokens": "5473",
+        "cache_read_input_tokens": "110336",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "1503"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:98c6bcfe428d35a4b36ef7c3a17474ff9eda5936e337d8362781bdcadab4a5f7",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "116870",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "27c3c69d72d4deadcedfde16f1aad87e",
+        "flAImegraph.lineage.native_id_hashes": "27c3c69d72d4deadcedfde16f1aad87e",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:3a3833dd4c824a2ca394c19b5e95af67",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:f4bb09a1f5d02ece78c508b982092553fc7d922ece3f787b3371f2977785abf5:line:19"
+        },
+        {
+          "source_id": "codex:dc0cf6a542e5e8ae",
+          "record": "response:sha256:f4bb09a1f5d02ece78c508b982092553fc7d922ece3f787b3371f2977785abf5:line:19"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "92089",
+        "output_tokens": "214",
+        "cache_read_input_tokens": "82688",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "57"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:f4bb09a1f5d02ece78c508b982092553fc7d922ece3f787b3371f2977785abf5",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "92303",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "f23f7f27b31bfb2831c9e2bf2b06ab6e",
+        "flAImegraph.lineage.native_id_hashes": "f23f7f27b31bfb2831c9e2bf2b06ab6e",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:440db7bc463650c9fbd724315f6e7d86",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:318ea2a483d0aa49dd0a3e433011579bfaae15a02f72a2f91e89dc878101cb7d:line:5"
+        },
+        {
+          "source_id": "codex:dc0cf6a542e5e8ae",
+          "record": "response:sha256:318ea2a483d0aa49dd0a3e433011579bfaae15a02f72a2f91e89dc878101cb7d:line:5"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "40783",
+        "output_tokens": "600",
+        "cache_read_input_tokens": "37632",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "260"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:318ea2a483d0aa49dd0a3e433011579bfaae15a02f72a2f91e89dc878101cb7d",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "41383",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "d3155a5ae764181631e2fa512f20cef0",
+        "flAImegraph.lineage.native_id_hashes": "d3155a5ae764181631e2fa512f20cef0",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:47c3538fdbb3ab305e405d7a8b4749c1",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:b678ac7f14b9f5a811e6ce1426476f6be165155f8e1e0fa187139277e9144bf9:line:41"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "125523",
+        "output_tokens": "2105",
+        "cache_read_input_tokens": "124672",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "1794"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:b678ac7f14b9f5a811e6ce1426476f6be165155f8e1e0fa187139277e9144bf9",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "127628",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "5cfa54b2a24ba13a17f84c0e793c5b97",
+        "flAImegraph.lineage.native_id_hashes": "5cfa54b2a24ba13a17f84c0e793c5b97",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:54f32102e7d885db7dec1163e382f662",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:cef1d2c4cd27956649139a3678cb5bacb1332ac84ca1735527b91cc661b3aedf:line:49"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "134519",
+        "output_tokens": "476",
+        "cache_read_input_tokens": "131840",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "230"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:cef1d2c4cd27956649139a3678cb5bacb1332ac84ca1735527b91cc661b3aedf",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "134995",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "fa296e5757e15679c3aa96321634b182",
+        "flAImegraph.lineage.native_id_hashes": "fa296e5757e15679c3aa96321634b182",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:5903e74a3dc3c14d899e4636c6f9e060",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:6c6135be0f1dca79376e9704d53cb4591327cabbbbd4cb5e38456e543d21fbf3:line:45"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "127993",
+        "output_tokens": "325",
+        "cache_read_input_tokens": "126720",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "49"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:6c6135be0f1dca79376e9704d53cb4591327cabbbbd4cb5e38456e543d21fbf3",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "128318",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "e9a147863da22d6edd1dd80304655f78",
+        "flAImegraph.lineage.native_id_hashes": "e9a147863da22d6edd1dd80304655f78",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:612920843e33878952a5d043de0e0a9f",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:cbed66be04fd1b850cfd6db2dd48754ab53166500f34cca2286a53b7014b58a1:line:35"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "123588",
+        "output_tokens": "1083",
+        "cache_read_input_tokens": "116480",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "563"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:cbed66be04fd1b850cfd6db2dd48754ab53166500f34cca2286a53b7014b58a1",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "124671",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "d62cd49bdcf15e7b808abeebe6ecdb81",
+        "flAImegraph.lineage.native_id_hashes": "d62cd49bdcf15e7b808abeebe6ecdb81",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:65b1cb715286ac2a4c812f7e0be22d7a",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:9ab5c3e0b2ca66dd8a1a0761d3d2d9fd3a3feef5630741ec0361bfc336382159:line:67"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "138753",
+        "output_tokens": "1060",
+        "cache_read_input_tokens": "137984",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "838"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:9ab5c3e0b2ca66dd8a1a0761d3d2d9fd3a3feef5630741ec0361bfc336382159",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "139813",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "5c79af1b1794d691c718784ef686d7e2",
+        "flAImegraph.lineage.native_id_hashes": "5c79af1b1794d691c718784ef686d7e2",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:66a8ed613befe75aee7fb674e622ee51",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:b749ca0505af94172d598c6c396e24e8a179eb88edff0cef6f52f06bb6b158ba:line:3"
+        },
+        {
+          "source_id": "codex:dc0cf6a542e5e8ae",
+          "record": "response:sha256:b749ca0505af94172d598c6c396e24e8a179eb88edff0cef6f52f06bb6b158ba:line:3"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "38761",
+        "output_tokens": "412",
+        "cache_read_input_tokens": "36608",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "119"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:b749ca0505af94172d598c6c396e24e8a179eb88edff0cef6f52f06bb6b158ba",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "39173",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "0f70563714f7f4d6ad4fca28e8d944ee",
+        "flAImegraph.lineage.native_id_hashes": "0f70563714f7f4d6ad4fca28e8d944ee",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:6d1945d4c6b74d02da1e12c0877aa345",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:97a4ca4a8c1b686b4bc75cac84cf131ab3e68ae15e5881398a9a0ea68a9fdfa2:line:7"
+        },
+        {
+          "source_id": "codex:dc0cf6a542e5e8ae",
+          "record": "response:sha256:97a4ca4a8c1b686b4bc75cac84cf131ab3e68ae15e5881398a9a0ea68a9fdfa2:line:7"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "50604",
+        "output_tokens": "372",
+        "cache_read_input_tokens": "39680",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "95"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:97a4ca4a8c1b686b4bc75cac84cf131ab3e68ae15e5881398a9a0ea68a9fdfa2",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "50976",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "a7e881d80279766776ecba4a6f0b7f55",
+        "flAImegraph.lineage.native_id_hashes": "a7e881d80279766776ecba4a6f0b7f55",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:759a3f1cf2c0aa2495670bf90fd9fcaa",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:3cf1c9c23ccb8ce3716c719d1c853e4de1ef691f8f41f59c2e4122a918ce0518:line:55"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "136222",
+        "output_tokens": "411",
+        "cache_read_input_tokens": "135936",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "29"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:3cf1c9c23ccb8ce3716c719d1c853e4de1ef691f8f41f59c2e4122a918ce0518",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "136633",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "7090d917610b5c2ef5c4a57da515f0cd",
+        "flAImegraph.lineage.native_id_hashes": "7090d917610b5c2ef5c4a57da515f0cd",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:75fd692aa7b39d37058effbea7097f25",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:fe5072a11a40010259f7912beb58dbe4f47796081f752082d35e66635b1f4ef6:line:11"
+        },
+        {
+          "source_id": "codex:dc0cf6a542e5e8ae",
+          "record": "response:sha256:fe5072a11a40010259f7912beb58dbe4f47796081f752082d35e66635b1f4ef6:line:11"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "59297",
+        "output_tokens": "273",
+        "cache_read_input_tokens": "50944",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "45"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:fe5072a11a40010259f7912beb58dbe4f47796081f752082d35e66635b1f4ef6",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "59570",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "613f82fd4c36a7d7cab0cab2cb6a430d",
+        "flAImegraph.lineage.native_id_hashes": "613f82fd4c36a7d7cab0cab2cb6a430d",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:8242a0c3cba564fc714b8eb945ea3bd7",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:b882107e52b185417750cda74e7cd968e08105b835a502375a7fec93891c53b2:line:13"
+        },
+        {
+          "source_id": "codex:dc0cf6a542e5e8ae",
+          "record": "response:sha256:b882107e52b185417750cda74e7cd968e08105b835a502375a7fec93891c53b2:line:13"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "66830",
+        "output_tokens": "206",
+        "cache_read_input_tokens": "59136",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "40"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:b882107e52b185417750cda74e7cd968e08105b835a502375a7fec93891c53b2",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "67036",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "f2e461264dd3c5c20a3b9da071bf055d",
+        "flAImegraph.lineage.native_id_hashes": "f2e461264dd3c5c20a3b9da071bf055d",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:8a67a17fab696141347ccb470e5b23e1",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:37e39268349e4111166cd7c966f74344a74d9cf718e695a77332305a5a039831:line:43"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "127730",
+        "output_tokens": "230",
+        "cache_read_input_tokens": "124672",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "83"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:37e39268349e4111166cd7c966f74344a74d9cf718e695a77332305a5a039831",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "127960",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "3fb15e998d8145b090a9e6bf03c6528c",
+        "flAImegraph.lineage.native_id_hashes": "3fb15e998d8145b090a9e6bf03c6528c",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:8b4322adf080f469feb5864b2f2d4138",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:8f200ce73c26073bd95e2398901b8f1adfb6e9a868c3bddb78cd1150ab4fd3db:line:65"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "138402",
+        "output_tokens": "133",
+        "cache_read_input_tokens": "137984",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "106"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:8f200ce73c26073bd95e2398901b8f1adfb6e9a868c3bddb78cd1150ab4fd3db",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "138535",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "3871cb22a0a8123c0f6b9d06161ce86a",
+        "flAImegraph.lineage.native_id_hashes": "3871cb22a0a8123c0f6b9d06161ce86a",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:a4f706c3db0abba3883dc555fc4b97ae",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:b1f94512ffa81a46225b02bd41912f1008d3d2097551f10afcebd77dc0ba5170:line:51"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "135236",
+        "output_tokens": "805",
+        "cache_read_input_tokens": "133888",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "730"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:b1f94512ffa81a46225b02bd41912f1008d3d2097551f10afcebd77dc0ba5170",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "136041",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "ea941e4c057b091e0fa1e64229875dd7",
+        "flAImegraph.lineage.native_id_hashes": "ea941e4c057b091e0fa1e64229875dd7",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:bc28d12b87eba1e439d1c156006ed3c4",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:8a9ddf6e41b70175089dfc0f72bf91bf9af4c59535d18a28b8e9c73eb5dead14:line:47"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "132909",
+        "output_tokens": "1586",
+        "cache_read_input_tokens": "127744",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "531"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:8a9ddf6e41b70175089dfc0f72bf91bf9af4c59535d18a28b8e9c73eb5dead14",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "134495",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "b5101ff7a2021ea96402d6f7206167a9",
+        "flAImegraph.lineage.native_id_hashes": "b5101ff7a2021ea96402d6f7206167a9",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:c2269dfe44df3ec7c0102ddc0009ee96",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:5d55c2e436ae4d4bcde1754381612b063490d34a25255020223d94ad5e004f6d:line:25"
+        },
+        {
+          "source_id": "codex:dc0cf6a542e5e8ae",
+          "record": "response:sha256:5d55c2e436ae4d4bcde1754381612b063490d34a25255020223d94ad5e004f6d:line:25"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "102015",
+        "output_tokens": "8596",
+        "cache_read_input_tokens": "98048",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "6518"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:5d55c2e436ae4d4bcde1754381612b063490d34a25255020223d94ad5e004f6d",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "110611",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "0c9f3b9829113da2e7856cf6cd58efc3",
+        "flAImegraph.lineage.native_id_hashes": "0c9f3b9829113da2e7856cf6cd58efc3",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:ce0eaa5cb74c4445496480bc09c6be34",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:a18b56e6b506ded1c7616706b9d819687da27887e8b9addfeb6bd582ba6db1b4:line:15"
+        },
+        {
+          "source_id": "codex:dc0cf6a542e5e8ae",
+          "record": "response:sha256:a18b56e6b506ded1c7616706b9d819687da27887e8b9addfeb6bd582ba6db1b4:line:15"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "73978",
+        "output_tokens": "467",
+        "cache_read_input_tokens": "66304",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "150"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:a18b56e6b506ded1c7616706b9d819687da27887e8b9addfeb6bd582ba6db1b4",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "74445",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "527992e9716de6c09077e5f1dc27bfdb",
+        "flAImegraph.lineage.native_id_hashes": "527992e9716de6c09077e5f1dc27bfdb",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:ce2da0b48d1d00d5c7c2d9fa6bdc2268",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:90ac1835c04fe5d8f5fed6995678f245786a5e211b9a8515146f0acff596bc6a:line:63"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "138251",
+        "output_tokens": "127",
+        "cache_read_input_tokens": "137984",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "23"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:90ac1835c04fe5d8f5fed6995678f245786a5e211b9a8515146f0acff596bc6a",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "138378",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "9cc316f8a554f9a9b3fafc048cfa06ab",
+        "flAImegraph.lineage.native_id_hashes": "9cc316f8a554f9a9b3fafc048cfa06ab",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:d02aaf657ecdfa490cd879d7e02e7146",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:e84352850506d190d49b3abdeaa398075ad7ceb48c9bd5a4164b021e22a27831:line:33"
+        },
+        {
+          "source_id": "codex:dc0cf6a542e5e8ae",
+          "record": "response:sha256:e84352850506d190d49b3abdeaa398075ad7ceb48c9bd5a4164b021e22a27831:line:33"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "117357",
+        "output_tokens": "1449",
+        "cache_read_input_tokens": "116480",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "903"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:e84352850506d190d49b3abdeaa398075ad7ceb48c9bd5a4164b021e22a27831",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "118806",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "508d589fd3eb7b63fd5df75107045054",
+        "flAImegraph.lineage.native_id_hashes": "508d589fd3eb7b63fd5df75107045054",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:e25be8c555ba66288807bb78f46acaca",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:3fa45b6bafd7f5bcd29d38da367ddb65299dad6744a681c90ee1668bb700b72b:line:53"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "136083",
+        "output_tokens": "116",
+        "cache_read_input_tokens": "134912",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "17"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:3fa45b6bafd7f5bcd29d38da367ddb65299dad6744a681c90ee1668bb700b72b",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "136199",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "0cdecb2b0f5ea36668ccac7c65f999d0",
+        "flAImegraph.lineage.native_id_hashes": "0cdecb2b0f5ea36668ccac7c65f999d0",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:eb805fa84795a3e0f38d9ee3f9958442",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:ea69536ed2589d7effffcf3b370c96c309cc7c78421b5e592c72d8096750b55e:line:61"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "138120",
+        "output_tokens": "89",
+        "cache_read_input_tokens": "136960",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "14"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:ea69536ed2589d7effffcf3b370c96c309cc7c78421b5e592c72d8096750b55e",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "138209",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "4f81bc50cc7aab932d81d5a82a7feadb",
+        "flAImegraph.lineage.native_id_hashes": "4f81bc50cc7aab932d81d5a82a7feadb",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:f5cc5cafb6ae872eb94bb34043dbae08",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:c83af71316d9a6b5b4945aed334d212d3b487f9c6f2d0a8d62de3556791bd147:line:39"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "125335",
+        "output_tokens": "78",
+        "cache_read_input_tokens": "123648",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "9"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:c83af71316d9a6b5b4945aed334d212d3b487f9c6f2d0a8d62de3556791bd147",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "125413",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "575fa809dacc52fcbdf7ced6b8b467be",
+        "flAImegraph.lineage.native_id_hashes": "575fa809dacc52fcbdf7ced6b8b467be",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:fb0885de5dc3877cf639c17b6c669d00",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:2b75e8f46c7966d75d12e374c1332ea04b0838f7f959b1103be167d66a9342eb:line:9"
+        },
+        {
+          "source_id": "codex:dc0cf6a542e5e8ae",
+          "record": "response:sha256:2b75e8f46c7966d75d12e374c1332ea04b0838f7f959b1103be167d66a9342eb:line:9"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "51358",
+        "output_tokens": "245",
+        "cache_read_input_tokens": "49920",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "25"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:2b75e8f46c7966d75d12e374c1332ea04b0838f7f959b1103be167d66a9342eb",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "51603",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "4befaa2ca2eed820aedaa3b8b3fbe0e1",
+        "flAImegraph.lineage.native_id_hashes": "4befaa2ca2eed820aedaa3b8b3fbe0e1",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    },
+    {
+      "id": "codex:capture:observation:feb239a86337a3ab522fb8b0ba8782ff",
+      "source_refs": [
+        {
+          "source_id": "codex:8d63a66d95efd2b1",
+          "record": "response:sha256:b2307d7027586eae9810097b116972c691f1402e0fae8d7d05b20deef02e4890:line:27"
+        },
+        {
+          "source_id": "codex:dc0cf6a542e5e8ae",
+          "record": "response:sha256:b2307d7027586eae9810097b116972c691f1402e0fae8d7d05b20deef02e4890:line:27"
+        }
+      ],
+      "kind": "model",
+      "operation": "codex.model",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "usage": {
+        "input_tokens": "110635",
+        "output_tokens": "79",
+        "cache_read_input_tokens": "101120",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": "10"
+      },
+      "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+      "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+      "provider": "openai",
+      "model": "gpt-5.6-luna",
+      "model_identity": "setting",
+      "subject_id": "sha256:b2307d7027586eae9810097b116972c691f1402e0fae8d7d05b20deef02e4890",
+      "grain": "operation",
+      "count_basis": "provider_native",
+      "product": "codex",
+      "work_item_id": "context-producer-proof",
+      "attributes": {
+        "source_record_type": "token_usage_record",
+        "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+        "native_total_tokens": "110714",
+        "effort": "max",
+        "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "native_id_hash": "5432ad923109da2de609e6f917897f36",
+        "flAImegraph.lineage.native_id_hashes": "5432ad923109da2de609e6f917897f36",
+        "flAImegraph.capture_namespace": "v02-independent-producer",
+        "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+      },
+      "agent_id": "independent-producer"
+    }
+  ],
+  "coverage": {
+    "source_ids": [
+      "codex:8d63a66d95efd2b1",
+      "codex:dc0cf6a542e5e8ae"
+    ],
+    "source_coverage": [
+      {
+        "id": "codex:8d63a66d95efd2b1",
+        "coverage": "partial"
+      },
+      {
+        "id": "codex:dc0cf6a542e5e8ae",
+        "coverage": "partial"
+      }
+    ],
+    "issues": [
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 10 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 10 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 12 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 12 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 14 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 14 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 16 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 16 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 18 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 18 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 20 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 20 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 22 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 22 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 24 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 24 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 26 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 26 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 28 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 28 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 30 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 30 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 32 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 32 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 34 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 34 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 36 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 38 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 4 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 4 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 40 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 42 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 44 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 46 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 48 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 50 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 52 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 54 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 56 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 58 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 6 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 6 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 60 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 62 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 64 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 66 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 68 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 8 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 8 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "partial_source_coverage",
+        "message": "Codex additive usage is authoritative only for the inspected capture contract; legacy snapshots and hidden/provider retries remain unresolved.",
+        "severity": "info",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "partial_source_coverage",
+        "message": "Codex additive usage is authoritative only for the inspected capture contract; legacy snapshots and hidden/provider retries remain unresolved.",
+        "severity": "info",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      }
+    ]
+  },
+  "valuation": {
+    "schema_version": "0.1.0",
+    "id": "val-35e8eaaed73522baf8fd3ad05bc097c0cbfc798049e3e92e97db0bd1e09d561f/work-item/context-producer-proof/8f4cb7a31ba056da5cc5edeee9b4f1ad68d97e0f04743fcbc8f904a22362a850",
+    "dataset_id": "context-producer-proof-v02",
+    "selection_policy": "direct-only-v1",
+    "currency": "USD",
+    "basis": "mixed",
+    "assumptions": [
+      "selection policy: direct-only-v1",
+      "recorded monetary amounts are rounded once to nano-currency using HALF_EVEN"
+    ],
+    "observations": [
+      {
+        "observation_id": "codex:capture:observation:0d06f93033d813239b59a237628df076",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:0f3bfc8bb000d19041803e41dab53b26",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:15cec6aee7c05c5a2ac4fd5e3127d9c0",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:190a030f2f6e361ae15b99d355634a0c",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:1a99de20842013e8c583bf070ff0e0e6",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:23d896a2272985fb936b4163a639c2b0",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:37b1d873f08707708aeeeb392d16d489",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:38924f1bea6a3d03875faaf5617806ed",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:3a3833dd4c824a2ca394c19b5e95af67",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:440db7bc463650c9fbd724315f6e7d86",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:47c3538fdbb3ab305e405d7a8b4749c1",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:54f32102e7d885db7dec1163e382f662",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:5903e74a3dc3c14d899e4636c6f9e060",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:612920843e33878952a5d043de0e0a9f",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:65b1cb715286ac2a4c812f7e0be22d7a",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:66a8ed613befe75aee7fb674e622ee51",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:6d1945d4c6b74d02da1e12c0877aa345",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:759a3f1cf2c0aa2495670bf90fd9fcaa",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:75fd692aa7b39d37058effbea7097f25",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:8242a0c3cba564fc714b8eb945ea3bd7",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:8a67a17fab696141347ccb470e5b23e1",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:8b4322adf080f469feb5864b2f2d4138",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:a4f706c3db0abba3883dc555fc4b97ae",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:bc28d12b87eba1e439d1c156006ed3c4",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:c2269dfe44df3ec7c0102ddc0009ee96",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:ce0eaa5cb74c4445496480bc09c6be34",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:ce2da0b48d1d00d5c7c2d9fa6bdc2268",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:d02aaf657ecdfa490cd879d7e02e7146",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:e25be8c555ba66288807bb78f46acaca",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:eb805fa84795a3e0f38d9ee3f9958442",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:f5cc5cafb6ae872eb94bb34043dbae08",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:fb0885de5dc3877cf639c17b6c669d00",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:feb239a86337a3ab522fb8b0ba8782ff",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      }
+    ],
+    "total_nanos": "0",
+    "complete": false,
+    "issues": [
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:0d06f93033d813239b59a237628df076"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:0f3bfc8bb000d19041803e41dab53b26"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:15cec6aee7c05c5a2ac4fd5e3127d9c0"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:190a030f2f6e361ae15b99d355634a0c"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:1a99de20842013e8c583bf070ff0e0e6"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:23d896a2272985fb936b4163a639c2b0"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:37b1d873f08707708aeeeb392d16d489"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:38924f1bea6a3d03875faaf5617806ed"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:3a3833dd4c824a2ca394c19b5e95af67"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:440db7bc463650c9fbd724315f6e7d86"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:47c3538fdbb3ab305e405d7a8b4749c1"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:54f32102e7d885db7dec1163e382f662"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:5903e74a3dc3c14d899e4636c6f9e060"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:612920843e33878952a5d043de0e0a9f"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:65b1cb715286ac2a4c812f7e0be22d7a"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:66a8ed613befe75aee7fb674e622ee51"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:6d1945d4c6b74d02da1e12c0877aa345"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:759a3f1cf2c0aa2495670bf90fd9fcaa"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:75fd692aa7b39d37058effbea7097f25"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:8242a0c3cba564fc714b8eb945ea3bd7"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:8a67a17fab696141347ccb470e5b23e1"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:8b4322adf080f469feb5864b2f2d4138"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:a4f706c3db0abba3883dc555fc4b97ae"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:bc28d12b87eba1e439d1c156006ed3c4"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:c2269dfe44df3ec7c0102ddc0009ee96"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:ce0eaa5cb74c4445496480bc09c6be34"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:ce2da0b48d1d00d5c7c2d9fa6bdc2268"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:d02aaf657ecdfa490cd879d7e02e7146"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:e25be8c555ba66288807bb78f46acaca"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:eb805fa84795a3e0f38d9ee3f9958442"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:f5cc5cafb6ae872eb94bb34043dbae08"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:fb0885de5dc3877cf639c17b6c669d00"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:feb239a86337a3ab522fb8b0ba8782ff"
+      },
+      {
+        "code": "SOURCE_COVERAGE_PARTIAL",
+        "message": "source codex:8d63a66d95efd2b1 declares partial capture coverage",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "SOURCE_COVERAGE_PARTIAL",
+        "message": "source codex:dc0cf6a542e5e8ae declares partial capture coverage",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 10 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 10 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 12 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 12 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 14 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 14 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 16 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 16 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 18 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 18 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 20 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 20 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 22 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 22 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 24 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 24 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 26 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 26 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 28 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 28 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 30 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 30 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 32 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 32 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 34 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 34 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 36 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 38 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 4 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 4 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 40 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 42 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 44 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 46 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 48 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 50 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 52 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 54 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 56 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 58 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 6 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 6 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 60 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 62 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 64 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 66 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 68 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 8 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 8 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "partial_source_coverage",
+        "message": "Codex additive usage is authoritative only for the inspected capture contract; legacy snapshots and hidden/provider retries remain unresolved.",
+        "severity": "info",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "partial_source_coverage",
+        "message": "Codex additive usage is authoritative only for the inspected capture contract; legacy snapshots and hidden/provider retries remain unresolved.",
+        "severity": "info",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      }
+    ]
+  },
+  "dataset_valuation": {
+    "schema_version": "0.1.0",
+    "id": "val-35e8eaaed73522baf8fd3ad05bc097c0cbfc798049e3e92e97db0bd1e09d561f",
+    "dataset_id": "context-producer-proof-v02",
+    "selection_policy": "direct-only-v1",
+    "currency": "USD",
+    "basis": "mixed",
+    "assumptions": [
+      "selection policy: direct-only-v1",
+      "recorded monetary amounts are rounded once to nano-currency using HALF_EVEN"
+    ],
+    "observations": [
+      {
+        "observation_id": "codex:capture:observation:02d1d15aaa8ad2a2e284d7251124f10f",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:04e1d51f3c726e0c029e3e4d5585e191",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:0d06f93033d813239b59a237628df076",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:0eea19f28665c6cbac11ea407da032f6",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:0f3bfc8bb000d19041803e41dab53b26",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:12a9444fdc45f9916bdd1b1dba1c95df",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:15cec6aee7c05c5a2ac4fd5e3127d9c0",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:190a030f2f6e361ae15b99d355634a0c",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:1a99de20842013e8c583bf070ff0e0e6",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:1b62dcba0fcc6617f34d7c103f29793c",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:1eb6d113acec24b28e1c3529b8ea033f",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:1fec17e019e2c603aed4c4becb5ddd2b",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:2251665cf00b5b334e8dcbff45676fc9",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:23d896a2272985fb936b4163a639c2b0",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:2507640909d1c230ae6169b0cafd86d4",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:26b902ee5f9be55f1ef6e1ed1cddbc55",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:27a9b525257a3c1c71151672ee5270ac",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:28e7e8b7103b0b1115db4fc6aae01e5c",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:2bd542fff6ce693ce062bea8169245ce",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:2cbac83206140c05179b1c6e571a41e6",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:2dc5c8acadfb55d76e571fb436682351",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:2e57259379ce6c6633abad34c5fe3a02",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:2e633aab3a8d1c87400b5716b229a930",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:2f99427f0effd5297d672686906cd941",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:353e0200e0de0caa3c1cabc2a290ac28",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:37b1d873f08707708aeeeb392d16d489",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:38924f1bea6a3d03875faaf5617806ed",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:3a3833dd4c824a2ca394c19b5e95af67",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:3b51f9f3c35d5c8c79031753d07cf278",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:40fa80c3526bceb777be91482cac5a3f",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:43fa331369aad3b5801f064a5abb3552",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:440db7bc463650c9fbd724315f6e7d86",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:45c9f2a2294e76b2adc55aa21d76874c",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:47c3538fdbb3ab305e405d7a8b4749c1",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:49785ac5ac45e9ebdab70c54ca57d0c5",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:538272046edc4f367de66b13724ae5dc",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:54f32102e7d885db7dec1163e382f662",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:5903e74a3dc3c14d899e4636c6f9e060",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:592caa316b2b894dc11ec777c213794f",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:5b08367db0a31ae32eea8c2e06585978",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:5cce9fe124b90e07339a4bf219b10c40",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:5cf7e3d4bc92506e5b0ba8c9aaefb90e",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:5da329cf56a22a0ff4c069df403fb81e",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:612920843e33878952a5d043de0e0a9f",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:6220b695c60ab332feff1299ac60a25b",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:65b1cb715286ac2a4c812f7e0be22d7a",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:66a8ed613befe75aee7fb674e622ee51",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:684f716384712037543c698e3957c424",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:6d1945d4c6b74d02da1e12c0877aa345",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:6e14a1dadfb6a94ecf691376fb684375",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:6f02116acf4b3979fa0ae8bd0a0eab72",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:7038fa774d9614d5b06ae80455cbe9aa",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:70af16132821dc8c9b8ffa07ecb0274a",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:70de307c96a1f4a9ffdf06b61a2a0dc8",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:718e30bef4ad729bf9fab9878660c655",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:74a7575f94667d625b701d671ff31c63",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:759a3f1cf2c0aa2495670bf90fd9fcaa",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:75e541c9309e3f3dc331c07876b6bd78",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:75fd692aa7b39d37058effbea7097f25",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:79e72bf47508d80b7886ca43cd45ded6",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:7eb37e51a5688552e108fb5210562c7b",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:8242a0c3cba564fc714b8eb945ea3bd7",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:859e458f148e6d2d6b56f311e8d1a23f",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:8a67a17fab696141347ccb470e5b23e1",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:8b4322adf080f469feb5864b2f2d4138",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:8bae796431ef66c4644d5ec9982aba42",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:9c22b17b576540a78a2ed462a55bda3f",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:9cd5b1f635f713f0a6f6749372f00fab",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:9d15843a90a9b220eab216fbe1abc3f6",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:a4f706c3db0abba3883dc555fc4b97ae",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:ad623e47a18152ecfad8a6b391985868",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:ae131a0fddcada6a24c68e4789952877",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:ae89ca52c350fbe6e478c6363218395f",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:b34151875b445ec60793dcf460384439",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:b63b4fbad48c6ae76d507f266c7a16df",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:bc28d12b87eba1e439d1c156006ed3c4",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:bd1d32b0b9ad310dce8c4b75d5f2c317",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:c2269dfe44df3ec7c0102ddc0009ee96",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:c6ae461115f482e7c7e25069938abea8",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:cc02bf3133540bc21c9d0180939f71c6",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:ce0eaa5cb74c4445496480bc09c6be34",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:ce2da0b48d1d00d5c7c2d9fa6bdc2268",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:d02aaf657ecdfa490cd879d7e02e7146",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:e1f755e20ce596402722d2ba3ac1a688",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:e25be8c555ba66288807bb78f46acaca",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:e6abf64b2c77deb9bfc13472aefc26c4",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:eb805fa84795a3e0f38d9ee3f9958442",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:f005b14bbcf5fe89fc5d1a5e6c59429d",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:f3b69a43d55216dbccc751f5210e6070",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:f52eb5b70a2ad104f910272d1698f705",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:f5cc5cafb6ae872eb94bb34043dbae08",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:f8883993b5f7a5e87ee4f6bfa6f44cc1",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:f9d2d248c4c51daa9bbf437097fc7420",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:fb0885de5dc3877cf639c17b6c669d00",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:fca7bddc3042814649f08ac8b672ae4d",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:fd6457a0475cc6352d37605eaabcd2e1",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "aggregate accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:feb239a86337a3ab522fb8b0ba8782ff",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "recorded cost is unavailable"
+      },
+      {
+        "observation_id": "codex:capture:observation:ff782306c0f9add2123d1002a9522364",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      },
+      {
+        "observation_id": "codex:capture:observation:ff7b069d543532c5c159000d7cb64c88",
+        "amount_nanos": null,
+        "basis": null,
+        "reason": "snapshot accounting scope is excluded by direct-only-v1"
+      }
+    ],
+    "total_nanos": "0",
+    "complete": false,
+    "issues": [
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:04e1d51f3c726e0c029e3e4d5585e191"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:12a9444fdc45f9916bdd1b1dba1c95df"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:1b62dcba0fcc6617f34d7c103f29793c"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:1eb6d113acec24b28e1c3529b8ea033f"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:1fec17e019e2c603aed4c4becb5ddd2b"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:2251665cf00b5b334e8dcbff45676fc9"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:2507640909d1c230ae6169b0cafd86d4"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:28e7e8b7103b0b1115db4fc6aae01e5c"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:2bd542fff6ce693ce062bea8169245ce"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:2e57259379ce6c6633abad34c5fe3a02"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:2e633aab3a8d1c87400b5716b229a930"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:2f99427f0effd5297d672686906cd941"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:3b51f9f3c35d5c8c79031753d07cf278"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:40fa80c3526bceb777be91482cac5a3f"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:538272046edc4f367de66b13724ae5dc"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:5b08367db0a31ae32eea8c2e06585978"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:5da329cf56a22a0ff4c069df403fb81e"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:6220b695c60ab332feff1299ac60a25b"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:6e14a1dadfb6a94ecf691376fb684375"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:70af16132821dc8c9b8ffa07ecb0274a"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:70de307c96a1f4a9ffdf06b61a2a0dc8"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:74a7575f94667d625b701d671ff31c63"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:75e541c9309e3f3dc331c07876b6bd78"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:7eb37e51a5688552e108fb5210562c7b"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:9cd5b1f635f713f0a6f6749372f00fab"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:9d15843a90a9b220eab216fbe1abc3f6"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:b63b4fbad48c6ae76d507f266c7a16df"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:bd1d32b0b9ad310dce8c4b75d5f2c317"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:c6ae461115f482e7c7e25069938abea8"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:f52eb5b70a2ad104f910272d1698f705"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:f8883993b5f7a5e87ee4f6bfa6f44cc1"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:fca7bddc3042814649f08ac8b672ae4d"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "aggregate observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:fd6457a0475cc6352d37605eaabcd2e1"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:02d1d15aaa8ad2a2e284d7251124f10f"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:0eea19f28665c6cbac11ea407da032f6"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:26b902ee5f9be55f1ef6e1ed1cddbc55"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:27a9b525257a3c1c71151672ee5270ac"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:2cbac83206140c05179b1c6e571a41e6"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:2dc5c8acadfb55d76e571fb436682351"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:353e0200e0de0caa3c1cabc2a290ac28"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:43fa331369aad3b5801f064a5abb3552"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:45c9f2a2294e76b2adc55aa21d76874c"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:49785ac5ac45e9ebdab70c54ca57d0c5"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:592caa316b2b894dc11ec777c213794f"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:5cce9fe124b90e07339a4bf219b10c40"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:5cf7e3d4bc92506e5b0ba8c9aaefb90e"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:684f716384712037543c698e3957c424"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:6f02116acf4b3979fa0ae8bd0a0eab72"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:7038fa774d9614d5b06ae80455cbe9aa"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:718e30bef4ad729bf9fab9878660c655"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:79e72bf47508d80b7886ca43cd45ded6"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:859e458f148e6d2d6b56f311e8d1a23f"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:8bae796431ef66c4644d5ec9982aba42"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:9c22b17b576540a78a2ed462a55bda3f"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:ad623e47a18152ecfad8a6b391985868"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:ae131a0fddcada6a24c68e4789952877"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:ae89ca52c350fbe6e478c6363218395f"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:b34151875b445ec60793dcf460384439"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:cc02bf3133540bc21c9d0180939f71c6"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:e1f755e20ce596402722d2ba3ac1a688"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:e6abf64b2c77deb9bfc13472aefc26c4"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:f005b14bbcf5fe89fc5d1a5e6c59429d"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:f3b69a43d55216dbccc751f5210e6070"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:f9d2d248c4c51daa9bbf437097fc7420"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:ff782306c0f9add2123d1002a9522364"
+      },
+      {
+        "code": "NON_DIRECT_EXCLUDED",
+        "message": "snapshot observation is retained as evidence but excluded by direct-only-v1",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:ff7b069d543532c5c159000d7cb64c88"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:0d06f93033d813239b59a237628df076"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:0f3bfc8bb000d19041803e41dab53b26"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:15cec6aee7c05c5a2ac4fd5e3127d9c0"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:190a030f2f6e361ae15b99d355634a0c"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:1a99de20842013e8c583bf070ff0e0e6"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:23d896a2272985fb936b4163a639c2b0"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:37b1d873f08707708aeeeb392d16d489"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:38924f1bea6a3d03875faaf5617806ed"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:3a3833dd4c824a2ca394c19b5e95af67"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:440db7bc463650c9fbd724315f6e7d86"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:47c3538fdbb3ab305e405d7a8b4749c1"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:54f32102e7d885db7dec1163e382f662"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:5903e74a3dc3c14d899e4636c6f9e060"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:612920843e33878952a5d043de0e0a9f"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:65b1cb715286ac2a4c812f7e0be22d7a"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:66a8ed613befe75aee7fb674e622ee51"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:6d1945d4c6b74d02da1e12c0877aa345"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:759a3f1cf2c0aa2495670bf90fd9fcaa"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:75fd692aa7b39d37058effbea7097f25"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:8242a0c3cba564fc714b8eb945ea3bd7"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:8a67a17fab696141347ccb470e5b23e1"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:8b4322adf080f469feb5864b2f2d4138"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:a4f706c3db0abba3883dc555fc4b97ae"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:bc28d12b87eba1e439d1c156006ed3c4"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:c2269dfe44df3ec7c0102ddc0009ee96"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:ce0eaa5cb74c4445496480bc09c6be34"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:ce2da0b48d1d00d5c7c2d9fa6bdc2268"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:d02aaf657ecdfa490cd879d7e02e7146"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:e25be8c555ba66288807bb78f46acaca"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:eb805fa84795a3e0f38d9ee3f9958442"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:f5cc5cafb6ae872eb94bb34043dbae08"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:fb0885de5dc3877cf639c17b6c669d00"
+      },
+      {
+        "code": "RECORDED_COST_UNAVAILABLE",
+        "message": "direct observation has no recorded cost",
+        "severity": "warning",
+        "observation_id": "codex:capture:observation:feb239a86337a3ab522fb8b0ba8782ff"
+      },
+      {
+        "code": "SOURCE_COVERAGE_PARTIAL",
+        "message": "source codex:8d63a66d95efd2b1 declares partial capture coverage",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "SOURCE_COVERAGE_PARTIAL",
+        "message": "source codex:dc0cf6a542e5e8ae declares partial capture coverage",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 10 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 10 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 12 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 12 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 14 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 14 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 16 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 16 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 18 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 18 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 20 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 20 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 22 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 22 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 24 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 24 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 26 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 26 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 28 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 28 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 30 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 30 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 32 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 32 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 34 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 34 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 36 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 38 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 4 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 4 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 40 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 42 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 44 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 46 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 48 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 50 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 52 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 54 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 56 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 58 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 6 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 6 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 60 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 62 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 64 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 66 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 68 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 8 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 8 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "partial_source_coverage",
+        "message": "Codex additive usage is authoritative only for the inspected capture contract; legacy snapshots and hidden/provider retries remain unresolved.",
+        "severity": "info",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "partial_source_coverage",
+        "message": "Codex additive usage is authoritative only for the inspected capture contract; legacy snapshots and hidden/provider retries remain unresolved.",
+        "severity": "info",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      }
+    ]
+  },
+  "estimate_semantics": [
+    {
+      "estimate_id": "initial",
+      "timing": "pre_execution",
+      "interpretation": "pre_execution_estimate",
+      "temporal_status": "verified"
+    }
+  ]
+}

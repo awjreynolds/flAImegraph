@@ -87,3 +87,31 @@ The package archive can be installed from the GitHub release with `npm install /
 An independent producer can start with [the worked evidence JSON](../examples/golden/evidence.json) and the [versioned schemas](../spec/0.1/schemas/). Follow the semantic contracts as well as structural schemas. The portable [accounting vectors](../spec/0.1/fixtures/accounting.json) contain literal expectations and invalid cases; compare your consumer with them. `node dist/cli.js conformance` executes those vectors against this reference implementation and checks profile/folded conservation. `npm run check` also runs adversarial adapter, allocation, identity and profile tests. Independent Go pprof and upstream FlameGraph checks exercise existing consumers; they do not establish independent implementation of this bridge specification.
 
 Propose changes through a repository issue with a concrete failing example and compatibility impact. Declare conformance classes, source versions and limitations. Experimental version changes follow the [evolution policy](../spec/0.1/conformance.md); external adoption and calibration are separate evidence gates. Context Points remain a [versioned local planning proposal](context-points.md), with no universal points-to-token or points-to-dollar conversion.
+
+## Context and harness profiles (0.2)
+
+A context report joins 0.1 usage and valuation with a 0.2 context sidecar. Open a report in the Context Explorer to inspect request order, context origin and representation, repeated source revisions, summaries, capture gaps, effective harness settings and exact request cost. Report loading happens in the browser; file contents are not uploaded.
+
+```sh
+node dist/cli.js harness-profile --harness codex --version 0.153.4 --out .local/harness.json
+node dist/cli.js capture --harness codex --input session.jsonl --namespace my-run --dataset-id my-work --out .local/capture.json --evidence-out .local/evidence.json
+# Repeat after complete JSONL records have been appended; exact replay is idempotent.
+node dist/cli.js capture --input session.jsonl --state .local/capture.json --out .local/capture.json --evidence-out .local/evidence.json
+node dist/cli.js value --input .local/evidence.json --mode recorded --out .local/valuation.json
+```
+
+A supplied version or model in `harness-profile` is a producer declaration. Observed facts need source references. Recorded valuation leaves missing prices unvalued; a zero known subtotal does not mean free work.
+
+`context-import` reconstructs a bounded Pi transcript history, or explicit unavailable Codex context, from the exact input artifact named by `--source-id` in an imported EvidenceBundle. It checks the artifact SHA-256. Capture state's merged evidence can reference several immutable prefixes; select the exact matching source, or use `import` for a single input. Pi transcript history is partial and is not a certified final provider request.
+
+```sh
+node dist/cli.js context-import --harness codex --input session.jsonl --evidence .local/evidence.json --profile .local/harness.json --source-id EXACT_SOURCE_ID --out .local/context.json
+node dist/cli.js context-report --evidence .local/evidence.json --valuation .local/valuation.json --context .local/context.json --out .local/context-report.json
+node dist/cli.js validate --kind context-report --input .local/context-report.json
+```
+
+For instrumentation, call `captureRequestContext` at the boundary you control, or `captureProviderRequest` for OpenAI Responses, Anthropic Messages or Gemini content request objects. These are pure capture functions: they send no provider requests. Raw text/bytes are hashed transiently; exports contain metadata. Annotate known repository instructions, skills or files explicitly; roles alone do not prove semantic origin. Unsupported request fields downgrade coverage. Local byte counts and supplied token estimates are separately classified.
+
+Optional `--allocate-requests id-a,id-b` selects at most one context request per model observation. It estimates portions of the existing whole-request cost using token weights and preserves an unallocated remainder. It does not measure exact per-source billing. Allocation is off by default.
+
+See the [0.2 contract](../spec/0.2/README.md), [capture SDK evidence](implementation-evidence/context-capture.md), [native import evidence](implementation-evidence/native-context.md), and [report examples](../examples/context/README.md). The [viewer source](../viewer/README.md) supports a local build. Standard FlameGraph, pprof and OTLP cost exports continue to work independently.

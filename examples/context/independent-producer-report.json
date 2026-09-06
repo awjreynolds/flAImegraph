@@ -1,0 +1,671 @@
+{
+  "schema_version": "0.2.0",
+  "dataset_id": "independent-producer-fixture-v02",
+  "evidence": {
+    "schema_version": "0.1.0",
+    "dataset_id": "independent-producer-fixture-v02",
+    "sources": [
+      {
+        "id": "independent-evidence",
+        "harness": "independent-python",
+        "format": "synthetic-json",
+        "coverage": "complete",
+        "description": "Synthetic valuation input; no provider call or bill is represented."
+      }
+    ],
+    "observations": [
+      {
+        "id": "model-call-1",
+        "source_refs": [
+          {
+            "source_id": "independent-evidence",
+            "record": "observations[0]"
+          }
+        ],
+        "kind": "model",
+        "operation": "synthetic.context-producer",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "timestamp": "2026-09-06T20:00:00Z",
+        "provider": "synthetic-provider",
+        "model": "synthetic-model",
+        "model_identity": "setting",
+        "usage": {
+          "input_tokens": "100",
+          "output_tokens": "5",
+          "cache_read_input_tokens": null,
+          "cache_write_input_tokens": null,
+          "reasoning_output_tokens": null
+        },
+        "recorded_cost": {
+          "amount": "0.000000101",
+          "currency": "USD",
+          "basis": "model_price_estimate"
+        }
+      }
+    ],
+    "relationships": [],
+    "issues": [
+      {
+        "code": "SYNTHETIC_FIXTURE",
+        "severity": "info",
+        "message": "Synthetic fixture: token measurements and model_price_estimate are illustrative; no provider call, billed amount, or accepted user task exists."
+      }
+    ]
+  },
+  "valuation": {
+    "schema_version": "0.1.0",
+    "id": "val-c831dc945cfcdb1b40f935ad5465c8dcab7721e405e7f486aee5c97bdb39d996",
+    "dataset_id": "independent-producer-fixture-v02",
+    "selection_policy": "direct-only-v1",
+    "currency": "USD",
+    "basis": "model_price_estimate",
+    "assumptions": [
+      "selection policy: direct-only-v1",
+      "recorded monetary amounts are rounded once to nano-currency using HALF_EVEN"
+    ],
+    "observations": [
+      {
+        "observation_id": "model-call-1",
+        "amount_nanos": "101",
+        "basis": "model_price_estimate"
+      }
+    ],
+    "total_nanos": "101",
+    "complete": true,
+    "issues": [
+      {
+        "code": "SYNTHETIC_FIXTURE",
+        "severity": "info",
+        "message": "Synthetic fixture: token measurements and model_price_estimate are illustrative; no provider call, billed amount, or accepted user task exists."
+      }
+    ]
+  },
+  "context": {
+    "artifacts": [
+      {
+        "coverage": "partial",
+        "description": "Synthetic independent producer capture; no provider call, bill, or accepted task is represented.",
+        "format": "synthetic-context-json",
+        "harness": "independent-python",
+        "id": "context-capture",
+        "version": "0.2.0"
+      }
+    ],
+    "dataset_id": "independent-producer-fixture-v02",
+    "evidence_schema_version": "0.1.0",
+    "issues": [
+      {
+        "code": "SYNTHETIC_FIXTURE",
+        "message": "Synthetic fixture: token measurements and model_price_estimate are illustrative; no provider call, billed amount, or accepted user task exists.",
+        "severity": "info"
+      }
+    ],
+    "profiles": [
+      {
+        "artifacts": [
+          {
+            "coverage": "complete",
+            "description": "Declared profile provenance for the independent synthetic fixture.",
+            "format": "synthetic-profile-json",
+            "harness": "independent-python",
+            "id": "profile-manifest",
+            "version": "0.2.0"
+          }
+        ],
+        "context_capabilities": [
+          {
+            "capture": "direct",
+            "evidence": "declared",
+            "note": "The synthetic request includes a direct user occurrence.",
+            "origin": "user_prompt",
+            "source_refs": [
+              {
+                "record": "profile.context_capabilities.user_prompt",
+                "source_id": "profile-manifest"
+              }
+            ]
+          },
+          {
+            "capture": "reconstructed",
+            "evidence": "declared",
+            "note": "The history summary is a declared fixture transformation.",
+            "origin": "conversation_history",
+            "source_refs": [
+              {
+                "record": "profile.context_capabilities.conversation_history",
+                "source_id": "profile-manifest"
+              }
+            ]
+          },
+          {
+            "capture": "unavailable",
+            "evidence": "declared",
+            "note": "Tool identity is declared, but a request-level schema occurrence is not captured.",
+            "origin": "tool_schema",
+            "source_refs": [
+              {
+                "record": "profile.context_capabilities.tool_schema",
+                "source_id": "profile-manifest"
+              }
+            ]
+          }
+        ],
+        "harness": "independent-python",
+        "harness_version": {
+          "evidence": "declared",
+          "source_refs": [
+            {
+              "record": "profile.harness_version",
+              "source_id": "profile-manifest"
+            }
+          ],
+          "value": "0.1.0"
+        },
+        "id": "independent-python-profile-v1",
+        "instruction_sources": [
+          {
+            "delivery": "always",
+            "evidence": "declared",
+            "label": "synthetic repository instruction",
+            "origin": "repository_instruction",
+            "source_refs": [
+              {
+                "record": "profile.instruction_sources[0]",
+                "source_id": "profile-manifest"
+              }
+            ]
+          },
+          {
+            "delivery": "conditional",
+            "evidence": "declared",
+            "label": "synthetic TDD skill",
+            "origin": "skill",
+            "source_refs": [
+              {
+                "record": "profile.instruction_sources[1]",
+                "source_id": "profile-manifest"
+              }
+            ]
+          }
+        ],
+        "model": {
+          "name": {
+            "evidence": "declared",
+            "source_refs": [
+              {
+                "record": "profile.model.name",
+                "source_id": "profile-manifest"
+              }
+            ],
+            "value": "synthetic-model"
+          },
+          "provider": {
+            "evidence": "declared",
+            "source_refs": [
+              {
+                "record": "profile.model.provider",
+                "source_id": "profile-manifest"
+              }
+            ],
+            "value": "synthetic-provider"
+          },
+          "settings": {
+            "max_output_tokens": {
+              "evidence": "unknown",
+              "source_refs": [],
+              "value": null
+            },
+            "temperature": {
+              "evidence": "declared",
+              "source_refs": [
+                {
+                  "record": "profile.model.settings.temperature",
+                  "source_id": "profile-manifest"
+                }
+              ],
+              "value": "0"
+            }
+          }
+        },
+        "name": "Independent Python synthetic harness",
+        "policies": {
+          "assembly": {
+            "evidence": "declared",
+            "source_refs": [
+              {
+                "record": "profile.policies.assembly",
+                "source_id": "profile-manifest"
+              }
+            ],
+            "value": "ordered"
+          },
+          "caching": {
+            "evidence": "unknown",
+            "source_refs": [],
+            "value": null
+          },
+          "compaction": {
+            "evidence": "declared",
+            "source_refs": [
+              {
+                "record": "profile.policies.compaction",
+                "source_id": "profile-manifest"
+              }
+            ],
+            "value": "summary-v1"
+          },
+          "truncation": {
+            "evidence": "unknown",
+            "source_refs": [],
+            "value": null
+          }
+        },
+        "profile_version": "0.2.0-independent-fixture-v1",
+        "schema_version": "0.2.0",
+        "tools": [
+          {
+            "definition_evidence": "derived",
+            "definition_method": "sha256(canonical synthetic tool definition)",
+            "definition_sha256": "bc4ad76b4642fa6e894e164c7ec721aa7bef441146a4ca8387081358325cd6f8",
+            "evidence": "declared",
+            "id": "synthetic-tool",
+            "name": "synthetic_tool",
+            "source_refs": [
+              {
+                "record": "profile.tools[0]",
+                "source_id": "profile-manifest"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "requests": [
+      {
+        "boundary": "harness_context",
+        "captured_at": "2026-09-06T20:00:00Z",
+        "coverage": "partial",
+        "coverage_evidence": "observed",
+        "id": "request-main",
+        "observation_id": "model-call-1",
+        "occurrences": [
+          {
+            "id": "occurrence-system",
+            "placement": "instruction",
+            "revision_id": "revision-system",
+            "role": "system",
+            "treatment": {
+              "evidence": "declared",
+              "method": "synthetic request manifest",
+              "source_refs": [
+                {
+                  "record": "requests[0].occurrences[0]",
+                  "source_id": "context-capture"
+                }
+              ],
+              "value": "fresh"
+            }
+          },
+          {
+            "id": "occurrence-user-first",
+            "placement": "current_turn",
+            "revision_id": "revision-user",
+            "role": "user",
+            "treatment": {
+              "evidence": "declared",
+              "method": "synthetic request manifest",
+              "source_refs": [
+                {
+                  "record": "requests[0].occurrences[1]",
+                  "source_id": "context-capture"
+                }
+              ],
+              "value": "fresh"
+            }
+          },
+          {
+            "id": "occurrence-history-summary",
+            "placement": "history",
+            "revision_id": "revision-history-summary",
+            "role": "assistant",
+            "treatment": {
+              "evidence": "declared",
+              "method": "synthetic compaction output",
+              "source_refs": [
+                {
+                  "record": "requests[0].occurrences[2]",
+                  "source_id": "context-capture"
+                }
+              ],
+              "value": "fresh"
+            }
+          },
+          {
+            "id": "occurrence-user-repeat",
+            "placement": "current_turn",
+            "revision_id": "revision-user",
+            "role": "user",
+            "treatment": {
+              "evidence": "unknown",
+              "method": "cache treatment was not captured; repetition is not a cache hit",
+              "source_refs": [],
+              "value": "unknown"
+            }
+          }
+        ],
+        "overrides": {
+          "compaction": {
+            "evidence": "observed",
+            "source_refs": [
+              {
+                "record": "requests[0].overrides.compaction",
+                "source_id": "context-capture"
+              }
+            ],
+            "value": "summary-v1"
+          },
+          "temperature": {
+            "evidence": "observed",
+            "source_refs": [
+              {
+                "record": "requests[0].overrides.temperature",
+                "source_id": "context-capture"
+              }
+            ],
+            "value": 0.2
+          }
+        },
+        "profile_id": "independent-python-profile-v1",
+        "source_refs": [
+          {
+            "record": "requests[0]",
+            "source_id": "context-capture"
+          }
+        ]
+      }
+    ],
+    "revisions": [
+      {
+        "bytes": {
+          "evidence": "derived",
+          "method": "UTF-8 byte length via Python standard library",
+          "source_refs": [
+            {
+              "record": "revisions[0].bytes",
+              "source_id": "context-capture"
+            }
+          ],
+          "unit": "utf8_bytes",
+          "value": "58"
+        },
+        "content_sha256": "c7eeed062e1af479c8af2bb9878d9c40c0e576d3c576ccd20eac04dea15d2805",
+        "fingerprint_evidence": "derived",
+        "fingerprint_method": "sha256(UTF-8 synthetic fixture text)",
+        "id": "revision-system",
+        "media": "text",
+        "representation": "original",
+        "source_id": "source-system",
+        "source_refs": [
+          {
+            "record": "revisions[0]",
+            "source_id": "context-capture"
+          }
+        ],
+        "tokens": {
+          "evidence": "unavailable",
+          "method": "no tokenizer record in synthetic fixture",
+          "source_refs": [
+            {
+              "record": "revisions[0].tokens",
+              "source_id": "context-capture"
+            }
+          ],
+          "unit": "tokens",
+          "value": null
+        }
+      },
+      {
+        "bytes": {
+          "evidence": "derived",
+          "method": "UTF-8 byte length via Python standard library",
+          "source_refs": [
+            {
+              "record": "revisions[1].bytes",
+              "source_id": "context-capture"
+            }
+          ],
+          "unit": "utf8_bytes",
+          "value": "43"
+        },
+        "content_sha256": "5826b917165719b79c3c79f10c315b4743235f82fdf993abfcbee8ffabb5cb6c",
+        "fingerprint_evidence": "derived",
+        "fingerprint_method": "sha256(UTF-8 synthetic fixture text)",
+        "id": "revision-user",
+        "media": "text",
+        "representation": "original",
+        "source_id": "source-user",
+        "source_refs": [
+          {
+            "record": "revisions[1]",
+            "source_id": "context-capture"
+          }
+        ],
+        "tokens": {
+          "evidence": "estimated",
+          "method": "synthetic fixture token estimate",
+          "source_refs": [
+            {
+              "record": "revisions[1].tokens",
+              "source_id": "context-capture"
+            }
+          ],
+          "unit": "tokens",
+          "value": "30"
+        }
+      },
+      {
+        "bytes": {
+          "evidence": "unavailable",
+          "method": "raw byte length not captured for this synthetic history record",
+          "source_refs": [
+            {
+              "record": "revisions[2].bytes",
+              "source_id": "context-capture"
+            }
+          ],
+          "unit": "utf8_bytes",
+          "value": null
+        },
+        "content_sha256": "f3c14f8dc09e032f6146c85675b072f7f7ba7f4707cc57cefb676916a30662ac",
+        "fingerprint_evidence": "derived",
+        "fingerprint_method": "sha256(UTF-8 synthetic fixture text)",
+        "id": "revision-history-full",
+        "media": "text",
+        "representation": "original",
+        "source_id": "source-history",
+        "source_refs": [
+          {
+            "record": "revisions[2]",
+            "source_id": "context-capture"
+          }
+        ],
+        "tokens": {
+          "evidence": "estimated",
+          "method": "synthetic fixture token estimate before compaction",
+          "source_refs": [
+            {
+              "record": "revisions[2].tokens",
+              "source_id": "context-capture"
+            }
+          ],
+          "unit": "tokens",
+          "value": "40"
+        }
+      },
+      {
+        "bytes": {
+          "evidence": "unavailable",
+          "method": "raw byte length not captured for this synthetic summary record",
+          "source_refs": [
+            {
+              "record": "revisions[3].bytes",
+              "source_id": "context-capture"
+            }
+          ],
+          "unit": "utf8_bytes",
+          "value": null
+        },
+        "content_sha256": "11ac8fc4d8294d908bffb7b2a996210144aa0b22d5052e95ade90f2909582463",
+        "fingerprint_evidence": "derived",
+        "fingerprint_method": "sha256(UTF-8 synthetic fixture text)",
+        "id": "revision-history-summary",
+        "media": "text",
+        "representation": "summary",
+        "source_id": "source-history",
+        "source_refs": [
+          {
+            "record": "revisions[3]",
+            "source_id": "context-capture"
+          }
+        ],
+        "tokens": {
+          "evidence": "estimated",
+          "method": "synthetic fixture token estimate after compaction",
+          "source_refs": [
+            {
+              "record": "revisions[3].tokens",
+              "source_id": "context-capture"
+            }
+          ],
+          "unit": "tokens",
+          "value": "20"
+        }
+      }
+    ],
+    "schema_version": "0.2.0",
+    "sources": [
+      {
+        "id": "source-system",
+        "identity_basis": "producer",
+        "label": "synthetic system instruction",
+        "origin": "system_instruction",
+        "origin_evidence": "declared",
+        "source_refs": [
+          {
+            "record": "sources[0]",
+            "source_id": "context-capture"
+          }
+        ]
+      },
+      {
+        "id": "source-user",
+        "identity_basis": "producer",
+        "label": "synthetic user request",
+        "origin": "user_prompt",
+        "origin_evidence": "observed",
+        "source_refs": [
+          {
+            "record": "sources[1]",
+            "source_id": "context-capture"
+          }
+        ]
+      },
+      {
+        "id": "source-history",
+        "identity_basis": "producer",
+        "label": "synthetic conversation history",
+        "origin": "conversation_history",
+        "origin_evidence": "declared",
+        "source_refs": [
+          {
+            "record": "sources[2]",
+            "source_id": "context-capture"
+          }
+        ]
+      }
+    ],
+    "transformations": [
+      {
+        "evidence": "declared",
+        "from_revision_ids": [
+          "revision-history-full"
+        ],
+        "id": "transformation-history-summary",
+        "kind": "summarize",
+        "method": "synthetic compaction summary-v1 with explicit source lineage",
+        "observation_id": "model-call-1",
+        "source_refs": [
+          {
+            "record": "transformations[0]",
+            "source_id": "context-capture"
+          }
+        ],
+        "to_revision_ids": [
+          "revision-history-summary"
+        ]
+      }
+    ]
+  },
+  "allocations": [
+    {
+      "request_id": "request-main",
+      "observation_id": "model-call-1",
+      "method": "proportional-input-coverage-v1",
+      "evidence": "estimated",
+      "amount_nanos": "101",
+      "denominator_tokens": "100",
+      "unallocated_weight_tokens": "20",
+      "allocated_nanos": "81",
+      "unallocated_nanos": "20",
+      "portions": [
+        {
+          "occurrence_id": "occurrence-user-first",
+          "revision_id": "revision-user",
+          "source_id": "source-user",
+          "weight_tokens": "30",
+          "amount_nanos": "31"
+        },
+        {
+          "occurrence_id": "occurrence-history-summary",
+          "revision_id": "revision-history-summary",
+          "source_id": "source-history",
+          "weight_tokens": "20",
+          "amount_nanos": "20"
+        },
+        {
+          "occurrence_id": "occurrence-user-repeat",
+          "revision_id": "revision-user",
+          "source_id": "source-user",
+          "weight_tokens": "30",
+          "amount_nanos": "30"
+        }
+      ],
+      "assumptions": [
+        "This estimates a distribution of the whole selected request cost, including any output component; it is not source billing or causal savings.",
+        "Eligible occurrence token counts are weights against observed inclusive input tokens. Repeated occurrences count separately; transformation ancestors do not receive implicit weights.",
+        "Selected capture boundary: harness_context; coverage: partial. Missing input weight remains unallocated.",
+        "Counterfactual and unavailable measurements are excluded. Observed, derived and estimated token measurements can supply weights without changing the allocation's estimated status."
+      ],
+      "issues": []
+    }
+  ],
+  "summary": {
+    "requests": 1,
+    "linked_observations": 1,
+    "context_sources": 3,
+    "known_cost_nanos": "101",
+    "currency": "USD",
+    "valuation_complete": true,
+    "complete_context_requests": 0,
+    "partial_context_requests": 1,
+    "unknown_context_requests": 0
+  },
+  "issues": [
+    {
+      "code": "SYNTHETIC_FIXTURE",
+      "message": "Synthetic fixture: token measurements and model_price_estimate are illustrative; no provider call, billed amount, or accepted user task exists.",
+      "severity": "info"
+    }
+  ]
+}

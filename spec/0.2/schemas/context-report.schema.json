@@ -1,0 +1,213 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/awjreynolds/flAImegraph/v0.2.0/spec/0.2/schemas/context-report.schema.json",
+  "title": "flAImegraph context report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "dataset_id",
+    "evidence",
+    "valuation",
+    "context",
+    "allocations",
+    "summary",
+    "issues"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.2.0"
+    },
+    "dataset_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence": {
+      "$ref": "https://raw.githubusercontent.com/awjreynolds/flAImegraph/v0.1.0/spec/0.1/schemas/evidence.schema.json"
+    },
+    "valuation": {
+      "$ref": "https://raw.githubusercontent.com/awjreynolds/flAImegraph/v0.1.0/spec/0.1/schemas/valuation.schema.json"
+    },
+    "context": {
+      "$ref": "https://raw.githubusercontent.com/awjreynolds/flAImegraph/v0.2.0/spec/0.2/schemas/context.schema.json"
+    },
+    "allocations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "request_id",
+          "observation_id",
+          "method",
+          "evidence",
+          "amount_nanos",
+          "denominator_tokens",
+          "unallocated_weight_tokens",
+          "allocated_nanos",
+          "unallocated_nanos",
+          "portions",
+          "assumptions",
+          "issues"
+        ],
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "observation_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "method": {
+            "const": "proportional-input-coverage-v1"
+          },
+          "evidence": {
+            "const": "estimated"
+          },
+          "amount_nanos": {
+            "type": "string",
+            "pattern": "^-?(0|[1-9][0-9]*)$"
+          },
+          "denominator_tokens": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "unallocated_weight_tokens": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "allocated_nanos": {
+            "type": "string",
+            "pattern": "^-?(0|[1-9][0-9]*)$"
+          },
+          "unallocated_nanos": {
+            "type": "string",
+            "pattern": "^-?(0|[1-9][0-9]*)$"
+          },
+          "portions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "occurrence_id",
+                "source_id",
+                "revision_id",
+                "amount_nanos",
+                "weight_tokens"
+              ],
+              "properties": {
+                "occurrence_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "revision_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "amount_nanos": {
+                  "type": "string",
+                  "pattern": "^-?(0|[1-9][0-9]*)$"
+                },
+                "weight_tokens": {
+                  "type": "string",
+                  "pattern": "^(0|[1-9][0-9]*)$"
+                }
+              }
+            }
+          },
+          "assumptions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "$ref": "https://raw.githubusercontent.com/awjreynolds/flAImegraph/v0.2.0/spec/0.2/schemas/context.schema.json#/$defs/issue"
+            }
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requests",
+        "linked_observations",
+        "context_sources",
+        "known_cost_nanos",
+        "currency",
+        "valuation_complete",
+        "complete_context_requests",
+        "partial_context_requests",
+        "unknown_context_requests"
+      ],
+      "properties": {
+        "requests": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "linked_observations": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "context_sources": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "known_cost_nanos": {
+          "type": "string",
+          "pattern": "^-?(0|[1-9][0-9]*)$"
+        },
+        "currency": {
+          "type": "string",
+          "minLength": 1
+        },
+        "valuation_complete": {
+          "type": "boolean"
+        },
+        "complete_context_requests": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "partial_context_requests": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unknown_context_requests": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "$ref": "https://raw.githubusercontent.com/awjreynolds/flAImegraph/v0.2.0/spec/0.2/schemas/context.schema.json#/$defs/issue"
+      }
+    }
+  }
+}

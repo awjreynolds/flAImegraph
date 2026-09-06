@@ -1,0 +1,302 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/awjreynolds/flAImegraph/v0.2.0/spec/0.2/schemas/context.schema.json",
+  "title": "flAImegraph context bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "dataset_id",
+    "evidence_schema_version",
+    "artifacts",
+    "profiles",
+    "sources",
+    "revisions",
+    "requests",
+    "transformations",
+    "issues"
+  ],
+  "properties": {
+    "schema_version": { "const": "0.2.0" },
+    "dataset_id": { "$ref": "#/$defs/id" },
+    "evidence_schema_version": { "const": "0.1.0" },
+    "artifacts": { "type": "array", "items": { "$ref": "#/$defs/source" } },
+    "profiles": { "type": "array", "items": { "$ref": "#/$defs/profile" } },
+    "sources": { "type": "array", "items": { "$ref": "#/$defs/contextSource" } },
+    "revisions": { "type": "array", "items": { "$ref": "#/$defs/revision" } },
+    "requests": { "type": "array", "items": { "$ref": "#/$defs/request" } },
+    "transformations": { "type": "array", "items": { "$ref": "#/$defs/transformation" } },
+    "issues": { "type": "array", "items": { "$ref": "#/$defs/issue" } }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1 },
+    "nonEmptyString": { "type": "string", "minLength": 1 },
+    "dateTime": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})$"
+    },
+    "origin": {
+      "enum": [
+        "system_instruction",
+        "developer_instruction",
+        "user_prompt",
+        "repository_instruction",
+        "skill",
+        "repository_file",
+        "retrieved_document",
+        "tool_result",
+        "tool_schema",
+        "output_schema",
+        "conversation_history",
+        "assistant_output",
+        "memory",
+        "delegated_context",
+        "attachment",
+        "unknown"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "harness", "format", "coverage"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "harness": { "$ref": "#/$defs/id" },
+        "format": { "$ref": "#/$defs/id" },
+        "version": { "$ref": "#/$defs/id" },
+        "sha256": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" },
+        "coverage": { "enum": ["complete", "partial", "unknown"] },
+        "description": { "type": "string" }
+      }
+    },
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "record"],
+      "properties": {
+        "source_id": { "$ref": "#/$defs/id" },
+        "record": { "$ref": "#/$defs/id" }
+      }
+    },
+    "measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "unit", "evidence", "method", "source_refs"],
+      "properties": {
+        "value": {
+          "anyOf": [
+            { "type": "string", "pattern": "^(0|[1-9][0-9]*)$" },
+            { "type": "null" }
+          ]
+        },
+        "unit": { "enum": ["tokens", "utf8_bytes", "unicode_scalars", "items"] },
+        "evidence": { "enum": ["observed", "derived", "estimated", "counterfactual", "unavailable"] },
+        "method": { "$ref": "#/$defs/nonEmptyString" },
+        "source_refs": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" } }
+      }
+    },
+    "fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "evidence", "source_refs"],
+      "properties": {
+        "value": { "type": ["string", "number", "boolean", "null"] },
+        "evidence": { "enum": ["observed", "declared", "unknown"] },
+        "source_refs": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" } }
+      }
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "id",
+        "name",
+        "harness",
+        "harness_version",
+        "profile_version",
+        "model",
+        "instruction_sources",
+        "tools",
+        "policies",
+        "context_capabilities",
+        "artifacts"
+      ],
+      "properties": {
+        "schema_version": { "const": "0.2.0" },
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "harness": { "$ref": "#/$defs/nonEmptyString" },
+        "harness_version": { "$ref": "#/$defs/fact" },
+        "profile_version": { "$ref": "#/$defs/nonEmptyString" },
+        "model": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["provider", "name", "settings"],
+          "properties": {
+            "provider": { "$ref": "#/$defs/fact" },
+            "name": { "$ref": "#/$defs/fact" },
+            "settings": { "type": "object", "additionalProperties": { "$ref": "#/$defs/fact" } }
+          }
+        },
+        "instruction_sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["origin", "label", "delivery", "evidence", "source_refs"],
+            "properties": {
+              "origin": { "$ref": "#/$defs/origin" },
+              "label": { "$ref": "#/$defs/nonEmptyString" },
+              "delivery": { "enum": ["always", "conditional", "on_demand", "unknown"] },
+              "evidence": { "enum": ["observed", "declared", "unknown"] },
+              "source_refs": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" } }
+            }
+          }
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "name", "definition_sha256", "definition_evidence", "definition_method", "evidence", "source_refs"],
+            "properties": {
+              "id": { "$ref": "#/$defs/id" },
+              "name": { "$ref": "#/$defs/nonEmptyString" },
+              "definition_sha256": { "anyOf": [{ "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" }, { "type": "null" }] },
+              "definition_evidence": { "enum": ["derived", "declared", "unknown"] },
+              "definition_method": { "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }] },
+              "evidence": { "enum": ["observed", "declared", "unknown"] },
+              "source_refs": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" } }
+            }
+          }
+        },
+        "policies": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["assembly", "truncation", "compaction", "caching"],
+          "properties": {
+            "assembly": { "$ref": "#/$defs/fact" },
+            "truncation": { "$ref": "#/$defs/fact" },
+            "compaction": { "$ref": "#/$defs/fact" },
+            "caching": { "$ref": "#/$defs/fact" }
+          }
+        },
+        "context_capabilities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["origin", "capture", "evidence", "source_refs", "note"],
+            "properties": {
+              "origin": { "$ref": "#/$defs/origin" },
+              "capture": { "enum": ["direct", "reconstructed", "unavailable", "unknown"] },
+              "evidence": { "enum": ["observed", "declared", "unknown"] },
+              "source_refs": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" } },
+              "note": { "$ref": "#/$defs/nonEmptyString" }
+            }
+          }
+        },
+        "artifacts": { "type": "array", "items": { "$ref": "#/$defs/source" } }
+      }
+    },
+    "contextSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "origin", "origin_evidence", "label", "identity_basis", "source_refs"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "origin": { "$ref": "#/$defs/origin" },
+        "origin_evidence": { "enum": ["observed", "declared", "estimated", "unknown"] },
+        "label": { "$ref": "#/$defs/nonEmptyString" },
+        "identity_basis": { "enum": ["producer", "content_fingerprint", "unknown"] },
+        "source_refs": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" } }
+      }
+    },
+    "revision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "source_id", "representation", "media", "content_sha256", "fingerprint_evidence", "fingerprint_method", "tokens", "bytes", "source_refs"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "source_id": { "$ref": "#/$defs/id" },
+        "representation": { "enum": ["original", "excerpt", "truncated", "summary", "opaque", "reference"] },
+        "media": { "enum": ["text", "structured", "image", "audio", "video", "document", "unknown"] },
+        "content_sha256": { "anyOf": [{ "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" }, { "type": "null" }] },
+        "fingerprint_evidence": { "enum": ["derived", "declared", "unknown"] },
+        "fingerprint_method": { "anyOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }] },
+        "tokens": { "$ref": "#/$defs/measurement" },
+        "bytes": { "$ref": "#/$defs/measurement" },
+        "source_refs": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" } }
+      }
+    },
+    "treatment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "evidence", "method", "source_refs"],
+      "properties": {
+        "value": { "enum": ["fresh", "cache_read", "cache_write", "mixed", "unknown"] },
+        "evidence": { "enum": ["observed", "declared", "estimated", "unknown"] },
+        "method": { "$ref": "#/$defs/nonEmptyString" },
+        "source_refs": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" } }
+      }
+    },
+    "occurrence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "revision_id", "role", "placement", "treatment"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "revision_id": { "$ref": "#/$defs/id" },
+        "role": { "enum": ["system", "developer", "user", "assistant", "tool", "unknown"] },
+        "placement": { "enum": ["instruction", "history", "current_turn", "tool_result", "tool_definition", "attachment", "server_state", "unknown"] },
+        "treatment": { "$ref": "#/$defs/treatment" }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "observation_id", "profile_id", "captured_at", "boundary", "coverage", "coverage_evidence", "occurrences", "overrides", "source_refs"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "observation_id": { "anyOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }] },
+        "profile_id": { "$ref": "#/$defs/id" },
+        "captured_at": { "anyOf": [{ "$ref": "#/$defs/dateTime" }, { "type": "null" }] },
+        "boundary": { "enum": ["client_request", "harness_context", "transcript_reconstruction", "unavailable"] },
+        "coverage": { "enum": ["complete", "partial", "unknown"] },
+        "coverage_evidence": { "enum": ["observed", "declared", "unknown"] },
+        "occurrences": { "type": "array", "items": { "$ref": "#/$defs/occurrence" } },
+        "overrides": { "type": "object", "additionalProperties": { "$ref": "#/$defs/fact" } },
+        "source_refs": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" } }
+      }
+    },
+    "transformation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "from_revision_ids", "to_revision_ids", "evidence", "method", "observation_id", "source_refs"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "kind": { "enum": ["truncate", "summarize", "compact", "delegate", "copy", "other"] },
+        "from_revision_ids": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/id" } },
+        "to_revision_ids": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/id" } },
+        "evidence": { "enum": ["observed", "declared", "estimated"] },
+        "method": { "$ref": "#/$defs/nonEmptyString" },
+        "observation_id": { "anyOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }] },
+        "source_refs": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" } }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message", "severity"],
+      "properties": {
+        "code": { "$ref": "#/$defs/id" },
+        "message": { "$ref": "#/$defs/nonEmptyString" },
+        "severity": { "enum": ["info", "warning", "error"] },
+        "request_id": { "$ref": "#/$defs/id" },
+        "source_id": { "$ref": "#/$defs/id" },
+        "revision_id": { "$ref": "#/$defs/id" }
+      }
+    }
+  }
+}

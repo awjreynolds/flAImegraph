@@ -1,0 +1,82 @@
+{
+  "schema_version": "0.1.0",
+  "dataset_id": "context-producer-proof-v02",
+  "work_item_id": "context-producer-proof",
+  "title": "Independent context manifest producer proof",
+  "scope": {
+    "revision": "1",
+    "description": "Implement a separate-language producer from the published 0.2 context contract, validate its output with the TypeScript consumer, and document provenance and limitations."
+  },
+  "acceptance_criteria": [
+    "Producer does not call the TypeScript capture implementation",
+    "Ordered repeated context and a summary transformation pass the public validator",
+    "A generated report preserves the fixture's exact request cost"
+  ],
+  "outcome": {
+    "status": "accepted",
+    "recorded_at": "2026-09-06T21:03:01.300Z",
+    "summary": "Accepted after the independent producer crossed the public context and report seams; usage and cost coverage remain partial because provider billing and hidden calls are unavailable."
+  },
+  "attempts": [
+    {
+      "attempt_id": "independent-producer-2026-09-06",
+      "status": "accepted",
+      "started_at": "2026-09-06T20:46:09.000Z",
+      "ended_at": "2026-09-06T20:56:45.879Z",
+      "observation_ids": [
+        "codex:capture:observation:0d06f93033d813239b59a237628df076",
+        "codex:capture:observation:0f3bfc8bb000d19041803e41dab53b26",
+        "codex:capture:observation:15cec6aee7c05c5a2ac4fd5e3127d9c0",
+        "codex:capture:observation:190a030f2f6e361ae15b99d355634a0c",
+        "codex:capture:observation:1a99de20842013e8c583bf070ff0e0e6",
+        "codex:capture:observation:23d896a2272985fb936b4163a639c2b0",
+        "codex:capture:observation:37b1d873f08707708aeeeb392d16d489",
+        "codex:capture:observation:38924f1bea6a3d03875faaf5617806ed",
+        "codex:capture:observation:3a3833dd4c824a2ca394c19b5e95af67",
+        "codex:capture:observation:440db7bc463650c9fbd724315f6e7d86",
+        "codex:capture:observation:47c3538fdbb3ab305e405d7a8b4749c1",
+        "codex:capture:observation:54f32102e7d885db7dec1163e382f662",
+        "codex:capture:observation:5903e74a3dc3c14d899e4636c6f9e060",
+        "codex:capture:observation:612920843e33878952a5d043de0e0a9f",
+        "codex:capture:observation:65b1cb715286ac2a4c812f7e0be22d7a",
+        "codex:capture:observation:66a8ed613befe75aee7fb674e622ee51",
+        "codex:capture:observation:6d1945d4c6b74d02da1e12c0877aa345",
+        "codex:capture:observation:759a3f1cf2c0aa2495670bf90fd9fcaa",
+        "codex:capture:observation:75fd692aa7b39d37058effbea7097f25",
+        "codex:capture:observation:8242a0c3cba564fc714b8eb945ea3bd7",
+        "codex:capture:observation:8a67a17fab696141347ccb470e5b23e1",
+        "codex:capture:observation:8b4322adf080f469feb5864b2f2d4138",
+        "codex:capture:observation:a4f706c3db0abba3883dc555fc4b97ae",
+        "codex:capture:observation:bc28d12b87eba1e439d1c156006ed3c4",
+        "codex:capture:observation:c2269dfe44df3ec7c0102ddc0009ee96",
+        "codex:capture:observation:ce0eaa5cb74c4445496480bc09c6be34",
+        "codex:capture:observation:ce2da0b48d1d00d5c7c2d9fa6bdc2268",
+        "codex:capture:observation:d02aaf657ecdfa490cd879d7e02e7146",
+        "codex:capture:observation:e25be8c555ba66288807bb78f46acaca",
+        "codex:capture:observation:eb805fa84795a3e0f38d9ee3f9958442",
+        "codex:capture:observation:f5cc5cafb6ae872eb94bb34043dbae08",
+        "codex:capture:observation:fb0885de5dc3877cf639c17b6c669d00",
+        "codex:capture:observation:feb239a86337a3ab522fb8b0ba8782ff"
+      ]
+    }
+  ],
+  "estimates": [
+    {
+      "estimate_id": "initial",
+      "estimate_version": 1,
+      "scope_revision": "1",
+      "created_at": "2026-09-06T20:16:42Z",
+      "timing": "pre_execution",
+      "information_basis": "repository_inspection",
+      "estimator": "coordinator",
+      "confidence": "low",
+      "point_estimate": {
+        "scale_id": "local-contract-proof",
+        "scale_version": "1",
+        "kind": "ordinal",
+        "value": "3"
+      },
+      "rationale": "A declared local three-point anchor for one producer, one consumer integration and one provenance record. This scale is uncalibrated; the estimate is collected before this bounded implementation begins, not before the surrounding v0.2 project."
+    }
+  ]
+}

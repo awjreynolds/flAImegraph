@@ -1,0 +1,4394 @@
+{
+  "schema_version": "0.2.0",
+  "dataset_id": "context-producer-proof-v02",
+  "capture_namespace": "v02-independent-producer",
+  "harness": "codex",
+  "import_options": {
+    "version": "0.153.4",
+    "work_item_id": "context-producer-proof",
+    "agent_id": "independent-producer"
+  },
+  "cursor": {
+    "sequence": "1",
+    "prefix_bytes": "50629",
+    "prefix_sha256": "8d63a66d95efd2b12904ecd387418d30e94b17ad9ca66a5c0d2606922788b97f",
+    "record_count": "68"
+  },
+  "captures": [
+    {
+      "id": "capture:codex:4d9a2cb71e1875aabee650740576c2bf",
+      "sequence": "0",
+      "source_id": "codex:dc0cf6a542e5e8ae",
+      "sha256": "dc0cf6a542e5e8ae00b0956e324e3ecfa696b683762b2d3215ac92dfeee2468b",
+      "prefix_bytes": "24752",
+      "prefix_sha256": "dc0cf6a542e5e8ae00b0956e324e3ecfa696b683762b2d3215ac92dfeee2468b",
+      "record_count": "34",
+      "observation_count": "48"
+    },
+    {
+      "id": "capture:codex:53637854f94d91a2cb7fabaa965abc3c",
+      "sequence": "1",
+      "source_id": "codex:8d63a66d95efd2b1",
+      "sha256": "8d63a66d95efd2b12904ecd387418d30e94b17ad9ca66a5c0d2606922788b97f",
+      "prefix_bytes": "50629",
+      "prefix_sha256": "8d63a66d95efd2b12904ecd387418d30e94b17ad9ca66a5c0d2606922788b97f",
+      "record_count": "68",
+      "observation_count": "99"
+    }
+  ],
+  "evidence": {
+    "schema_version": "0.1.0",
+    "dataset_id": "context-producer-proof-v02",
+    "sources": [
+      {
+        "id": "codex:8d63a66d95efd2b1",
+        "harness": "codex",
+        "format": "codex-rollout-jsonl",
+        "version": "0.153.4",
+        "sha256": "8d63a66d95efd2b12904ecd387418d30e94b17ad9ca66a5c0d2606922788b97f",
+        "coverage": "partial",
+        "description": "Codex rollout JSONL with additive response usage and legacy token snapshots."
+      },
+      {
+        "id": "codex:dc0cf6a542e5e8ae",
+        "harness": "codex",
+        "format": "codex-rollout-jsonl",
+        "version": "0.153.4",
+        "sha256": "dc0cf6a542e5e8ae00b0956e324e3ecfa696b683762b2d3215ac92dfeee2468b",
+        "coverage": "partial",
+        "description": "Codex rollout JSONL with additive response usage and legacy token snapshots."
+      }
+    ],
+    "observations": [
+      {
+        "id": "codex:capture:observation:02d1d15aaa8ad2a2e284d7251124f10f",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:28:last:line:28"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:unknown:28:last:line:28"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "110635",
+          "output_tokens": "79",
+          "cache_read_input_tokens": "101120",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "10"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:28:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "1e74801c52ee8c92bde7d5d078e33438",
+          "flAImegraph.lineage.native_id_hashes": "1e74801c52ee8c92bde7d5d078e33438",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:04e1d51f3c726e0c029e3e4d5585e191",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:46:total:line:46"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "2176266",
+          "output_tokens": "24589",
+          "cache_read_input_tokens": "2063104",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "13275"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:46:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "c16a743683da19902c20af1247d45375",
+          "flAImegraph.lineage.native_id_hashes": "c16a743683da19902c20af1247d45375",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:0d06f93033d813239b59a237628df076",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:7e61dbeac3591cb910f221851dfeec9b487e014c3663715b2ddbf64af5083673:line:31"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "response:sha256:7e61dbeac3591cb910f221851dfeec9b487e014c3663715b2ddbf64af5083673:line:31"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "116894",
+          "output_tokens": "79",
+          "cache_read_input_tokens": "110336",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "10"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:7e61dbeac3591cb910f221851dfeec9b487e014c3663715b2ddbf64af5083673",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "116973",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "9d55ed39dcd52c755ed073c3906c714d",
+          "flAImegraph.lineage.native_id_hashes": "9d55ed39dcd52c755ed073c3906c714d",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:0eea19f28665c6cbac11ea407da032f6",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:68:last:line:68"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "138753",
+          "output_tokens": "1060",
+          "cache_read_input_tokens": "137984",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "838"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:68:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "d8ec05b55d5eecc91c462cdcdcf3370f",
+          "flAImegraph.lineage.native_id_hashes": "d8ec05b55d5eecc91c462cdcdcf3370f",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:0f3bfc8bb000d19041803e41dab53b26",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:d5987a103ed4975917d78996646277bf552be14dbe85e08a5339577f55256bea:line:57"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "136657",
+          "output_tokens": "949",
+          "cache_read_input_tokens": "135936",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "698"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:d5987a103ed4975917d78996646277bf552be14dbe85e08a5339577f55256bea",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "137606",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "a8850387b1ab898db0c719c39072760c",
+          "flAImegraph.lineage.native_id_hashes": "a8850387b1ab898db0c719c39072760c",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:12a9444fdc45f9916bdd1b1dba1c95df",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:66:total:line:66"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "3540295",
+          "output_tokens": "29622",
+          "cache_read_input_tokens": "3412224",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "15669"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:66:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "bdc6a4ea30cfea05ab0b299b78b6fbaf",
+          "flAImegraph.lineage.native_id_hashes": "bdc6a4ea30cfea05ab0b299b78b6fbaf",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:15cec6aee7c05c5a2ac4fd5e3127d9c0",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:dce28feb36c9fb45b95660c5e3d189e7f020d6f8b8dc2b9a01e72c4444d275a0:line:23"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "response:sha256:dce28feb36c9fb45b95660c5e3d189e7f020d6f8b8dc2b9a01e72c4444d275a0:line:23"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "99160",
+          "output_tokens": "537",
+          "cache_read_input_tokens": "96000",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "417"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:dce28feb36c9fb45b95660c5e3d189e7f020d6f8b8dc2b9a01e72c4444d275a0",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "99697",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "cacaa16651970bb0da49222dc33006ba",
+          "flAImegraph.lineage.native_id_hashes": "cacaa16651970bb0da49222dc33006ba",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:190a030f2f6e361ae15b99d355634a0c",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:cf52d4a761919f5b4c38fdb9cc8530270cd299a98b0590011895227a211d5642:line:17"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "response:sha256:cf52d4a761919f5b4c38fdb9cc8530270cd299a98b0590011895227a211d5642:line:17"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "83165",
+          "output_tokens": "260",
+          "cache_read_input_tokens": "73472",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "49"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:cf52d4a761919f5b4c38fdb9cc8530270cd299a98b0590011895227a211d5642",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "83425",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "c97a5bf631d5d74fb03b25182246412b",
+          "flAImegraph.lineage.native_id_hashes": "c97a5bf631d5d74fb03b25182246412b",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:1a99de20842013e8c583bf070ff0e0e6",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:6b24bd997f491355052b1fb348d70110ec1e9feee3c3f38e2591ee5ca62060c6:line:37"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "124749",
+          "output_tokens": "562",
+          "cache_read_input_tokens": "122624",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "23"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:6b24bd997f491355052b1fb348d70110ec1e9feee3c3f38e2591ee5ca62060c6",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "125311",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "6628f7bc2f930956200399707339043c",
+          "flAImegraph.lineage.native_id_hashes": "6628f7bc2f930956200399707339043c",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:1b62dcba0fcc6617f34d7c103f29793c",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:36:total:line:36"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "1544936",
+          "output_tokens": "21289",
+          "cache_read_input_tokens": "1440768",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "11317"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:36:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "4175817031cc89c4ed5f8fa0da42ce61",
+          "flAImegraph.lineage.native_id_hashes": "4175817031cc89c4ed5f8fa0da42ce61",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:1eb6d113acec24b28e1c3529b8ea033f",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:54:total:line:54"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "2715013",
+          "output_tokens": "27572",
+          "cache_read_input_tokens": "2591488",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "14783"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:54:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "55d3008ada55e8ffe724af5998fd2e5e",
+          "flAImegraph.lineage.native_id_hashes": "55d3008ada55e8ffe724af5998fd2e5e",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:1fec17e019e2c603aed4c4becb5ddd2b",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:64:total:line:64"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "3401893",
+          "output_tokens": "29489",
+          "cache_read_input_tokens": "3274240",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "15563"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:64:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "80e14f83a8049018e705fd666a252f54",
+          "flAImegraph.lineage.native_id_hashes": "80e14f83a8049018e705fd666a252f54",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:2251665cf00b5b334e8dcbff45676fc9",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:40:total:line:40"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "1795020",
+          "output_tokens": "21929",
+          "cache_read_input_tokens": "1687040",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "11349"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:40:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "f897c5fcb5aeefe1be1107ccc4059068",
+          "flAImegraph.lineage.native_id_hashes": "f897c5fcb5aeefe1be1107ccc4059068",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:23d896a2272985fb936b4163a639c2b0",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:98d2b22bcbb5b1046efa83dd3b0a3f4c4003b5e81c4f73120b3f70007b228383:line:59"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "137630",
+          "output_tokens": "341",
+          "cache_read_input_tokens": "135936",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "16"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:98d2b22bcbb5b1046efa83dd3b0a3f4c4003b5e81c4f73120b3f70007b228383",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "137971",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "de3c7b6e64026b78b5b5dc009e418087",
+          "flAImegraph.lineage.native_id_hashes": "de3c7b6e64026b78b5b5dc009e418087",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:2507640909d1c230ae6169b0cafd86d4",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:4:total:line:4"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:4:total:line:4"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "149308",
+          "output_tokens": "1237",
+          "cache_read_input_tokens": "140288",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "624"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:4:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "3574f51c7c2a1b32fe061e335e073e87",
+          "flAImegraph.lineage.native_id_hashes": "3574f51c7c2a1b32fe061e335e073e87",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:26b902ee5f9be55f1ef6e1ed1cddbc55",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:22:last:line:22"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:unknown:22:last:line:22"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "96478",
+          "output_tokens": "119",
+          "cache_read_input_tokens": "91904",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "48"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:22:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "6f47ebc1db9893b71bd6c3f1aeeb27ed",
+          "flAImegraph.lineage.native_id_hashes": "6f47ebc1db9893b71bd6c3f1aeeb27ed",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:27a9b525257a3c1c71151672ee5270ac",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:58:last:line:58"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "136657",
+          "output_tokens": "949",
+          "cache_read_input_tokens": "135936",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "698"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:58:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "4db90d0a1f0fbe506175d2286b984b1b",
+          "flAImegraph.lineage.native_id_hashes": "4db90d0a1f0fbe506175d2286b984b1b",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:28e7e8b7103b0b1115db4fc6aae01e5c",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:68:total:line:68"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "3679048",
+          "output_tokens": "30682",
+          "cache_read_input_tokens": "3550208",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "16507"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:68:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "4e8bd68c3810aa44beffdf9ed09cd108",
+          "flAImegraph.lineage.native_id_hashes": "4e8bd68c3810aa44beffdf9ed09cd108",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:2bd542fff6ce693ce062bea8169245ce",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:38:total:line:38"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "1669685",
+          "output_tokens": "21851",
+          "cache_read_input_tokens": "1563392",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "11340"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:38:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "26231d7206ae9db85b1d07a7ab4ab8bf",
+          "flAImegraph.lineage.native_id_hashes": "26231d7206ae9db85b1d07a7ab4ab8bf",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:2cbac83206140c05179b1c6e571a41e6",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:44:last:line:44"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "127730",
+          "output_tokens": "230",
+          "cache_read_input_tokens": "124672",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "83"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:44:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "f74c34f8b83f2ddaa94f146090b2a3f6",
+          "flAImegraph.lineage.native_id_hashes": "f74c34f8b83f2ddaa94f146090b2a3f6",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:2dc5c8acadfb55d76e571fb436682351",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:36:last:line:36"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "123588",
+          "output_tokens": "1083",
+          "cache_read_input_tokens": "116480",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "563"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:36:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "bf54a9d2527c9f16eeeb51e26a3017b9",
+          "flAImegraph.lineage.native_id_hashes": "bf54a9d2527c9f16eeeb51e26a3017b9",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:2e57259379ce6c6633abad34c5fe3a02",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:30:total:line:30"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:30:total:line:30"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "1187097",
+          "output_tokens": "18678",
+          "cache_read_input_tokens": "1097472",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "9841"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:30:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "c59a49e726732a374efc438b4665b6cf",
+          "flAImegraph.lineage.native_id_hashes": "c59a49e726732a374efc438b4665b6cf",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:2e633aab3a8d1c87400b5716b229a930",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:8:total:line:8"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:8:total:line:8"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "240695",
+          "output_tokens": "2209",
+          "cache_read_input_tokens": "217600",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "979"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:8:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "90e65069efc452beb39e19e1c5f70173",
+          "flAImegraph.lineage.native_id_hashes": "90e65069efc452beb39e19e1c5f70173",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:2f99427f0effd5297d672686906cd941",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:50:total:line:50"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "2443694",
+          "output_tokens": "26651",
+          "cache_read_input_tokens": "2322688",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "14036"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:50:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "f96ca2286c9c023bb27b9515588ae55a",
+          "flAImegraph.lineage.native_id_hashes": "f96ca2286c9c023bb27b9515588ae55a",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:353e0200e0de0caa3c1cabc2a290ac28",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:20:last:line:20"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:unknown:20:last:line:20"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "92089",
+          "output_tokens": "214",
+          "cache_read_input_tokens": "82688",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "57"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:20:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "fefc9b48357761854274499df603b4e9",
+          "flAImegraph.lineage.native_id_hashes": "fefc9b48357761854274499df603b4e9",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:37b1d873f08707708aeeeb392d16d489",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:165da8c6bb28c10ab05bd79aaf021ced00244151a226b65d7abf4b630b49c2d7:line:21"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "response:sha256:165da8c6bb28c10ab05bd79aaf021ced00244151a226b65d7abf4b630b49c2d7:line:21"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "96478",
+          "output_tokens": "119",
+          "cache_read_input_tokens": "91904",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "48"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:165da8c6bb28c10ab05bd79aaf021ced00244151a226b65d7abf4b630b49c2d7",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "96597",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "fe1a629be792ad888382ce6b64950caf",
+          "flAImegraph.lineage.native_id_hashes": "fe1a629be792ad888382ce6b64950caf",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:38924f1bea6a3d03875faaf5617806ed",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:98c6bcfe428d35a4b36ef7c3a17474ff9eda5936e337d8362781bdcadab4a5f7:line:29"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "response:sha256:98c6bcfe428d35a4b36ef7c3a17474ff9eda5936e337d8362781bdcadab4a5f7:line:29"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "111397",
+          "output_tokens": "5473",
+          "cache_read_input_tokens": "110336",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "1503"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:98c6bcfe428d35a4b36ef7c3a17474ff9eda5936e337d8362781bdcadab4a5f7",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "116870",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "27c3c69d72d4deadcedfde16f1aad87e",
+          "flAImegraph.lineage.native_id_hashes": "27c3c69d72d4deadcedfde16f1aad87e",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:3a3833dd4c824a2ca394c19b5e95af67",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:f4bb09a1f5d02ece78c508b982092553fc7d922ece3f787b3371f2977785abf5:line:19"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "response:sha256:f4bb09a1f5d02ece78c508b982092553fc7d922ece3f787b3371f2977785abf5:line:19"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "92089",
+          "output_tokens": "214",
+          "cache_read_input_tokens": "82688",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "57"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:f4bb09a1f5d02ece78c508b982092553fc7d922ece3f787b3371f2977785abf5",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "92303",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "f23f7f27b31bfb2831c9e2bf2b06ab6e",
+          "flAImegraph.lineage.native_id_hashes": "f23f7f27b31bfb2831c9e2bf2b06ab6e",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:3b51f9f3c35d5c8c79031753d07cf278",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:26:total:line:26"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:26:total:line:26"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "965065",
+          "output_tokens": "13126",
+          "cache_read_input_tokens": "886016",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "8328"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:26:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "df44b06ae00fee983bcaf9acf31df885",
+          "flAImegraph.lineage.native_id_hashes": "df44b06ae00fee983bcaf9acf31df885",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:40fa80c3526bceb777be91482cac5a3f",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:44:total:line:44"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "2048273",
+          "output_tokens": "24264",
+          "cache_read_input_tokens": "1936384",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "13226"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:44:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "47b0b16e371aee4237f5095cb33dd504",
+          "flAImegraph.lineage.native_id_hashes": "47b0b16e371aee4237f5095cb33dd504",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:43fa331369aad3b5801f064a5abb3552",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:62:last:line:62"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "138120",
+          "output_tokens": "89",
+          "cache_read_input_tokens": "136960",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "14"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:62:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "c33595f656df40c4d57efe22a9c0fe15",
+          "flAImegraph.lineage.native_id_hashes": "c33595f656df40c4d57efe22a9c0fe15",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:440db7bc463650c9fbd724315f6e7d86",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:318ea2a483d0aa49dd0a3e433011579bfaae15a02f72a2f91e89dc878101cb7d:line:5"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "response:sha256:318ea2a483d0aa49dd0a3e433011579bfaae15a02f72a2f91e89dc878101cb7d:line:5"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "40783",
+          "output_tokens": "600",
+          "cache_read_input_tokens": "37632",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "260"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:318ea2a483d0aa49dd0a3e433011579bfaae15a02f72a2f91e89dc878101cb7d",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "41383",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "d3155a5ae764181631e2fa512f20cef0",
+          "flAImegraph.lineage.native_id_hashes": "d3155a5ae764181631e2fa512f20cef0",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:45c9f2a2294e76b2adc55aa21d76874c",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:42:last:line:42"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "125523",
+          "output_tokens": "2105",
+          "cache_read_input_tokens": "124672",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "1794"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:42:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "46d0b4cc46531b00bb15f69778a3a4c4",
+          "flAImegraph.lineage.native_id_hashes": "46d0b4cc46531b00bb15f69778a3a4c4",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:47c3538fdbb3ab305e405d7a8b4749c1",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:b678ac7f14b9f5a811e6ce1426476f6be165155f8e1e0fa187139277e9144bf9:line:41"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "125523",
+          "output_tokens": "2105",
+          "cache_read_input_tokens": "124672",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "1794"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:b678ac7f14b9f5a811e6ce1426476f6be165155f8e1e0fa187139277e9144bf9",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "127628",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "5cfa54b2a24ba13a17f84c0e793c5b97",
+          "flAImegraph.lineage.native_id_hashes": "5cfa54b2a24ba13a17f84c0e793c5b97",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:49785ac5ac45e9ebdab70c54ca57d0c5",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:40:last:line:40"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "125335",
+          "output_tokens": "78",
+          "cache_read_input_tokens": "123648",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "9"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:40:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "d2a3b53b92cfaa6880e6eeff42826154",
+          "flAImegraph.lineage.native_id_hashes": "d2a3b53b92cfaa6880e6eeff42826154",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:538272046edc4f367de66b13724ae5dc",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:58:total:line:58"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "2987892",
+          "output_tokens": "28932",
+          "cache_read_input_tokens": "2863360",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "15510"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:58:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "b37f38941899056bf6549d658fae4d87",
+          "flAImegraph.lineage.native_id_hashes": "b37f38941899056bf6549d658fae4d87",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:54f32102e7d885db7dec1163e382f662",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:cef1d2c4cd27956649139a3678cb5bacb1332ac84ca1735527b91cc661b3aedf:line:49"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "134519",
+          "output_tokens": "476",
+          "cache_read_input_tokens": "131840",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "230"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:cef1d2c4cd27956649139a3678cb5bacb1332ac84ca1735527b91cc661b3aedf",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "134995",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "fa296e5757e15679c3aa96321634b182",
+          "flAImegraph.lineage.native_id_hashes": "fa296e5757e15679c3aa96321634b182",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:5903e74a3dc3c14d899e4636c6f9e060",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:6c6135be0f1dca79376e9704d53cb4591327cabbbbd4cb5e38456e543d21fbf3:line:45"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "127993",
+          "output_tokens": "325",
+          "cache_read_input_tokens": "126720",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "49"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:6c6135be0f1dca79376e9704d53cb4591327cabbbbd4cb5e38456e543d21fbf3",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "128318",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "e9a147863da22d6edd1dd80304655f78",
+          "flAImegraph.lineage.native_id_hashes": "e9a147863da22d6edd1dd80304655f78",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:592caa316b2b894dc11ec777c213794f",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:54:last:line:54"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "136083",
+          "output_tokens": "116",
+          "cache_read_input_tokens": "134912",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "17"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:54:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "1d822698b8507f358899fe3ba272b4e6",
+          "flAImegraph.lineage.native_id_hashes": "1d822698b8507f358899fe3ba272b4e6",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:5b08367db0a31ae32eea8c2e06585978",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:42:total:line:42"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "1920543",
+          "output_tokens": "24034",
+          "cache_read_input_tokens": "1811712",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "13143"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:42:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "bacce1debde54d68f942c3bf58d66f80",
+          "flAImegraph.lineage.native_id_hashes": "bacce1debde54d68f942c3bf58d66f80",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:5cce9fe124b90e07339a4bf219b10c40",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:50:last:line:50"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "134519",
+          "output_tokens": "476",
+          "cache_read_input_tokens": "131840",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "230"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:50:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "cea60d4523998f545df5dcf0f7cdf5ae",
+          "flAImegraph.lineage.native_id_hashes": "cea60d4523998f545df5dcf0f7cdf5ae",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:5cf7e3d4bc92506e5b0ba8c9aaefb90e",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:14:last:line:14"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:unknown:14:last:line:14"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "66830",
+          "output_tokens": "206",
+          "cache_read_input_tokens": "59136",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "40"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:14:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "4ab6f8661de4540a4e388595ebaf55f6",
+          "flAImegraph.lineage.native_id_hashes": "4ab6f8661de4540a4e388595ebaf55f6",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:5da329cf56a22a0ff4c069df403fb81e",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:32:total:line:32"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:32:total:line:32"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "1303991",
+          "output_tokens": "18757",
+          "cache_read_input_tokens": "1207808",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "9851"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:32:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "8010557ef49c5d59707677414400fd89",
+          "flAImegraph.lineage.native_id_hashes": "8010557ef49c5d59707677414400fd89",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:612920843e33878952a5d043de0e0a9f",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:cbed66be04fd1b850cfd6db2dd48754ab53166500f34cca2286a53b7014b58a1:line:35"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "123588",
+          "output_tokens": "1083",
+          "cache_read_input_tokens": "116480",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "563"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:cbed66be04fd1b850cfd6db2dd48754ab53166500f34cca2286a53b7014b58a1",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "124671",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "d62cd49bdcf15e7b808abeebe6ecdb81",
+          "flAImegraph.lineage.native_id_hashes": "d62cd49bdcf15e7b808abeebe6ecdb81",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:6220b695c60ab332feff1299ac60a25b",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:12:total:line:12"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:12:total:line:12"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "351350",
+          "output_tokens": "2727",
+          "cache_read_input_tokens": "318464",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "1049"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:12:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "2851e61d56b297c79ebb0d0c573c98cd",
+          "flAImegraph.lineage.native_id_hashes": "2851e61d56b297c79ebb0d0c573c98cd",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:65b1cb715286ac2a4c812f7e0be22d7a",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:9ab5c3e0b2ca66dd8a1a0761d3d2d9fd3a3feef5630741ec0361bfc336382159:line:67"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "138753",
+          "output_tokens": "1060",
+          "cache_read_input_tokens": "137984",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "838"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:9ab5c3e0b2ca66dd8a1a0761d3d2d9fd3a3feef5630741ec0361bfc336382159",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "139813",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "5c79af1b1794d691c718784ef686d7e2",
+          "flAImegraph.lineage.native_id_hashes": "5c79af1b1794d691c718784ef686d7e2",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:66a8ed613befe75aee7fb674e622ee51",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:b749ca0505af94172d598c6c396e24e8a179eb88edff0cef6f52f06bb6b158ba:line:3"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "response:sha256:b749ca0505af94172d598c6c396e24e8a179eb88edff0cef6f52f06bb6b158ba:line:3"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "38761",
+          "output_tokens": "412",
+          "cache_read_input_tokens": "36608",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "119"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:b749ca0505af94172d598c6c396e24e8a179eb88edff0cef6f52f06bb6b158ba",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "39173",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "0f70563714f7f4d6ad4fca28e8d944ee",
+          "flAImegraph.lineage.native_id_hashes": "0f70563714f7f4d6ad4fca28e8d944ee",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:684f716384712037543c698e3957c424",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:60:last:line:60"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "137630",
+          "output_tokens": "341",
+          "cache_read_input_tokens": "135936",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "16"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:60:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "609268e9e15759afbc139083faa4916f",
+          "flAImegraph.lineage.native_id_hashes": "609268e9e15759afbc139083faa4916f",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:6d1945d4c6b74d02da1e12c0877aa345",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:97a4ca4a8c1b686b4bc75cac84cf131ab3e68ae15e5881398a9a0ea68a9fdfa2:line:7"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "response:sha256:97a4ca4a8c1b686b4bc75cac84cf131ab3e68ae15e5881398a9a0ea68a9fdfa2:line:7"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "50604",
+          "output_tokens": "372",
+          "cache_read_input_tokens": "39680",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "95"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:97a4ca4a8c1b686b4bc75cac84cf131ab3e68ae15e5881398a9a0ea68a9fdfa2",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "50976",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "a7e881d80279766776ecba4a6f0b7f55",
+          "flAImegraph.lineage.native_id_hashes": "a7e881d80279766776ecba4a6f0b7f55",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:6e14a1dadfb6a94ecf691376fb684375",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:24:total:line:24"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:24:total:line:24"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "863050",
+          "output_tokens": "4530",
+          "cache_read_input_tokens": "787968",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "1810"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:24:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "2e9e173597aac4331bdb166af672b544",
+          "flAImegraph.lineage.native_id_hashes": "2e9e173597aac4331bdb166af672b544",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:6f02116acf4b3979fa0ae8bd0a0eab72",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:30:last:line:30"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:unknown:30:last:line:30"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "111397",
+          "output_tokens": "5473",
+          "cache_read_input_tokens": "110336",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "1503"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:30:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "4c8f668f5624d47acfa39472157e02c1",
+          "flAImegraph.lineage.native_id_hashes": "4c8f668f5624d47acfa39472157e02c1",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:7038fa774d9614d5b06ae80455cbe9aa",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:4:last:line:4"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:unknown:4:last:line:4"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "38761",
+          "output_tokens": "412",
+          "cache_read_input_tokens": "36608",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "119"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:4:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "0fabb9a76fb727f70daccd38513a0c7c",
+          "flAImegraph.lineage.native_id_hashes": "0fabb9a76fb727f70daccd38513a0c7c",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:70af16132821dc8c9b8ffa07ecb0274a",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:56:total:line:56"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "2851235",
+          "output_tokens": "27983",
+          "cache_read_input_tokens": "2727424",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "14812"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:56:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "a2ec058b91b97156978b701b31bc0585",
+          "flAImegraph.lineage.native_id_hashes": "a2ec058b91b97156978b701b31bc0585",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:70de307c96a1f4a9ffdf06b61a2a0dc8",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:14:total:line:14"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:14:total:line:14"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "418180",
+          "output_tokens": "2933",
+          "cache_read_input_tokens": "377600",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "1089"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:14:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "6f54e2608bcf58ec6de94b46d7b81564",
+          "flAImegraph.lineage.native_id_hashes": "6f54e2608bcf58ec6de94b46d7b81564",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:718e30bef4ad729bf9fab9878660c655",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:26:last:line:26"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:unknown:26:last:line:26"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "102015",
+          "output_tokens": "8596",
+          "cache_read_input_tokens": "98048",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "6518"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:26:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "8c9c47e60b466b53214617b1c4b40365",
+          "flAImegraph.lineage.native_id_hashes": "8c9c47e60b466b53214617b1c4b40365",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:74a7575f94667d625b701d671ff31c63",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:34:total:line:34"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:34:total:line:34"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "1421348",
+          "output_tokens": "20206",
+          "cache_read_input_tokens": "1324288",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "10754"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:34:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "70266c2f95275a5194b549af37276b14",
+          "flAImegraph.lineage.native_id_hashes": "70266c2f95275a5194b549af37276b14",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:759a3f1cf2c0aa2495670bf90fd9fcaa",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:3cf1c9c23ccb8ce3716c719d1c853e4de1ef691f8f41f59c2e4122a918ce0518:line:55"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "136222",
+          "output_tokens": "411",
+          "cache_read_input_tokens": "135936",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "29"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:3cf1c9c23ccb8ce3716c719d1c853e4de1ef691f8f41f59c2e4122a918ce0518",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "136633",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "7090d917610b5c2ef5c4a57da515f0cd",
+          "flAImegraph.lineage.native_id_hashes": "7090d917610b5c2ef5c4a57da515f0cd",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:75e541c9309e3f3dc331c07876b6bd78",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:48:total:line:48"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "2309175",
+          "output_tokens": "26175",
+          "cache_read_input_tokens": "2190848",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "13806"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:48:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "8d09e925b912335b4cbce148d7907ca6",
+          "flAImegraph.lineage.native_id_hashes": "8d09e925b912335b4cbce148d7907ca6",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:75fd692aa7b39d37058effbea7097f25",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:fe5072a11a40010259f7912beb58dbe4f47796081f752082d35e66635b1f4ef6:line:11"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "response:sha256:fe5072a11a40010259f7912beb58dbe4f47796081f752082d35e66635b1f4ef6:line:11"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "59297",
+          "output_tokens": "273",
+          "cache_read_input_tokens": "50944",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "45"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:fe5072a11a40010259f7912beb58dbe4f47796081f752082d35e66635b1f4ef6",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "59570",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "613f82fd4c36a7d7cab0cab2cb6a430d",
+          "flAImegraph.lineage.native_id_hashes": "613f82fd4c36a7d7cab0cab2cb6a430d",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:79e72bf47508d80b7886ca43cd45ded6",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:6:last:line:6"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:unknown:6:last:line:6"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "40783",
+          "output_tokens": "600",
+          "cache_read_input_tokens": "37632",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "260"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:6:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "90c270a7551917f014382e7bc29d5c66",
+          "flAImegraph.lineage.native_id_hashes": "90c270a7551917f014382e7bc29d5c66",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:7eb37e51a5688552e108fb5210562c7b",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:18:total:line:18"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:18:total:line:18"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "575323",
+          "output_tokens": "3660",
+          "cache_read_input_tokens": "517376",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "1288"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:18:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "53722244f15823474966b331f632c73e",
+          "flAImegraph.lineage.native_id_hashes": "53722244f15823474966b331f632c73e",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:8242a0c3cba564fc714b8eb945ea3bd7",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:b882107e52b185417750cda74e7cd968e08105b835a502375a7fec93891c53b2:line:13"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "response:sha256:b882107e52b185417750cda74e7cd968e08105b835a502375a7fec93891c53b2:line:13"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "66830",
+          "output_tokens": "206",
+          "cache_read_input_tokens": "59136",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "40"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:b882107e52b185417750cda74e7cd968e08105b835a502375a7fec93891c53b2",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "67036",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "f2e461264dd3c5c20a3b9da071bf055d",
+          "flAImegraph.lineage.native_id_hashes": "f2e461264dd3c5c20a3b9da071bf055d",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:859e458f148e6d2d6b56f311e8d1a23f",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:34:last:line:34"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:unknown:34:last:line:34"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "117357",
+          "output_tokens": "1449",
+          "cache_read_input_tokens": "116480",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "903"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:34:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "a18ec6bdde92b20beb55467f11514260",
+          "flAImegraph.lineage.native_id_hashes": "a18ec6bdde92b20beb55467f11514260",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:8a67a17fab696141347ccb470e5b23e1",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:37e39268349e4111166cd7c966f74344a74d9cf718e695a77332305a5a039831:line:43"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "127730",
+          "output_tokens": "230",
+          "cache_read_input_tokens": "124672",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "83"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:37e39268349e4111166cd7c966f74344a74d9cf718e695a77332305a5a039831",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "127960",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "3fb15e998d8145b090a9e6bf03c6528c",
+          "flAImegraph.lineage.native_id_hashes": "3fb15e998d8145b090a9e6bf03c6528c",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:8b4322adf080f469feb5864b2f2d4138",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:8f200ce73c26073bd95e2398901b8f1adfb6e9a868c3bddb78cd1150ab4fd3db:line:65"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "138402",
+          "output_tokens": "133",
+          "cache_read_input_tokens": "137984",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "106"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:8f200ce73c26073bd95e2398901b8f1adfb6e9a868c3bddb78cd1150ab4fd3db",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "138535",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "3871cb22a0a8123c0f6b9d06161ce86a",
+          "flAImegraph.lineage.native_id_hashes": "3871cb22a0a8123c0f6b9d06161ce86a",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:8bae796431ef66c4644d5ec9982aba42",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:10:last:line:10"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:unknown:10:last:line:10"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "51358",
+          "output_tokens": "245",
+          "cache_read_input_tokens": "49920",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "25"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:10:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "276a11e878d59ee06a4525c735a253c9",
+          "flAImegraph.lineage.native_id_hashes": "276a11e878d59ee06a4525c735a253c9",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:9c22b17b576540a78a2ed462a55bda3f",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:16:last:line:16"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:unknown:16:last:line:16"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "73978",
+          "output_tokens": "467",
+          "cache_read_input_tokens": "66304",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "150"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:16:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "448c8f099c4606445292a9dcc5f14e1f",
+          "flAImegraph.lineage.native_id_hashes": "448c8f099c4606445292a9dcc5f14e1f",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:9cd5b1f635f713f0a6f6749372f00fab",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:10:total:line:10"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:10:total:line:10"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "292053",
+          "output_tokens": "2454",
+          "cache_read_input_tokens": "267520",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "1004"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:10:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "b3a0b4f55afe64515c78b5d729d1834a",
+          "flAImegraph.lineage.native_id_hashes": "b3a0b4f55afe64515c78b5d729d1834a",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:9d15843a90a9b220eab216fbe1abc3f6",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:22:total:line:22"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:22:total:line:22"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "763890",
+          "output_tokens": "3993",
+          "cache_read_input_tokens": "691968",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "1393"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:22:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "291937a398a369eb96f56b5761fc7496",
+          "flAImegraph.lineage.native_id_hashes": "291937a398a369eb96f56b5761fc7496",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:a4f706c3db0abba3883dc555fc4b97ae",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:b1f94512ffa81a46225b02bd41912f1008d3d2097551f10afcebd77dc0ba5170:line:51"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "135236",
+          "output_tokens": "805",
+          "cache_read_input_tokens": "133888",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "730"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:b1f94512ffa81a46225b02bd41912f1008d3d2097551f10afcebd77dc0ba5170",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "136041",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "ea941e4c057b091e0fa1e64229875dd7",
+          "flAImegraph.lineage.native_id_hashes": "ea941e4c057b091e0fa1e64229875dd7",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:ad623e47a18152ecfad8a6b391985868",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:12:last:line:12"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:unknown:12:last:line:12"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "59297",
+          "output_tokens": "273",
+          "cache_read_input_tokens": "50944",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "45"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:12:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "7e28f67bd41c2b2caa9e97eec6d92386",
+          "flAImegraph.lineage.native_id_hashes": "7e28f67bd41c2b2caa9e97eec6d92386",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:ae131a0fddcada6a24c68e4789952877",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:18:last:line:18"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:unknown:18:last:line:18"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "83165",
+          "output_tokens": "260",
+          "cache_read_input_tokens": "73472",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "49"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:18:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "4d4d6fe7cc1c4f623a885ad39349de2b",
+          "flAImegraph.lineage.native_id_hashes": "4d4d6fe7cc1c4f623a885ad39349de2b",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:ae89ca52c350fbe6e478c6363218395f",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:64:last:line:64"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "138251",
+          "output_tokens": "127",
+          "cache_read_input_tokens": "137984",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "23"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:64:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "48c05909e6070a4304fcc3ed72e48c56",
+          "flAImegraph.lineage.native_id_hashes": "48c05909e6070a4304fcc3ed72e48c56",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:b34151875b445ec60793dcf460384439",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:56:last:line:56"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "136222",
+          "output_tokens": "411",
+          "cache_read_input_tokens": "135936",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "29"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:56:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "c0b6e4aa871b60bcece448c4935c5fb1",
+          "flAImegraph.lineage.native_id_hashes": "c0b6e4aa871b60bcece448c4935c5fb1",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:b63b4fbad48c6ae76d507f266c7a16df",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:60:total:line:60"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "3125522",
+          "output_tokens": "29273",
+          "cache_read_input_tokens": "2999296",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "15526"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:60:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "14137b3cdb0d41e851a529bea99f30b3",
+          "flAImegraph.lineage.native_id_hashes": "14137b3cdb0d41e851a529bea99f30b3",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:bc28d12b87eba1e439d1c156006ed3c4",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:8a9ddf6e41b70175089dfc0f72bf91bf9af4c59535d18a28b8e9c73eb5dead14:line:47"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "132909",
+          "output_tokens": "1586",
+          "cache_read_input_tokens": "127744",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "531"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:8a9ddf6e41b70175089dfc0f72bf91bf9af4c59535d18a28b8e9c73eb5dead14",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "134495",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "b5101ff7a2021ea96402d6f7206167a9",
+          "flAImegraph.lineage.native_id_hashes": "b5101ff7a2021ea96402d6f7206167a9",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:bd1d32b0b9ad310dce8c4b75d5f2c317",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:52:total:line:52"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "2578930",
+          "output_tokens": "27456",
+          "cache_read_input_tokens": "2456576",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "14766"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:52:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "2c8372bfb940f1424c8e4aaea1ea2831",
+          "flAImegraph.lineage.native_id_hashes": "2c8372bfb940f1424c8e4aaea1ea2831",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:c2269dfe44df3ec7c0102ddc0009ee96",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:5d55c2e436ae4d4bcde1754381612b063490d34a25255020223d94ad5e004f6d:line:25"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "response:sha256:5d55c2e436ae4d4bcde1754381612b063490d34a25255020223d94ad5e004f6d:line:25"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "102015",
+          "output_tokens": "8596",
+          "cache_read_input_tokens": "98048",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "6518"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:5d55c2e436ae4d4bcde1754381612b063490d34a25255020223d94ad5e004f6d",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "110611",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "0c9f3b9829113da2e7856cf6cd58efc3",
+          "flAImegraph.lineage.native_id_hashes": "0c9f3b9829113da2e7856cf6cd58efc3",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:c6ae461115f482e7c7e25069938abea8",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:16:total:line:16"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:16:total:line:16"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "492158",
+          "output_tokens": "3400",
+          "cache_read_input_tokens": "443904",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "1239"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:16:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "60fabef8d743e3ba8f9cfd3059a6e26f",
+          "flAImegraph.lineage.native_id_hashes": "60fabef8d743e3ba8f9cfd3059a6e26f",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:cc02bf3133540bc21c9d0180939f71c6",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:38:last:line:38"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "124749",
+          "output_tokens": "562",
+          "cache_read_input_tokens": "122624",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "23"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:38:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "3f977b827d187db9e4c2034f836ee0c6",
+          "flAImegraph.lineage.native_id_hashes": "3f977b827d187db9e4c2034f836ee0c6",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:ce0eaa5cb74c4445496480bc09c6be34",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:a18b56e6b506ded1c7616706b9d819687da27887e8b9addfeb6bd582ba6db1b4:line:15"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "response:sha256:a18b56e6b506ded1c7616706b9d819687da27887e8b9addfeb6bd582ba6db1b4:line:15"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "73978",
+          "output_tokens": "467",
+          "cache_read_input_tokens": "66304",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "150"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:a18b56e6b506ded1c7616706b9d819687da27887e8b9addfeb6bd582ba6db1b4",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "74445",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "527992e9716de6c09077e5f1dc27bfdb",
+          "flAImegraph.lineage.native_id_hashes": "527992e9716de6c09077e5f1dc27bfdb",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:ce2da0b48d1d00d5c7c2d9fa6bdc2268",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:90ac1835c04fe5d8f5fed6995678f245786a5e211b9a8515146f0acff596bc6a:line:63"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "138251",
+          "output_tokens": "127",
+          "cache_read_input_tokens": "137984",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "23"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:90ac1835c04fe5d8f5fed6995678f245786a5e211b9a8515146f0acff596bc6a",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "138378",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "9cc316f8a554f9a9b3fafc048cfa06ab",
+          "flAImegraph.lineage.native_id_hashes": "9cc316f8a554f9a9b3fafc048cfa06ab",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:d02aaf657ecdfa490cd879d7e02e7146",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:e84352850506d190d49b3abdeaa398075ad7ceb48c9bd5a4164b021e22a27831:line:33"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "response:sha256:e84352850506d190d49b3abdeaa398075ad7ceb48c9bd5a4164b021e22a27831:line:33"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "117357",
+          "output_tokens": "1449",
+          "cache_read_input_tokens": "116480",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "903"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:e84352850506d190d49b3abdeaa398075ad7ceb48c9bd5a4164b021e22a27831",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "118806",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "508d589fd3eb7b63fd5df75107045054",
+          "flAImegraph.lineage.native_id_hashes": "508d589fd3eb7b63fd5df75107045054",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:e1f755e20ce596402722d2ba3ac1a688",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:48:last:line:48"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "132909",
+          "output_tokens": "1586",
+          "cache_read_input_tokens": "127744",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "531"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:48:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "f7e414327ee40474de184c0416612c3b",
+          "flAImegraph.lineage.native_id_hashes": "f7e414327ee40474de184c0416612c3b",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:e25be8c555ba66288807bb78f46acaca",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:3fa45b6bafd7f5bcd29d38da367ddb65299dad6744a681c90ee1668bb700b72b:line:53"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "136083",
+          "output_tokens": "116",
+          "cache_read_input_tokens": "134912",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "17"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:3fa45b6bafd7f5bcd29d38da367ddb65299dad6744a681c90ee1668bb700b72b",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "136199",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "0cdecb2b0f5ea36668ccac7c65f999d0",
+          "flAImegraph.lineage.native_id_hashes": "0cdecb2b0f5ea36668ccac7c65f999d0",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:e6abf64b2c77deb9bfc13472aefc26c4",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:32:last:line:32"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:unknown:32:last:line:32"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "116894",
+          "output_tokens": "79",
+          "cache_read_input_tokens": "110336",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "10"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:32:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "8097f631ab118b90eb7a1cc1e6292baa",
+          "flAImegraph.lineage.native_id_hashes": "8097f631ab118b90eb7a1cc1e6292baa",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:eb805fa84795a3e0f38d9ee3f9958442",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:ea69536ed2589d7effffcf3b370c96c309cc7c78421b5e592c72d8096750b55e:line:61"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "138120",
+          "output_tokens": "89",
+          "cache_read_input_tokens": "136960",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "14"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:ea69536ed2589d7effffcf3b370c96c309cc7c78421b5e592c72d8096750b55e",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "138209",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "4f81bc50cc7aab932d81d5a82a7feadb",
+          "flAImegraph.lineage.native_id_hashes": "4f81bc50cc7aab932d81d5a82a7feadb",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:f005b14bbcf5fe89fc5d1a5e6c59429d",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:46:last:line:46"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "127993",
+          "output_tokens": "325",
+          "cache_read_input_tokens": "126720",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "49"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:46:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "b78a006bc1a008a6b56a85eb2b3fb859",
+          "flAImegraph.lineage.native_id_hashes": "b78a006bc1a008a6b56a85eb2b3fb859",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:f3b69a43d55216dbccc751f5210e6070",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:24:last:line:24"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:unknown:24:last:line:24"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "99160",
+          "output_tokens": "537",
+          "cache_read_input_tokens": "96000",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "417"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:24:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "7542d5b8b5b73b63abdb58b2e1fc05a8",
+          "flAImegraph.lineage.native_id_hashes": "7542d5b8b5b73b63abdb58b2e1fc05a8",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:f52eb5b70a2ad104f910272d1698f705",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:6:total:line:6"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:6:total:line:6"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "190091",
+          "output_tokens": "1837",
+          "cache_read_input_tokens": "177920",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "884"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:6:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "7fb9d712a768c6da9066fb4cb046181f",
+          "flAImegraph.lineage.native_id_hashes": "7fb9d712a768c6da9066fb4cb046181f",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:f5cc5cafb6ae872eb94bb34043dbae08",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:c83af71316d9a6b5b4945aed334d212d3b487f9c6f2d0a8d62de3556791bd147:line:39"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "125335",
+          "output_tokens": "78",
+          "cache_read_input_tokens": "123648",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "9"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:c83af71316d9a6b5b4945aed334d212d3b487f9c6f2d0a8d62de3556791bd147",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "125413",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "575fa809dacc52fcbdf7ced6b8b467be",
+          "flAImegraph.lineage.native_id_hashes": "575fa809dacc52fcbdf7ced6b8b467be",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:f8883993b5f7a5e87ee4f6bfa6f44cc1",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:20:total:line:20"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:20:total:line:20"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "667412",
+          "output_tokens": "3874",
+          "cache_read_input_tokens": "600064",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "1345"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:20:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "e3ffba6328cacf75b1955f8adf0fe0bb",
+          "flAImegraph.lineage.native_id_hashes": "e3ffba6328cacf75b1955f8adf0fe0bb",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:f9d2d248c4c51daa9bbf437097fc7420",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:66:last:line:66"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "138402",
+          "output_tokens": "133",
+          "cache_read_input_tokens": "137984",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "106"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:66:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "8955c915f49de5dc8c9f0ddaec232258",
+          "flAImegraph.lineage.native_id_hashes": "8955c915f49de5dc8c9f0ddaec232258",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:fb0885de5dc3877cf639c17b6c669d00",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:2b75e8f46c7966d75d12e374c1332ea04b0838f7f959b1103be167d66a9342eb:line:9"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "response:sha256:2b75e8f46c7966d75d12e374c1332ea04b0838f7f959b1103be167d66a9342eb:line:9"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "51358",
+          "output_tokens": "245",
+          "cache_read_input_tokens": "49920",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "25"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:2b75e8f46c7966d75d12e374c1332ea04b0838f7f959b1103be167d66a9342eb",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "51603",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "4befaa2ca2eed820aedaa3b8b3fbe0e1",
+          "flAImegraph.lineage.native_id_hashes": "4befaa2ca2eed820aedaa3b8b3fbe0e1",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:fca7bddc3042814649f08ac8b672ae4d",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:62:total:line:62"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "3263642",
+          "output_tokens": "29362",
+          "cache_read_input_tokens": "3136256",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "15540"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:62:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "bd723490074ef62000429fefdc23d697",
+          "flAImegraph.lineage.native_id_hashes": "bd723490074ef62000429fefdc23d697",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:fd6457a0475cc6352d37605eaabcd2e1",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:28:total:line:28"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:28:total:line:28"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count.total",
+        "status": "ok",
+        "accounting_scope": "aggregate",
+        "usage": {
+          "input_tokens": "1075700",
+          "output_tokens": "13205",
+          "cache_read_input_tokens": "987136",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "8338"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:28:total",
+        "grain": "session",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "total_token_usage",
+          "native_id_hash": "ef98c9be2a9bdc8b8f501bb5b70148ff",
+          "flAImegraph.lineage.native_id_hashes": "ef98c9be2a9bdc8b8f501bb5b70148ff",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:feb239a86337a3ab522fb8b0ba8782ff",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "response:sha256:b2307d7027586eae9810097b116972c691f1402e0fae8d7d05b20deef02e4890:line:27"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "response:sha256:b2307d7027586eae9810097b116972c691f1402e0fae8d7d05b20deef02e4890:line:27"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.model",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "usage": {
+          "input_tokens": "110635",
+          "output_tokens": "79",
+          "cache_read_input_tokens": "101120",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "10"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "turn_id": "sha256:137ba044fa92c81657035734c8bc686163a17249cdeeac5b84ab0e83c16e36dd",
+        "provider": "openai",
+        "model": "gpt-5.6-luna",
+        "model_identity": "setting",
+        "subject_id": "sha256:b2307d7027586eae9810097b116972c691f1402e0fae8d7d05b20deef02e4890",
+        "grain": "operation",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "work_item_id": "context-producer-proof",
+        "attributes": {
+          "source_record_type": "token_usage_record",
+          "root_turn_id": "sha256:fabf5e57a199879a4b4282768b817a37dc55d0caf63c906f18e32d71a4b001f3",
+          "native_total_tokens": "110714",
+          "effort": "max",
+          "parent_thread_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+          "native_id_hash": "5432ad923109da2de609e6f917897f36",
+          "flAImegraph.lineage.native_id_hashes": "5432ad923109da2de609e6f917897f36",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer"
+      },
+      {
+        "id": "codex:capture:observation:ff782306c0f9add2123d1002a9522364",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:52:last:line:52"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "135236",
+          "output_tokens": "805",
+          "cache_read_input_tokens": "133888",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "730"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:52:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "38ce680861735cbdd043fca9844137c4",
+          "flAImegraph.lineage.native_id_hashes": "38ce680861735cbdd043fca9844137c4",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      },
+      {
+        "id": "codex:capture:observation:ff7b069d543532c5c159000d7cb64c88",
+        "source_refs": [
+          {
+            "source_id": "codex:8d63a66d95efd2b1",
+            "record": "snapshot:unknown:unknown:8:last:line:8"
+          },
+          {
+            "source_id": "codex:dc0cf6a542e5e8ae",
+            "record": "snapshot:unknown:unknown:8:last:line:8"
+          }
+        ],
+        "kind": "model",
+        "operation": "codex.token_count",
+        "status": "ok",
+        "accounting_scope": "snapshot",
+        "usage": {
+          "input_tokens": "50604",
+          "output_tokens": "372",
+          "cache_read_input_tokens": "39680",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": "95"
+        },
+        "session_id": "sha256:ae867cf5813e89c706b258da90d6a0779cc2e7c8ea74d701c84dc249b74fd8bf",
+        "model": "gpt-5.6-luna",
+        "model_identity": "unknown",
+        "subject_id": "snapshot:unknown:unknown:8:last",
+        "grain": "event",
+        "count_basis": "provider_native",
+        "product": "codex",
+        "attributes": {
+          "source_record_type": "event_msg.token_count",
+          "snapshot_kind": "last_token_usage",
+          "native_id_hash": "648f0757819f7b3311f1fc4b7b2b4a3d",
+          "flAImegraph.lineage.native_id_hashes": "648f0757819f7b3311f1fc4b7b2b4a3d",
+          "flAImegraph.capture_namespace": "v02-independent-producer",
+          "flAImegraph.capture_identity_basis": "native_or_verified_prefix_coordinate"
+        },
+        "agent_id": "independent-producer",
+        "work_item_id": "context-producer-proof"
+      }
+    ],
+    "relationships": [],
+    "issues": [
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 10 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 10 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 12 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 12 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 14 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 14 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 16 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 16 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 18 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 18 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 20 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 20 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 22 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 22 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 24 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 24 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 26 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 26 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 28 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 28 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 30 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 30 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 32 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 32 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 34 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 34 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 36 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 38 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 4 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 4 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 40 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 42 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 44 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 46 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 48 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 50 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 52 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 54 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 56 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 58 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 6 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 6 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 60 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 62 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 64 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 66 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 68 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 8 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "legacy_snapshot_non_additive",
+        "message": "Codex token_count line 8 is retained as snapshot evidence and is not added to direct usage.",
+        "severity": "warning",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      },
+      {
+        "code": "partial_source_coverage",
+        "message": "Codex additive usage is authoritative only for the inspected capture contract; legacy snapshots and hidden/provider retries remain unresolved.",
+        "severity": "info",
+        "source_id": "codex:8d63a66d95efd2b1"
+      },
+      {
+        "code": "partial_source_coverage",
+        "message": "Codex additive usage is authoritative only for the inspected capture contract; legacy snapshots and hidden/provider retries remain unresolved.",
+        "severity": "info",
+        "source_id": "codex:dc0cf6a542e5e8ae"
+      }
+    ]
+  }
+}

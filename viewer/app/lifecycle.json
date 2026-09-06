@@ -1,0 +1,1292 @@
+{
+  "schema_version": "0.2.0",
+  "dataset_id": "synthetic-context-lifecycle",
+  "evidence": {
+    "schema_version": "0.1.0",
+    "dataset_id": "synthetic-context-lifecycle",
+    "sources": [
+      {
+        "id": "synthetic-transcript",
+        "harness": "fixture",
+        "format": "synthetic",
+        "coverage": "complete",
+        "description": "Synthetic demonstration; token weights and monetary amounts are illustrative."
+      }
+    ],
+    "relationships": [
+      {
+        "from": "request-1",
+        "to": "request-2",
+        "kind": "context_from"
+      },
+      {
+        "from": "request-2",
+        "to": "request-3",
+        "kind": "context_from"
+      }
+    ],
+    "issues": [
+      {
+        "code": "SYNTHETIC_FIXTURE",
+        "severity": "info",
+        "message": "Illustrative token weights, outcomes and cost values; no provider call was made."
+      }
+    ],
+    "observations": [
+      {
+        "id": "request-1",
+        "kind": "model",
+        "operation": "Inspect allocation",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "timestamp": "2026-09-06T10:00:00Z",
+        "agent_id": "fixture-coder",
+        "model": "fixture-model",
+        "model_identity": "setting",
+        "source_refs": [
+          {
+            "source_id": "synthetic-transcript",
+            "record": "request-1"
+          }
+        ],
+        "usage": {
+          "input_tokens": "400",
+          "output_tokens": "50",
+          "cache_read_input_tokens": null,
+          "cache_write_input_tokens": null,
+          "reasoning_output_tokens": null
+        },
+        "recorded_cost": {
+          "amount": "0.0025",
+          "currency": "USD",
+          "basis": "model_price_estimate"
+        }
+      },
+      {
+        "id": "request-2",
+        "kind": "model",
+        "operation": "Implement and test",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "timestamp": "2026-09-06T10:01:00Z",
+        "agent_id": "fixture-coder",
+        "model": "fixture-model",
+        "model_identity": "setting",
+        "source_refs": [
+          {
+            "source_id": "synthetic-transcript",
+            "record": "request-2"
+          }
+        ],
+        "usage": {
+          "input_tokens": "650",
+          "output_tokens": "50",
+          "cache_read_input_tokens": null,
+          "cache_write_input_tokens": null,
+          "reasoning_output_tokens": null
+        },
+        "recorded_cost": {
+          "amount": "0.0045",
+          "currency": "USD",
+          "basis": "model_price_estimate"
+        }
+      },
+      {
+        "id": "request-3",
+        "kind": "model",
+        "operation": "Explain coverage",
+        "status": "ok",
+        "accounting_scope": "direct",
+        "timestamp": "2026-09-06T10:02:00Z",
+        "agent_id": "fixture-coder",
+        "model": "fixture-model",
+        "model_identity": "setting",
+        "source_refs": [
+          {
+            "source_id": "synthetic-transcript",
+            "record": "request-3"
+          }
+        ],
+        "usage": {
+          "input_tokens": "220",
+          "output_tokens": "50",
+          "cache_read_input_tokens": null,
+          "cache_write_input_tokens": null,
+          "reasoning_output_tokens": null
+        },
+        "recorded_cost": {
+          "amount": "0.0018",
+          "currency": "USD",
+          "basis": "model_price_estimate"
+        }
+      }
+    ]
+  },
+  "valuation": {
+    "schema_version": "0.1.0",
+    "id": "val-03d23a5980cd43630bc724163b23dfa60b97036815c86aea48c31ce9b9495675",
+    "dataset_id": "synthetic-context-lifecycle",
+    "selection_policy": "direct-only-v1",
+    "currency": "USD",
+    "basis": "model_price_estimate",
+    "assumptions": [
+      "selection policy: direct-only-v1",
+      "recorded monetary amounts are rounded once to nano-currency using HALF_EVEN"
+    ],
+    "observations": [
+      {
+        "observation_id": "request-1",
+        "amount_nanos": "2500000",
+        "basis": "model_price_estimate"
+      },
+      {
+        "observation_id": "request-2",
+        "amount_nanos": "4500000",
+        "basis": "model_price_estimate"
+      },
+      {
+        "observation_id": "request-3",
+        "amount_nanos": "1800000",
+        "basis": "model_price_estimate"
+      }
+    ],
+    "total_nanos": "8800000",
+    "complete": true,
+    "issues": [
+      {
+        "code": "SYNTHETIC_FIXTURE",
+        "severity": "info",
+        "message": "Illustrative token weights, outcomes and cost values; no provider call was made."
+      }
+    ]
+  },
+  "context": {
+    "artifacts": [
+      {
+        "coverage": "complete",
+        "description": "Synthetic demonstration; token weights and monetary amounts are illustrative.",
+        "format": "synthetic",
+        "harness": "fixture",
+        "id": "synthetic-transcript"
+      }
+    ],
+    "dataset_id": "synthetic-context-lifecycle",
+    "evidence_schema_version": "0.1.0",
+    "issues": [],
+    "profiles": [
+      {
+        "artifacts": [],
+        "context_capabilities": [
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "system_instruction",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "developer_instruction",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "user_prompt",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "repository_instruction",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "skill",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "repository_file",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "retrieved_document",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "tool_result",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "tool_schema",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "output_schema",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "conversation_history",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "assistant_output",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "memory",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "delegated_context",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "attachment",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "unknown",
+            "source_refs": []
+          }
+        ],
+        "harness": "fixture",
+        "harness_version": {
+          "evidence": "declared",
+          "source_refs": [],
+          "value": "1"
+        },
+        "id": "harness-profile:bb700f4fc28ea3c51bcd6a6e97272c9a275f2bf145c3c7b4e6a5ad671c98ec7f",
+        "instruction_sources": [
+          {
+            "delivery": "always",
+            "evidence": "declared",
+            "label": "AGENTS.md (illustrative)",
+            "origin": "repository_instruction",
+            "source_refs": []
+          },
+          {
+            "delivery": "conditional",
+            "evidence": "declared",
+            "label": "TDD instructions (illustrative)",
+            "origin": "skill",
+            "source_refs": []
+          }
+        ],
+        "model": {
+          "name": {
+            "evidence": "declared",
+            "source_refs": [],
+            "value": "fixture-model"
+          },
+          "provider": {
+            "evidence": "declared",
+            "source_refs": [],
+            "value": "fixture"
+          },
+          "settings": {}
+        },
+        "name": "Illustrative coding harness",
+        "policies": {
+          "assembly": {
+            "evidence": "unknown",
+            "source_refs": [],
+            "value": null
+          },
+          "caching": {
+            "evidence": "unknown",
+            "source_refs": [],
+            "value": null
+          },
+          "compaction": {
+            "evidence": "declared",
+            "source_refs": [],
+            "value": "Explicit producer-supplied summary"
+          },
+          "truncation": {
+            "evidence": "unknown",
+            "source_refs": [],
+            "value": null
+          }
+        },
+        "profile_version": "0.2.0",
+        "schema_version": "0.2.0",
+        "tools": []
+      }
+    ],
+    "requests": [
+      {
+        "boundary": "client_request",
+        "captured_at": "2026-09-06T10:00:00Z",
+        "coverage": "partial",
+        "coverage_evidence": "declared",
+        "id": "context-request-1",
+        "observation_id": "request-1",
+        "occurrences": [
+          {
+            "id": "context-occurrence:f6fffe7ef97146962516223df335fe4a3051f855b66a2a0abec8a8be02245708",
+            "placement": "instruction",
+            "revision_id": "context-revision:9290c873ee1bc42b475fa982c0b21fb22d4636c2f16758d64799234fd3b8c54f",
+            "role": "user",
+            "treatment": {
+              "evidence": "unknown",
+              "method": "capture-treatment-unknown-v1",
+              "source_refs": [],
+              "value": "unknown"
+            }
+          },
+          {
+            "id": "context-occurrence:e263654b1a1e6539b2f8699e4095ad66daeeb1ea98fedf80b3728fb20e2f1852",
+            "placement": "instruction",
+            "revision_id": "context-revision:80dcf1f3653e6713e5f1bd0e4f06f634c402e42ee958269ef70e32f914b7ae31",
+            "role": "user",
+            "treatment": {
+              "evidence": "unknown",
+              "method": "capture-treatment-unknown-v1",
+              "source_refs": [],
+              "value": "unknown"
+            }
+          },
+          {
+            "id": "context-occurrence:be5fca0453997868c4b6d854ff16a3b1b1b9de19b90fae13bf76139e04909448",
+            "placement": "current_turn",
+            "revision_id": "context-revision:257e61e64a4191f1e49e234ffff689840062a380af3988f1ad3abfce189582be",
+            "role": "user",
+            "treatment": {
+              "evidence": "unknown",
+              "method": "capture-treatment-unknown-v1",
+              "source_refs": [],
+              "value": "unknown"
+            }
+          },
+          {
+            "id": "context-occurrence:f3b43240013a27666aceb26280e2743d1c664cf1a224727ff8e8c14a8382e0c8",
+            "placement": "current_turn",
+            "revision_id": "context-revision:3a5528741db10e8898167f38f6e561ec970e01210075ba1ea6a83ccf564f771f",
+            "role": "user",
+            "treatment": {
+              "evidence": "unknown",
+              "method": "capture-treatment-unknown-v1",
+              "source_refs": [],
+              "value": "unknown"
+            }
+          }
+        ],
+        "overrides": {},
+        "profile_id": "harness-profile:bb700f4fc28ea3c51bcd6a6e97272c9a275f2bf145c3c7b4e6a5ad671c98ec7f",
+        "source_refs": [
+          {
+            "record": "request-1",
+            "source_id": "synthetic-transcript"
+          }
+        ]
+      },
+      {
+        "boundary": "client_request",
+        "captured_at": "2026-09-06T10:01:00Z",
+        "coverage": "partial",
+        "coverage_evidence": "declared",
+        "id": "context-request-2",
+        "observation_id": "request-2",
+        "occurrences": [
+          {
+            "id": "context-occurrence:d9edb5b30412d0b31127da61341d92b3142bf2796570fa7136700c13d808f2ae",
+            "placement": "instruction",
+            "revision_id": "context-revision:9290c873ee1bc42b475fa982c0b21fb22d4636c2f16758d64799234fd3b8c54f",
+            "role": "user",
+            "treatment": {
+              "evidence": "unknown",
+              "method": "capture-treatment-unknown-v1",
+              "source_refs": [],
+              "value": "unknown"
+            }
+          },
+          {
+            "id": "context-occurrence:b353101f0f10c2c7962b92fdc7dbb9e4d3c30f8b5decc9c93eb65d7288ae3e7d",
+            "placement": "instruction",
+            "revision_id": "context-revision:80dcf1f3653e6713e5f1bd0e4f06f634c402e42ee958269ef70e32f914b7ae31",
+            "role": "user",
+            "treatment": {
+              "evidence": "unknown",
+              "method": "capture-treatment-unknown-v1",
+              "source_refs": [],
+              "value": "unknown"
+            }
+          },
+          {
+            "id": "context-occurrence:413c96d6df9de26ec10670a77666f6640af4673723cfed9faaf2487e261527c3",
+            "placement": "current_turn",
+            "revision_id": "context-revision:257e61e64a4191f1e49e234ffff689840062a380af3988f1ad3abfce189582be",
+            "role": "user",
+            "treatment": {
+              "evidence": "unknown",
+              "method": "capture-treatment-unknown-v1",
+              "source_refs": [],
+              "value": "unknown"
+            }
+          },
+          {
+            "id": "context-occurrence:0c928c68ac5d36e3f1a77a55d076ebe23a9026935b2706a2bd6cdbb6c3ebccbd",
+            "placement": "current_turn",
+            "revision_id": "context-revision:3a5528741db10e8898167f38f6e561ec970e01210075ba1ea6a83ccf564f771f",
+            "role": "user",
+            "treatment": {
+              "evidence": "unknown",
+              "method": "capture-treatment-unknown-v1",
+              "source_refs": [],
+              "value": "unknown"
+            }
+          },
+          {
+            "id": "context-occurrence:2efef908643d6572a83218e0d8161472a6a1207424b59ccb51acc345921be70b",
+            "placement": "history",
+            "revision_id": "context-revision:75010119c82ad00f13f374504774fe0bc9b5ef56ba80c12bf12165eff994273a",
+            "role": "assistant",
+            "treatment": {
+              "evidence": "unknown",
+              "method": "capture-treatment-unknown-v1",
+              "source_refs": [],
+              "value": "unknown"
+            }
+          },
+          {
+            "id": "context-occurrence:c5fc69d48057b79f54856dd6d370039f6f4d0c279bfd86a6e49758c72ee613c3",
+            "placement": "tool_result",
+            "revision_id": "context-revision:65ee85f0bf0eac7bfa6875c8a5b25125cc1d78aa4d18646af7722ec4a103dabc",
+            "role": "tool",
+            "treatment": {
+              "evidence": "unknown",
+              "method": "capture-treatment-unknown-v1",
+              "source_refs": [],
+              "value": "unknown"
+            }
+          }
+        ],
+        "overrides": {},
+        "profile_id": "harness-profile:bb700f4fc28ea3c51bcd6a6e97272c9a275f2bf145c3c7b4e6a5ad671c98ec7f",
+        "source_refs": [
+          {
+            "record": "request-2",
+            "source_id": "synthetic-transcript"
+          }
+        ]
+      },
+      {
+        "boundary": "client_request",
+        "captured_at": "2026-09-06T10:02:00Z",
+        "coverage": "partial",
+        "coverage_evidence": "declared",
+        "id": "context-request-3",
+        "observation_id": "request-3",
+        "occurrences": [
+          {
+            "id": "context-occurrence:fa2b238772c84fc99dbb270791aa16cd9e3a1c411d8a36a7dd4297995f03cb0a",
+            "placement": "instruction",
+            "revision_id": "context-revision:9290c873ee1bc42b475fa982c0b21fb22d4636c2f16758d64799234fd3b8c54f",
+            "role": "user",
+            "treatment": {
+              "evidence": "unknown",
+              "method": "capture-treatment-unknown-v1",
+              "source_refs": [],
+              "value": "unknown"
+            }
+          },
+          {
+            "id": "context-occurrence:581637341d656274c9a1205c802911715187fc53c059a6bc9fa09a48f4628a9a",
+            "placement": "history",
+            "revision_id": "context-revision:c30caa1fb4bb0e517c8075eb678255820e1a29ea93c58b70a4286ab4911cebbf",
+            "role": "user",
+            "treatment": {
+              "evidence": "unknown",
+              "method": "capture-treatment-unknown-v1",
+              "source_refs": [],
+              "value": "unknown"
+            }
+          },
+          {
+            "id": "context-occurrence:1db3cf5be36c461455b2d92da9eab1107a6f5fe7986a335284cf989e160d86a3",
+            "placement": "current_turn",
+            "revision_id": "context-revision:4adb9ebe25c31aa999ff8943e6aca8c2aa818dc63fb6f4dd3010c01c76abe584",
+            "role": "user",
+            "treatment": {
+              "evidence": "unknown",
+              "method": "capture-treatment-unknown-v1",
+              "source_refs": [],
+              "value": "unknown"
+            }
+          }
+        ],
+        "overrides": {},
+        "profile_id": "harness-profile:bb700f4fc28ea3c51bcd6a6e97272c9a275f2bf145c3c7b4e6a5ad671c98ec7f",
+        "source_refs": [
+          {
+            "record": "request-3",
+            "source_id": "synthetic-transcript"
+          }
+        ]
+      }
+    ],
+    "revisions": [
+      {
+        "bytes": {
+          "evidence": "derived",
+          "method": "utf8-byte-length-v1",
+          "source_refs": [
+            {
+              "record": "request-1",
+              "source_id": "synthetic-transcript"
+            },
+            {
+              "record": "request-2",
+              "source_id": "synthetic-transcript"
+            }
+          ],
+          "unit": "utf8_bytes",
+          "value": "65"
+        },
+        "content_sha256": "626642af7f768d0b0e4802034cdb2a598407df149ce81048fb645293f010fc5f",
+        "fingerprint_evidence": "derived",
+        "fingerprint_method": "sha256-utf8-content-v1",
+        "id": "context-revision:257e61e64a4191f1e49e234ffff689840062a380af3988f1ad3abfce189582be",
+        "media": "text",
+        "representation": "excerpt",
+        "source_id": "file",
+        "source_refs": [
+          {
+            "record": "request-1",
+            "source_id": "synthetic-transcript"
+          },
+          {
+            "record": "request-2",
+            "source_id": "synthetic-transcript"
+          }
+        ],
+        "tokens": {
+          "evidence": "estimated",
+          "method": "Illustrative synthetic token weight; not a provider token count",
+          "source_refs": [
+            {
+              "record": "file",
+              "source_id": "synthetic-transcript"
+            },
+            {
+              "record": "request-1",
+              "source_id": "synthetic-transcript"
+            },
+            {
+              "record": "request-2",
+              "source_id": "synthetic-transcript"
+            }
+          ],
+          "unit": "tokens",
+          "value": "140"
+        }
+      },
+      {
+        "bytes": {
+          "evidence": "derived",
+          "method": "utf8-byte-length-v1",
+          "source_refs": [
+            {
+              "record": "request-1",
+              "source_id": "synthetic-transcript"
+            },
+            {
+              "record": "request-2",
+              "source_id": "synthetic-transcript"
+            }
+          ],
+          "unit": "utf8_bytes",
+          "value": "23"
+        },
+        "content_sha256": "c2ef762e3242181d415e5fcabff7a2810ba6f3ce1db0d12b2996a5b06f0d5ce7",
+        "fingerprint_evidence": "derived",
+        "fingerprint_method": "sha256-utf8-content-v1",
+        "id": "context-revision:3a5528741db10e8898167f38f6e561ec970e01210075ba1ea6a83ccf564f771f",
+        "media": "text",
+        "representation": "original",
+        "source_id": "prompt",
+        "source_refs": [
+          {
+            "record": "request-1",
+            "source_id": "synthetic-transcript"
+          },
+          {
+            "record": "request-2",
+            "source_id": "synthetic-transcript"
+          }
+        ],
+        "tokens": {
+          "evidence": "estimated",
+          "method": "Illustrative synthetic token weight; not a provider token count",
+          "source_refs": [
+            {
+              "record": "prompt",
+              "source_id": "synthetic-transcript"
+            },
+            {
+              "record": "request-1",
+              "source_id": "synthetic-transcript"
+            },
+            {
+              "record": "request-2",
+              "source_id": "synthetic-transcript"
+            }
+          ],
+          "unit": "tokens",
+          "value": "20"
+        }
+      },
+      {
+        "bytes": {
+          "evidence": "derived",
+          "method": "utf8-byte-length-v1",
+          "source_refs": [
+            {
+              "record": "request-3",
+              "source_id": "synthetic-transcript"
+            }
+          ],
+          "unit": "utf8_bytes",
+          "value": "31"
+        },
+        "content_sha256": "388f6310c7c34525347de4731e9a7d537c854fa2c260a019b7d8d0d2ea1242ef",
+        "fingerprint_evidence": "derived",
+        "fingerprint_method": "sha256-utf8-content-v1",
+        "id": "context-revision:4adb9ebe25c31aa999ff8943e6aca8c2aa818dc63fb6f4dd3010c01c76abe584",
+        "media": "text",
+        "representation": "original",
+        "source_id": "followup",
+        "source_refs": [
+          {
+            "record": "request-3",
+            "source_id": "synthetic-transcript"
+          }
+        ],
+        "tokens": {
+          "evidence": "estimated",
+          "method": "Illustrative synthetic token weight; not a provider token count",
+          "source_refs": [
+            {
+              "record": "followup",
+              "source_id": "synthetic-transcript"
+            },
+            {
+              "record": "request-3",
+              "source_id": "synthetic-transcript"
+            }
+          ],
+          "unit": "tokens",
+          "value": "15"
+        }
+      },
+      {
+        "bytes": {
+          "evidence": "derived",
+          "method": "utf8-byte-length-v1",
+          "source_refs": [
+            {
+              "record": "request-2",
+              "source_id": "synthetic-transcript"
+            }
+          ],
+          "unit": "utf8_bytes",
+          "value": "29"
+        },
+        "content_sha256": "91e0a74403b89efb7569a8228d032006e35f78bbf21f6e80daf6df070e2f42bf",
+        "fingerprint_evidence": "derived",
+        "fingerprint_method": "sha256-utf8-content-v1",
+        "id": "context-revision:65ee85f0bf0eac7bfa6875c8a5b25125cc1d78aa4d18646af7722ec4a103dabc",
+        "media": "text",
+        "representation": "original",
+        "source_id": "test-result",
+        "source_refs": [
+          {
+            "record": "request-2",
+            "source_id": "synthetic-transcript"
+          }
+        ],
+        "tokens": {
+          "evidence": "estimated",
+          "method": "Illustrative synthetic token weight; not a provider token count",
+          "source_refs": [
+            {
+              "record": "request-2",
+              "source_id": "synthetic-transcript"
+            },
+            {
+              "record": "test-result",
+              "source_id": "synthetic-transcript"
+            }
+          ],
+          "unit": "tokens",
+          "value": "50"
+        }
+      },
+      {
+        "bytes": {
+          "evidence": "derived",
+          "method": "utf8-byte-length-v1",
+          "source_refs": [
+            {
+              "record": "request-2",
+              "source_id": "synthetic-transcript"
+            }
+          ],
+          "unit": "utf8_bytes",
+          "value": "62"
+        },
+        "content_sha256": "7e46b63e5d5ceb51fb2876a82c040d08689413cf4bfe485f0d85cba88ed34391",
+        "fingerprint_evidence": "derived",
+        "fingerprint_method": "sha256-utf8-content-v1",
+        "id": "context-revision:75010119c82ad00f13f374504774fe0bc9b5ef56ba80c12bf12165eff994273a",
+        "media": "text",
+        "representation": "original",
+        "source_id": "assistant",
+        "source_refs": [
+          {
+            "record": "request-2",
+            "source_id": "synthetic-transcript"
+          }
+        ],
+        "tokens": {
+          "evidence": "estimated",
+          "method": "Illustrative synthetic token weight; not a provider token count",
+          "source_refs": [
+            {
+              "record": "assistant",
+              "source_id": "synthetic-transcript"
+            },
+            {
+              "record": "request-2",
+              "source_id": "synthetic-transcript"
+            }
+          ],
+          "unit": "tokens",
+          "value": "40"
+        }
+      },
+      {
+        "bytes": {
+          "evidence": "derived",
+          "method": "utf8-byte-length-v1",
+          "source_refs": [
+            {
+              "record": "request-1",
+              "source_id": "synthetic-transcript"
+            },
+            {
+              "record": "request-2",
+              "source_id": "synthetic-transcript"
+            }
+          ],
+          "unit": "utf8_bytes",
+          "value": "59"
+        },
+        "content_sha256": "40af3821f73114ab7eb1148cf63c4dd310a672188f0f5e92a15c0b1703d420ce",
+        "fingerprint_evidence": "derived",
+        "fingerprint_method": "sha256-utf8-content-v1",
+        "id": "context-revision:80dcf1f3653e6713e5f1bd0e4f06f634c402e42ee958269ef70e32f914b7ae31",
+        "media": "text",
+        "representation": "original",
+        "source_id": "skill",
+        "source_refs": [
+          {
+            "record": "request-1",
+            "source_id": "synthetic-transcript"
+          },
+          {
+            "record": "request-2",
+            "source_id": "synthetic-transcript"
+          }
+        ],
+        "tokens": {
+          "evidence": "estimated",
+          "method": "Illustrative synthetic token weight; not a provider token count",
+          "source_refs": [
+            {
+              "record": "request-1",
+              "source_id": "synthetic-transcript"
+            },
+            {
+              "record": "request-2",
+              "source_id": "synthetic-transcript"
+            },
+            {
+              "record": "skill",
+              "source_id": "synthetic-transcript"
+            }
+          ],
+          "unit": "tokens",
+          "value": "80"
+        }
+      },
+      {
+        "bytes": {
+          "evidence": "derived",
+          "method": "utf8-byte-length-v1",
+          "source_refs": [
+            {
+              "record": "request-1",
+              "source_id": "synthetic-transcript"
+            },
+            {
+              "record": "request-2",
+              "source_id": "synthetic-transcript"
+            },
+            {
+              "record": "request-3",
+              "source_id": "synthetic-transcript"
+            }
+          ],
+          "unit": "utf8_bytes",
+          "value": "65"
+        },
+        "content_sha256": "84f97a583de4ca0d205a24eabc80016b5c54195a6cebc96023e9073055812c69",
+        "fingerprint_evidence": "derived",
+        "fingerprint_method": "sha256-utf8-content-v1",
+        "id": "context-revision:9290c873ee1bc42b475fa982c0b21fb22d4636c2f16758d64799234fd3b8c54f",
+        "media": "text",
+        "representation": "original",
+        "source_id": "repo-instructions",
+        "source_refs": [
+          {
+            "record": "request-1",
+            "source_id": "synthetic-transcript"
+          },
+          {
+            "record": "request-2",
+            "source_id": "synthetic-transcript"
+          },
+          {
+            "record": "request-3",
+            "source_id": "synthetic-transcript"
+          }
+        ],
+        "tokens": {
+          "evidence": "estimated",
+          "method": "Illustrative synthetic token weight; not a provider token count",
+          "source_refs": [
+            {
+              "record": "repo-instructions",
+              "source_id": "synthetic-transcript"
+            },
+            {
+              "record": "request-1",
+              "source_id": "synthetic-transcript"
+            },
+            {
+              "record": "request-2",
+              "source_id": "synthetic-transcript"
+            },
+            {
+              "record": "request-3",
+              "source_id": "synthetic-transcript"
+            }
+          ],
+          "unit": "tokens",
+          "value": "60"
+        }
+      },
+      {
+        "bytes": {
+          "evidence": "derived",
+          "method": "utf8-byte-length-v1",
+          "source_refs": [
+            {
+              "record": "request-3",
+              "source_id": "synthetic-transcript"
+            }
+          ],
+          "unit": "utf8_bytes",
+          "value": "85"
+        },
+        "content_sha256": "2f9f12f73a0f41d89b5844d56a4ff1bb984da8d87a62323df1f37b617e3cc854",
+        "fingerprint_evidence": "derived",
+        "fingerprint_method": "sha256-utf8-content-v1",
+        "id": "context-revision:c30caa1fb4bb0e517c8075eb678255820e1a29ea93c58b70a4286ab4911cebbf",
+        "media": "text",
+        "representation": "summary",
+        "source_id": "summary",
+        "source_refs": [
+          {
+            "record": "request-3",
+            "source_id": "synthetic-transcript"
+          }
+        ],
+        "tokens": {
+          "evidence": "estimated",
+          "method": "Illustrative synthetic token weight; not a provider token count",
+          "source_refs": [
+            {
+              "record": "request-3",
+              "source_id": "synthetic-transcript"
+            },
+            {
+              "record": "summary",
+              "source_id": "synthetic-transcript"
+            }
+          ],
+          "unit": "tokens",
+          "value": "70"
+        }
+      }
+    ],
+    "schema_version": "0.2.0",
+    "sources": [
+      {
+        "id": "assistant",
+        "identity_basis": "unknown",
+        "label": "Earlier response",
+        "origin": "assistant_output",
+        "origin_evidence": "declared",
+        "source_refs": [
+          {
+            "record": "request-2",
+            "source_id": "synthetic-transcript"
+          }
+        ]
+      },
+      {
+        "id": "file",
+        "identity_basis": "unknown",
+        "label": "allocation.ts",
+        "origin": "repository_file",
+        "origin_evidence": "declared",
+        "source_refs": [
+          {
+            "record": "request-1",
+            "source_id": "synthetic-transcript"
+          },
+          {
+            "record": "request-2",
+            "source_id": "synthetic-transcript"
+          }
+        ]
+      },
+      {
+        "id": "followup",
+        "identity_basis": "unknown",
+        "label": "Follow-up request",
+        "origin": "user_prompt",
+        "origin_evidence": "declared",
+        "source_refs": [
+          {
+            "record": "request-3",
+            "source_id": "synthetic-transcript"
+          }
+        ]
+      },
+      {
+        "id": "prompt",
+        "identity_basis": "unknown",
+        "label": "Task request",
+        "origin": "user_prompt",
+        "origin_evidence": "declared",
+        "source_refs": [
+          {
+            "record": "request-1",
+            "source_id": "synthetic-transcript"
+          },
+          {
+            "record": "request-2",
+            "source_id": "synthetic-transcript"
+          }
+        ]
+      },
+      {
+        "id": "repo-instructions",
+        "identity_basis": "unknown",
+        "label": "AGENTS.md",
+        "origin": "repository_instruction",
+        "origin_evidence": "declared",
+        "source_refs": [
+          {
+            "record": "request-1",
+            "source_id": "synthetic-transcript"
+          },
+          {
+            "record": "request-2",
+            "source_id": "synthetic-transcript"
+          },
+          {
+            "record": "request-3",
+            "source_id": "synthetic-transcript"
+          }
+        ]
+      },
+      {
+        "id": "skill",
+        "identity_basis": "unknown",
+        "label": "TDD skill",
+        "origin": "skill",
+        "origin_evidence": "declared",
+        "source_refs": [
+          {
+            "record": "request-1",
+            "source_id": "synthetic-transcript"
+          },
+          {
+            "record": "request-2",
+            "source_id": "synthetic-transcript"
+          }
+        ]
+      },
+      {
+        "id": "summary",
+        "identity_basis": "unknown",
+        "label": "Compaction summary",
+        "origin": "conversation_history",
+        "origin_evidence": "declared",
+        "source_refs": [
+          {
+            "record": "request-3",
+            "source_id": "synthetic-transcript"
+          }
+        ]
+      },
+      {
+        "id": "test-result",
+        "identity_basis": "unknown",
+        "label": "Test output",
+        "origin": "tool_result",
+        "origin_evidence": "declared",
+        "source_refs": [
+          {
+            "record": "request-2",
+            "source_id": "synthetic-transcript"
+          }
+        ]
+      }
+    ],
+    "transformations": [
+      {
+        "id": "compact-1",
+        "kind": "compact",
+        "from_revision_ids": [
+          "context-revision:257e61e64a4191f1e49e234ffff689840062a380af3988f1ad3abfce189582be",
+          "context-revision:3a5528741db10e8898167f38f6e561ec970e01210075ba1ea6a83ccf564f771f",
+          "context-revision:65ee85f0bf0eac7bfa6875c8a5b25125cc1d78aa4d18646af7722ec4a103dabc",
+          "context-revision:75010119c82ad00f13f374504774fe0bc9b5ef56ba80c12bf12165eff994273a"
+        ],
+        "to_revision_ids": [
+          "context-revision:c30caa1fb4bb0e517c8075eb678255820e1a29ea93c58b70a4286ab4911cebbf"
+        ],
+        "evidence": "declared",
+        "method": "Synthetic producer-declared compaction lineage; retained instructions are not ancestors of the summary.",
+        "observation_id": null,
+        "source_refs": [
+          {
+            "source_id": "synthetic-transcript",
+            "record": "compact-1"
+          }
+        ]
+      }
+    ]
+  },
+  "allocations": [
+    {
+      "request_id": "context-request-1",
+      "observation_id": "request-1",
+      "method": "proportional-input-coverage-v1",
+      "evidence": "estimated",
+      "amount_nanos": "2500000",
+      "denominator_tokens": "400",
+      "unallocated_weight_tokens": "100",
+      "allocated_nanos": "1875000",
+      "unallocated_nanos": "625000",
+      "portions": [
+        {
+          "occurrence_id": "context-occurrence:f6fffe7ef97146962516223df335fe4a3051f855b66a2a0abec8a8be02245708",
+          "revision_id": "context-revision:9290c873ee1bc42b475fa982c0b21fb22d4636c2f16758d64799234fd3b8c54f",
+          "source_id": "repo-instructions",
+          "weight_tokens": "60",
+          "amount_nanos": "375000"
+        },
+        {
+          "occurrence_id": "context-occurrence:e263654b1a1e6539b2f8699e4095ad66daeeb1ea98fedf80b3728fb20e2f1852",
+          "revision_id": "context-revision:80dcf1f3653e6713e5f1bd0e4f06f634c402e42ee958269ef70e32f914b7ae31",
+          "source_id": "skill",
+          "weight_tokens": "80",
+          "amount_nanos": "500000"
+        },
+        {
+          "occurrence_id": "context-occurrence:be5fca0453997868c4b6d854ff16a3b1b1b9de19b90fae13bf76139e04909448",
+          "revision_id": "context-revision:257e61e64a4191f1e49e234ffff689840062a380af3988f1ad3abfce189582be",
+          "source_id": "file",
+          "weight_tokens": "140",
+          "amount_nanos": "875000"
+        },
+        {
+          "occurrence_id": "context-occurrence:f3b43240013a27666aceb26280e2743d1c664cf1a224727ff8e8c14a8382e0c8",
+          "revision_id": "context-revision:3a5528741db10e8898167f38f6e561ec970e01210075ba1ea6a83ccf564f771f",
+          "source_id": "prompt",
+          "weight_tokens": "20",
+          "amount_nanos": "125000"
+        }
+      ],
+      "assumptions": [
+        "This estimates a distribution of the whole selected request cost, including any output component; it is not source billing or causal savings.",
+        "Eligible occurrence token counts are weights against observed inclusive input tokens. Repeated occurrences count separately; transformation ancestors do not receive implicit weights.",
+        "Selected capture boundary: client_request; coverage: partial. Missing input weight remains unallocated.",
+        "Counterfactual and unavailable measurements are excluded. Observed, derived and estimated token measurements can supply weights without changing the allocation's estimated status."
+      ],
+      "issues": []
+    },
+    {
+      "request_id": "context-request-2",
+      "observation_id": "request-2",
+      "method": "proportional-input-coverage-v1",
+      "evidence": "estimated",
+      "amount_nanos": "4500000",
+      "denominator_tokens": "650",
+      "unallocated_weight_tokens": "260",
+      "allocated_nanos": "2700000",
+      "unallocated_nanos": "1800000",
+      "portions": [
+        {
+          "occurrence_id": "context-occurrence:d9edb5b30412d0b31127da61341d92b3142bf2796570fa7136700c13d808f2ae",
+          "revision_id": "context-revision:9290c873ee1bc42b475fa982c0b21fb22d4636c2f16758d64799234fd3b8c54f",
+          "source_id": "repo-instructions",
+          "weight_tokens": "60",
+          "amount_nanos": "415385"
+        },
+        {
+          "occurrence_id": "context-occurrence:b353101f0f10c2c7962b92fdc7dbb9e4d3c30f8b5decc9c93eb65d7288ae3e7d",
+          "revision_id": "context-revision:80dcf1f3653e6713e5f1bd0e4f06f634c402e42ee958269ef70e32f914b7ae31",
+          "source_id": "skill",
+          "weight_tokens": "80",
+          "amount_nanos": "553846"
+        },
+        {
+          "occurrence_id": "context-occurrence:413c96d6df9de26ec10670a77666f6640af4673723cfed9faaf2487e261527c3",
+          "revision_id": "context-revision:257e61e64a4191f1e49e234ffff689840062a380af3988f1ad3abfce189582be",
+          "source_id": "file",
+          "weight_tokens": "140",
+          "amount_nanos": "969231"
+        },
+        {
+          "occurrence_id": "context-occurrence:0c928c68ac5d36e3f1a77a55d076ebe23a9026935b2706a2bd6cdbb6c3ebccbd",
+          "revision_id": "context-revision:3a5528741db10e8898167f38f6e561ec970e01210075ba1ea6a83ccf564f771f",
+          "source_id": "prompt",
+          "weight_tokens": "20",
+          "amount_nanos": "138461"
+        },
+        {
+          "occurrence_id": "context-occurrence:2efef908643d6572a83218e0d8161472a6a1207424b59ccb51acc345921be70b",
+          "revision_id": "context-revision:75010119c82ad00f13f374504774fe0bc9b5ef56ba80c12bf12165eff994273a",
+          "source_id": "assistant",
+          "weight_tokens": "40",
+          "amount_nanos": "276923"
+        },
+        {
+          "occurrence_id": "context-occurrence:c5fc69d48057b79f54856dd6d370039f6f4d0c279bfd86a6e49758c72ee613c3",
+          "revision_id": "context-revision:65ee85f0bf0eac7bfa6875c8a5b25125cc1d78aa4d18646af7722ec4a103dabc",
+          "source_id": "test-result",
+          "weight_tokens": "50",
+          "amount_nanos": "346154"
+        }
+      ],
+      "assumptions": [
+        "This estimates a distribution of the whole selected request cost, including any output component; it is not source billing or causal savings.",
+        "Eligible occurrence token counts are weights against observed inclusive input tokens. Repeated occurrences count separately; transformation ancestors do not receive implicit weights.",
+        "Selected capture boundary: client_request; coverage: partial. Missing input weight remains unallocated.",
+        "Counterfactual and unavailable measurements are excluded. Observed, derived and estimated token measurements can supply weights without changing the allocation's estimated status."
+      ],
+      "issues": []
+    },
+    {
+      "request_id": "context-request-3",
+      "observation_id": "request-3",
+      "method": "proportional-input-coverage-v1",
+      "evidence": "estimated",
+      "amount_nanos": "1800000",
+      "denominator_tokens": "220",
+      "unallocated_weight_tokens": "75",
+      "allocated_nanos": "1186363",
+      "unallocated_nanos": "613637",
+      "portions": [
+        {
+          "occurrence_id": "context-occurrence:fa2b238772c84fc99dbb270791aa16cd9e3a1c411d8a36a7dd4297995f03cb0a",
+          "revision_id": "context-revision:9290c873ee1bc42b475fa982c0b21fb22d4636c2f16758d64799234fd3b8c54f",
+          "source_id": "repo-instructions",
+          "weight_tokens": "60",
+          "amount_nanos": "490909"
+        },
+        {
+          "occurrence_id": "context-occurrence:581637341d656274c9a1205c802911715187fc53c059a6bc9fa09a48f4628a9a",
+          "revision_id": "context-revision:c30caa1fb4bb0e517c8075eb678255820e1a29ea93c58b70a4286ab4911cebbf",
+          "source_id": "summary",
+          "weight_tokens": "70",
+          "amount_nanos": "572727"
+        },
+        {
+          "occurrence_id": "context-occurrence:1db3cf5be36c461455b2d92da9eab1107a6f5fe7986a335284cf989e160d86a3",
+          "revision_id": "context-revision:4adb9ebe25c31aa999ff8943e6aca8c2aa818dc63fb6f4dd3010c01c76abe584",
+          "source_id": "followup",
+          "weight_tokens": "15",
+          "amount_nanos": "122727"
+        }
+      ],
+      "assumptions": [
+        "This estimates a distribution of the whole selected request cost, including any output component; it is not source billing or causal savings.",
+        "Eligible occurrence token counts are weights against observed inclusive input tokens. Repeated occurrences count separately; transformation ancestors do not receive implicit weights.",
+        "Selected capture boundary: client_request; coverage: partial. Missing input weight remains unallocated.",
+        "Counterfactual and unavailable measurements are excluded. Observed, derived and estimated token measurements can supply weights without changing the allocation's estimated status."
+      ],
+      "issues": []
+    }
+  ],
+  "summary": {
+    "requests": 3,
+    "linked_observations": 3,
+    "context_sources": 8,
+    "known_cost_nanos": "8800000",
+    "currency": "USD",
+    "valuation_complete": true,
+    "complete_context_requests": 0,
+    "partial_context_requests": 3,
+    "unknown_context_requests": 0
+  },
+  "issues": []
+}
