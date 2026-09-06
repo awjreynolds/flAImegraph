@@ -2,10 +2,12 @@
 
 Type: research
 Label: wayfinder:research
-Status: open
-Assignee: none
+Status: claimed
+Assignee: awjre (research investigator: profiles)
 Parent: ../map.md
 Blocked by: none
+
+Research branch: research/profile-projection
 
 ## Question
 
