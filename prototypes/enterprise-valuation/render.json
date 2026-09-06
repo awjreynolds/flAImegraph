@@ -1,0 +1,18 @@
+{
+  "name": "Brendan Gregg FlameGraph",
+  "commit": "41fee1f99f9276008b7cd112fca19dc3ea84ac32",
+  "url": "https://raw.githubusercontent.com/brendangregg/FlameGraph/41fee1f99f9276008b7cd112fca19dc3ea84ac32/flamegraph.pl",
+  "sha256": "088f82e6848a4f12a56e1e8e8170ee6761fccf12e5615cd64630f6b087c99ea7",
+  "unmodified": true,
+  "title": "Enterprise-rate scenario — model tokens only",
+  "totalNanoUsd": 41046242000,
+  "foldedSha256": "fafcef4c2b6f6f42dd5d166be3455aa0976288f6e1c6cdc75e438807b087107d",
+  "svgSha256": "16395c3bf457fe78010e30b309086011dd2d21b34e1b6a8b77874aef5c9e89e6",
+  "pngSha256": "ee42e5a46e33fea7a0da9d52581a6457fd2eaec0b5314152ee43048a574eb780",
+  "verification": {
+    "rootTotalMatches": true,
+    "eachObservationMatchesOnce": true,
+    "agentTotalsMatch": true,
+    "pngSignatureValid": true
+  }
+}

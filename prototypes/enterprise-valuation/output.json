@@ -1,0 +1,5494 @@
+{
+  "label": "SELECTED PUBLIC ENTERPRISE RATE SCENARIO — model tokens only",
+  "basis": "Analytical repricing; not an actual bill, subscription charge or negotiated contract",
+  "scenarioId": "public-enterprise-astra-codex-2026-09-06-standard",
+  "selectedRateSource": {
+    "title": "ChatGPT Rate Card (Enterprise token-based pricing)",
+    "url": "https://help.openai.com/en/articles/20001415-chatgpt-rate-card-enterprise-token-based-pricing",
+    "section": "ChatGPT Work and Codex models; Additional fees and multipliers; GPT-6 Astra — Codex long-context exception",
+    "paraphrasedFacts": "The public card covers new Enterprise agreements specifying USD usage billing; agreement terms determine applicable pricing. Astra Codex lists $10 fresh input, $1 cached input and $50 output per million tokens. Available reasoning levels share rates. Astra Codex has no additional long-context multiplier and Codex has no cache-write charge. Fast mode and regional processing can add multipliers; feature fees may apply."
+  },
+  "rateRetrievedDate": "2026-09-06",
+  "validFrom": null,
+  "validUntil": null,
+  "historicalApplicabilityEstablished": false,
+  "assumptions": [
+    "All recorded gpt-6-astra settings identify the executing model; settings are from turn_context, not response-verified model identities.",
+    "Standard speed; no regional-processing uplift. These are selected scenario assumptions, not observed billing settings.",
+    "Use the rate card retrieved on 2026-09-06 as a comparison scenario. Effective start/end dates and historical applicability are unavailable.",
+    "Input includes cached input. Reasoning is already included in output. Cache-write tokens are zero in this snapshot and no additional fee is applied."
+  ],
+  "exclusions": [
+    "Separate tool/feature fees are excluded and unknown; not assumed zero.",
+    "Hidden, unobserved or later usage is excluded and unknown. This is a frozen partial run.",
+    "No contract discounts, credits, commitments, taxes, subscription allocation or invoice reconciliation."
+  ],
+  "fullEnterpriseBillKnown": false,
+  "completeRunCostKnown": false,
+  "usageSource": {
+    "path": "usage.json",
+    "copiedFrom": "../capture-depth/evidence.json",
+    "sha256": "bfc3ac2e38eaaf7308a0dea1e8ec4f57fb0590aee4d3d781676076c6b0f1edef",
+    "cutoff": "2026-09-06T16:36:00.000Z",
+    "immutable": true
+  },
+  "ratecardSha256": "0785e5e7a7b29998de14ed6e8f1c0334f8f405c2ef8c0a492216ce50160b75d0",
+  "currency": "USD",
+  "weightUnit": "integer nanoUSD",
+  "nanoUsdPerUsd": 1000000000,
+  "rounding": "None: rates yield integral nanoUSD per token",
+  "pricingMapping": "fresh=input-cached; cached=cached; output includes reasoning; no extra cache-write fee",
+  "overall": {
+    "observationCount": 177,
+    "tokens": {
+      "input_tokens": 21092039,
+      "cached_input_tokens": 19225472,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 63102,
+      "reasoning_output_tokens": 7445,
+      "total_tokens": 21155141
+    },
+    "billableQuantities": {
+      "freshInput": 1866567,
+      "cachedInput": 19225472,
+      "output": 63102
+    },
+    "componentNanoUsd": {
+      "freshInput": 18665670000,
+      "cachedInput": 19225472000,
+      "output": 3155100000
+    },
+    "totalNanoUsd": 41046242000,
+    "totalUsd": "41.046242"
+  },
+  "agents": [
+    {
+      "agent": "coordinator",
+      "parent": null,
+      "observationCount": 88,
+      "sourceThreadHash": "6f9664c57f024214015c96c801d080c0744cdf3c2639e0314ab4b6aad4a91990",
+      "tokens": {
+        "input_tokens": 10775868,
+        "cached_input_tokens": 9876864,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 36060,
+        "reasoning_output_tokens": 5683,
+        "total_tokens": 10811928
+      },
+      "billableQuantities": {
+        "freshInput": 899004,
+        "cachedInput": 9876864,
+        "output": 36060
+      },
+      "componentNanoUsd": {
+        "freshInput": 8990040000,
+        "cachedInput": 9876864000,
+        "output": 1803000000
+      },
+      "totalNanoUsd": 20669904000,
+      "totalUsd": "20.669904"
+    },
+    {
+      "agent": "telemetry",
+      "parent": "coordinator",
+      "observationCount": 28,
+      "sourceThreadHash": "710dbe5eb689963d9c4750d5698b401a7d165720e1e49d095209b865a04258cb",
+      "tokens": {
+        "input_tokens": 3137235,
+        "cached_input_tokens": 2818048,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 10402,
+        "reasoning_output_tokens": 501,
+        "total_tokens": 3147637
+      },
+      "billableQuantities": {
+        "freshInput": 319187,
+        "cachedInput": 2818048,
+        "output": 10402
+      },
+      "componentNanoUsd": {
+        "freshInput": 3191870000,
+        "cachedInput": 2818048000,
+        "output": 520100000
+      },
+      "totalNanoUsd": 6530018000,
+      "totalUsd": "6.530018"
+    },
+    {
+      "agent": "accounting",
+      "parent": "coordinator",
+      "observationCount": 33,
+      "sourceThreadHash": "07b31cc2cc42a1105794f7d2fa9413b8d514a979e685b04678776df0050e950e",
+      "tokens": {
+        "input_tokens": 4467054,
+        "cached_input_tokens": 3997440,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 8336,
+        "reasoning_output_tokens": 815,
+        "total_tokens": 4475390
+      },
+      "billableQuantities": {
+        "freshInput": 469614,
+        "cachedInput": 3997440,
+        "output": 8336
+      },
+      "componentNanoUsd": {
+        "freshInput": 4696140000,
+        "cachedInput": 3997440000,
+        "output": 416800000
+      },
+      "totalNanoUsd": 9110380000,
+      "totalUsd": "9.11038"
+    },
+    {
+      "agent": "profiles",
+      "parent": "coordinator",
+      "observationCount": 28,
+      "sourceThreadHash": "f89ff0f5b74a93f3d490b07386062fba942731e6f82f50b25132320207fc504d",
+      "tokens": {
+        "input_tokens": 2711882,
+        "cached_input_tokens": 2533120,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 8304,
+        "reasoning_output_tokens": 446,
+        "total_tokens": 2720186
+      },
+      "billableQuantities": {
+        "freshInput": 178762,
+        "cachedInput": 2533120,
+        "output": 8304
+      },
+      "componentNanoUsd": {
+        "freshInput": 1787620000,
+        "cachedInput": 2533120000,
+        "output": 415200000
+      },
+      "totalNanoUsd": 4735940000,
+      "totalUsd": "4.73594"
+    }
+  ],
+  "observations": [
+    {
+      "id": "coordinator call 001",
+      "responseHash": "8a68b63caaacd543",
+      "agent": "coordinator",
+      "turn": "turn 01",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "medium",
+      "time": "2026-09-06T15:24:59.298Z",
+      "tokens": {
+        "input_tokens": 34482,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 214,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 34696
+      },
+      "billableQuantities": {
+        "freshInput": 34482,
+        "cachedInput": 0,
+        "output": 214
+      },
+      "componentNanoUsd": {
+        "freshInput": 344820000,
+        "cachedInput": 0,
+        "output": 10700000
+      },
+      "totalNanoUsd": 355520000,
+      "totalUsd": "0.35552"
+    },
+    {
+      "id": "coordinator call 002",
+      "responseHash": "0de95ddb7b5a1d5d",
+      "agent": "coordinator",
+      "turn": "turn 01",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "medium",
+      "time": "2026-09-06T15:25:28.090Z",
+      "tokens": {
+        "input_tokens": 44258,
+        "cached_input_tokens": 34304,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 630,
+        "reasoning_output_tokens": 76,
+        "total_tokens": 44888
+      },
+      "billableQuantities": {
+        "freshInput": 9954,
+        "cachedInput": 34304,
+        "output": 630
+      },
+      "componentNanoUsd": {
+        "freshInput": 99540000,
+        "cachedInput": 34304000,
+        "output": 31500000
+      },
+      "totalNanoUsd": 165344000,
+      "totalUsd": "0.165344"
+    },
+    {
+      "id": "coordinator call 003",
+      "responseHash": "4ee0f2f57886c5d9",
+      "agent": "coordinator",
+      "turn": "turn 02",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "medium",
+      "time": "2026-09-06T15:27:34.602Z",
+      "tokens": {
+        "input_tokens": 45132,
+        "cached_input_tokens": 44032,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 119,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 45251
+      },
+      "billableQuantities": {
+        "freshInput": 1100,
+        "cachedInput": 44032,
+        "output": 119
+      },
+      "componentNanoUsd": {
+        "freshInput": 11000000,
+        "cachedInput": 44032000,
+        "output": 5950000
+      },
+      "totalNanoUsd": 60982000,
+      "totalUsd": "0.060982"
+    },
+    {
+      "id": "coordinator call 004",
+      "responseHash": "4d9b70f753fbaa9d",
+      "agent": "coordinator",
+      "turn": "turn 02",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "medium",
+      "time": "2026-09-06T15:28:09.041Z",
+      "tokens": {
+        "input_tokens": 50197,
+        "cached_input_tokens": 44928,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 747,
+        "reasoning_output_tokens": 79,
+        "total_tokens": 50944
+      },
+      "billableQuantities": {
+        "freshInput": 5269,
+        "cachedInput": 44928,
+        "output": 747
+      },
+      "componentNanoUsd": {
+        "freshInput": 52690000,
+        "cachedInput": 44928000,
+        "output": 37350000
+      },
+      "totalNanoUsd": 134968000,
+      "totalUsd": "0.134968"
+    },
+    {
+      "id": "coordinator call 005",
+      "responseHash": "7db8e3e6aa0ab035",
+      "agent": "coordinator",
+      "turn": "turn 03",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "medium",
+      "time": "2026-09-06T15:29:03.779Z",
+      "tokens": {
+        "input_tokens": 50996,
+        "cached_input_tokens": 50048,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 119,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 51115
+      },
+      "billableQuantities": {
+        "freshInput": 948,
+        "cachedInput": 50048,
+        "output": 119
+      },
+      "componentNanoUsd": {
+        "freshInput": 9480000,
+        "cachedInput": 50048000,
+        "output": 5950000
+      },
+      "totalNanoUsd": 65478000,
+      "totalUsd": "0.065478"
+    },
+    {
+      "id": "coordinator call 006",
+      "responseHash": "15a25d7e690facab",
+      "agent": "coordinator",
+      "turn": "turn 03",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "medium",
+      "time": "2026-09-06T15:29:35.867Z",
+      "tokens": {
+        "input_tokens": 55117,
+        "cached_input_tokens": 50816,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 645,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 55762
+      },
+      "billableQuantities": {
+        "freshInput": 4301,
+        "cachedInput": 50816,
+        "output": 645
+      },
+      "componentNanoUsd": {
+        "freshInput": 43010000,
+        "cachedInput": 50816000,
+        "output": 32250000
+      },
+      "totalNanoUsd": 126076000,
+      "totalUsd": "0.126076"
+    },
+    {
+      "id": "coordinator call 007",
+      "responseHash": "ba5adf6041bb59c6",
+      "agent": "coordinator",
+      "turn": "turn 04",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "medium",
+      "time": "2026-09-06T15:30:37.011Z",
+      "tokens": {
+        "input_tokens": 55790,
+        "cached_input_tokens": 54912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 107,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 55897
+      },
+      "billableQuantities": {
+        "freshInput": 878,
+        "cachedInput": 54912,
+        "output": 107
+      },
+      "componentNanoUsd": {
+        "freshInput": 8780000,
+        "cachedInput": 54912000,
+        "output": 5350000
+      },
+      "totalNanoUsd": 69042000,
+      "totalUsd": "0.069042"
+    },
+    {
+      "id": "coordinator call 008",
+      "responseHash": "8961c51e52cc2524",
+      "agent": "coordinator",
+      "turn": "turn 04",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "medium",
+      "time": "2026-09-06T15:30:44.172Z",
+      "tokens": {
+        "input_tokens": 59762,
+        "cached_input_tokens": 55552,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 100,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 59862
+      },
+      "billableQuantities": {
+        "freshInput": 4210,
+        "cachedInput": 55552,
+        "output": 100
+      },
+      "componentNanoUsd": {
+        "freshInput": 42100000,
+        "cachedInput": 55552000,
+        "output": 5000000
+      },
+      "totalNanoUsd": 102652000,
+      "totalUsd": "0.102652"
+    },
+    {
+      "id": "coordinator call 009",
+      "responseHash": "47639fc62411a7b6",
+      "agent": "coordinator",
+      "turn": "turn 04",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "medium",
+      "time": "2026-09-06T15:30:53.277Z",
+      "tokens": {
+        "input_tokens": 63847,
+        "cached_input_tokens": 59520,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 144,
+        "reasoning_output_tokens": 15,
+        "total_tokens": 63991
+      },
+      "billableQuantities": {
+        "freshInput": 4327,
+        "cachedInput": 59520,
+        "output": 144
+      },
+      "componentNanoUsd": {
+        "freshInput": 43270000,
+        "cachedInput": 59520000,
+        "output": 7200000
+      },
+      "totalNanoUsd": 109990000,
+      "totalUsd": "0.10999"
+    },
+    {
+      "id": "coordinator call 010",
+      "responseHash": "e21755d3a32fc29e",
+      "agent": "coordinator",
+      "turn": "turn 04",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "medium",
+      "time": "2026-09-06T15:31:26.184Z",
+      "tokens": {
+        "input_tokens": 68971,
+        "cached_input_tokens": 63616,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 694,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 69665
+      },
+      "billableQuantities": {
+        "freshInput": 5355,
+        "cachedInput": 63616,
+        "output": 694
+      },
+      "componentNanoUsd": {
+        "freshInput": 53550000,
+        "cachedInput": 63616000,
+        "output": 34700000
+      },
+      "totalNanoUsd": 151866000,
+      "totalUsd": "0.151866"
+    },
+    {
+      "id": "coordinator call 011",
+      "responseHash": "f45a4471351e0ccc",
+      "agent": "coordinator",
+      "turn": "turn 05",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "medium",
+      "time": "2026-09-06T15:32:33.933Z",
+      "tokens": {
+        "input_tokens": 69720,
+        "cached_input_tokens": 68736,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 69,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 69789
+      },
+      "billableQuantities": {
+        "freshInput": 984,
+        "cachedInput": 68736,
+        "output": 69
+      },
+      "componentNanoUsd": {
+        "freshInput": 9840000,
+        "cachedInput": 68736000,
+        "output": 3450000
+      },
+      "totalNanoUsd": 82026000,
+      "totalUsd": "0.082026"
+    },
+    {
+      "id": "coordinator call 012",
+      "responseHash": "34ad127deb8094fe",
+      "agent": "coordinator",
+      "turn": "turn 05",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "medium",
+      "time": "2026-09-06T15:32:39.435Z",
+      "tokens": {
+        "input_tokens": 70988,
+        "cached_input_tokens": 69504,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 44,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 71032
+      },
+      "billableQuantities": {
+        "freshInput": 1484,
+        "cachedInput": 69504,
+        "output": 44
+      },
+      "componentNanoUsd": {
+        "freshInput": 14840000,
+        "cachedInput": 69504000,
+        "output": 2200000
+      },
+      "totalNanoUsd": 86544000,
+      "totalUsd": "0.086544"
+    },
+    {
+      "id": "coordinator call 013",
+      "responseHash": "7ce35f38f26d66ee",
+      "agent": "coordinator",
+      "turn": "turn 05",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "medium",
+      "time": "2026-09-06T15:32:45.370Z",
+      "tokens": {
+        "input_tokens": 75034,
+        "cached_input_tokens": 70784,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 46,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 75080
+      },
+      "billableQuantities": {
+        "freshInput": 4250,
+        "cachedInput": 70784,
+        "output": 46
+      },
+      "componentNanoUsd": {
+        "freshInput": 42500000,
+        "cachedInput": 70784000,
+        "output": 2300000
+      },
+      "totalNanoUsd": 115584000,
+      "totalUsd": "0.115584"
+    },
+    {
+      "id": "coordinator call 014",
+      "responseHash": "38591209380d70a1",
+      "agent": "coordinator",
+      "turn": "turn 05",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "medium",
+      "time": "2026-09-06T15:33:12.860Z",
+      "tokens": {
+        "input_tokens": 81180,
+        "cached_input_tokens": 74880,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 300,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 81480
+      },
+      "billableQuantities": {
+        "freshInput": 6300,
+        "cachedInput": 74880,
+        "output": 300
+      },
+      "componentNanoUsd": {
+        "freshInput": 63000000,
+        "cachedInput": 74880000,
+        "output": 15000000
+      },
+      "totalNanoUsd": 152880000,
+      "totalUsd": "0.15288"
+    },
+    {
+      "id": "coordinator call 015",
+      "responseHash": "7f0d858872f05a22",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:33:38.049Z",
+      "tokens": {
+        "input_tokens": 81497,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 272,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 81769
+      },
+      "billableQuantities": {
+        "freshInput": 81497,
+        "cachedInput": 0,
+        "output": 272
+      },
+      "componentNanoUsd": {
+        "freshInput": 814970000,
+        "cachedInput": 0,
+        "output": 13600000
+      },
+      "totalNanoUsd": 828570000,
+      "totalUsd": "0.82857"
+    },
+    {
+      "id": "coordinator call 016",
+      "responseHash": "dc3dc65f9aae9c4f",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:33:49.845Z",
+      "tokens": {
+        "input_tokens": 89141,
+        "cached_input_tokens": 81280,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 151,
+        "reasoning_output_tokens": 36,
+        "total_tokens": 89292
+      },
+      "billableQuantities": {
+        "freshInput": 7861,
+        "cachedInput": 81280,
+        "output": 151
+      },
+      "componentNanoUsd": {
+        "freshInput": 78610000,
+        "cachedInput": 81280000,
+        "output": 7550000
+      },
+      "totalNanoUsd": 167440000,
+      "totalUsd": "0.16744"
+    },
+    {
+      "id": "coordinator call 017",
+      "responseHash": "8fde2334afb1a890",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:34:00.983Z",
+      "tokens": {
+        "input_tokens": 89519,
+        "cached_input_tokens": 88960,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 197,
+        "reasoning_output_tokens": 144,
+        "total_tokens": 89716
+      },
+      "billableQuantities": {
+        "freshInput": 559,
+        "cachedInput": 88960,
+        "output": 197
+      },
+      "componentNanoUsd": {
+        "freshInput": 5590000,
+        "cachedInput": 88960000,
+        "output": 9850000
+      },
+      "totalNanoUsd": 104400000,
+      "totalUsd": "0.1044"
+    },
+    {
+      "id": "coordinator call 018",
+      "responseHash": "c518843030a7bc82",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:34:55.570Z",
+      "tokens": {
+        "input_tokens": 90264,
+        "cached_input_tokens": 89344,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1298,
+        "reasoning_output_tokens": 39,
+        "total_tokens": 91562
+      },
+      "billableQuantities": {
+        "freshInput": 920,
+        "cachedInput": 89344,
+        "output": 1298
+      },
+      "componentNanoUsd": {
+        "freshInput": 9200000,
+        "cachedInput": 89344000,
+        "output": 64900000
+      },
+      "totalNanoUsd": 163444000,
+      "totalUsd": "0.163444"
+    },
+    {
+      "id": "coordinator call 019",
+      "responseHash": "6ecb1b541a28bcbe",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:35:02.986Z",
+      "tokens": {
+        "input_tokens": 91586,
+        "cached_input_tokens": 90112,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 101,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 91687
+      },
+      "billableQuantities": {
+        "freshInput": 1474,
+        "cachedInput": 90112,
+        "output": 101
+      },
+      "componentNanoUsd": {
+        "freshInput": 14740000,
+        "cachedInput": 90112000,
+        "output": 5050000
+      },
+      "totalNanoUsd": 109902000,
+      "totalUsd": "0.109902"
+    },
+    {
+      "id": "coordinator call 020",
+      "responseHash": "69d1268eefe6833d",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:35:10.491Z",
+      "tokens": {
+        "input_tokens": 91765,
+        "cached_input_tokens": 91392,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 63,
+        "reasoning_output_tokens": 13,
+        "total_tokens": 91828
+      },
+      "billableQuantities": {
+        "freshInput": 373,
+        "cachedInput": 91392,
+        "output": 63
+      },
+      "componentNanoUsd": {
+        "freshInput": 3730000,
+        "cachedInput": 91392000,
+        "output": 3150000
+      },
+      "totalNanoUsd": 98272000,
+      "totalUsd": "0.098272"
+    },
+    {
+      "id": "coordinator call 021",
+      "responseHash": "8207cf884d0b8466",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:35:26.785Z",
+      "tokens": {
+        "input_tokens": 92011,
+        "cached_input_tokens": 91648,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 393,
+        "reasoning_output_tokens": 28,
+        "total_tokens": 92404
+      },
+      "billableQuantities": {
+        "freshInput": 363,
+        "cachedInput": 91648,
+        "output": 393
+      },
+      "componentNanoUsd": {
+        "freshInput": 3630000,
+        "cachedInput": 91648000,
+        "output": 19650000
+      },
+      "totalNanoUsd": 114928000,
+      "totalUsd": "0.114928"
+    },
+    {
+      "id": "coordinator call 022",
+      "responseHash": "3e9236fd76e3249a",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:35:41.881Z",
+      "tokens": {
+        "input_tokens": 92561,
+        "cached_input_tokens": 91776,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 299,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 92860
+      },
+      "billableQuantities": {
+        "freshInput": 785,
+        "cachedInput": 91776,
+        "output": 299
+      },
+      "componentNanoUsd": {
+        "freshInput": 7850000,
+        "cachedInput": 91776000,
+        "output": 14950000
+      },
+      "totalNanoUsd": 114576000,
+      "totalUsd": "0.114576"
+    },
+    {
+      "id": "coordinator call 023",
+      "responseHash": "cf05061688e643d6",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:35:56.244Z",
+      "tokens": {
+        "input_tokens": 92886,
+        "cached_input_tokens": 92416,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 276,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 93162
+      },
+      "billableQuantities": {
+        "freshInput": 470,
+        "cachedInput": 92416,
+        "output": 276
+      },
+      "componentNanoUsd": {
+        "freshInput": 4700000,
+        "cachedInput": 92416000,
+        "output": 13800000
+      },
+      "totalNanoUsd": 110916000,
+      "totalUsd": "0.110916"
+    },
+    {
+      "id": "coordinator call 024",
+      "responseHash": "4c9a6dc8998d51af",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:36:08.450Z",
+      "tokens": {
+        "input_tokens": 93188,
+        "cached_input_tokens": 92672,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 269,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 93457
+      },
+      "billableQuantities": {
+        "freshInput": 516,
+        "cachedInput": 92672,
+        "output": 269
+      },
+      "componentNanoUsd": {
+        "freshInput": 5160000,
+        "cachedInput": 92672000,
+        "output": 13450000
+      },
+      "totalNanoUsd": 111282000,
+      "totalUsd": "0.111282"
+    },
+    {
+      "id": "coordinator call 025",
+      "responseHash": "397d27e182ea614d",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:36:21.598Z",
+      "tokens": {
+        "input_tokens": 93482,
+        "cached_input_tokens": 93056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 213,
+        "reasoning_output_tokens": 127,
+        "total_tokens": 93695
+      },
+      "billableQuantities": {
+        "freshInput": 426,
+        "cachedInput": 93056,
+        "output": 213
+      },
+      "componentNanoUsd": {
+        "freshInput": 4260000,
+        "cachedInput": 93056000,
+        "output": 10650000
+      },
+      "totalNanoUsd": 107966000,
+      "totalUsd": "0.107966"
+    },
+    {
+      "id": "coordinator call 026",
+      "responseHash": "326258edbfbf2e47",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:36:30.289Z",
+      "tokens": {
+        "input_tokens": 101684,
+        "cached_input_tokens": 93312,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 140,
+        "reasoning_output_tokens": 10,
+        "total_tokens": 101824
+      },
+      "billableQuantities": {
+        "freshInput": 8372,
+        "cachedInput": 93312,
+        "output": 140
+      },
+      "componentNanoUsd": {
+        "freshInput": 83720000,
+        "cachedInput": 93312000,
+        "output": 7000000
+      },
+      "totalNanoUsd": 184032000,
+      "totalUsd": "0.184032"
+    },
+    {
+      "id": "coordinator call 027",
+      "responseHash": "94297879dd4ef25a",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:36:40.687Z",
+      "tokens": {
+        "input_tokens": 111133,
+        "cached_input_tokens": 101504,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 139,
+        "reasoning_output_tokens": 20,
+        "total_tokens": 111272
+      },
+      "billableQuantities": {
+        "freshInput": 9629,
+        "cachedInput": 101504,
+        "output": 139
+      },
+      "componentNanoUsd": {
+        "freshInput": 96290000,
+        "cachedInput": 101504000,
+        "output": 6950000
+      },
+      "totalNanoUsd": 204744000,
+      "totalUsd": "0.204744"
+    },
+    {
+      "id": "coordinator call 028",
+      "responseHash": "f9ea246dc3f457d0",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:36:52.191Z",
+      "tokens": {
+        "input_tokens": 111395,
+        "cached_input_tokens": 110976,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 188,
+        "reasoning_output_tokens": 12,
+        "total_tokens": 111583
+      },
+      "billableQuantities": {
+        "freshInput": 419,
+        "cachedInput": 110976,
+        "output": 188
+      },
+      "componentNanoUsd": {
+        "freshInput": 4190000,
+        "cachedInput": 110976000,
+        "output": 9400000
+      },
+      "totalNanoUsd": 124566000,
+      "totalUsd": "0.124566"
+    },
+    {
+      "id": "coordinator call 029",
+      "responseHash": "839cd433c8ff05c1",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:37:01.141Z",
+      "tokens": {
+        "input_tokens": 111710,
+        "cached_input_tokens": 111232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 128,
+        "reasoning_output_tokens": 14,
+        "total_tokens": 111838
+      },
+      "billableQuantities": {
+        "freshInput": 478,
+        "cachedInput": 111232,
+        "output": 128
+      },
+      "componentNanoUsd": {
+        "freshInput": 4780000,
+        "cachedInput": 111232000,
+        "output": 6400000
+      },
+      "totalNanoUsd": 122412000,
+      "totalUsd": "0.122412"
+    },
+    {
+      "id": "coordinator call 030",
+      "responseHash": "d6c0900343508c68",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:37:10.564Z",
+      "tokens": {
+        "input_tokens": 115967,
+        "cached_input_tokens": 111488,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 150,
+        "reasoning_output_tokens": 22,
+        "total_tokens": 116117
+      },
+      "billableQuantities": {
+        "freshInput": 4479,
+        "cachedInput": 111488,
+        "output": 150
+      },
+      "componentNanoUsd": {
+        "freshInput": 44790000,
+        "cachedInput": 111488000,
+        "output": 7500000
+      },
+      "totalNanoUsd": 163778000,
+      "totalUsd": "0.163778"
+    },
+    {
+      "id": "coordinator call 031",
+      "responseHash": "671169e7b62c2a8f",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:37:56.910Z",
+      "tokens": {
+        "input_tokens": 117053,
+        "cached_input_tokens": 116608,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 71,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 117124
+      },
+      "billableQuantities": {
+        "freshInput": 445,
+        "cachedInput": 116608,
+        "output": 71
+      },
+      "componentNanoUsd": {
+        "freshInput": 4450000,
+        "cachedInput": 116608000,
+        "output": 3550000
+      },
+      "totalNanoUsd": 124608000,
+      "totalUsd": "0.124608"
+    },
+    {
+      "id": "coordinator call 032",
+      "responseHash": "ffd5b8fc0309249e",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:38:03.159Z",
+      "tokens": {
+        "input_tokens": 122477,
+        "cached_input_tokens": 116864,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 59,
+        "reasoning_output_tokens": 15,
+        "total_tokens": 122536
+      },
+      "billableQuantities": {
+        "freshInput": 5613,
+        "cachedInput": 116864,
+        "output": 59
+      },
+      "componentNanoUsd": {
+        "freshInput": 56130000,
+        "cachedInput": 116864000,
+        "output": 2950000
+      },
+      "totalNanoUsd": 175944000,
+      "totalUsd": "0.175944"
+    },
+    {
+      "id": "coordinator call 033",
+      "responseHash": "61cc4e514e04b5dc",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:38:13.556Z",
+      "tokens": {
+        "input_tokens": 127980,
+        "cached_input_tokens": 122240,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 129,
+        "reasoning_output_tokens": 30,
+        "total_tokens": 128109
+      },
+      "billableQuantities": {
+        "freshInput": 5740,
+        "cachedInput": 122240,
+        "output": 129
+      },
+      "componentNanoUsd": {
+        "freshInput": 57400000,
+        "cachedInput": 122240000,
+        "output": 6450000
+      },
+      "totalNanoUsd": 186090000,
+      "totalUsd": "0.18609"
+    },
+    {
+      "id": "coordinator call 034",
+      "responseHash": "91e14daa0662e415",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:38:23.700Z",
+      "tokens": {
+        "input_tokens": 128120,
+        "cached_input_tokens": 127744,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 50,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 128170
+      },
+      "billableQuantities": {
+        "freshInput": 376,
+        "cachedInput": 127744,
+        "output": 50
+      },
+      "componentNanoUsd": {
+        "freshInput": 3760000,
+        "cachedInput": 127744000,
+        "output": 2500000
+      },
+      "totalNanoUsd": 134004000,
+      "totalUsd": "0.134004"
+    },
+    {
+      "id": "coordinator call 035",
+      "responseHash": "d6ad968ac12b741c",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:39:54.457Z",
+      "tokens": {
+        "input_tokens": 133380,
+        "cached_input_tokens": 132736,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1762,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 135142
+      },
+      "billableQuantities": {
+        "freshInput": 644,
+        "cachedInput": 132736,
+        "output": 1762
+      },
+      "componentNanoUsd": {
+        "freshInput": 6440000,
+        "cachedInput": 132736000,
+        "output": 88100000
+      },
+      "totalNanoUsd": 227276000,
+      "totalUsd": "0.227276"
+    },
+    {
+      "id": "coordinator call 036",
+      "responseHash": "92d25e47203f7934",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:40:01.796Z",
+      "tokens": {
+        "input_tokens": 135166,
+        "cached_input_tokens": 133248,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 99,
+        "reasoning_output_tokens": 51,
+        "total_tokens": 135265
+      },
+      "billableQuantities": {
+        "freshInput": 1918,
+        "cachedInput": 133248,
+        "output": 99
+      },
+      "componentNanoUsd": {
+        "freshInput": 19180000,
+        "cachedInput": 133248000,
+        "output": 4950000
+      },
+      "totalNanoUsd": 157378000,
+      "totalUsd": "0.157378"
+    },
+    {
+      "id": "coordinator call 037",
+      "responseHash": "f9e3e20d69048d27",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:40:07.915Z",
+      "tokens": {
+        "input_tokens": 135390,
+        "cached_input_tokens": 135040,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 40,
+        "reasoning_output_tokens": 24,
+        "total_tokens": 135430
+      },
+      "billableQuantities": {
+        "freshInput": 350,
+        "cachedInput": 135040,
+        "output": 40
+      },
+      "componentNanoUsd": {
+        "freshInput": 3500000,
+        "cachedInput": 135040000,
+        "output": 2000000
+      },
+      "totalNanoUsd": 140540000,
+      "totalUsd": "0.14054"
+    },
+    {
+      "id": "coordinator call 038",
+      "responseHash": "ca5f79fe301b69e9",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:40:20.663Z",
+      "tokens": {
+        "input_tokens": 135497,
+        "cached_input_tokens": 135168,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 153,
+        "reasoning_output_tokens": 88,
+        "total_tokens": 135650
+      },
+      "billableQuantities": {
+        "freshInput": 329,
+        "cachedInput": 135168,
+        "output": 153
+      },
+      "componentNanoUsd": {
+        "freshInput": 3290000,
+        "cachedInput": 135168000,
+        "output": 7650000
+      },
+      "totalNanoUsd": 146108000,
+      "totalUsd": "0.146108"
+    },
+    {
+      "id": "coordinator call 039",
+      "responseHash": "0b55da389c2097a6",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:40:27.257Z",
+      "tokens": {
+        "input_tokens": 135661,
+        "cached_input_tokens": 135296,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 53,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 135714
+      },
+      "billableQuantities": {
+        "freshInput": 365,
+        "cachedInput": 135296,
+        "output": 53
+      },
+      "componentNanoUsd": {
+        "freshInput": 3650000,
+        "cachedInput": 135296000,
+        "output": 2650000
+      },
+      "totalNanoUsd": 141596000,
+      "totalUsd": "0.141596"
+    },
+    {
+      "id": "coordinator call 040",
+      "responseHash": "917169c45440b7db",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:40:36.927Z",
+      "tokens": {
+        "input_tokens": 135725,
+        "cached_input_tokens": 135424,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 49,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 135774
+      },
+      "billableQuantities": {
+        "freshInput": 301,
+        "cachedInput": 135424,
+        "output": 49
+      },
+      "componentNanoUsd": {
+        "freshInput": 3010000,
+        "cachedInput": 135424000,
+        "output": 2450000
+      },
+      "totalNanoUsd": 140884000,
+      "totalUsd": "0.140884"
+    },
+    {
+      "id": "coordinator call 041",
+      "responseHash": "0fc43cb6ddf3871f",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:41:00.169Z",
+      "tokens": {
+        "input_tokens": 135785,
+        "cached_input_tokens": 135552,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 427,
+        "reasoning_output_tokens": 298,
+        "total_tokens": 136212
+      },
+      "billableQuantities": {
+        "freshInput": 233,
+        "cachedInput": 135552,
+        "output": 427
+      },
+      "componentNanoUsd": {
+        "freshInput": 2330000,
+        "cachedInput": 135552000,
+        "output": 21350000
+      },
+      "totalNanoUsd": 159232000,
+      "totalUsd": "0.159232"
+    },
+    {
+      "id": "coordinator call 042",
+      "responseHash": "ac305f655c9ffbbe",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:41:35.823Z",
+      "tokens": {
+        "input_tokens": 137134,
+        "cached_input_tokens": 136192,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 101,
+        "reasoning_output_tokens": 37,
+        "total_tokens": 137235
+      },
+      "billableQuantities": {
+        "freshInput": 942,
+        "cachedInput": 136192,
+        "output": 101
+      },
+      "componentNanoUsd": {
+        "freshInput": 9420000,
+        "cachedInput": 136192000,
+        "output": 5050000
+      },
+      "totalNanoUsd": 150662000,
+      "totalUsd": "0.150662"
+    },
+    {
+      "id": "coordinator call 043",
+      "responseHash": "3c91c1a4f8b21b79",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:41:43.459Z",
+      "tokens": {
+        "input_tokens": 137319,
+        "cached_input_tokens": 136960,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 120,
+        "reasoning_output_tokens": 27,
+        "total_tokens": 137439
+      },
+      "billableQuantities": {
+        "freshInput": 359,
+        "cachedInput": 136960,
+        "output": 120
+      },
+      "componentNanoUsd": {
+        "freshInput": 3590000,
+        "cachedInput": 136960000,
+        "output": 6000000
+      },
+      "totalNanoUsd": 146550000,
+      "totalUsd": "0.14655"
+    },
+    {
+      "id": "coordinator call 044",
+      "responseHash": "1338d2ba4dc3bc97",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:41:54.144Z",
+      "tokens": {
+        "input_tokens": 137559,
+        "cached_input_tokens": 137088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 34,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 137593
+      },
+      "billableQuantities": {
+        "freshInput": 471,
+        "cachedInput": 137088,
+        "output": 34
+      },
+      "componentNanoUsd": {
+        "freshInput": 4710000,
+        "cachedInput": 137088000,
+        "output": 1700000
+      },
+      "totalNanoUsd": 143498000,
+      "totalUsd": "0.143498"
+    },
+    {
+      "id": "coordinator call 045",
+      "responseHash": "f7b6b7edeb66d5bf",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:42:03.331Z",
+      "tokens": {
+        "input_tokens": 141103,
+        "cached_input_tokens": 137344,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 114,
+        "reasoning_output_tokens": 13,
+        "total_tokens": 141217
+      },
+      "billableQuantities": {
+        "freshInput": 3759,
+        "cachedInput": 137344,
+        "output": 114
+      },
+      "componentNanoUsd": {
+        "freshInput": 37590000,
+        "cachedInput": 137344000,
+        "output": 5700000
+      },
+      "totalNanoUsd": 180634000,
+      "totalUsd": "0.180634"
+    },
+    {
+      "id": "coordinator call 046",
+      "responseHash": "eca1b188cdec6cd5",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:43:26.561Z",
+      "tokens": {
+        "input_tokens": 145320,
+        "cached_input_tokens": 140928,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2007,
+        "reasoning_output_tokens": 238,
+        "total_tokens": 147327
+      },
+      "billableQuantities": {
+        "freshInput": 4392,
+        "cachedInput": 140928,
+        "output": 2007
+      },
+      "componentNanoUsd": {
+        "freshInput": 43920000,
+        "cachedInput": 140928000,
+        "output": 100350000
+      },
+      "totalNanoUsd": 285198000,
+      "totalUsd": "0.285198"
+    },
+    {
+      "id": "coordinator call 047",
+      "responseHash": "8993abb7c86123b7",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:43:35.580Z",
+      "tokens": {
+        "input_tokens": 147626,
+        "cached_input_tokens": 145152,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 146,
+        "reasoning_output_tokens": 30,
+        "total_tokens": 147772
+      },
+      "billableQuantities": {
+        "freshInput": 2474,
+        "cachedInput": 145152,
+        "output": 146
+      },
+      "componentNanoUsd": {
+        "freshInput": 24740000,
+        "cachedInput": 145152000,
+        "output": 7300000
+      },
+      "totalNanoUsd": 177192000,
+      "totalUsd": "0.177192"
+    },
+    {
+      "id": "coordinator call 048",
+      "responseHash": "09c0fa66cb7b8fc0",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:44:47.638Z",
+      "tokens": {
+        "input_tokens": 151285,
+        "cached_input_tokens": 147456,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2189,
+        "reasoning_output_tokens": 275,
+        "total_tokens": 153474
+      },
+      "billableQuantities": {
+        "freshInput": 3829,
+        "cachedInput": 147456,
+        "output": 2189
+      },
+      "componentNanoUsd": {
+        "freshInput": 38290000,
+        "cachedInput": 147456000,
+        "output": 109450000
+      },
+      "totalNanoUsd": 295196000,
+      "totalUsd": "0.295196"
+    },
+    {
+      "id": "coordinator call 049",
+      "responseHash": "6e9f4d77e97361a0",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:45:02.177Z",
+      "tokens": {
+        "input_tokens": 153577,
+        "cached_input_tokens": 151168,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 233,
+        "reasoning_output_tokens": 64,
+        "total_tokens": 153810
+      },
+      "billableQuantities": {
+        "freshInput": 2409,
+        "cachedInput": 151168,
+        "output": 233
+      },
+      "componentNanoUsd": {
+        "freshInput": 24090000,
+        "cachedInput": 151168000,
+        "output": 11650000
+      },
+      "totalNanoUsd": 186908000,
+      "totalUsd": "0.186908"
+    },
+    {
+      "id": "coordinator call 050",
+      "responseHash": "b7465319d5554e58",
+      "agent": "coordinator",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:45:53.453Z",
+      "tokens": {
+        "input_tokens": 154026,
+        "cached_input_tokens": 153344,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1020,
+        "reasoning_output_tokens": 415,
+        "total_tokens": 155046
+      },
+      "billableQuantities": {
+        "freshInput": 682,
+        "cachedInput": 153344,
+        "output": 1020
+      },
+      "componentNanoUsd": {
+        "freshInput": 6820000,
+        "cachedInput": 153344000,
+        "output": 51000000
+      },
+      "totalNanoUsd": 211164000,
+      "totalUsd": "0.211164"
+    },
+    {
+      "id": "coordinator call 051",
+      "responseHash": "0dab4af15382a065",
+      "agent": "coordinator",
+      "turn": "turn 07",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:53:30.835Z",
+      "tokens": {
+        "input_tokens": 155089,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 207,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 155296
+      },
+      "billableQuantities": {
+        "freshInput": 155089,
+        "cachedInput": 0,
+        "output": 207
+      },
+      "componentNanoUsd": {
+        "freshInput": 1550890000,
+        "cachedInput": 0,
+        "output": 10350000
+      },
+      "totalNanoUsd": 1561240000,
+      "totalUsd": "1.56124"
+    },
+    {
+      "id": "coordinator call 052",
+      "responseHash": "706b27d26c7676f4",
+      "agent": "coordinator",
+      "turn": "turn 07",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:53:54.088Z",
+      "tokens": {
+        "input_tokens": 163214,
+        "cached_input_tokens": 154880,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 623,
+        "reasoning_output_tokens": 419,
+        "total_tokens": 163837
+      },
+      "billableQuantities": {
+        "freshInput": 8334,
+        "cachedInput": 154880,
+        "output": 623
+      },
+      "componentNanoUsd": {
+        "freshInput": 83340000,
+        "cachedInput": 154880000,
+        "output": 31150000
+      },
+      "totalNanoUsd": 269370000,
+      "totalUsd": "0.26937"
+    },
+    {
+      "id": "coordinator call 053",
+      "responseHash": "96d1c9003929483e",
+      "agent": "coordinator",
+      "turn": "turn 07",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:55:29.793Z",
+      "tokens": {
+        "input_tokens": 167986,
+        "cached_input_tokens": 163072,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3020,
+        "reasoning_output_tokens": 442,
+        "total_tokens": 171006
+      },
+      "billableQuantities": {
+        "freshInput": 4914,
+        "cachedInput": 163072,
+        "output": 3020
+      },
+      "componentNanoUsd": {
+        "freshInput": 49140000,
+        "cachedInput": 163072000,
+        "output": 151000000
+      },
+      "totalNanoUsd": 363212000,
+      "totalUsd": "0.363212"
+    },
+    {
+      "id": "coordinator call 054",
+      "responseHash": "077271c1e58dda62",
+      "agent": "coordinator",
+      "turn": "turn 07",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:55:39.769Z",
+      "tokens": {
+        "input_tokens": 171073,
+        "cached_input_tokens": 167808,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 187,
+        "reasoning_output_tokens": 69,
+        "total_tokens": 171260
+      },
+      "billableQuantities": {
+        "freshInput": 3265,
+        "cachedInput": 167808,
+        "output": 187
+      },
+      "componentNanoUsd": {
+        "freshInput": 32650000,
+        "cachedInput": 167808000,
+        "output": 9350000
+      },
+      "totalNanoUsd": 209808000,
+      "totalUsd": "0.209808"
+    },
+    {
+      "id": "coordinator call 055",
+      "responseHash": "c1b7395a4c9fe416",
+      "agent": "coordinator",
+      "turn": "turn 07",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:55:59.726Z",
+      "tokens": {
+        "input_tokens": 171380,
+        "cached_input_tokens": 170880,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 406,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 171786
+      },
+      "billableQuantities": {
+        "freshInput": 500,
+        "cachedInput": 170880,
+        "output": 406
+      },
+      "componentNanoUsd": {
+        "freshInput": 5000000,
+        "cachedInput": 170880000,
+        "output": 20300000
+      },
+      "totalNanoUsd": 196180000,
+      "totalUsd": "0.19618"
+    },
+    {
+      "id": "coordinator call 056",
+      "responseHash": "c8a784a3d284179a",
+      "agent": "coordinator",
+      "turn": "turn 08",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:03:43.855Z",
+      "tokens": {
+        "input_tokens": 171812,
+        "cached_input_tokens": 171264,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 133,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 171945
+      },
+      "billableQuantities": {
+        "freshInput": 548,
+        "cachedInput": 171264,
+        "output": 133
+      },
+      "componentNanoUsd": {
+        "freshInput": 5480000,
+        "cachedInput": 171264000,
+        "output": 6650000
+      },
+      "totalNanoUsd": 183394000,
+      "totalUsd": "0.183394"
+    },
+    {
+      "id": "coordinator call 057",
+      "responseHash": "b80b9e469bc5e028",
+      "agent": "coordinator",
+      "turn": "turn 08",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:04:18.387Z",
+      "tokens": {
+        "input_tokens": 177516,
+        "cached_input_tokens": 171648,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 739,
+        "reasoning_output_tokens": 214,
+        "total_tokens": 178255
+      },
+      "billableQuantities": {
+        "freshInput": 5868,
+        "cachedInput": 171648,
+        "output": 739
+      },
+      "componentNanoUsd": {
+        "freshInput": 58680000,
+        "cachedInput": 171648000,
+        "output": 36950000
+      },
+      "totalNanoUsd": 267278000,
+      "totalUsd": "0.267278"
+    },
+    {
+      "id": "coordinator call 058",
+      "responseHash": "997a36b6ba5b9d98",
+      "agent": "coordinator",
+      "turn": "turn 09",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:05:45.555Z",
+      "tokens": {
+        "input_tokens": 178286,
+        "cached_input_tokens": 177280,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 103,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 178389
+      },
+      "billableQuantities": {
+        "freshInput": 1006,
+        "cachedInput": 177280,
+        "output": 103
+      },
+      "componentNanoUsd": {
+        "freshInput": 10060000,
+        "cachedInput": 177280000,
+        "output": 5150000
+      },
+      "totalNanoUsd": 192490000,
+      "totalUsd": "0.19249"
+    },
+    {
+      "id": "coordinator call 059",
+      "responseHash": "2427f230cd42b1b3",
+      "agent": "coordinator",
+      "turn": "turn 09",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:06:13.081Z",
+      "tokens": {
+        "input_tokens": 183762,
+        "cached_input_tokens": 178048,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 598,
+        "reasoning_output_tokens": 214,
+        "total_tokens": 184360
+      },
+      "billableQuantities": {
+        "freshInput": 5714,
+        "cachedInput": 178048,
+        "output": 598
+      },
+      "componentNanoUsd": {
+        "freshInput": 57140000,
+        "cachedInput": 178048000,
+        "output": 29900000
+      },
+      "totalNanoUsd": 265088000,
+      "totalUsd": "0.265088"
+    },
+    {
+      "id": "coordinator call 060",
+      "responseHash": "d9e894ff0e7af782",
+      "agent": "coordinator",
+      "turn": "turn 10",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:14:06.166Z",
+      "tokens": {
+        "input_tokens": 184389,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 165,
+        "reasoning_output_tokens": 73,
+        "total_tokens": 184554
+      },
+      "billableQuantities": {
+        "freshInput": 184389,
+        "cachedInput": 0,
+        "output": 165
+      },
+      "componentNanoUsd": {
+        "freshInput": 1843890000,
+        "cachedInput": 0,
+        "output": 8250000
+      },
+      "totalNanoUsd": 1852140000,
+      "totalUsd": "1.85214"
+    },
+    {
+      "id": "coordinator call 061",
+      "responseHash": "de60ca681d87a8c4",
+      "agent": "coordinator",
+      "turn": "turn 10",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:14:23.817Z",
+      "tokens": {
+        "input_tokens": 189248,
+        "cached_input_tokens": 184192,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 320,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 189568
+      },
+      "billableQuantities": {
+        "freshInput": 5056,
+        "cachedInput": 184192,
+        "output": 320
+      },
+      "componentNanoUsd": {
+        "freshInput": 50560000,
+        "cachedInput": 184192000,
+        "output": 16000000
+      },
+      "totalNanoUsd": 250752000,
+      "totalUsd": "0.250752"
+    },
+    {
+      "id": "coordinator call 062",
+      "responseHash": "7d2951f248200e19",
+      "agent": "coordinator",
+      "turn": "turn 11",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:18:09.537Z",
+      "tokens": {
+        "input_tokens": 189611,
+        "cached_input_tokens": 189056,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 162,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 189773
+      },
+      "billableQuantities": {
+        "freshInput": 555,
+        "cachedInput": 189056,
+        "output": 162
+      },
+      "componentNanoUsd": {
+        "freshInput": 5550000,
+        "cachedInput": 189056000,
+        "output": 8100000
+      },
+      "totalNanoUsd": 202706000,
+      "totalUsd": "0.202706"
+    },
+    {
+      "id": "coordinator call 063",
+      "responseHash": "37296a01e86a3baa",
+      "agent": "coordinator",
+      "turn": "turn 11",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:18:21.721Z",
+      "tokens": {
+        "input_tokens": 194800,
+        "cached_input_tokens": 189440,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 158,
+        "reasoning_output_tokens": 65,
+        "total_tokens": 194958
+      },
+      "billableQuantities": {
+        "freshInput": 5360,
+        "cachedInput": 189440,
+        "output": 158
+      },
+      "componentNanoUsd": {
+        "freshInput": 53600000,
+        "cachedInput": 189440000,
+        "output": 7900000
+      },
+      "totalNanoUsd": 250940000,
+      "totalUsd": "0.25094"
+    },
+    {
+      "id": "coordinator call 064",
+      "responseHash": "b6b0f4974827e21c",
+      "agent": "coordinator",
+      "turn": "turn 11",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:18:32.177Z",
+      "tokens": {
+        "input_tokens": 198876,
+        "cached_input_tokens": 194560,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 146,
+        "reasoning_output_tokens": 41,
+        "total_tokens": 199022
+      },
+      "billableQuantities": {
+        "freshInput": 4316,
+        "cachedInput": 194560,
+        "output": 146
+      },
+      "componentNanoUsd": {
+        "freshInput": 43160000,
+        "cachedInput": 194560000,
+        "output": 7300000
+      },
+      "totalNanoUsd": 245020000,
+      "totalUsd": "0.24502"
+    },
+    {
+      "id": "coordinator call 065",
+      "responseHash": "8a968193f569d69d",
+      "agent": "coordinator",
+      "turn": "turn 11",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:18:42.270Z",
+      "tokens": {
+        "input_tokens": 203051,
+        "cached_input_tokens": 198656,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 159,
+        "reasoning_output_tokens": 42,
+        "total_tokens": 203210
+      },
+      "billableQuantities": {
+        "freshInput": 4395,
+        "cachedInput": 198656,
+        "output": 159
+      },
+      "componentNanoUsd": {
+        "freshInput": 43950000,
+        "cachedInput": 198656000,
+        "output": 7950000
+      },
+      "totalNanoUsd": 250556000,
+      "totalUsd": "0.250556"
+    },
+    {
+      "id": "coordinator call 066",
+      "responseHash": "ec6eb28c0c15537f",
+      "agent": "coordinator",
+      "turn": "turn 11",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:18:52.113Z",
+      "tokens": {
+        "input_tokens": 207244,
+        "cached_input_tokens": 202880,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 155,
+        "reasoning_output_tokens": 14,
+        "total_tokens": 207399
+      },
+      "billableQuantities": {
+        "freshInput": 4364,
+        "cachedInput": 202880,
+        "output": 155
+      },
+      "componentNanoUsd": {
+        "freshInput": 43640000,
+        "cachedInput": 202880000,
+        "output": 7750000
+      },
+      "totalNanoUsd": 254270000,
+      "totalUsd": "0.25427"
+    },
+    {
+      "id": "coordinator call 067",
+      "responseHash": "1c1f9b34af45ccb4",
+      "agent": "coordinator",
+      "turn": "turn 11",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:19:12.984Z",
+      "tokens": {
+        "input_tokens": 211947,
+        "cached_input_tokens": 207104,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 423,
+        "reasoning_output_tokens": 338,
+        "total_tokens": 212370
+      },
+      "billableQuantities": {
+        "freshInput": 4843,
+        "cachedInput": 207104,
+        "output": 423
+      },
+      "componentNanoUsd": {
+        "freshInput": 48430000,
+        "cachedInput": 207104000,
+        "output": 21150000
+      },
+      "totalNanoUsd": 276684000,
+      "totalUsd": "0.276684"
+    },
+    {
+      "id": "coordinator call 068",
+      "responseHash": "20fae874fb6d0fee",
+      "agent": "coordinator",
+      "turn": "turn 11",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:19:51.888Z",
+      "tokens": {
+        "input_tokens": 218162,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 966,
+        "reasoning_output_tokens": 33,
+        "total_tokens": 219128
+      },
+      "billableQuantities": {
+        "freshInput": 218162,
+        "cachedInput": 0,
+        "output": 966
+      },
+      "componentNanoUsd": {
+        "freshInput": 2181620000,
+        "cachedInput": 0,
+        "output": 48300000
+      },
+      "totalNanoUsd": 2229920000,
+      "totalUsd": "2.22992"
+    },
+    {
+      "id": "coordinator call 069",
+      "responseHash": "de08d0753a134ec6",
+      "agent": "coordinator",
+      "turn": "turn 11",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:20:14.405Z",
+      "tokens": {
+        "input_tokens": 219257,
+        "cached_input_tokens": 217984,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 461,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 219718
+      },
+      "billableQuantities": {
+        "freshInput": 1273,
+        "cachedInput": 217984,
+        "output": 461
+      },
+      "componentNanoUsd": {
+        "freshInput": 12730000,
+        "cachedInput": 217984000,
+        "output": 23050000
+      },
+      "totalNanoUsd": 253764000,
+      "totalUsd": "0.253764"
+    },
+    {
+      "id": "coordinator call 070",
+      "responseHash": "a087929d602fb831",
+      "agent": "coordinator",
+      "turn": "turn 12",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:25:30.158Z",
+      "tokens": {
+        "input_tokens": 219828,
+        "cached_input_tokens": 219136,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 625,
+        "reasoning_output_tokens": 516,
+        "total_tokens": 220453
+      },
+      "billableQuantities": {
+        "freshInput": 692,
+        "cachedInput": 219136,
+        "output": 625
+      },
+      "componentNanoUsd": {
+        "freshInput": 6920000,
+        "cachedInput": 219136000,
+        "output": 31250000
+      },
+      "totalNanoUsd": 257306000,
+      "totalUsd": "0.257306"
+    },
+    {
+      "id": "coordinator call 071",
+      "responseHash": "8c22dcdad12eff7d",
+      "agent": "coordinator",
+      "turn": "turn 12",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:27:01.589Z",
+      "tokens": {
+        "input_tokens": 221446,
+        "cached_input_tokens": 219648,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2572,
+        "reasoning_output_tokens": 516,
+        "total_tokens": 224018
+      },
+      "billableQuantities": {
+        "freshInput": 1798,
+        "cachedInput": 219648,
+        "output": 2572
+      },
+      "componentNanoUsd": {
+        "freshInput": 17980000,
+        "cachedInput": 219648000,
+        "output": 128600000
+      },
+      "totalNanoUsd": 366228000,
+      "totalUsd": "0.366228"
+    },
+    {
+      "id": "coordinator call 072",
+      "responseHash": "16b119f41eeb7c32",
+      "agent": "coordinator",
+      "turn": "turn 12",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:27:30.760Z",
+      "tokens": {
+        "input_tokens": 224077,
+        "cached_input_tokens": 221312,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 594,
+        "reasoning_output_tokens": 323,
+        "total_tokens": 224671
+      },
+      "billableQuantities": {
+        "freshInput": 2765,
+        "cachedInput": 221312,
+        "output": 594
+      },
+      "componentNanoUsd": {
+        "freshInput": 27650000,
+        "cachedInput": 221312000,
+        "output": 29700000
+      },
+      "totalNanoUsd": 278662000,
+      "totalUsd": "0.278662"
+    },
+    {
+      "id": "coordinator call 073",
+      "responseHash": "04ae23800fe0d9a9",
+      "agent": "coordinator",
+      "turn": "turn 12",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:27:59.622Z",
+      "tokens": {
+        "input_tokens": 224883,
+        "cached_input_tokens": 223872,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 440,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 225323
+      },
+      "billableQuantities": {
+        "freshInput": 1011,
+        "cachedInput": 223872,
+        "output": 440
+      },
+      "componentNanoUsd": {
+        "freshInput": 10110000,
+        "cachedInput": 223872000,
+        "output": 22000000
+      },
+      "totalNanoUsd": 255982000,
+      "totalUsd": "0.255982"
+    },
+    {
+      "id": "coordinator call 074",
+      "responseHash": "6a3149fa9f6f85cf",
+      "agent": "coordinator",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:31:05.448Z",
+      "tokens": {
+        "input_tokens": 225350,
+        "cached_input_tokens": 224768,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 183,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 225533
+      },
+      "billableQuantities": {
+        "freshInput": 582,
+        "cachedInput": 224768,
+        "output": 183
+      },
+      "componentNanoUsd": {
+        "freshInput": 5820000,
+        "cachedInput": 224768000,
+        "output": 9150000
+      },
+      "totalNanoUsd": 239738000,
+      "totalUsd": "0.239738"
+    },
+    {
+      "id": "coordinator call 075",
+      "responseHash": "292340747cf7cc7a",
+      "agent": "coordinator",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:32:36.848Z",
+      "tokens": {
+        "input_tokens": 233722,
+        "cached_input_tokens": 225152,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2794,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 236516
+      },
+      "billableQuantities": {
+        "freshInput": 8570,
+        "cachedInput": 225152,
+        "output": 2794
+      },
+      "componentNanoUsd": {
+        "freshInput": 85700000,
+        "cachedInput": 225152000,
+        "output": 139700000
+      },
+      "totalNanoUsd": 450552000,
+      "totalUsd": "0.450552"
+    },
+    {
+      "id": "coordinator call 076",
+      "responseHash": "89255104b7f5c3dc",
+      "agent": "coordinator",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:32:46.599Z",
+      "tokens": {
+        "input_tokens": 236561,
+        "cached_input_tokens": 233600,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 14,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 236575
+      },
+      "billableQuantities": {
+        "freshInput": 2961,
+        "cachedInput": 233600,
+        "output": 14
+      },
+      "componentNanoUsd": {
+        "freshInput": 29610000,
+        "cachedInput": 233600000,
+        "output": 700000
+      },
+      "totalNanoUsd": 263910000,
+      "totalUsd": "0.26391"
+    },
+    {
+      "id": "coordinator call 077",
+      "responseHash": "b9c1ec758994a208",
+      "agent": "coordinator",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:32:54.962Z",
+      "tokens": {
+        "input_tokens": 31758,
+        "cached_input_tokens": 28928,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 18,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 31776
+      },
+      "billableQuantities": {
+        "freshInput": 2830,
+        "cachedInput": 28928,
+        "output": 18
+      },
+      "componentNanoUsd": {
+        "freshInput": 28300000,
+        "cachedInput": 28928000,
+        "output": 900000
+      },
+      "totalNanoUsd": 58128000,
+      "totalUsd": "0.058128"
+    },
+    {
+      "id": "coordinator call 078",
+      "responseHash": "754fa3fcbdca0561",
+      "agent": "coordinator",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:33:04.192Z",
+      "tokens": {
+        "input_tokens": 34568,
+        "cached_input_tokens": 31616,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 87,
+        "reasoning_output_tokens": 25,
+        "total_tokens": 34655
+      },
+      "billableQuantities": {
+        "freshInput": 2952,
+        "cachedInput": 31616,
+        "output": 87
+      },
+      "componentNanoUsd": {
+        "freshInput": 29520000,
+        "cachedInput": 31616000,
+        "output": 4350000
+      },
+      "totalNanoUsd": 65486000,
+      "totalUsd": "0.065486"
+    },
+    {
+      "id": "coordinator call 079",
+      "responseHash": "0dab07f9f36f86dd",
+      "agent": "coordinator",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:33:14.827Z",
+      "tokens": {
+        "input_tokens": 35272,
+        "cached_input_tokens": 34432,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 165,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 35437
+      },
+      "billableQuantities": {
+        "freshInput": 840,
+        "cachedInput": 34432,
+        "output": 165
+      },
+      "componentNanoUsd": {
+        "freshInput": 8400000,
+        "cachedInput": 34432000,
+        "output": 8250000
+      },
+      "totalNanoUsd": 51082000,
+      "totalUsd": "0.051082"
+    },
+    {
+      "id": "coordinator call 080",
+      "responseHash": "a0120140c9625f0f",
+      "agent": "coordinator",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:33:30.566Z",
+      "tokens": {
+        "input_tokens": 40591,
+        "cached_input_tokens": 35072,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 271,
+        "reasoning_output_tokens": 26,
+        "total_tokens": 40862
+      },
+      "billableQuantities": {
+        "freshInput": 5519,
+        "cachedInput": 35072,
+        "output": 271
+      },
+      "componentNanoUsd": {
+        "freshInput": 55190000,
+        "cachedInput": 35072000,
+        "output": 13550000
+      },
+      "totalNanoUsd": 103812000,
+      "totalUsd": "0.103812"
+    },
+    {
+      "id": "coordinator call 081",
+      "responseHash": "b7162437db90b863",
+      "agent": "coordinator",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:33:41.143Z",
+      "tokens": {
+        "input_tokens": 40874,
+        "cached_input_tokens": 40448,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 174,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 41048
+      },
+      "billableQuantities": {
+        "freshInput": 426,
+        "cachedInput": 40448,
+        "output": 174
+      },
+      "componentNanoUsd": {
+        "freshInput": 4260000,
+        "cachedInput": 40448000,
+        "output": 8700000
+      },
+      "totalNanoUsd": 53408000,
+      "totalUsd": "0.053408"
+    },
+    {
+      "id": "coordinator call 082",
+      "responseHash": "00d6ea0f85328024",
+      "agent": "coordinator",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:33:52.777Z",
+      "tokens": {
+        "input_tokens": 41060,
+        "cached_input_tokens": 40704,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 191,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 41251
+      },
+      "billableQuantities": {
+        "freshInput": 356,
+        "cachedInput": 40704,
+        "output": 191
+      },
+      "componentNanoUsd": {
+        "freshInput": 3560000,
+        "cachedInput": 40704000,
+        "output": 9550000
+      },
+      "totalNanoUsd": 53814000,
+      "totalUsd": "0.053814"
+    },
+    {
+      "id": "coordinator call 083",
+      "responseHash": "64bf23fb9b3cc54a",
+      "agent": "coordinator",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:34:04.105Z",
+      "tokens": {
+        "input_tokens": 41263,
+        "cached_input_tokens": 40832,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 143,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 41406
+      },
+      "billableQuantities": {
+        "freshInput": 431,
+        "cachedInput": 40832,
+        "output": 143
+      },
+      "componentNanoUsd": {
+        "freshInput": 4310000,
+        "cachedInput": 40832000,
+        "output": 7150000
+      },
+      "totalNanoUsd": 52292000,
+      "totalUsd": "0.052292"
+    },
+    {
+      "id": "coordinator call 084",
+      "responseHash": "b64a5cc77b3d50de",
+      "agent": "coordinator",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:34:18.327Z",
+      "tokens": {
+        "input_tokens": 44314,
+        "cached_input_tokens": 41088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 326,
+        "reasoning_output_tokens": 22,
+        "total_tokens": 44640
+      },
+      "billableQuantities": {
+        "freshInput": 3226,
+        "cachedInput": 41088,
+        "output": 326
+      },
+      "componentNanoUsd": {
+        "freshInput": 32260000,
+        "cachedInput": 41088000,
+        "output": 16300000
+      },
+      "totalNanoUsd": 89648000,
+      "totalUsd": "0.089648"
+    },
+    {
+      "id": "coordinator call 085",
+      "responseHash": "718998549b0d4382",
+      "agent": "coordinator",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:34:31.093Z",
+      "tokens": {
+        "input_tokens": 46397,
+        "cached_input_tokens": 44160,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 136,
+        "reasoning_output_tokens": 15,
+        "total_tokens": 46533
+      },
+      "billableQuantities": {
+        "freshInput": 2237,
+        "cachedInput": 44160,
+        "output": 136
+      },
+      "componentNanoUsd": {
+        "freshInput": 22370000,
+        "cachedInput": 44160000,
+        "output": 6800000
+      },
+      "totalNanoUsd": 73330000,
+      "totalUsd": "0.07333"
+    },
+    {
+      "id": "coordinator call 086",
+      "responseHash": "f247015ef2f48752",
+      "agent": "coordinator",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:34:49.979Z",
+      "tokens": {
+        "input_tokens": 48010,
+        "cached_input_tokens": 46208,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 417,
+        "reasoning_output_tokens": 16,
+        "total_tokens": 48427
+      },
+      "billableQuantities": {
+        "freshInput": 1802,
+        "cachedInput": 46208,
+        "output": 417
+      },
+      "componentNanoUsd": {
+        "freshInput": 18020000,
+        "cachedInput": 46208000,
+        "output": 20850000
+      },
+      "totalNanoUsd": 85078000,
+      "totalUsd": "0.085078"
+    },
+    {
+      "id": "coordinator call 087",
+      "responseHash": "e04a67f902263abe",
+      "agent": "coordinator",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:35:10.853Z",
+      "tokens": {
+        "input_tokens": 51343,
+        "cached_input_tokens": 47872,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 520,
+        "reasoning_output_tokens": 20,
+        "total_tokens": 51863
+      },
+      "billableQuantities": {
+        "freshInput": 3471,
+        "cachedInput": 47872,
+        "output": 520
+      },
+      "componentNanoUsd": {
+        "freshInput": 34710000,
+        "cachedInput": 47872000,
+        "output": 26000000
+      },
+      "totalNanoUsd": 108582000,
+      "totalUsd": "0.108582"
+    },
+    {
+      "id": "coordinator call 088",
+      "responseHash": "a5b23c79290fb77f",
+      "agent": "coordinator",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:35:34.083Z",
+      "tokens": {
+        "input_tokens": 55402,
+        "cached_input_tokens": 54912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 148,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 55550
+      },
+      "billableQuantities": {
+        "freshInput": 490,
+        "cachedInput": 54912,
+        "output": 148
+      },
+      "componentNanoUsd": {
+        "freshInput": 4900000,
+        "cachedInput": 54912000,
+        "output": 7400000
+      },
+      "totalNanoUsd": 67212000,
+      "totalUsd": "0.067212"
+    },
+    {
+      "id": "telemetry call 001",
+      "responseHash": "3b9eef0b1e5edcd4",
+      "agent": "telemetry",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:35:50.286Z",
+      "tokens": {
+        "input_tokens": 37842,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 138,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 37980
+      },
+      "billableQuantities": {
+        "freshInput": 37842,
+        "cachedInput": 0,
+        "output": 138
+      },
+      "componentNanoUsd": {
+        "freshInput": 378420000,
+        "cachedInput": 0,
+        "output": 6900000
+      },
+      "totalNanoUsd": 385320000,
+      "totalUsd": "0.38532"
+    },
+    {
+      "id": "telemetry call 002",
+      "responseHash": "b02c615f746ddeaa",
+      "agent": "telemetry",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:35:57.422Z",
+      "tokens": {
+        "input_tokens": 38409,
+        "cached_input_tokens": 37632,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 104,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 38513
+      },
+      "billableQuantities": {
+        "freshInput": 777,
+        "cachedInput": 37632,
+        "output": 104
+      },
+      "componentNanoUsd": {
+        "freshInput": 7770000,
+        "cachedInput": 37632000,
+        "output": 5200000
+      },
+      "totalNanoUsd": 50602000,
+      "totalUsd": "0.050602"
+    },
+    {
+      "id": "telemetry call 003",
+      "responseHash": "c8c4f9e06ce24471",
+      "agent": "telemetry",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:36:13.183Z",
+      "tokens": {
+        "input_tokens": 47818,
+        "cached_input_tokens": 38272,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 347,
+        "reasoning_output_tokens": 36,
+        "total_tokens": 48165
+      },
+      "billableQuantities": {
+        "freshInput": 9546,
+        "cachedInput": 38272,
+        "output": 347
+      },
+      "componentNanoUsd": {
+        "freshInput": 95460000,
+        "cachedInput": 38272000,
+        "output": 17350000
+      },
+      "totalNanoUsd": 151082000,
+      "totalUsd": "0.151082"
+    },
+    {
+      "id": "telemetry call 004",
+      "responseHash": "38b23ab3f507e429",
+      "agent": "telemetry",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:36:21.673Z",
+      "tokens": {
+        "input_tokens": 49525,
+        "cached_input_tokens": 47616,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 136,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 49661
+      },
+      "billableQuantities": {
+        "freshInput": 1909,
+        "cachedInput": 47616,
+        "output": 136
+      },
+      "componentNanoUsd": {
+        "freshInput": 19090000,
+        "cachedInput": 47616000,
+        "output": 6800000
+      },
+      "totalNanoUsd": 73506000,
+      "totalUsd": "0.073506"
+    },
+    {
+      "id": "telemetry call 005",
+      "responseHash": "d1c78171d06ca337",
+      "agent": "telemetry",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:36:31.757Z",
+      "tokens": {
+        "input_tokens": 57755,
+        "cached_input_tokens": 49408,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 183,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 57938
+      },
+      "billableQuantities": {
+        "freshInput": 8347,
+        "cachedInput": 49408,
+        "output": 183
+      },
+      "componentNanoUsd": {
+        "freshInput": 83470000,
+        "cachedInput": 49408000,
+        "output": 9150000
+      },
+      "totalNanoUsd": 142028000,
+      "totalUsd": "0.142028"
+    },
+    {
+      "id": "telemetry call 006",
+      "responseHash": "e1616b499b0f6e67",
+      "agent": "telemetry",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:36:39.310Z",
+      "tokens": {
+        "input_tokens": 66083,
+        "cached_input_tokens": 57600,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 99,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 66182
+      },
+      "billableQuantities": {
+        "freshInput": 8483,
+        "cachedInput": 57600,
+        "output": 99
+      },
+      "componentNanoUsd": {
+        "freshInput": 84830000,
+        "cachedInput": 57600000,
+        "output": 4950000
+      },
+      "totalNanoUsd": 147380000,
+      "totalUsd": "0.14738"
+    },
+    {
+      "id": "telemetry call 007",
+      "responseHash": "57cfc858ad570da5",
+      "agent": "telemetry",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:36:47.020Z",
+      "tokens": {
+        "input_tokens": 66193,
+        "cached_input_tokens": 65920,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 117,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 66310
+      },
+      "billableQuantities": {
+        "freshInput": 273,
+        "cachedInput": 65920,
+        "output": 117
+      },
+      "componentNanoUsd": {
+        "freshInput": 2730000,
+        "cachedInput": 65920000,
+        "output": 5850000
+      },
+      "totalNanoUsd": 74500000,
+      "totalUsd": "0.0745"
+    },
+    {
+      "id": "telemetry call 008",
+      "responseHash": "711328c69f15098d",
+      "agent": "telemetry",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:37:02.102Z",
+      "tokens": {
+        "input_tokens": 74579,
+        "cached_input_tokens": 74240,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 94,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 74673
+      },
+      "billableQuantities": {
+        "freshInput": 339,
+        "cachedInput": 74240,
+        "output": 94
+      },
+      "componentNanoUsd": {
+        "freshInput": 3390000,
+        "cachedInput": 74240000,
+        "output": 4700000
+      },
+      "totalNanoUsd": 82330000,
+      "totalUsd": "0.08233"
+    },
+    {
+      "id": "telemetry call 009",
+      "responseHash": "1399997e446019cd",
+      "agent": "telemetry",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:37:11.046Z",
+      "tokens": {
+        "input_tokens": 82610,
+        "cached_input_tokens": 74368,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 164,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 82774
+      },
+      "billableQuantities": {
+        "freshInput": 8242,
+        "cachedInput": 74368,
+        "output": 164
+      },
+      "componentNanoUsd": {
+        "freshInput": 82420000,
+        "cachedInput": 74368000,
+        "output": 8200000
+      },
+      "totalNanoUsd": 164988000,
+      "totalUsd": "0.164988"
+    },
+    {
+      "id": "telemetry call 010",
+      "responseHash": "d42fb382d0e56254",
+      "agent": "telemetry",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:37:21.678Z",
+      "tokens": {
+        "input_tokens": 92365,
+        "cached_input_tokens": 82432,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 182,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 92547
+      },
+      "billableQuantities": {
+        "freshInput": 9933,
+        "cachedInput": 82432,
+        "output": 182
+      },
+      "componentNanoUsd": {
+        "freshInput": 99330000,
+        "cachedInput": 82432000,
+        "output": 9100000
+      },
+      "totalNanoUsd": 190862000,
+      "totalUsd": "0.190862"
+    },
+    {
+      "id": "telemetry call 011",
+      "responseHash": "26f2c527e6552963",
+      "agent": "telemetry",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:37:38.450Z",
+      "tokens": {
+        "input_tokens": 92558,
+        "cached_input_tokens": 92160,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 385,
+        "reasoning_output_tokens": 16,
+        "total_tokens": 92943
+      },
+      "billableQuantities": {
+        "freshInput": 398,
+        "cachedInput": 92160,
+        "output": 385
+      },
+      "componentNanoUsd": {
+        "freshInput": 3980000,
+        "cachedInput": 92160000,
+        "output": 19250000
+      },
+      "totalNanoUsd": 115390000,
+      "totalUsd": "0.11539"
+    },
+    {
+      "id": "telemetry call 012",
+      "responseHash": "520e9ff253586638",
+      "agent": "telemetry",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:37:54.065Z",
+      "tokens": {
+        "input_tokens": 93122,
+        "cached_input_tokens": 92416,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 127,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 93249
+      },
+      "billableQuantities": {
+        "freshInput": 706,
+        "cachedInput": 92416,
+        "output": 127
+      },
+      "componentNanoUsd": {
+        "freshInput": 7060000,
+        "cachedInput": 92416000,
+        "output": 6350000
+      },
+      "totalNanoUsd": 105826000,
+      "totalUsd": "0.105826"
+    },
+    {
+      "id": "telemetry call 013",
+      "responseHash": "8547b462b7188d47",
+      "agent": "telemetry",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:38:18.064Z",
+      "tokens": {
+        "input_tokens": 99487,
+        "cached_input_tokens": 92928,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 326,
+        "reasoning_output_tokens": 20,
+        "total_tokens": 99813
+      },
+      "billableQuantities": {
+        "freshInput": 6559,
+        "cachedInput": 92928,
+        "output": 326
+      },
+      "componentNanoUsd": {
+        "freshInput": 65590000,
+        "cachedInput": 92928000,
+        "output": 16300000
+      },
+      "totalNanoUsd": 174818000,
+      "totalUsd": "0.174818"
+    },
+    {
+      "id": "telemetry call 014",
+      "responseHash": "bafcb91e0375ef15",
+      "agent": "telemetry",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:38:51.043Z",
+      "tokens": {
+        "input_tokens": 110256,
+        "cached_input_tokens": 99328,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 360,
+        "reasoning_output_tokens": 36,
+        "total_tokens": 110616
+      },
+      "billableQuantities": {
+        "freshInput": 10928,
+        "cachedInput": 99328,
+        "output": 360
+      },
+      "componentNanoUsd": {
+        "freshInput": 109280000,
+        "cachedInput": 99328000,
+        "output": 18000000
+      },
+      "totalNanoUsd": 226608000,
+      "totalUsd": "0.226608"
+    },
+    {
+      "id": "telemetry call 015",
+      "responseHash": "d896037aa1415f34",
+      "agent": "telemetry",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:39:07.305Z",
+      "tokens": {
+        "input_tokens": 120882,
+        "cached_input_tokens": 110080,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 226,
+        "reasoning_output_tokens": 52,
+        "total_tokens": 121108
+      },
+      "billableQuantities": {
+        "freshInput": 10802,
+        "cachedInput": 110080,
+        "output": 226
+      },
+      "componentNanoUsd": {
+        "freshInput": 108020000,
+        "cachedInput": 110080000,
+        "output": 11300000
+      },
+      "totalNanoUsd": 229400000,
+      "totalUsd": "0.2294"
+    },
+    {
+      "id": "telemetry call 016",
+      "responseHash": "69055413f283a4ee",
+      "agent": "telemetry",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:39:16.601Z",
+      "tokens": {
+        "input_tokens": 131413,
+        "cached_input_tokens": 120704,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 144,
+        "reasoning_output_tokens": 47,
+        "total_tokens": 131557
+      },
+      "billableQuantities": {
+        "freshInput": 10709,
+        "cachedInput": 120704,
+        "output": 144
+      },
+      "componentNanoUsd": {
+        "freshInput": 107090000,
+        "cachedInput": 120704000,
+        "output": 7200000
+      },
+      "totalNanoUsd": 234994000,
+      "totalUsd": "0.234994"
+    },
+    {
+      "id": "telemetry call 017",
+      "responseHash": "53e8c84c9835004f",
+      "agent": "telemetry",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:41:25.246Z",
+      "tokens": {
+        "input_tokens": 136205,
+        "cached_input_tokens": 131200,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4027,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 140232
+      },
+      "billableQuantities": {
+        "freshInput": 5005,
+        "cachedInput": 131200,
+        "output": 4027
+      },
+      "componentNanoUsd": {
+        "freshInput": 50050000,
+        "cachedInput": 131200000,
+        "output": 201350000
+      },
+      "totalNanoUsd": 382600000,
+      "totalUsd": "0.3826"
+    },
+    {
+      "id": "telemetry call 018",
+      "responseHash": "4d480eea0c4bc0ac",
+      "agent": "telemetry",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:41:37.223Z",
+      "tokens": {
+        "input_tokens": 140377,
+        "cached_input_tokens": 136064,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 248,
+        "reasoning_output_tokens": 104,
+        "total_tokens": 140625
+      },
+      "billableQuantities": {
+        "freshInput": 4313,
+        "cachedInput": 136064,
+        "output": 248
+      },
+      "componentNanoUsd": {
+        "freshInput": 43130000,
+        "cachedInput": 136064000,
+        "output": 12400000
+      },
+      "totalNanoUsd": 191594000,
+      "totalUsd": "0.191594"
+    },
+    {
+      "id": "telemetry call 019",
+      "responseHash": "3bfac23a725d501c",
+      "agent": "telemetry",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:41:53.390Z",
+      "tokens": {
+        "input_tokens": 140826,
+        "cached_input_tokens": 140160,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 407,
+        "reasoning_output_tokens": 42,
+        "total_tokens": 141233
+      },
+      "billableQuantities": {
+        "freshInput": 666,
+        "cachedInput": 140160,
+        "output": 407
+      },
+      "componentNanoUsd": {
+        "freshInput": 6660000,
+        "cachedInput": 140160000,
+        "output": 20350000
+      },
+      "totalNanoUsd": 167170000,
+      "totalUsd": "0.16717"
+    },
+    {
+      "id": "telemetry call 020",
+      "responseHash": "c20738615d7c15cc",
+      "agent": "telemetry",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:33:38.595Z",
+      "tokens": {
+        "input_tokens": 141427,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 50,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 141477
+      },
+      "billableQuantities": {
+        "freshInput": 141427,
+        "cachedInput": 0,
+        "output": 50
+      },
+      "componentNanoUsd": {
+        "freshInput": 1414270000,
+        "cachedInput": 0,
+        "output": 2500000
+      },
+      "totalNanoUsd": 1416770000,
+      "totalUsd": "1.41677"
+    },
+    {
+      "id": "telemetry call 021",
+      "responseHash": "17f12e011720cb04",
+      "agent": "telemetry",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:33:58.616Z",
+      "tokens": {
+        "input_tokens": 149382,
+        "cached_input_tokens": 141312,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 384,
+        "reasoning_output_tokens": 30,
+        "total_tokens": 149766
+      },
+      "billableQuantities": {
+        "freshInput": 8070,
+        "cachedInput": 141312,
+        "output": 384
+      },
+      "componentNanoUsd": {
+        "freshInput": 80700000,
+        "cachedInput": 141312000,
+        "output": 19200000
+      },
+      "totalNanoUsd": 241212000,
+      "totalUsd": "0.241212"
+    },
+    {
+      "id": "telemetry call 022",
+      "responseHash": "777f7c2edde23467",
+      "agent": "telemetry",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:34:25.998Z",
+      "tokens": {
+        "input_tokens": 153544,
+        "cached_input_tokens": 149248,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 547,
+        "reasoning_output_tokens": 54,
+        "total_tokens": 154091
+      },
+      "billableQuantities": {
+        "freshInput": 4296,
+        "cachedInput": 149248,
+        "output": 547
+      },
+      "componentNanoUsd": {
+        "freshInput": 42960000,
+        "cachedInput": 149248000,
+        "output": 27350000
+      },
+      "totalNanoUsd": 219558000,
+      "totalUsd": "0.219558"
+    },
+    {
+      "id": "telemetry call 023",
+      "responseHash": "fc01e8ff006686a1",
+      "agent": "telemetry",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:34:39.675Z",
+      "tokens": {
+        "input_tokens": 154566,
+        "cached_input_tokens": 153344,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 160,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 154726
+      },
+      "billableQuantities": {
+        "freshInput": 1222,
+        "cachedInput": 153344,
+        "output": 160
+      },
+      "componentNanoUsd": {
+        "freshInput": 12220000,
+        "cachedInput": 153344000,
+        "output": 8000000
+      },
+      "totalNanoUsd": 173564000,
+      "totalUsd": "0.173564"
+    },
+    {
+      "id": "telemetry call 024",
+      "responseHash": "2c89e8862c8c4cd2",
+      "agent": "telemetry",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:34:53.942Z",
+      "tokens": {
+        "input_tokens": 165221,
+        "cached_input_tokens": 154368,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 311,
+        "reasoning_output_tokens": 19,
+        "total_tokens": 165532
+      },
+      "billableQuantities": {
+        "freshInput": 10853,
+        "cachedInput": 154368,
+        "output": 311
+      },
+      "componentNanoUsd": {
+        "freshInput": 108530000,
+        "cachedInput": 154368000,
+        "output": 15550000
+      },
+      "totalNanoUsd": 278448000,
+      "totalUsd": "0.278448"
+    },
+    {
+      "id": "telemetry call 025",
+      "responseHash": "21936b5135e0f245",
+      "agent": "telemetry",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:35:18.831Z",
+      "tokens": {
+        "input_tokens": 169762,
+        "cached_input_tokens": 164992,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 645,
+        "reasoning_output_tokens": 24,
+        "total_tokens": 170407
+      },
+      "billableQuantities": {
+        "freshInput": 4770,
+        "cachedInput": 164992,
+        "output": 645
+      },
+      "componentNanoUsd": {
+        "freshInput": 47700000,
+        "cachedInput": 164992000,
+        "output": 32250000
+      },
+      "totalNanoUsd": 244942000,
+      "totalUsd": "0.244942"
+    },
+    {
+      "id": "telemetry call 026",
+      "responseHash": "878b7144f71fa65b",
+      "agent": "telemetry",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:35:32.581Z",
+      "tokens": {
+        "input_tokens": 171413,
+        "cached_input_tokens": 169600,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 176,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 171589
+      },
+      "billableQuantities": {
+        "freshInput": 1813,
+        "cachedInput": 169600,
+        "output": 176
+      },
+      "componentNanoUsd": {
+        "freshInput": 18130000,
+        "cachedInput": 169600000,
+        "output": 8800000
+      },
+      "totalNanoUsd": 196530000,
+      "totalUsd": "0.19653"
+    },
+    {
+      "id": "telemetry call 027",
+      "responseHash": "c4ea62ce53649230",
+      "agent": "telemetry",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:35:45.501Z",
+      "tokens": {
+        "input_tokens": 171600,
+        "cached_input_tokens": 171264,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 126,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 171726
+      },
+      "billableQuantities": {
+        "freshInput": 336,
+        "cachedInput": 171264,
+        "output": 126
+      },
+      "componentNanoUsd": {
+        "freshInput": 3360000,
+        "cachedInput": 171264000,
+        "output": 6300000
+      },
+      "totalNanoUsd": 180924000,
+      "totalUsd": "0.180924"
+    },
+    {
+      "id": "telemetry call 028",
+      "responseHash": "0117e8c1a6d0b152",
+      "agent": "telemetry",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:35:58.253Z",
+      "tokens": {
+        "input_tokens": 182015,
+        "cached_input_tokens": 171392,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 189,
+        "reasoning_output_tokens": 21,
+        "total_tokens": 182204
+      },
+      "billableQuantities": {
+        "freshInput": 10623,
+        "cachedInput": 171392,
+        "output": 189
+      },
+      "componentNanoUsd": {
+        "freshInput": 106230000,
+        "cachedInput": 171392000,
+        "output": 9450000
+      },
+      "totalNanoUsd": 287072000,
+      "totalUsd": "0.287072"
+    },
+    {
+      "id": "accounting call 001",
+      "responseHash": "14ac343ed9430a63",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:36:04.261Z",
+      "tokens": {
+        "input_tokens": 37816,
+        "cached_input_tokens": 36608,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 76,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 37892
+      },
+      "billableQuantities": {
+        "freshInput": 1208,
+        "cachedInput": 36608,
+        "output": 76
+      },
+      "componentNanoUsd": {
+        "freshInput": 12080000,
+        "cachedInput": 36608000,
+        "output": 3800000
+      },
+      "totalNanoUsd": 52488000,
+      "totalUsd": "0.052488"
+    },
+    {
+      "id": "accounting call 002",
+      "responseHash": "0126ded02bf113da",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:36:13.201Z",
+      "tokens": {
+        "input_tokens": 38226,
+        "cached_input_tokens": 37632,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 65,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 38291
+      },
+      "billableQuantities": {
+        "freshInput": 594,
+        "cachedInput": 37632,
+        "output": 65
+      },
+      "componentNanoUsd": {
+        "freshInput": 5940000,
+        "cachedInput": 37632000,
+        "output": 3250000
+      },
+      "totalNanoUsd": 46822000,
+      "totalUsd": "0.046822"
+    },
+    {
+      "id": "accounting call 003",
+      "responseHash": "1a12534722e5b111",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:36:20.718Z",
+      "tokens": {
+        "input_tokens": 46322,
+        "cached_input_tokens": 38016,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 87,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 46409
+      },
+      "billableQuantities": {
+        "freshInput": 8306,
+        "cachedInput": 38016,
+        "output": 87
+      },
+      "componentNanoUsd": {
+        "freshInput": 83060000,
+        "cachedInput": 38016000,
+        "output": 4350000
+      },
+      "totalNanoUsd": 125426000,
+      "totalUsd": "0.125426"
+    },
+    {
+      "id": "accounting call 004",
+      "responseHash": "61d0ced29af6f789",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:36:28.460Z",
+      "tokens": {
+        "input_tokens": 58941,
+        "cached_input_tokens": 46080,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 74,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 59015
+      },
+      "billableQuantities": {
+        "freshInput": 12861,
+        "cachedInput": 46080,
+        "output": 74
+      },
+      "componentNanoUsd": {
+        "freshInput": 128610000,
+        "cachedInput": 46080000,
+        "output": 3700000
+      },
+      "totalNanoUsd": 178390000,
+      "totalUsd": "0.17839"
+    },
+    {
+      "id": "accounting call 005",
+      "responseHash": "0f96381b8e624bfd",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:36:36.505Z",
+      "tokens": {
+        "input_tokens": 71634,
+        "cached_input_tokens": 58752,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 104,
+        "reasoning_output_tokens": 34,
+        "total_tokens": 71738
+      },
+      "billableQuantities": {
+        "freshInput": 12882,
+        "cachedInput": 58752,
+        "output": 104
+      },
+      "componentNanoUsd": {
+        "freshInput": 128820000,
+        "cachedInput": 58752000,
+        "output": 5200000
+      },
+      "totalNanoUsd": 192772000,
+      "totalUsd": "0.192772"
+    },
+    {
+      "id": "accounting call 006",
+      "responseHash": "accd414d539f1dd0",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:36:44.346Z",
+      "tokens": {
+        "input_tokens": 84076,
+        "cached_input_tokens": 71424,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 78,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 84154
+      },
+      "billableQuantities": {
+        "freshInput": 12652,
+        "cachedInput": 71424,
+        "output": 78
+      },
+      "componentNanoUsd": {
+        "freshInput": 126520000,
+        "cachedInput": 71424000,
+        "output": 3900000
+      },
+      "totalNanoUsd": 201844000,
+      "totalUsd": "0.201844"
+    },
+    {
+      "id": "accounting call 007",
+      "responseHash": "c109f95d30bdae58",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:36:51.534Z",
+      "tokens": {
+        "input_tokens": 88626,
+        "cached_input_tokens": 83840,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 105,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 88731
+      },
+      "billableQuantities": {
+        "freshInput": 4786,
+        "cachedInput": 83840,
+        "output": 105
+      },
+      "componentNanoUsd": {
+        "freshInput": 47860000,
+        "cachedInput": 83840000,
+        "output": 5250000
+      },
+      "totalNanoUsd": 136950000,
+      "totalUsd": "0.13695"
+    },
+    {
+      "id": "accounting call 008",
+      "responseHash": "a4abfe8a361d399b",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:37:05.786Z",
+      "tokens": {
+        "input_tokens": 88742,
+        "cached_input_tokens": 88448,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 198,
+        "reasoning_output_tokens": 122,
+        "total_tokens": 88940
+      },
+      "billableQuantities": {
+        "freshInput": 294,
+        "cachedInput": 88448,
+        "output": 198
+      },
+      "componentNanoUsd": {
+        "freshInput": 2940000,
+        "cachedInput": 88448000,
+        "output": 9900000
+      },
+      "totalNanoUsd": 101288000,
+      "totalUsd": "0.101288"
+    },
+    {
+      "id": "accounting call 009",
+      "responseHash": "b524e3a008e11e28",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:37:21.120Z",
+      "tokens": {
+        "input_tokens": 93094,
+        "cached_input_tokens": 88576,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 192,
+        "reasoning_output_tokens": 30,
+        "total_tokens": 93286
+      },
+      "billableQuantities": {
+        "freshInput": 4518,
+        "cachedInput": 88576,
+        "output": 192
+      },
+      "componentNanoUsd": {
+        "freshInput": 45180000,
+        "cachedInput": 88576000,
+        "output": 9600000
+      },
+      "totalNanoUsd": 143356000,
+      "totalUsd": "0.143356"
+    },
+    {
+      "id": "accounting call 010",
+      "responseHash": "ec500973220bd170",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:37:30.292Z",
+      "tokens": {
+        "input_tokens": 94647,
+        "cached_input_tokens": 92928,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 72,
+        "reasoning_output_tokens": 13,
+        "total_tokens": 94719
+      },
+      "billableQuantities": {
+        "freshInput": 1719,
+        "cachedInput": 92928,
+        "output": 72
+      },
+      "componentNanoUsd": {
+        "freshInput": 17190000,
+        "cachedInput": 92928000,
+        "output": 3600000
+      },
+      "totalNanoUsd": 113718000,
+      "totalUsd": "0.113718"
+    },
+    {
+      "id": "accounting call 011",
+      "responseHash": "2265703e811694c7",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:37:40.537Z",
+      "tokens": {
+        "input_tokens": 110314,
+        "cached_input_tokens": 94464,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 167,
+        "reasoning_output_tokens": 16,
+        "total_tokens": 110481
+      },
+      "billableQuantities": {
+        "freshInput": 15850,
+        "cachedInput": 94464,
+        "output": 167
+      },
+      "componentNanoUsd": {
+        "freshInput": 158500000,
+        "cachedInput": 94464000,
+        "output": 8350000
+      },
+      "totalNanoUsd": 261314000,
+      "totalUsd": "0.261314"
+    },
+    {
+      "id": "accounting call 012",
+      "responseHash": "d1eac998813852a1",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:37:58.538Z",
+      "tokens": {
+        "input_tokens": 116273,
+        "cached_input_tokens": 110080,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 171,
+        "reasoning_output_tokens": 28,
+        "total_tokens": 116444
+      },
+      "billableQuantities": {
+        "freshInput": 6193,
+        "cachedInput": 110080,
+        "output": 171
+      },
+      "componentNanoUsd": {
+        "freshInput": 61930000,
+        "cachedInput": 110080000,
+        "output": 8550000
+      },
+      "totalNanoUsd": 180560000,
+      "totalUsd": "0.18056"
+    },
+    {
+      "id": "accounting call 013",
+      "responseHash": "01eb4dab763bb806",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:38:10.913Z",
+      "tokens": {
+        "input_tokens": 127927,
+        "cached_input_tokens": 116096,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 178,
+        "reasoning_output_tokens": 91,
+        "total_tokens": 128105
+      },
+      "billableQuantities": {
+        "freshInput": 11831,
+        "cachedInput": 116096,
+        "output": 178
+      },
+      "componentNanoUsd": {
+        "freshInput": 118310000,
+        "cachedInput": 116096000,
+        "output": 8900000
+      },
+      "totalNanoUsd": 243306000,
+      "totalUsd": "0.243306"
+    },
+    {
+      "id": "accounting call 014",
+      "responseHash": "a34f1214455350dc",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:38:35.606Z",
+      "tokens": {
+        "input_tokens": 136174,
+        "cached_input_tokens": 127744,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 155,
+        "reasoning_output_tokens": 25,
+        "total_tokens": 136329
+      },
+      "billableQuantities": {
+        "freshInput": 8430,
+        "cachedInput": 127744,
+        "output": 155
+      },
+      "componentNanoUsd": {
+        "freshInput": 84300000,
+        "cachedInput": 127744000,
+        "output": 7750000
+      },
+      "totalNanoUsd": 219794000,
+      "totalUsd": "0.219794"
+    },
+    {
+      "id": "accounting call 015",
+      "responseHash": "5a3e181b873258ef",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:38:50.110Z",
+      "tokens": {
+        "input_tokens": 136340,
+        "cached_input_tokens": 135936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 227,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 136567
+      },
+      "billableQuantities": {
+        "freshInput": 404,
+        "cachedInput": 135936,
+        "output": 227
+      },
+      "componentNanoUsd": {
+        "freshInput": 4040000,
+        "cachedInput": 135936000,
+        "output": 11350000
+      },
+      "totalNanoUsd": 151326000,
+      "totalUsd": "0.151326"
+    },
+    {
+      "id": "accounting call 016",
+      "responseHash": "40770266a979961d",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:39:05.024Z",
+      "tokens": {
+        "input_tokens": 144949,
+        "cached_input_tokens": 136192,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 209,
+        "reasoning_output_tokens": 18,
+        "total_tokens": 145158
+      },
+      "billableQuantities": {
+        "freshInput": 8757,
+        "cachedInput": 136192,
+        "output": 209
+      },
+      "componentNanoUsd": {
+        "freshInput": 87570000,
+        "cachedInput": 136192000,
+        "output": 10450000
+      },
+      "totalNanoUsd": 234212000,
+      "totalUsd": "0.234212"
+    },
+    {
+      "id": "accounting call 017",
+      "responseHash": "da592db935def1b9",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:39:17.670Z",
+      "tokens": {
+        "input_tokens": 147130,
+        "cached_input_tokens": 144768,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 222,
+        "reasoning_output_tokens": 30,
+        "total_tokens": 147352
+      },
+      "billableQuantities": {
+        "freshInput": 2362,
+        "cachedInput": 144768,
+        "output": 222
+      },
+      "componentNanoUsd": {
+        "freshInput": 23620000,
+        "cachedInput": 144768000,
+        "output": 11100000
+      },
+      "totalNanoUsd": 179488000,
+      "totalUsd": "0.179488"
+    },
+    {
+      "id": "accounting call 018",
+      "responseHash": "de6b36ec638287b7",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:39:27.675Z",
+      "tokens": {
+        "input_tokens": 155620,
+        "cached_input_tokens": 146944,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 156,
+        "reasoning_output_tokens": 93,
+        "total_tokens": 155776
+      },
+      "billableQuantities": {
+        "freshInput": 8676,
+        "cachedInput": 146944,
+        "output": 156
+      },
+      "componentNanoUsd": {
+        "freshInput": 86760000,
+        "cachedInput": 146944000,
+        "output": 7800000
+      },
+      "totalNanoUsd": 241504000,
+      "totalUsd": "0.241504"
+    },
+    {
+      "id": "accounting call 019",
+      "responseHash": "5de16aabc94b59f8",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:41:32.632Z",
+      "tokens": {
+        "input_tokens": 155832,
+        "cached_input_tokens": 155392,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3522,
+        "reasoning_output_tokens": 41,
+        "total_tokens": 159354
+      },
+      "billableQuantities": {
+        "freshInput": 440,
+        "cachedInput": 155392,
+        "output": 3522
+      },
+      "componentNanoUsd": {
+        "freshInput": 4400000,
+        "cachedInput": 155392000,
+        "output": 176100000
+      },
+      "totalNanoUsd": 335892000,
+      "totalUsd": "0.335892"
+    },
+    {
+      "id": "accounting call 020",
+      "responseHash": "da0da62aae072f4f",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:41:41.301Z",
+      "tokens": {
+        "input_tokens": 159442,
+        "cached_input_tokens": 155648,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 78,
+        "reasoning_output_tokens": 12,
+        "total_tokens": 159520
+      },
+      "billableQuantities": {
+        "freshInput": 3794,
+        "cachedInput": 155648,
+        "output": 78
+      },
+      "componentNanoUsd": {
+        "freshInput": 37940000,
+        "cachedInput": 155648000,
+        "output": 3900000
+      },
+      "totalNanoUsd": 197488000,
+      "totalUsd": "0.197488"
+    },
+    {
+      "id": "accounting call 021",
+      "responseHash": "62011df179b448a5",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:41:55.544Z",
+      "tokens": {
+        "input_tokens": 159594,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 128,
+        "reasoning_output_tokens": 51,
+        "total_tokens": 159722
+      },
+      "billableQuantities": {
+        "freshInput": 159594,
+        "cachedInput": 0,
+        "output": 128
+      },
+      "componentNanoUsd": {
+        "freshInput": 1595940000,
+        "cachedInput": 0,
+        "output": 6400000
+      },
+      "totalNanoUsd": 1602340000,
+      "totalUsd": "1.60234"
+    },
+    {
+      "id": "accounting call 022",
+      "responseHash": "cbff146413b553cd",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:42:04.906Z",
+      "tokens": {
+        "input_tokens": 159810,
+        "cached_input_tokens": 159360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 101,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 159911
+      },
+      "billableQuantities": {
+        "freshInput": 450,
+        "cachedInput": 159360,
+        "output": 101
+      },
+      "componentNanoUsd": {
+        "freshInput": 4500000,
+        "cachedInput": 159360000,
+        "output": 5050000
+      },
+      "totalNanoUsd": 168910000,
+      "totalUsd": "0.16891"
+    },
+    {
+      "id": "accounting call 023",
+      "responseHash": "679cadc40625682a",
+      "agent": "accounting",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:42:25.907Z",
+      "tokens": {
+        "input_tokens": 160036,
+        "cached_input_tokens": 159616,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 289,
+        "reasoning_output_tokens": 43,
+        "total_tokens": 160325
+      },
+      "billableQuantities": {
+        "freshInput": 420,
+        "cachedInput": 159616,
+        "output": 289
+      },
+      "componentNanoUsd": {
+        "freshInput": 4200000,
+        "cachedInput": 159616000,
+        "output": 14450000
+      },
+      "totalNanoUsd": 178266000,
+      "totalUsd": "0.178266"
+    },
+    {
+      "id": "accounting call 024",
+      "responseHash": "3dd9832cb4275bf0",
+      "agent": "accounting",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:34:02.357Z",
+      "tokens": {
+        "input_tokens": 160529,
+        "cached_input_tokens": 36608,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 90,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 160619
+      },
+      "billableQuantities": {
+        "freshInput": 123921,
+        "cachedInput": 36608,
+        "output": 90
+      },
+      "componentNanoUsd": {
+        "freshInput": 1239210000,
+        "cachedInput": 36608000,
+        "output": 4500000
+      },
+      "totalNanoUsd": 1280318000,
+      "totalUsd": "1.280318"
+    },
+    {
+      "id": "accounting call 025",
+      "responseHash": "a03aa14986cd5b2b",
+      "agent": "accounting",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:34:13.758Z",
+      "tokens": {
+        "input_tokens": 168617,
+        "cached_input_tokens": 160384,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 122,
+        "reasoning_output_tokens": 33,
+        "total_tokens": 168739
+      },
+      "billableQuantities": {
+        "freshInput": 8233,
+        "cachedInput": 160384,
+        "output": 122
+      },
+      "componentNanoUsd": {
+        "freshInput": 82330000,
+        "cachedInput": 160384000,
+        "output": 6100000
+      },
+      "totalNanoUsd": 248814000,
+      "totalUsd": "0.248814"
+    },
+    {
+      "id": "accounting call 026",
+      "responseHash": "8604fa21f1540822",
+      "agent": "accounting",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:34:28.193Z",
+      "tokens": {
+        "input_tokens": 176635,
+        "cached_input_tokens": 168448,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 211,
+        "reasoning_output_tokens": 13,
+        "total_tokens": 176846
+      },
+      "billableQuantities": {
+        "freshInput": 8187,
+        "cachedInput": 168448,
+        "output": 211
+      },
+      "componentNanoUsd": {
+        "freshInput": 81870000,
+        "cachedInput": 168448000,
+        "output": 10550000
+      },
+      "totalNanoUsd": 260868000,
+      "totalUsd": "0.260868"
+    },
+    {
+      "id": "accounting call 027",
+      "responseHash": "c6fdb1f35272f312",
+      "agent": "accounting",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:34:43.971Z",
+      "tokens": {
+        "input_tokens": 179509,
+        "cached_input_tokens": 176512,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 284,
+        "reasoning_output_tokens": 19,
+        "total_tokens": 179793
+      },
+      "billableQuantities": {
+        "freshInput": 2997,
+        "cachedInput": 176512,
+        "output": 284
+      },
+      "componentNanoUsd": {
+        "freshInput": 29970000,
+        "cachedInput": 176512000,
+        "output": 14200000
+      },
+      "totalNanoUsd": 220682000,
+      "totalUsd": "0.220682"
+    },
+    {
+      "id": "accounting call 028",
+      "responseHash": "b75e539c38110586",
+      "agent": "accounting",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:34:55.015Z",
+      "tokens": {
+        "input_tokens": 184282,
+        "cached_input_tokens": 179328,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 208,
+        "reasoning_output_tokens": 21,
+        "total_tokens": 184490
+      },
+      "billableQuantities": {
+        "freshInput": 4954,
+        "cachedInput": 179328,
+        "output": 208
+      },
+      "componentNanoUsd": {
+        "freshInput": 49540000,
+        "cachedInput": 179328000,
+        "output": 10400000
+      },
+      "totalNanoUsd": 239268000,
+      "totalUsd": "0.239268"
+    },
+    {
+      "id": "accounting call 029",
+      "responseHash": "4627843b8ef0906a",
+      "agent": "accounting",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:35:09.217Z",
+      "tokens": {
+        "input_tokens": 195282,
+        "cached_input_tokens": 184064,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 101,
+        "reasoning_output_tokens": 17,
+        "total_tokens": 195383
+      },
+      "billableQuantities": {
+        "freshInput": 11218,
+        "cachedInput": 184064,
+        "output": 101
+      },
+      "componentNanoUsd": {
+        "freshInput": 112180000,
+        "cachedInput": 184064000,
+        "output": 5050000
+      },
+      "totalNanoUsd": 301294000,
+      "totalUsd": "0.301294"
+    },
+    {
+      "id": "accounting call 030",
+      "responseHash": "6315c43eec1e41fe",
+      "agent": "accounting",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:35:20.477Z",
+      "tokens": {
+        "input_tokens": 200189,
+        "cached_input_tokens": 195072,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 155,
+        "reasoning_output_tokens": 16,
+        "total_tokens": 200344
+      },
+      "billableQuantities": {
+        "freshInput": 5117,
+        "cachedInput": 195072,
+        "output": 155
+      },
+      "componentNanoUsd": {
+        "freshInput": 51170000,
+        "cachedInput": 195072000,
+        "output": 7750000
+      },
+      "totalNanoUsd": 253992000,
+      "totalUsd": "0.253992"
+    },
+    {
+      "id": "accounting call 031",
+      "responseHash": "f19965343cd99713",
+      "agent": "accounting",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:35:32.779Z",
+      "tokens": {
+        "input_tokens": 200355,
+        "cached_input_tokens": 200064,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 210,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 200565
+      },
+      "billableQuantities": {
+        "freshInput": 291,
+        "cachedInput": 200064,
+        "output": 210
+      },
+      "componentNanoUsd": {
+        "freshInput": 2910000,
+        "cachedInput": 200064000,
+        "output": 10500000
+      },
+      "totalNanoUsd": 213474000,
+      "totalUsd": "0.213474"
+    },
+    {
+      "id": "accounting call 032",
+      "responseHash": "0d933bb73cba178d",
+      "agent": "accounting",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:35:46.492Z",
+      "tokens": {
+        "input_tokens": 212452,
+        "cached_input_tokens": 200192,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 154,
+        "reasoning_output_tokens": 16,
+        "total_tokens": 212606
+      },
+      "billableQuantities": {
+        "freshInput": 12260,
+        "cachedInput": 200192,
+        "output": 154
+      },
+      "componentNanoUsd": {
+        "freshInput": 122600000,
+        "cachedInput": 200192000,
+        "output": 7700000
+      },
+      "totalNanoUsd": 330492000,
+      "totalUsd": "0.330492"
+    },
+    {
+      "id": "accounting call 033",
+      "responseHash": "6d436c4da5810893",
+      "agent": "accounting",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:35:57.578Z",
+      "tokens": {
+        "input_tokens": 217639,
+        "cached_input_tokens": 212224,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 147,
+        "reasoning_output_tokens": 33,
+        "total_tokens": 217786
+      },
+      "billableQuantities": {
+        "freshInput": 5415,
+        "cachedInput": 212224,
+        "output": 147
+      },
+      "componentNanoUsd": {
+        "freshInput": 54150000,
+        "cachedInput": 212224000,
+        "output": 7350000
+      },
+      "totalNanoUsd": 273724000,
+      "totalUsd": "0.273724"
+    },
+    {
+      "id": "profiles call 001",
+      "responseHash": "c2a2494de904b2e4",
+      "agent": "profiles",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:36:14.670Z",
+      "tokens": {
+        "input_tokens": 37820,
+        "cached_input_tokens": 36608,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 69,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 37889
+      },
+      "billableQuantities": {
+        "freshInput": 1212,
+        "cachedInput": 36608,
+        "output": 69
+      },
+      "componentNanoUsd": {
+        "freshInput": 12120000,
+        "cachedInput": 36608000,
+        "output": 3450000
+      },
+      "totalNanoUsd": 52178000,
+      "totalUsd": "0.052178"
+    },
+    {
+      "id": "profiles call 002",
+      "responseHash": "755e7e2c90f8720d",
+      "agent": "profiles",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:36:21.838Z",
+      "tokens": {
+        "input_tokens": 38285,
+        "cached_input_tokens": 37632,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 100,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 38385
+      },
+      "billableQuantities": {
+        "freshInput": 653,
+        "cachedInput": 37632,
+        "output": 100
+      },
+      "componentNanoUsd": {
+        "freshInput": 6530000,
+        "cachedInput": 37632000,
+        "output": 5000000
+      },
+      "totalNanoUsd": 49162000,
+      "totalUsd": "0.049162"
+    },
+    {
+      "id": "profiles call 003",
+      "responseHash": "b4708c34a9e778af",
+      "agent": "profiles",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:36:31.527Z",
+      "tokens": {
+        "input_tokens": 47893,
+        "cached_input_tokens": 38144,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 182,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 48075
+      },
+      "billableQuantities": {
+        "freshInput": 9749,
+        "cachedInput": 38144,
+        "output": 182
+      },
+      "componentNanoUsd": {
+        "freshInput": 97490000,
+        "cachedInput": 38144000,
+        "output": 9100000
+      },
+      "totalNanoUsd": 144734000,
+      "totalUsd": "0.144734"
+    },
+    {
+      "id": "profiles call 004",
+      "responseHash": "ea382ae47b585f00",
+      "agent": "profiles",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:36:48.489Z",
+      "tokens": {
+        "input_tokens": 56292,
+        "cached_input_tokens": 47744,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 428,
+        "reasoning_output_tokens": 68,
+        "total_tokens": 56720
+      },
+      "billableQuantities": {
+        "freshInput": 8548,
+        "cachedInput": 47744,
+        "output": 428
+      },
+      "componentNanoUsd": {
+        "freshInput": 85480000,
+        "cachedInput": 47744000,
+        "output": 21400000
+      },
+      "totalNanoUsd": 154624000,
+      "totalUsd": "0.154624"
+    },
+    {
+      "id": "profiles call 005",
+      "responseHash": "f214da8663da31b1",
+      "agent": "profiles",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:37:01.176Z",
+      "tokens": {
+        "input_tokens": 57026,
+        "cached_input_tokens": 56064,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 253,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 57279
+      },
+      "billableQuantities": {
+        "freshInput": 962,
+        "cachedInput": 56064,
+        "output": 253
+      },
+      "componentNanoUsd": {
+        "freshInput": 9620000,
+        "cachedInput": 56064000,
+        "output": 12650000
+      },
+      "totalNanoUsd": 78334000,
+      "totalUsd": "0.078334"
+    },
+    {
+      "id": "profiles call 006",
+      "responseHash": "01ecd14727fd3f15",
+      "agent": "profiles",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:37:20.191Z",
+      "tokens": {
+        "input_tokens": 66671,
+        "cached_input_tokens": 56832,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 430,
+        "reasoning_output_tokens": 15,
+        "total_tokens": 67101
+      },
+      "billableQuantities": {
+        "freshInput": 9839,
+        "cachedInput": 56832,
+        "output": 430
+      },
+      "componentNanoUsd": {
+        "freshInput": 98390000,
+        "cachedInput": 56832000,
+        "output": 21500000
+      },
+      "totalNanoUsd": 176722000,
+      "totalUsd": "0.176722"
+    },
+    {
+      "id": "profiles call 007",
+      "responseHash": "8bcc5c6e54fc8582",
+      "agent": "profiles",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:37:31.039Z",
+      "tokens": {
+        "input_tokens": 67158,
+        "cached_input_tokens": 66432,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 121,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 67279
+      },
+      "billableQuantities": {
+        "freshInput": 726,
+        "cachedInput": 66432,
+        "output": 121
+      },
+      "componentNanoUsd": {
+        "freshInput": 7260000,
+        "cachedInput": 66432000,
+        "output": 6050000
+      },
+      "totalNanoUsd": 79742000,
+      "totalUsd": "0.079742"
+    },
+    {
+      "id": "profiles call 008",
+      "responseHash": "c8cf8a6c54ee687b",
+      "agent": "profiles",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:37:38.870Z",
+      "tokens": {
+        "input_tokens": 75422,
+        "cached_input_tokens": 66944,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 113,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 75535
+      },
+      "billableQuantities": {
+        "freshInput": 8478,
+        "cachedInput": 66944,
+        "output": 113
+      },
+      "componentNanoUsd": {
+        "freshInput": 84780000,
+        "cachedInput": 66944000,
+        "output": 5650000
+      },
+      "totalNanoUsd": 157374000,
+      "totalUsd": "0.157374"
+    },
+    {
+      "id": "profiles call 009",
+      "responseHash": "ef0f7c59255e8880",
+      "agent": "profiles",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:37:48.540Z",
+      "tokens": {
+        "input_tokens": 84531,
+        "cached_input_tokens": 75264,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 133,
+        "reasoning_output_tokens": 14,
+        "total_tokens": 84664
+      },
+      "billableQuantities": {
+        "freshInput": 9267,
+        "cachedInput": 75264,
+        "output": 133
+      },
+      "componentNanoUsd": {
+        "freshInput": 92670000,
+        "cachedInput": 75264000,
+        "output": 6650000
+      },
+      "totalNanoUsd": 174584000,
+      "totalUsd": "0.174584"
+    },
+    {
+      "id": "profiles call 010",
+      "responseHash": "d3cc0a4b3beac4c8",
+      "agent": "profiles",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:37:56.905Z",
+      "tokens": {
+        "input_tokens": 84675,
+        "cached_input_tokens": 84352,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 122,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 84797
+      },
+      "billableQuantities": {
+        "freshInput": 323,
+        "cachedInput": 84352,
+        "output": 122
+      },
+      "componentNanoUsd": {
+        "freshInput": 3230000,
+        "cachedInput": 84352000,
+        "output": 6100000
+      },
+      "totalNanoUsd": 93682000,
+      "totalUsd": "0.093682"
+    },
+    {
+      "id": "profiles call 011",
+      "responseHash": "f1e5a7134c923843",
+      "agent": "profiles",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:38:05.427Z",
+      "tokens": {
+        "input_tokens": 87401,
+        "cached_input_tokens": 84480,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 155,
+        "reasoning_output_tokens": 45,
+        "total_tokens": 87556
+      },
+      "billableQuantities": {
+        "freshInput": 2921,
+        "cachedInput": 84480,
+        "output": 155
+      },
+      "componentNanoUsd": {
+        "freshInput": 29210000,
+        "cachedInput": 84480000,
+        "output": 7750000
+      },
+      "totalNanoUsd": 121440000,
+      "totalUsd": "0.12144"
+    },
+    {
+      "id": "profiles call 012",
+      "responseHash": "f4755e0bbb08de28",
+      "agent": "profiles",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:38:12.242Z",
+      "tokens": {
+        "input_tokens": 90884,
+        "cached_input_tokens": 87168,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 102,
+        "reasoning_output_tokens": 37,
+        "total_tokens": 90986
+      },
+      "billableQuantities": {
+        "freshInput": 3716,
+        "cachedInput": 87168,
+        "output": 102
+      },
+      "componentNanoUsd": {
+        "freshInput": 37160000,
+        "cachedInput": 87168000,
+        "output": 5100000
+      },
+      "totalNanoUsd": 129428000,
+      "totalUsd": "0.129428"
+    },
+    {
+      "id": "profiles call 013",
+      "responseHash": "6bf76188be8498e2",
+      "agent": "profiles",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:40:30.027Z",
+      "tokens": {
+        "input_tokens": 103047,
+        "cached_input_tokens": 90752,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3301,
+        "reasoning_output_tokens": 73,
+        "total_tokens": 106348
+      },
+      "billableQuantities": {
+        "freshInput": 12295,
+        "cachedInput": 90752,
+        "output": 3301
+      },
+      "componentNanoUsd": {
+        "freshInput": 122950000,
+        "cachedInput": 90752000,
+        "output": 165050000
+      },
+      "totalNanoUsd": 378752000,
+      "totalUsd": "0.378752"
+    },
+    {
+      "id": "profiles call 014",
+      "responseHash": "358fdd207e986330",
+      "agent": "profiles",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:40:46.806Z",
+      "tokens": {
+        "input_tokens": 106489,
+        "cached_input_tokens": 106240,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 98,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 106587
+      },
+      "billableQuantities": {
+        "freshInput": 249,
+        "cachedInput": 106240,
+        "output": 98
+      },
+      "componentNanoUsd": {
+        "freshInput": 2490000,
+        "cachedInput": 106240000,
+        "output": 4900000
+      },
+      "totalNanoUsd": 113630000,
+      "totalUsd": "0.11363"
+    },
+    {
+      "id": "profiles call 015",
+      "responseHash": "8b1b2da174ba5caa",
+      "agent": "profiles",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:40:55.659Z",
+      "tokens": {
+        "input_tokens": 106744,
+        "cached_input_tokens": 106368,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 146,
+        "reasoning_output_tokens": 28,
+        "total_tokens": 106890
+      },
+      "billableQuantities": {
+        "freshInput": 376,
+        "cachedInput": 106368,
+        "output": 146
+      },
+      "componentNanoUsd": {
+        "freshInput": 3760000,
+        "cachedInput": 106368000,
+        "output": 7300000
+      },
+      "totalNanoUsd": 117428000,
+      "totalUsd": "0.117428"
+    },
+    {
+      "id": "profiles call 016",
+      "responseHash": "1e1322a791b0356d",
+      "agent": "profiles",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:41:04.843Z",
+      "tokens": {
+        "input_tokens": 112338,
+        "cached_input_tokens": 106624,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 148,
+        "reasoning_output_tokens": 93,
+        "total_tokens": 112486
+      },
+      "billableQuantities": {
+        "freshInput": 5714,
+        "cachedInput": 106624,
+        "output": 148
+      },
+      "componentNanoUsd": {
+        "freshInput": 57140000,
+        "cachedInput": 106624000,
+        "output": 7400000
+      },
+      "totalNanoUsd": 171164000,
+      "totalUsd": "0.171164"
+    },
+    {
+      "id": "profiles call 017",
+      "responseHash": "620c4195219d6139",
+      "agent": "profiles",
+      "turn": "turn 06",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T15:41:20.961Z",
+      "tokens": {
+        "input_tokens": 112566,
+        "cached_input_tokens": 112128,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 263,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 112829
+      },
+      "billableQuantities": {
+        "freshInput": 438,
+        "cachedInput": 112128,
+        "output": 263
+      },
+      "componentNanoUsd": {
+        "freshInput": 4380000,
+        "cachedInput": 112128000,
+        "output": 13150000
+      },
+      "totalNanoUsd": 129658000,
+      "totalUsd": "0.129658"
+    },
+    {
+      "id": "profiles call 018",
+      "responseHash": "00bced3cc7376bcd",
+      "agent": "profiles",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:33:49.383Z",
+      "tokens": {
+        "input_tokens": 113017,
+        "cached_input_tokens": 36608,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 103,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 113120
+      },
+      "billableQuantities": {
+        "freshInput": 76409,
+        "cachedInput": 36608,
+        "output": 103
+      },
+      "componentNanoUsd": {
+        "freshInput": 764090000,
+        "cachedInput": 36608000,
+        "output": 5150000
+      },
+      "totalNanoUsd": 805848000,
+      "totalUsd": "0.805848"
+    },
+    {
+      "id": "profiles call 019",
+      "responseHash": "d879d052551f254d",
+      "agent": "profiles",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:34:10.712Z",
+      "tokens": {
+        "input_tokens": 118043,
+        "cached_input_tokens": 112896,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 434,
+        "reasoning_output_tokens": 19,
+        "total_tokens": 118477
+      },
+      "billableQuantities": {
+        "freshInput": 5147,
+        "cachedInput": 112896,
+        "output": 434
+      },
+      "componentNanoUsd": {
+        "freshInput": 51470000,
+        "cachedInput": 112896000,
+        "output": 21700000
+      },
+      "totalNanoUsd": 186066000,
+      "totalUsd": "0.186066"
+    },
+    {
+      "id": "profiles call 020",
+      "responseHash": "0a1171c126877646",
+      "agent": "profiles",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:34:23.091Z",
+      "tokens": {
+        "input_tokens": 118533,
+        "cached_input_tokens": 117888,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 74,
+        "reasoning_output_tokens": 20,
+        "total_tokens": 118607
+      },
+      "billableQuantities": {
+        "freshInput": 645,
+        "cachedInput": 117888,
+        "output": 74
+      },
+      "componentNanoUsd": {
+        "freshInput": 6450000,
+        "cachedInput": 117888000,
+        "output": 3700000
+      },
+      "totalNanoUsd": 128038000,
+      "totalUsd": "0.128038"
+    },
+    {
+      "id": "profiles call 021",
+      "responseHash": "e6e085cb4e970f48",
+      "agent": "profiles",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:34:34.916Z",
+      "tokens": {
+        "input_tokens": 119165,
+        "cached_input_tokens": 118400,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 206,
+        "reasoning_output_tokens": 12,
+        "total_tokens": 119371
+      },
+      "billableQuantities": {
+        "freshInput": 765,
+        "cachedInput": 118400,
+        "output": 206
+      },
+      "componentNanoUsd": {
+        "freshInput": 7650000,
+        "cachedInput": 118400000,
+        "output": 10300000
+      },
+      "totalNanoUsd": 136350000,
+      "totalUsd": "0.13635"
+    },
+    {
+      "id": "profiles call 022",
+      "responseHash": "f154879eac2ac8f1",
+      "agent": "profiles",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:34:51.376Z",
+      "tokens": {
+        "input_tokens": 121298,
+        "cached_input_tokens": 119040,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 376,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 121674
+      },
+      "billableQuantities": {
+        "freshInput": 2258,
+        "cachedInput": 119040,
+        "output": 376
+      },
+      "componentNanoUsd": {
+        "freshInput": 22580000,
+        "cachedInput": 119040000,
+        "output": 18800000
+      },
+      "totalNanoUsd": 160420000,
+      "totalUsd": "0.16042"
+    },
+    {
+      "id": "profiles call 023",
+      "responseHash": "375bb1b134a24890",
+      "agent": "profiles",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:35:02.191Z",
+      "tokens": {
+        "input_tokens": 121732,
+        "cached_input_tokens": 121088,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 94,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 121826
+      },
+      "billableQuantities": {
+        "freshInput": 644,
+        "cachedInput": 121088,
+        "output": 94
+      },
+      "componentNanoUsd": {
+        "freshInput": 6440000,
+        "cachedInput": 121088000,
+        "output": 4700000
+      },
+      "totalNanoUsd": 132228000,
+      "totalUsd": "0.132228"
+    },
+    {
+      "id": "profiles call 024",
+      "responseHash": "6048dec409b17920",
+      "agent": "profiles",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:35:13.656Z",
+      "tokens": {
+        "input_tokens": 125363,
+        "cached_input_tokens": 121600,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 158,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 125521
+      },
+      "billableQuantities": {
+        "freshInput": 3763,
+        "cachedInput": 121600,
+        "output": 158
+      },
+      "componentNanoUsd": {
+        "freshInput": 37630000,
+        "cachedInput": 121600000,
+        "output": 7900000
+      },
+      "totalNanoUsd": 167130000,
+      "totalUsd": "0.16713"
+    },
+    {
+      "id": "profiles call 025",
+      "responseHash": "1491fb309cf2b28c",
+      "agent": "profiles",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:35:23.409Z",
+      "tokens": {
+        "input_tokens": 129972,
+        "cached_input_tokens": 125184,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 147,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 130119
+      },
+      "billableQuantities": {
+        "freshInput": 4788,
+        "cachedInput": 125184,
+        "output": 147
+      },
+      "componentNanoUsd": {
+        "freshInput": 47880000,
+        "cachedInput": 125184000,
+        "output": 7350000
+      },
+      "totalNanoUsd": 180414000,
+      "totalUsd": "0.180414"
+    },
+    {
+      "id": "profiles call 026",
+      "responseHash": "4a028697eb605434",
+      "agent": "profiles",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:35:35.127Z",
+      "tokens": {
+        "input_tokens": 132869,
+        "cached_input_tokens": 129792,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 230,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 133099
+      },
+      "billableQuantities": {
+        "freshInput": 3077,
+        "cachedInput": 129792,
+        "output": 230
+      },
+      "componentNanoUsd": {
+        "freshInput": 30770000,
+        "cachedInput": 129792000,
+        "output": 11500000
+      },
+      "totalNanoUsd": 172062000,
+      "totalUsd": "0.172062"
+    },
+    {
+      "id": "profiles call 027",
+      "responseHash": "0a5a4382a78651f9",
+      "agent": "profiles",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:35:47.564Z",
+      "tokens": {
+        "input_tokens": 138241,
+        "cached_input_tokens": 132736,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 155,
+        "reasoning_output_tokens": 22,
+        "total_tokens": 138396
+      },
+      "billableQuantities": {
+        "freshInput": 5505,
+        "cachedInput": 132736,
+        "output": 155
+      },
+      "componentNanoUsd": {
+        "freshInput": 55050000,
+        "cachedInput": 132736000,
+        "output": 7750000
+      },
+      "totalNanoUsd": 195536000,
+      "totalUsd": "0.195536"
+    },
+    {
+      "id": "profiles call 028",
+      "responseHash": "109871ecf5ee4154",
+      "agent": "profiles",
+      "turn": "turn 13",
+      "modelSetting": "gpt-6-astra",
+      "modelVerifiedInResponse": false,
+      "effortSetting": "high",
+      "time": "2026-09-06T16:35:58.925Z",
+      "tokens": {
+        "input_tokens": 138407,
+        "cached_input_tokens": 138112,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 163,
+        "reasoning_output_tokens": 0,
+        "total_tokens": 138570
+      },
+      "billableQuantities": {
+        "freshInput": 295,
+        "cachedInput": 138112,
+        "output": 163
+      },
+      "componentNanoUsd": {
+        "freshInput": 2950000,
+        "cachedInput": 138112000,
+        "output": 8150000
+      },
+      "totalNanoUsd": 149212000,
+      "totalUsd": "0.149212"
+    }
+  ],
+  "verification": {
+    "uniqueObservationIds": true,
+    "uniqueResponseHashes": true,
+    "inputAndOutputConserveTotal": true,
+    "cachedAndReasoningRemainSubsets": true,
+    "sourceThreadTotalsMatch": true,
+    "sourceOverallTotalsMatch": true,
+    "observationCostsConserveAgentTotals": true,
+    "agentTotalsConserveOverall": true,
+    "componentTotalsConserveOverall": true,
+    "usageHashUnchanged": true
+  }
+}

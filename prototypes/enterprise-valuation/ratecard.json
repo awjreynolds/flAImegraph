@@ -1,0 +1,40 @@
+{
+  "scenarioId": "public-enterprise-astra-codex-2026-09-06-standard",
+  "label": "SELECTED PUBLIC ENTERPRISE RATE SCENARIO — model tokens only",
+  "basis": "Analytical repricing; not an actual bill, subscription charge or negotiated contract",
+  "retrievedDate": "2026-09-06",
+  "validFrom": null,
+  "validUntil": null,
+  "historicalApplicabilityEstablished": false,
+  "source": {
+    "title": "ChatGPT Rate Card (Enterprise token-based pricing)",
+    "url": "https://help.openai.com/en/articles/20001415-chatgpt-rate-card-enterprise-token-based-pricing",
+    "section": "ChatGPT Work and Codex models; Additional fees and multipliers; GPT-6 Astra — Codex long-context exception",
+    "paraphrasedFacts": "The public card covers new Enterprise agreements specifying USD usage billing; agreement terms determine applicable pricing. Astra Codex lists $10 fresh input, $1 cached input and $50 output per million tokens. Available reasoning levels share rates. Astra Codex has no additional long-context multiplier and Codex has no cache-write charge. Fast mode and regional processing can add multipliers; feature fees may apply."
+  },
+  "model": "gpt-6-astra",
+  "surface": "Codex",
+  "currency": "USD",
+  "usdPerMillionTokens": { "freshInput": "10", "cachedInput": "1", "output": "50" },
+  "nanoUsdPerToken": { "freshInput": 10000, "cachedInput": 1000, "output": 50000 },
+  "multipliersApplied": { "speed": 1, "regionalProcessing": 1, "longContext": 1, "reasoningEffort": 1 },
+  "assumptions": [
+    "All recorded gpt-6-astra settings identify the executing model; settings are from turn_context, not response-verified model identities.",
+    "Standard speed; no regional-processing uplift. These are selected scenario assumptions, not observed billing settings.",
+    "Use the rate card retrieved on 2026-09-06 as a comparison scenario. Effective start/end dates and historical applicability are unavailable.",
+    "Input includes cached input. Reasoning is already included in output. Cache-write tokens are zero in this snapshot and no additional fee is applied."
+  ],
+  "exclusions": [
+    "Separate tool/feature fees are excluded and unknown; not assumed zero.",
+    "Hidden, unobserved or later usage is excluded and unknown. This is a frozen partial run.",
+    "No contract discounts, credits, commitments, taxes, subscription allocation or invoice reconciliation."
+  ],
+  "sourceUsageSha256": "bfc3ac2e38eaaf7308a0dea1e8ec4f57fb0590aee4d3d781676076c6b0f1edef",
+  "renderer": {
+    "name": "Brendan Gregg FlameGraph",
+    "commit": "41fee1f99f9276008b7cd112fca19dc3ea84ac32",
+    "url": "https://raw.githubusercontent.com/brendangregg/FlameGraph/41fee1f99f9276008b7cd112fca19dc3ea84ac32/flamegraph.pl",
+    "sha256": "088f82e6848a4f12a56e1e8e8170ee6761fccf12e5615cd64630f6b087c99ea7",
+    "unmodified": true
+  }
+}

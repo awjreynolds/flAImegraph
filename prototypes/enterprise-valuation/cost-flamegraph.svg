@@ -1,0 +1,1243 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" width="1800" height="241" onload="init(evt)" viewBox="0 0 1800 241" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!-- Flame graph stack visualization. See https://github.com/brendangregg/FlameGraph for latest version, and http://www.brendangregg.com/flamegraphs.html for examples. -->
+<!-- NOTES: Selected rate scenario public-enterprise-astra-codex-2026-09-06-standard. Model from settings, not response verified. Assume standard speed and no regional uplift. Usage hash bfc3ac2e38eaaf7308a0dea1e8ec4f57fb0590aee4d3d781676076c6b0f1edef. Rate source https://help.openai.com/en/articles/20001415-chatgpt-rate-card-enterprise-token-based-pricing. Unmodified renderer https://raw.githubusercontent.com/brendangregg/FlameGraph/41fee1f99f9276008b7cd112fca19dc3ea84ac32/flamegraph.pl. -->
+<defs>
+	<linearGradient id="background" y1="0" y2="1" x1="0" x2="0" >
+		<stop stop-color="#f8f8f8" offset="5%" />
+		<stop stop-color="#e8e8e8" offset="95%" />
+	</linearGradient>
+</defs>
+<style type="text/css">
+	text { font-family:Verdana; font-size:13px; fill:rgb(0,0,0); }
+	#search, #ignorecase { opacity:0.1; cursor:pointer; }
+	#search:hover, #search.show, #ignorecase:hover, #ignorecase.show { opacity:1; }
+	#subtitle { text-anchor:middle; font-color:rgb(160,160,160); }
+	#title { text-anchor:middle; font-size:18px}
+	#unzoom { cursor:pointer; }
+	#frames > *:hover { stroke:black; stroke-width:0.5; cursor:pointer; }
+	.hide { display:none; }
+	.parent { opacity:0.5; }
+</style>
+<script type="text/ecmascript">
+<![CDATA[
+	"use strict";
+	var details, searchbtn, unzoombtn, matchedtxt, svg, searching, currentSearchTerm, ignorecase, ignorecaseBtn;
+	function init(evt) {
+		details = document.getElementById("details").firstChild;
+		searchbtn = document.getElementById("search");
+		ignorecaseBtn = document.getElementById("ignorecase");
+		unzoombtn = document.getElementById("unzoom");
+		matchedtxt = document.getElementById("matched");
+		svg = document.getElementsByTagName("svg")[0];
+		searching = 0;
+		currentSearchTerm = null;
+
+		// use GET parameters to restore a flamegraphs state.
+		var params = get_params();
+		if (params.x && params.y)
+			zoom(find_group(document.querySelector('[x="' + params.x + '"][y="' + params.y + '"]')));
+                if (params.s) search(params.s);
+	}
+
+	// event listeners
+	window.addEventListener("click", function(e) {
+		var target = find_group(e.target);
+		if (target) {
+			if (target.nodeName == "a") {
+				if (e.ctrlKey === false) return;
+				e.preventDefault();
+			}
+			if (target.classList.contains("parent")) unzoom(true);
+			zoom(target);
+			if (!document.querySelector('.parent')) {
+				// we have basically done a clearzoom so clear the url
+				var params = get_params();
+				if (params.x) delete params.x;
+				if (params.y) delete params.y;
+				history.replaceState(null, null, parse_params(params));
+				unzoombtn.classList.add("hide");
+				return;
+			}
+
+			// set parameters for zoom state
+			var el = target.querySelector("rect");
+			if (el && el.attributes && el.attributes.y && el.attributes._orig_x) {
+				var params = get_params()
+				params.x = el.attributes._orig_x.value;
+				params.y = el.attributes.y.value;
+				history.replaceState(null, null, parse_params(params));
+			}
+		}
+		else if (e.target.id == "unzoom") clearzoom();
+		else if (e.target.id == "search") search_prompt();
+		else if (e.target.id == "ignorecase") toggle_ignorecase();
+	}, false)
+
+	// mouse-over for info
+	// show
+	window.addEventListener("mouseover", function(e) {
+		var target = find_group(e.target);
+		if (target) details.nodeValue = "Attribution: " + g_to_text(target);
+	}, false)
+
+	// clear
+	window.addEventListener("mouseout", function(e) {
+		var target = find_group(e.target);
+		if (target) details.nodeValue = ' ';
+	}, false)
+
+	// ctrl-F for search
+	// ctrl-I to toggle case-sensitive search
+	window.addEventListener("keydown",function (e) {
+		if (e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70)) {
+			e.preventDefault();
+			search_prompt();
+		}
+		else if (e.ctrlKey && e.keyCode === 73) {
+			e.preventDefault();
+			toggle_ignorecase();
+		}
+	}, false)
+
+	// functions
+	function get_params() {
+		var params = {};
+		var paramsarr = window.location.search.substr(1).split('&');
+		for (var i = 0; i < paramsarr.length; ++i) {
+			var tmp = paramsarr[i].split("=");
+			if (!tmp[0] || !tmp[1]) continue;
+			params[tmp[0]]  = decodeURIComponent(tmp[1]);
+		}
+		return params;
+	}
+	function parse_params(params) {
+		var uri = "?";
+		for (var key in params) {
+			uri += key + '=' + encodeURIComponent(params[key]) + '&';
+		}
+		if (uri.slice(-1) == "&")
+			uri = uri.substring(0, uri.length - 1);
+		if (uri == '?')
+			uri = window.location.href.split('?')[0];
+		return uri;
+	}
+	function find_child(node, selector) {
+		var children = node.querySelectorAll(selector);
+		if (children.length) return children[0];
+	}
+	function find_group(node) {
+		var parent = node.parentElement;
+		if (!parent) return;
+		if (parent.id == "frames") return node;
+		return find_group(parent);
+	}
+	function orig_save(e, attr, val) {
+		if (e.attributes["_orig_" + attr] != undefined) return;
+		if (e.attributes[attr] == undefined) return;
+		if (val == undefined) val = e.attributes[attr].value;
+		e.setAttribute("_orig_" + attr, val);
+	}
+	function orig_load(e, attr) {
+		if (e.attributes["_orig_"+attr] == undefined) return;
+		e.attributes[attr].value = e.attributes["_orig_" + attr].value;
+		e.removeAttribute("_orig_"+attr);
+	}
+	function g_to_text(e) {
+		var text = find_child(e, "title").firstChild.nodeValue;
+		return (text)
+	}
+	function g_to_func(e) {
+		var func = g_to_text(e);
+		// if there's any manipulation we want to do to the function
+		// name before it's searched, do it here before returning.
+		return (func);
+	}
+	function update_text(e) {
+		var r = find_child(e, "rect");
+		var t = find_child(e, "text");
+		var w = parseFloat(r.attributes.width.value) -3;
+		var txt = find_child(e, "title").textContent.replace(/\([^(]*\)$/,"");
+		t.attributes.x.value = parseFloat(r.attributes.x.value) + 3;
+
+		// Smaller than this size won't fit anything
+		if (w < 2 * 13 * 0.59) {
+			t.textContent = "";
+			return;
+		}
+
+		t.textContent = txt;
+		var sl = t.getSubStringLength(0, txt.length);
+		// check if only whitespace or if we can fit the entire string into width w
+		if (/^ *$/.test(txt) || sl < w)
+			return;
+
+		// this isn't perfect, but gives a good starting point
+		// and avoids calling getSubStringLength too often
+		var start = Math.floor((w/sl) * txt.length);
+		for (var x = start; x > 0; x = x-2) {
+			if (t.getSubStringLength(0, x + 2) <= w) {
+				t.textContent = txt.substring(0, x) + "..";
+				return;
+			}
+		}
+		t.textContent = "";
+	}
+
+	// zoom
+	function zoom_reset(e) {
+		if (e.attributes != undefined) {
+			orig_load(e, "x");
+			orig_load(e, "width");
+		}
+		if (e.childNodes == undefined) return;
+		for (var i = 0, c = e.childNodes; i < c.length; i++) {
+			zoom_reset(c[i]);
+		}
+	}
+	function zoom_child(e, x, ratio) {
+		if (e.attributes != undefined) {
+			if (e.attributes.x != undefined) {
+				orig_save(e, "x");
+				e.attributes.x.value = (parseFloat(e.attributes.x.value) - x - 10) * ratio + 10;
+				if (e.tagName == "text")
+					e.attributes.x.value = find_child(e.parentNode, "rect[x]").attributes.x.value + 3;
+			}
+			if (e.attributes.width != undefined) {
+				orig_save(e, "width");
+				e.attributes.width.value = parseFloat(e.attributes.width.value) * ratio;
+			}
+		}
+
+		if (e.childNodes == undefined) return;
+		for (var i = 0, c = e.childNodes; i < c.length; i++) {
+			zoom_child(c[i], x - 10, ratio);
+		}
+	}
+	function zoom_parent(e) {
+		if (e.attributes) {
+			if (e.attributes.x != undefined) {
+				orig_save(e, "x");
+				e.attributes.x.value = 10;
+			}
+			if (e.attributes.width != undefined) {
+				orig_save(e, "width");
+				e.attributes.width.value = parseInt(svg.width.baseVal.value) - (10 * 2);
+			}
+		}
+		if (e.childNodes == undefined) return;
+		for (var i = 0, c = e.childNodes; i < c.length; i++) {
+			zoom_parent(c[i]);
+		}
+	}
+	function zoom(node) {
+		var attr = find_child(node, "rect").attributes;
+		var width = parseFloat(attr.width.value);
+		var xmin = parseFloat(attr.x.value);
+		var xmax = parseFloat(xmin + width);
+		var ymin = parseFloat(attr.y.value);
+		var ratio = (svg.width.baseVal.value - 2 * 10) / width;
+
+		// XXX: Workaround for JavaScript float issues (fix me)
+		var fudge = 0.0001;
+
+		unzoombtn.classList.remove("hide");
+
+		var el = document.getElementById("frames").children;
+		for (var i = 0; i < el.length; i++) {
+			var e = el[i];
+			var a = find_child(e, "rect").attributes;
+			var ex = parseFloat(a.x.value);
+			var ew = parseFloat(a.width.value);
+			var upstack;
+			// Is it an ancestor
+			if (0 == 0) {
+				upstack = parseFloat(a.y.value) > ymin;
+			} else {
+				upstack = parseFloat(a.y.value) < ymin;
+			}
+			if (upstack) {
+				// Direct ancestor
+				if (ex <= xmin && (ex+ew+fudge) >= xmax) {
+					e.classList.add("parent");
+					zoom_parent(e);
+					update_text(e);
+				}
+				// not in current path
+				else
+					e.classList.add("hide");
+			}
+			// Children maybe
+			else {
+				// no common path
+				if (ex < xmin || ex + fudge >= xmax) {
+					e.classList.add("hide");
+				}
+				else {
+					zoom_child(e, xmin, ratio);
+					update_text(e);
+				}
+			}
+		}
+		search();
+	}
+	function unzoom(dont_update_text) {
+		unzoombtn.classList.add("hide");
+		var el = document.getElementById("frames").children;
+		for(var i = 0; i < el.length; i++) {
+			el[i].classList.remove("parent");
+			el[i].classList.remove("hide");
+			zoom_reset(el[i]);
+			if(!dont_update_text) update_text(el[i]);
+		}
+		search();
+	}
+	function clearzoom() {
+		unzoom();
+
+		// remove zoom state
+		var params = get_params();
+		if (params.x) delete params.x;
+		if (params.y) delete params.y;
+		history.replaceState(null, null, parse_params(params));
+	}
+
+	// search
+	function toggle_ignorecase() {
+		ignorecase = !ignorecase;
+		if (ignorecase) {
+			ignorecaseBtn.classList.add("show");
+		} else {
+			ignorecaseBtn.classList.remove("show");
+		}
+		reset_search();
+		search();
+	}
+	function reset_search() {
+		var el = document.querySelectorAll("#frames rect");
+		for (var i = 0; i < el.length; i++) {
+			orig_load(el[i], "fill")
+		}
+		var params = get_params();
+		delete params.s;
+		history.replaceState(null, null, parse_params(params));
+	}
+	function search_prompt() {
+		if (!searching) {
+			var term = prompt("Enter a search term (regexp " +
+			    "allowed, eg: ^ext4_)"
+			    + (ignorecase ? ", ignoring case" : "")
+			    + "\nPress Ctrl-i to toggle case sensitivity", "");
+			if (term != null) search(term);
+		} else {
+			reset_search();
+			searching = 0;
+			currentSearchTerm = null;
+			searchbtn.classList.remove("show");
+			searchbtn.firstChild.nodeValue = "Search"
+			matchedtxt.classList.add("hide");
+			matchedtxt.firstChild.nodeValue = ""
+		}
+	}
+	function search(term) {
+		if (term) currentSearchTerm = term;
+		if (currentSearchTerm === null) return;
+
+		var re = new RegExp(currentSearchTerm, ignorecase ? 'i' : '');
+		var el = document.getElementById("frames").children;
+		var matches = new Object();
+		var maxwidth = 0;
+		for (var i = 0; i < el.length; i++) {
+			var e = el[i];
+			var func = g_to_func(e);
+			var rect = find_child(e, "rect");
+			if (func == null || rect == null)
+				continue;
+
+			// Save max width. Only works as we have a root frame
+			var w = parseFloat(rect.attributes.width.value);
+			if (w > maxwidth)
+				maxwidth = w;
+
+			if (func.match(re)) {
+				// highlight
+				var x = parseFloat(rect.attributes.x.value);
+				orig_save(rect, "fill");
+				rect.attributes.fill.value = "rgb(230,0,230)";
+
+				// remember matches
+				if (matches[x] == undefined) {
+					matches[x] = w;
+				} else {
+					if (w > matches[x]) {
+						// overwrite with parent
+						matches[x] = w;
+					}
+				}
+				searching = 1;
+			}
+		}
+		if (!searching)
+			return;
+		var params = get_params();
+		params.s = currentSearchTerm;
+		history.replaceState(null, null, parse_params(params));
+
+		searchbtn.classList.add("show");
+		searchbtn.firstChild.nodeValue = "Reset Search";
+
+		// calculate percent matched, excluding vertical overlap
+		var count = 0;
+		var lastx = -1;
+		var lastw = 0;
+		var keys = Array();
+		for (k in matches) {
+			if (matches.hasOwnProperty(k))
+				keys.push(k);
+		}
+		// sort the matched frames by their x location
+		// ascending, then width descending
+		keys.sort(function(a, b){
+			return a - b;
+		});
+		// Step through frames saving only the biggest bottom-up frames
+		// thanks to the sort order. This relies on the tree property
+		// where children are always smaller than their parents.
+		var fudge = 0.0001;	// JavaScript floating point
+		for (var k in keys) {
+			var x = parseFloat(keys[k]);
+			var w = matches[keys[k]];
+			if (x >= lastx + lastw - fudge) {
+				count += w;
+				lastx = x;
+				lastw = w;
+			}
+		}
+		// display matched percent
+		matchedtxt.classList.remove("hide");
+		var pct = 100 * count / maxwidth;
+		if (pct != 100) pct = pct.toFixed(1)
+		matchedtxt.firstChild.nodeValue = "Matched: " + pct + "%";
+	}
+]]>
+</script>
+<rect x="0.0" y="0" width="1800.0" height="241.0" fill="url(#background)"  />
+<text id="title" x="900.00" y="26" >Enterprise-rate scenario — model tokens only</text>
+<text id="subtitle" x="900.00" y="52" >$41.046242 USD | 177 observed calls | selected public rates, not a bill | fees and hidden usage excluded</text>
+<text id="details" x="10.00" y="223" > </text>
+<text id="unzoom" x="10.00" y="26" class="hide">Reset Zoom</text>
+<text id="search" x="1690.00" y="26" >Search</text>
+<text id="ignorecase" x="1774.00" y="26" >ic</text>
+<text id="matched" x="1690.00" y="223" > </text>
+<g id="frames">
+<g >
+<title>telemetry_call_022 (219,558,000 nanoUSD (1e-9 USD), 0.53%)</title><rect x="1721.4" y="66" width="9.6" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1724.44" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_014 (226,608,000 nanoUSD (1e-9 USD), 0.55%)</title><rect x="1587.4" y="66" width="9.8" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1590.42" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_087 (108,582,000 nanoUSD (1e-9 USD), 0.26%)</title><rect x="1293.8" y="66" width="4.7" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1296.82" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_011 (121,440,000 nanoUSD (1e-9 USD), 0.30%)</title><rect x="1351.8" y="66" width="5.3" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1354.80" y="82.5" ></text>
+</g>
+<g >
+<title>Selected_enterprise_scenario (41,046,242,000 nanoUSD (1e-9 USD), 100.00%)</title><rect x="10.0" y="150" width="1780.0" height="27.0" fill="rgb(131,131,247)" rx="2" ry="2" />
+<text  x="13.00" y="166.5" >Selected_enterprise_scenario</text>
+</g>
+<g >
+<title>profiles_call_002 (49,162,000 nanoUSD (1e-9 USD), 0.12%)</title><rect x="1303.7" y="66" width="2.1" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1306.71" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_027 (180,924,000 nanoUSD (1e-9 USD), 0.44%)</title><rect x="1769.7" y="66" width="7.9" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1772.71" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_003 (60,982,000 nanoUSD (1e-9 USD), 0.15%)</title><rect x="427.7" y="66" width="2.6" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="430.67" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_046 (285,198,000 nanoUSD (1e-9 USD), 0.69%)</title><rect x="707.1" y="66" width="12.4" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="710.13" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_034 (134,004,000 nanoUSD (1e-9 USD), 0.33%)</title><rect x="626.1" y="66" width="5.8" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="629.11" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_009 (164,988,000 nanoUSD (1e-9 USD), 0.40%)</title><rect x="1554.8" y="66" width="7.2" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1557.82" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_059 (265,088,000 nanoUSD (1e-9 USD), 0.65%)</title><rect x="897.9" y="66" width="11.5" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="900.88" y="82.5" ></text>
+</g>
+<g >
+<title>profiles (4,735,940,000 nanoUSD (1e-9 USD), 11.54%)</title><rect x="1301.4" y="122" width="205.4" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1304.44" y="138.5" >profiles</text>
+</g>
+<g >
+<title>coordinator_call_052 (269,370,000 nanoUSD (1e-9 USD), 0.66%)</title><rect x="824.9" y="66" width="11.7" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="827.95" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_009 (109,990,000 nanoUSD (1e-9 USD), 0.27%)</title><rect x="451.9" y="66" width="4.8" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="454.92" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_088 (67,212,000 nanoUSD (1e-9 USD), 0.16%)</title><rect x="1298.5" y="66" width="2.9" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1301.53" y="82.5" ></text>
+</g>
+<g >
+<title>turn_05 (437,034,000 nanoUSD (1e-9 USD), 1.06%)</title><rect x="463.3" y="94" width="18.9" height="27.0" fill="rgb(113,113,232)" rx="2" ry="2" />
+<text  x="466.27" y="110.5" ></text>
+</g>
+<g >
+<title>telemetry_call_023 (173,564,000 nanoUSD (1e-9 USD), 0.42%)</title><rect x="1731.0" y="66" width="7.5" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1733.96" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_021 (114,928,000 nanoUSD (1e-9 USD), 0.28%)</title><rect x="546.1" y="66" width="4.9" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="549.06" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_001 (355,520,000 nanoUSD (1e-9 USD), 0.87%)</title><rect x="405.1" y="66" width="15.4" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="408.08" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_019 (335,892,000 nanoUSD (1e-9 USD), 0.82%)</title><rect x="140.3" y="66" width="14.6" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="143.29" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_033 (273,724,000 nanoUSD (1e-9 USD), 0.67%)</title><rect x="393.2" y="66" width="11.9" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="396.21" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_060 (1,852,140,000 nanoUSD (1e-9 USD), 4.51%)</title><rect x="909.4" y="66" width="80.3" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="912.37" y="82.5" >coordina..</text>
+</g>
+<g >
+<title>coordinator_call_067 (276,684,000 nanoUSD (1e-9 USD), 0.67%)</title><rect x="1052.8" y="66" width="12.0" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1055.76" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_081 (53,408,000 nanoUSD (1e-9 USD), 0.13%)</title><rect x="1276.1" y="66" width="2.4" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1279.15" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_033 (186,090,000 nanoUSD (1e-9 USD), 0.45%)</title><rect x="618.0" y="66" width="8.1" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="621.04" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_070 (257,306,000 nanoUSD (1e-9 USD), 0.63%)</title><rect x="1172.5" y="66" width="11.1" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1175.46" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_082 (53,814,000 nanoUSD (1e-9 USD), 0.13%)</title><rect x="1278.5" y="66" width="2.3" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1281.46" y="82.5" ></text>
+</g>
+<g >
+<title>turn_07 (2,599,810,000 nanoUSD (1e-9 USD), 6.33%)</title><rect x="757.2" y="94" width="112.8" height="27.0" fill="rgb(113,113,232)" rx="2" ry="2" />
+<text  x="760.24" y="110.5" >turn_07</text>
+</g>
+<g >
+<title>accounting_call_012 (180,560,000 nanoUSD (1e-9 USD), 0.44%)</title><rect x="77.4" y="66" width="7.8" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="80.41" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_003 (125,426,000 nanoUSD (1e-9 USD), 0.31%)</title><rect x="14.3" y="66" width="5.4" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="17.31" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_010 (151,866,000 nanoUSD (1e-9 USD), 0.37%)</title><rect x="456.7" y="66" width="6.6" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="459.69" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_047 (177,192,000 nanoUSD (1e-9 USD), 0.43%)</title><rect x="719.5" y="66" width="7.7" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="722.50" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_023 (178,266,000 nanoUSD (1e-9 USD), 0.43%)</title><rect x="240.2" y="66" width="7.8" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="243.24" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_013 (243,306,000 nanoUSD (1e-9 USD), 0.59%)</title><rect x="85.2" y="66" width="10.6" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="88.24" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_028 (287,072,000 nanoUSD (1e-9 USD), 0.70%)</title><rect x="1777.6" y="66" width="12.4" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1780.55" y="82.5" ></text>
+</g>
+<g >
+<title>turn_11 (3,963,860,000 nanoUSD (1e-9 USD), 9.66%)</title><rect x="1000.6" y="94" width="171.9" height="27.0" fill="rgb(113,113,232)" rx="2" ry="2" />
+<text  x="1003.57" y="110.5" >turn_11</text>
+</g>
+<g >
+<title>accounting_call_014 (219,794,000 nanoUSD (1e-9 USD), 0.54%)</title><rect x="95.8" y="66" width="9.5" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="98.79" y="82.5" ></text>
+</g>
+<g >
+<title>turn_10 (2,102,892,000 nanoUSD (1e-9 USD), 5.12%)</title><rect x="909.4" y="94" width="91.2" height="27.0" fill="rgb(113,113,232)" rx="2" ry="2" />
+<text  x="912.37" y="110.5" >turn_10</text>
+</g>
+<g >
+<title>coordinator_call_071 (366,228,000 nanoUSD (1e-9 USD), 0.89%)</title><rect x="1183.6" y="66" width="15.9" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1186.62" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_019 (109,902,000 nanoUSD (1e-9 USD), 0.27%)</title><rect x="537.0" y="66" width="4.8" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="540.03" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_025 (244,942,000 nanoUSD (1e-9 USD), 0.60%)</title><rect x="1750.6" y="66" width="10.6" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1753.56" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_011 (115,390,000 nanoUSD (1e-9 USD), 0.28%)</title><rect x="1570.2" y="66" width="5.1" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1573.25" y="82.5" ></text>
+</g>
+<g >
+<title>turn_06 (3,290,998,000 nanoUSD (1e-9 USD), 8.02%)</title><rect x="1506.8" y="94" width="142.7" height="27.0" fill="rgb(113,113,232)" rx="2" ry="2" />
+<text  x="1509.82" y="110.5" >turn_06</text>
+</g>
+<g >
+<title>telemetry_call_001 (385,320,000 nanoUSD (1e-9 USD), 0.94%)</title><rect x="1506.8" y="66" width="16.7" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1509.82" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_056 (183,394,000 nanoUSD (1e-9 USD), 0.45%)</title><rect x="870.0" y="66" width="7.9" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="872.99" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_023 (132,228,000 nanoUSD (1e-9 USD), 0.32%)</title><rect x="1463.6" y="66" width="5.7" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1466.60" y="82.5" ></text>
+</g>
+<g >
+<title>turn_02 (195,950,000 nanoUSD (1e-9 USD), 0.48%)</title><rect x="427.7" y="94" width="8.5" height="27.0" fill="rgb(113,113,232)" rx="2" ry="2" />
+<text  x="430.67" y="110.5" ></text>
+</g>
+<g >
+<title>coordinator_call_058 (192,490,000 nanoUSD (1e-9 USD), 0.47%)</title><rect x="889.5" y="66" width="8.4" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="892.53" y="82.5" ></text>
+</g>
+<g >
+<title>turn_09 (457,578,000 nanoUSD (1e-9 USD), 1.11%)</title><rect x="889.5" y="94" width="19.9" height="27.0" fill="rgb(113,113,232)" rx="2" ry="2" />
+<text  x="892.53" y="110.5" ></text>
+</g>
+<g >
+<title>accounting_call_015 (151,326,000 nanoUSD (1e-9 USD), 0.37%)</title><rect x="105.3" y="66" width="6.6" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="108.32" y="82.5" ></text>
+</g>
+<g >
+<title>turn_01 (520,864,000 nanoUSD (1e-9 USD), 1.27%)</title><rect x="405.1" y="94" width="22.6" height="27.0" fill="rgb(113,113,232)" rx="2" ry="2" />
+<text  x="408.08" y="110.5" ></text>
+</g>
+<g >
+<title>coordinator_call_031 (124,608,000 nanoUSD (1e-9 USD), 0.30%)</title><rect x="605.0" y="66" width="5.4" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="608.00" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_021 (1,602,340,000 nanoUSD (1e-9 USD), 3.90%)</title><rect x="163.4" y="66" width="69.5" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="166.43" y="82.5" >account..</text>
+</g>
+<g >
+<title>accounting_call_022 (168,910,000 nanoUSD (1e-9 USD), 0.41%)</title><rect x="232.9" y="66" width="7.3" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="235.91" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_020 (98,272,000 nanoUSD (1e-9 USD), 0.24%)</title><rect x="541.8" y="66" width="4.3" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="544.80" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_078 (65,486,000 nanoUSD (1e-9 USD), 0.16%)</title><rect x="1266.6" y="66" width="2.8" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1269.59" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_018 (191,594,000 nanoUSD (1e-9 USD), 0.47%)</title><rect x="1634.0" y="66" width="8.3" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1636.98" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_049 (186,908,000 nanoUSD (1e-9 USD), 0.46%)</title><rect x="740.0" y="66" width="8.1" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="742.98" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_044 (143,498,000 nanoUSD (1e-9 USD), 0.35%)</title><rect x="693.1" y="66" width="6.2" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="696.07" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_013 (174,818,000 nanoUSD (1e-9 USD), 0.43%)</title><rect x="1579.8" y="66" width="7.6" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1582.84" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_004 (73,506,000 nanoUSD (1e-9 USD), 0.18%)</title><rect x="1532.3" y="66" width="3.2" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1535.28" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_027 (204,744,000 nanoUSD (1e-9 USD), 0.50%)</title><rect x="578.3" y="66" width="8.9" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="581.31" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_036 (157,378,000 nanoUSD (1e-9 USD), 0.38%)</title><rect x="641.8" y="66" width="6.8" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="644.77" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_045 (180,634,000 nanoUSD (1e-9 USD), 0.44%)</title><rect x="699.3" y="66" width="7.8" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="702.30" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_020 (1,416,770,000 nanoUSD (1e-9 USD), 3.45%)</title><rect x="1649.5" y="66" width="61.5" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1652.54" y="82.5" >teleme..</text>
+</g>
+<g >
+<title>telemetry_call_026 (196,530,000 nanoUSD (1e-9 USD), 0.48%)</title><rect x="1761.2" y="66" width="8.5" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1764.18" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_009 (174,584,000 nanoUSD (1e-9 USD), 0.43%)</title><rect x="1340.2" y="66" width="7.5" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1343.16" y="82.5" ></text>
+</g>
+<g >
+<title>turn_13 (3,239,020,000 nanoUSD (1e-9 USD), 7.89%)</title><rect x="1649.5" y="94" width="140.5" height="27.0" fill="rgb(113,113,232)" rx="2" ry="2" />
+<text  x="1652.54" y="110.5" >turn_13</text>
+</g>
+<g >
+<title>profiles_call_013 (378,752,000 nanoUSD (1e-9 USD), 0.92%)</title><rect x="1362.7" y="66" width="16.4" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1365.68" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_040 (140,884,000 nanoUSD (1e-9 USD), 0.34%)</title><rect x="667.2" y="66" width="6.1" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="670.17" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_020 (128,038,000 nanoUSD (1e-9 USD), 0.31%)</title><rect x="1445.2" y="66" width="5.5" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1448.18" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_009 (143,356,000 nanoUSD (1e-9 USD), 0.35%)</title><rect x="54.9" y="66" width="6.2" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="57.93" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_006 (176,722,000 nanoUSD (1e-9 USD), 0.43%)</title><rect x="1322.2" y="66" width="7.7" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1325.22" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_030 (253,992,000 nanoUSD (1e-9 USD), 0.62%)</title><rect x="358.6" y="66" width="11.0" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="361.60" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_016 (234,994,000 nanoUSD (1e-9 USD), 0.57%)</title><rect x="1607.2" y="66" width="10.2" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1610.20" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_065 (250,556,000 nanoUSD (1e-9 USD), 0.61%)</title><rect x="1030.9" y="66" width="10.8" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1033.87" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_018 (163,444,000 nanoUSD (1e-9 USD), 0.40%)</title><rect x="529.9" y="66" width="7.1" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="532.94" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_035 (227,276,000 nanoUSD (1e-9 USD), 0.55%)</title><rect x="631.9" y="66" width="9.9" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="634.92" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_005 (192,772,000 nanoUSD (1e-9 USD), 0.47%)</title><rect x="27.5" y="66" width="8.3" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="30.48" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_026 (172,062,000 nanoUSD (1e-9 USD), 0.42%)</title><rect x="1484.4" y="66" width="7.5" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1487.41" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_018 (241,504,000 nanoUSD (1e-9 USD), 0.59%)</title><rect x="129.8" y="66" width="10.5" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="132.82" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_019 (186,066,000 nanoUSD (1e-9 USD), 0.45%)</title><rect x="1437.1" y="66" width="8.1" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1440.11" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_002 (165,344,000 nanoUSD (1e-9 USD), 0.40%)</title><rect x="420.5" y="66" width="7.2" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="423.50" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_008 (102,652,000 nanoUSD (1e-9 USD), 0.25%)</title><rect x="447.5" y="66" width="4.4" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="450.46" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_011 (82,026,000 nanoUSD (1e-9 USD), 0.20%)</title><rect x="463.3" y="66" width="3.5" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="466.27" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_025 (107,966,000 nanoUSD (1e-9 USD), 0.26%)</title><rect x="565.6" y="66" width="4.7" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="568.65" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_066 (254,270,000 nanoUSD (1e-9 USD), 0.62%)</title><rect x="1041.7" y="66" width="11.1" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1044.73" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_051 (1,561,240,000 nanoUSD (1e-9 USD), 3.80%)</title><rect x="757.2" y="66" width="67.7" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="760.24" y="82.5" >coordi..</text>
+</g>
+<g >
+<title>coordinator_call_050 (211,164,000 nanoUSD (1e-9 USD), 0.51%)</title><rect x="748.1" y="66" width="9.1" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="751.09" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_012 (86,544,000 nanoUSD (1e-9 USD), 0.21%)</title><rect x="466.8" y="66" width="3.8" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="469.83" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_028 (239,268,000 nanoUSD (1e-9 USD), 0.58%)</title><rect x="335.2" y="66" width="10.3" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="338.16" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_007 (74,500,000 nanoUSD (1e-9 USD), 0.18%)</title><rect x="1548.0" y="66" width="3.2" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1551.01" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_061 (250,752,000 nanoUSD (1e-9 USD), 0.61%)</title><rect x="989.7" y="66" width="10.9" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="992.69" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_026 (184,032,000 nanoUSD (1e-9 USD), 0.45%)</title><rect x="570.3" y="66" width="8.0" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="573.33" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_022 (160,420,000 nanoUSD (1e-9 USD), 0.39%)</title><rect x="1456.6" y="66" width="7.0" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1459.65" y="82.5" ></text>
+</g>
+<g >
+<title>turn_03 (191,554,000 nanoUSD (1e-9 USD), 0.47%)</title><rect x="436.2" y="94" width="8.3" height="27.0" fill="rgb(113,113,232)" rx="2" ry="2" />
+<text  x="439.16" y="110.5" ></text>
+</g>
+<g >
+<title>turn_08 (450,672,000 nanoUSD (1e-9 USD), 1.10%)</title><rect x="870.0" y="94" width="19.5" height="27.0" fill="rgb(113,113,232)" rx="2" ry="2" />
+<text  x="872.99" y="110.5" ></text>
+</g>
+<g >
+<title>coordinator_call_077 (58,128,000 nanoUSD (1e-9 USD), 0.14%)</title><rect x="1264.1" y="66" width="2.5" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1267.07" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_048 (295,196,000 nanoUSD (1e-9 USD), 0.72%)</title><rect x="727.2" y="66" width="12.8" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="730.18" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_002 (50,602,000 nanoUSD (1e-9 USD), 0.12%)</title><rect x="1523.5" y="66" width="2.2" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1526.53" y="82.5" ></text>
+</g>
+<g >
+<title>accounting (9,110,380,000 nanoUSD (1e-9 USD), 22.20%)</title><rect x="10.0" y="122" width="395.1" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="13.00" y="138.5" >accounting</text>
+</g>
+<g >
+<title>accounting_call_020 (197,488,000 nanoUSD (1e-9 USD), 0.48%)</title><rect x="154.9" y="66" width="8.5" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="157.86" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_026 (260,868,000 nanoUSD (1e-9 USD), 0.64%)</title><rect x="314.3" y="66" width="11.3" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="317.28" y="82.5" ></text>
+</g>
+<g >
+<title>turn_13 (3,622,926,000 nanoUSD (1e-9 USD), 8.83%)</title><rect x="248.0" y="94" width="157.1" height="27.0" fill="rgb(113,113,232)" rx="2" ry="2" />
+<text  x="250.97" y="110.5" >turn_13</text>
+</g>
+<g >
+<title>coordinator_call_014 (152,880,000 nanoUSD (1e-9 USD), 0.37%)</title><rect x="475.6" y="66" width="6.6" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="478.59" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_043 (146,550,000 nanoUSD (1e-9 USD), 0.36%)</title><rect x="686.7" y="66" width="6.4" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="689.72" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_003 (151,082,000 nanoUSD (1e-9 USD), 0.37%)</title><rect x="1525.7" y="66" width="6.6" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1528.73" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_038 (146,108,000 nanoUSD (1e-9 USD), 0.36%)</title><rect x="654.7" y="66" width="6.3" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="657.69" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_031 (213,474,000 nanoUSD (1e-9 USD), 0.52%)</title><rect x="369.6" y="66" width="9.3" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="372.62" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_006 (126,076,000 nanoUSD (1e-9 USD), 0.31%)</title><rect x="439.0" y="66" width="5.5" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="442.00" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_016 (171,164,000 nanoUSD (1e-9 USD), 0.42%)</title><rect x="1389.1" y="66" width="7.4" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1392.12" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_079 (51,082,000 nanoUSD (1e-9 USD), 0.12%)</title><rect x="1269.4" y="66" width="2.2" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1272.43" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_017 (382,600,000 nanoUSD (1e-9 USD), 0.93%)</title><rect x="1617.4" y="66" width="16.6" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1620.39" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_039 (141,596,000 nanoUSD (1e-9 USD), 0.34%)</title><rect x="661.0" y="66" width="6.2" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="664.03" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_011 (261,314,000 nanoUSD (1e-9 USD), 0.64%)</title><rect x="66.1" y="66" width="11.3" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="69.07" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_002 (46,822,000 nanoUSD (1e-9 USD), 0.11%)</title><rect x="12.3" y="66" width="2.0" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="15.28" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator (20,669,904,000 nanoUSD (1e-9 USD), 50.36%)</title><rect x="405.1" y="122" width="896.3" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="408.08" y="138.5" >coordinator</text>
+</g>
+<g >
+<title>profiles_call_017 (129,658,000 nanoUSD (1e-9 USD), 0.32%)</title><rect x="1396.5" y="66" width="5.7" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1399.54" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_028 (149,212,000 nanoUSD (1e-9 USD), 0.36%)</title><rect x="1500.4" y="66" width="6.4" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1503.35" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_013 (115,584,000 nanoUSD (1e-9 USD), 0.28%)</title><rect x="470.6" y="66" width="5.0" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="473.58" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_023 (110,916,000 nanoUSD (1e-9 USD), 0.27%)</title><rect x="556.0" y="66" width="4.8" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="559.01" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_018 (805,848,000 nanoUSD (1e-9 USD), 1.96%)</title><rect x="1402.2" y="66" width="34.9" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1405.17" y="82.5" >pr..</text>
+</g>
+<g >
+<title>coordinator_call_069 (253,764,000 nanoUSD (1e-9 USD), 0.62%)</title><rect x="1161.5" y="66" width="11.0" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1164.46" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_006 (201,844,000 nanoUSD (1e-9 USD), 0.49%)</title><rect x="35.8" y="66" width="8.8" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="38.84" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_008 (82,330,000 nanoUSD (1e-9 USD), 0.20%)</title><rect x="1551.2" y="66" width="3.6" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1554.25" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_074 (239,738,000 nanoUSD (1e-9 USD), 0.58%)</title><rect x="1222.7" y="66" width="10.4" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1225.69" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_022 (114,576,000 nanoUSD (1e-9 USD), 0.28%)</title><rect x="551.0" y="66" width="5.0" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="554.04" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_085 (73,330,000 nanoUSD (1e-9 USD), 0.18%)</title><rect x="1287.0" y="66" width="3.1" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1289.95" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_012 (105,826,000 nanoUSD (1e-9 USD), 0.26%)</title><rect x="1575.3" y="66" width="4.5" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1578.25" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_024 (1,280,318,000 nanoUSD (1e-9 USD), 3.12%)</title><rect x="248.0" y="66" width="55.5" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="250.97" y="82.5" >accou..</text>
+</g>
+<g >
+<title>profiles_call_007 (79,742,000 nanoUSD (1e-9 USD), 0.19%)</title><rect x="1329.9" y="66" width="3.4" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1332.88" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_004 (134,968,000 nanoUSD (1e-9 USD), 0.33%)</title><rect x="430.3" y="66" width="5.9" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="433.31" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_010 (113,718,000 nanoUSD (1e-9 USD), 0.28%)</title><rect x="61.1" y="66" width="5.0" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="64.14" y="82.5" ></text>
+</g>
+<g >
+<title>turn_06 (5,487,454,000 nanoUSD (1e-9 USD), 13.37%)</title><rect x="10.0" y="94" width="238.0" height="27.0" fill="rgb(113,113,232)" rx="2" ry="2" />
+<text  x="13.00" y="110.5" >turn_06</text>
+</g>
+<g >
+<title>accounting_call_027 (220,682,000 nanoUSD (1e-9 USD), 0.54%)</title><rect x="325.6" y="66" width="9.6" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="328.59" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_032 (175,944,000 nanoUSD (1e-9 USD), 0.43%)</title><rect x="610.4" y="66" width="7.6" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="613.41" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_015 (117,428,000 nanoUSD (1e-9 USD), 0.29%)</title><rect x="1384.0" y="66" width="5.1" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1387.03" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_053 (363,212,000 nanoUSD (1e-9 USD), 0.88%)</title><rect x="836.6" y="66" width="15.8" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="839.63" y="82.5" ></text>
+</g>
+<g >
+<title>turn_13 (2,413,304,000 nanoUSD (1e-9 USD), 5.88%)</title><rect x="1402.2" y="94" width="104.6" height="27.0" fill="rgb(113,113,232)" rx="2" ry="2" />
+<text  x="1405.17" y="110.5" >turn_13</text>
+</g>
+<g >
+<title>accounting_call_017 (179,488,000 nanoUSD (1e-9 USD), 0.44%)</title><rect x="122.0" y="66" width="7.8" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="125.04" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_004 (178,390,000 nanoUSD (1e-9 USD), 0.43%)</title><rect x="19.7" y="66" width="7.8" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="22.75" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_027 (195,536,000 nanoUSD (1e-9 USD), 0.48%)</title><rect x="1491.9" y="66" width="8.5" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1494.87" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_021 (241,212,000 nanoUSD (1e-9 USD), 0.59%)</title><rect x="1711.0" y="66" width="10.4" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1713.98" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_073 (255,982,000 nanoUSD (1e-9 USD), 0.62%)</title><rect x="1211.6" y="66" width="11.1" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1214.59" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_024 (278,448,000 nanoUSD (1e-9 USD), 0.68%)</title><rect x="1738.5" y="66" width="12.1" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1741.49" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_084 (89,648,000 nanoUSD (1e-9 USD), 0.22%)</title><rect x="1283.1" y="66" width="3.9" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1286.06" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_068 (2,229,920,000 nanoUSD (1e-9 USD), 5.43%)</title><rect x="1064.8" y="66" width="96.7" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1067.76" y="82.5" >coordinato..</text>
+</g>
+<g >
+<title>all (41,046,242,000 nanoUSD (1e-9 USD), 100%)</title><rect x="10.0" y="178" width="1780.0" height="27.0" fill="rgb(140,140,255)" rx="2" ry="2" />
+<text  x="13.00" y="194.5" ></text>
+</g>
+<g >
+<title>turn_13 (1,816,072,000 nanoUSD (1e-9 USD), 4.42%)</title><rect x="1222.7" y="94" width="78.7" height="27.0" fill="rgb(113,113,232)" rx="2" ry="2" />
+<text  x="1225.69" y="110.5" >turn_13</text>
+</g>
+<g >
+<title>profiles_call_001 (52,178,000 nanoUSD (1e-9 USD), 0.13%)</title><rect x="1301.4" y="66" width="2.3" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1304.44" y="82.5" ></text>
+</g>
+<g >
+<title>turn_06 (2,322,636,000 nanoUSD (1e-9 USD), 5.66%)</title><rect x="1301.4" y="94" width="100.8" height="27.0" fill="rgb(113,113,232)" rx="2" ry="2" />
+<text  x="1304.44" y="110.5" >turn_06</text>
+</g>
+<g >
+<title>coordinator_call_075 (450,552,000 nanoUSD (1e-9 USD), 1.10%)</title><rect x="1233.1" y="66" width="19.5" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1236.08" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_015 (828,570,000 nanoUSD (1e-9 USD), 2.02%)</title><rect x="482.2" y="66" width="36.0" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="485.22" y="82.5" >co..</text>
+</g>
+<g >
+<title>coordinator_call_076 (263,910,000 nanoUSD (1e-9 USD), 0.64%)</title><rect x="1252.6" y="66" width="11.5" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1255.62" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_029 (301,294,000 nanoUSD (1e-9 USD), 0.73%)</title><rect x="345.5" y="66" width="13.1" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="348.54" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_015 (229,400,000 nanoUSD (1e-9 USD), 0.56%)</title><rect x="1597.2" y="66" width="10.0" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1600.25" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_080 (103,812,000 nanoUSD (1e-9 USD), 0.25%)</title><rect x="1271.6" y="66" width="4.5" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1274.64" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_072 (278,662,000 nanoUSD (1e-9 USD), 0.68%)</title><rect x="1199.5" y="66" width="12.1" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1202.50" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_042 (150,662,000 nanoUSD (1e-9 USD), 0.37%)</title><rect x="680.2" y="66" width="6.5" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="683.18" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_025 (180,414,000 nanoUSD (1e-9 USD), 0.44%)</title><rect x="1476.6" y="66" width="7.8" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1479.59" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_010 (190,862,000 nanoUSD (1e-9 USD), 0.46%)</title><rect x="1562.0" y="66" width="8.2" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1564.97" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_007 (69,042,000 nanoUSD (1e-9 USD), 0.17%)</title><rect x="444.5" y="66" width="3.0" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="447.47" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_006 (147,380,000 nanoUSD (1e-9 USD), 0.36%)</title><rect x="1541.6" y="66" width="6.4" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1544.62" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_005 (142,028,000 nanoUSD (1e-9 USD), 0.35%)</title><rect x="1535.5" y="66" width="6.1" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1538.46" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_086 (85,078,000 nanoUSD (1e-9 USD), 0.21%)</title><rect x="1290.1" y="66" width="3.7" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1293.13" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_001 (52,488,000 nanoUSD (1e-9 USD), 0.13%)</title><rect x="10.0" y="66" width="2.3" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="13.00" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_055 (196,180,000 nanoUSD (1e-9 USD), 0.48%)</title><rect x="861.5" y="66" width="8.5" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="864.48" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_054 (209,808,000 nanoUSD (1e-9 USD), 0.51%)</title><rect x="852.4" y="66" width="9.1" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="855.38" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_014 (113,630,000 nanoUSD (1e-9 USD), 0.28%)</title><rect x="1379.1" y="66" width="4.9" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1382.10" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_032 (330,492,000 nanoUSD (1e-9 USD), 0.81%)</title><rect x="378.9" y="66" width="14.3" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="381.88" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_007 (136,950,000 nanoUSD (1e-9 USD), 0.33%)</title><rect x="44.6" y="66" width="5.9" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="47.59" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_010 (93,682,000 nanoUSD (1e-9 USD), 0.23%)</title><rect x="1347.7" y="66" width="4.1" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1350.73" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_021 (136,350,000 nanoUSD (1e-9 USD), 0.33%)</title><rect x="1450.7" y="66" width="5.9" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1453.73" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_008 (157,374,000 nanoUSD (1e-9 USD), 0.38%)</title><rect x="1333.3" y="66" width="6.9" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1336.34" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_029 (122,412,000 nanoUSD (1e-9 USD), 0.30%)</title><rect x="592.6" y="66" width="5.3" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="595.59" y="82.5" ></text>
+</g>
+<g >
+<title>turn_12 (1,158,178,000 nanoUSD (1e-9 USD), 2.82%)</title><rect x="1172.5" y="94" width="50.2" height="27.0" fill="rgb(113,113,232)" rx="2" ry="2" />
+<text  x="1175.46" y="110.5" >turn..</text>
+</g>
+<g >
+<title>profiles_call_003 (144,734,000 nanoUSD (1e-9 USD), 0.35%)</title><rect x="1305.8" y="66" width="6.3" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1308.84" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_024 (111,282,000 nanoUSD (1e-9 USD), 0.27%)</title><rect x="560.8" y="66" width="4.8" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="563.82" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_024 (167,130,000 nanoUSD (1e-9 USD), 0.41%)</title><rect x="1469.3" y="66" width="7.3" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1472.34" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_012 (129,428,000 nanoUSD (1e-9 USD), 0.32%)</title><rect x="1357.1" y="66" width="5.6" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1360.06" y="82.5" ></text>
+</g>
+<g >
+<title>turn_06 (6,341,890,000 nanoUSD (1e-9 USD), 15.45%)</title><rect x="482.2" y="94" width="275.0" height="27.0" fill="rgb(113,113,232)" rx="2" ry="2" />
+<text  x="485.22" y="110.5" >turn_06</text>
+</g>
+<g >
+<title>coordinator_call_062 (202,706,000 nanoUSD (1e-9 USD), 0.49%)</title><rect x="1000.6" y="66" width="8.8" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1003.57" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_083 (52,292,000 nanoUSD (1e-9 USD), 0.13%)</title><rect x="1280.8" y="66" width="2.3" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1283.80" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_041 (159,232,000 nanoUSD (1e-9 USD), 0.39%)</title><rect x="673.3" y="66" width="6.9" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="676.28" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_037 (140,540,000 nanoUSD (1e-9 USD), 0.34%)</title><rect x="648.6" y="66" width="6.1" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="651.60" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry_call_019 (167,170,000 nanoUSD (1e-9 USD), 0.41%)</title><rect x="1642.3" y="66" width="7.2" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1645.29" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_057 (267,278,000 nanoUSD (1e-9 USD), 0.65%)</title><rect x="877.9" y="66" width="11.6" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="880.94" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_005 (78,334,000 nanoUSD (1e-9 USD), 0.19%)</title><rect x="1318.8" y="66" width="3.4" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1321.82" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_016 (167,440,000 nanoUSD (1e-9 USD), 0.41%)</title><rect x="518.2" y="66" width="7.2" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="521.16" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_016 (234,212,000 nanoUSD (1e-9 USD), 0.57%)</title><rect x="111.9" y="66" width="10.1" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="114.88" y="82.5" ></text>
+</g>
+<g >
+<title>turn_04 (433,550,000 nanoUSD (1e-9 USD), 1.06%)</title><rect x="444.5" y="94" width="18.8" height="27.0" fill="rgb(113,113,232)" rx="2" ry="2" />
+<text  x="447.47" y="110.5" ></text>
+</g>
+<g >
+<title>coordinator_call_064 (245,020,000 nanoUSD (1e-9 USD), 0.60%)</title><rect x="1020.2" y="66" width="10.7" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1023.24" y="82.5" ></text>
+</g>
+<g >
+<title>profiles_call_004 (154,624,000 nanoUSD (1e-9 USD), 0.38%)</title><rect x="1312.1" y="66" width="6.7" height="27.0" fill="rgb(128,128,245)" rx="2" ry="2" />
+<text  x="1315.11" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_005 (65,478,000 nanoUSD (1e-9 USD), 0.16%)</title><rect x="436.2" y="66" width="2.8" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="439.16" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_025 (248,814,000 nanoUSD (1e-9 USD), 0.61%)</title><rect x="303.5" y="66" width="10.8" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="306.49" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_030 (163,778,000 nanoUSD (1e-9 USD), 0.40%)</title><rect x="597.9" y="66" width="7.1" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="600.90" y="82.5" ></text>
+</g>
+<g >
+<title>accounting_call_008 (101,288,000 nanoUSD (1e-9 USD), 0.25%)</title><rect x="50.5" y="66" width="4.4" height="27.0" fill="rgb(122,122,240)" rx="2" ry="2" />
+<text  x="53.53" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_017 (104,400,000 nanoUSD (1e-9 USD), 0.25%)</title><rect x="525.4" y="66" width="4.5" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="528.42" y="82.5" ></text>
+</g>
+<g >
+<title>coordinator_call_028 (124,566,000 nanoUSD (1e-9 USD), 0.30%)</title><rect x="587.2" y="66" width="5.4" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="590.19" y="82.5" ></text>
+</g>
+<g >
+<title>telemetry (6,530,018,000 nanoUSD (1e-9 USD), 15.91%)</title><rect x="1506.8" y="122" width="283.2" height="27.0" fill="rgb(124,124,242)" rx="2" ry="2" />
+<text  x="1509.82" y="138.5" >telemetry</text>
+</g>
+<g >
+<title>coordinator_call_063 (250,940,000 nanoUSD (1e-9 USD), 0.61%)</title><rect x="1009.4" y="66" width="10.8" height="27.0" fill="rgb(117,117,236)" rx="2" ry="2" />
+<text  x="1012.36" y="82.5" ></text>
+</g>
+</g>
+</svg>
