@@ -59,8 +59,11 @@ export async function renderProfile(profile: CostProfile, directory: string, png
   const renderer = fileURLToPath(new URL("../vendor/FlameGraph/flamegraph.pl", import.meta.url));
   const title = `flAImegraph - ${amount} ${profile.complete ? "selected cost" : "known subtotal"}`;
   const result = spawnSync("perl", [renderer, "--title", title, "--subtitle", `${profile.basis} | ${profile.cost_view} | width = cost | click to zoom; Ctrl+F to search`,
-    "--countname", profile.unit, "--nametype", "Attribution:", "--nameattr", attrFile, "--width", "1400", "--minwidth", "0"],
-    { input: folded.join("\n") + "\n", encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+    "--countname", profile.unit, "--nametype", "Attribution:", "--nameattr", attrFile, "--width", "1400", "--minwidth", "0", "--hash"],
+    { input: folded.join("\n") + "\n", encoding: "utf8", maxBuffer: 64 * 1024 * 1024,
+      // Upstream iterates a Perl hash when emitting frames. Fix this child's
+      // iteration seed and colors so replay is deterministic in the same runtime.
+      env: { ...process.env, PERL_HASH_SEED: "0", PERL_PERTURB_KEYS: "0" } });
   if (result.error || result.status !== 0) throw new Error(`FlameGraph renderer failed: ${result.error?.message ?? result.stderr}`);
   const svgPath = join(directory, "cost.svg");
   await writeArtifact(svgPath, result.stdout);
