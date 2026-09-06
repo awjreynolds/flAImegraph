@@ -16,6 +16,12 @@ The requirement is to understand what an agent did at useful depth and aggregate
 
 See [actual capture validation](codex-capture-validation.md), [Pi and OMP fidelity](pi-capture-fidelity.md), [context attribution limits](context-attribution-limits.md), and [profiler reuse findings](profiler-reuse-evaluation.md).
 
+The user further clarified that **monetary cost must determine flame-graph width**. The initial token-only prototype does not pass that criterion; [cost-baseline evidence and acceptance rules](cost-baseline.md) now make cost valuation a prerequisite to the primary profile.
+
+The public Pi cost demonstration now renders 471 positive recorded cost observations with the existing FlameGraph renderer. Its $42.5959075 model-price subtotal conserves integer nano-USD weights; the static PNG has been visually inspected. This proves monetary-width projection, not complete usage or invoice reconciliation. Two compactions have unreported usage, and 13 zero records do not prove free activity.
+
+The [enterprise valuation and forecasting roadmap](enterprise-valuation-and-forecast-roadmap.md) adds a calibration dataset linking specifications to accepted outcomes. Detailed capture is a prerequisite, but the current four-agent conversation is a measurement fixture, not a representative training dataset or evidence of predictive accuracy.
+
 ## Working analytical policy
 
 Keep observed usage, derived quantities, estimated context-source allocation and counterfactual savings distinct. Cache/reasoning detail can overlap input/output totals. Tool results may contribute to later model input without directly consuming model tokens. Compaction reduces context size while potentially adding work. Missing usage is not measured zero. No causal usefulness claim follows from token width.
@@ -24,6 +30,6 @@ Execution ancestry, context provenance and work/financial correspondence are sep
 
 ## What follows
 
-[The implementation route](implementation-route.md) recommends an offline Codex vertical slice, native Pi/OMP reuse, a versioned observation/reconciliation layer, existing profile exports, and linked execution/context views. The [GitHub wayfinding map](https://github.com/awjreynolds/flAImegraph/issues/1) tracks remaining review decisions; scoped implementation tickets distinguish build work from unresolved research.
+[The implementation route](implementation-route.md) recommends an offline Codex vertical slice, native Pi/OMP reuse, a versioned observation/reconciliation layer, existing profile exports, and linked execution/context views. The wider [profiler comparison](cross-harness-profiler-landscape.md) makes native inspectors and concrete Langfuse/LangSmith integrations the starting point. Custom components are conditional on [comparative workflow validation](https://github.com/awjreynolds/flAImegraph/issues/20). The [GitHub wayfinding map](https://github.com/awjreynolds/flAImegraph/issues/1) tracks remaining review decisions; scoped implementation tickets distinguish build work from unresolved research.
 
 The research does not establish universal capture completeness, workplace-data suitability, actual invoice cost, or a new standard. It establishes enough of the space to begin implementation with explicit capability and accuracy boundaries.

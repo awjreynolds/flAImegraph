@@ -51,6 +51,14 @@ The phrase **“Token Points”** already appears in Fabio Italiano's June 2026 
 
 ## What a defensible ticket estimator would need
 
+### Where ACEM expects its metrics to come from
+
+ACEM does not report a collected calibration dataset. Its proposed pilot records marginal task-content input separately from total context-inclusive request input; estimates input/output means and variation by task class; records rejection rates and retries; fits context growth; and derives sizing coefficients from the pilot. Its future evaluation calls for real project data across organizations, agents and domains. The examples are hypothetical. [ACEM §§3.6–3.7 and 5.1](https://arxiv.org/pdf/2608.02582).
+
+That protocol has an instrumentation dependency. A provider's request total does not directly measure the billed contribution of each task's source material. Request composition, transformations and an explicit attribution method would be needed to approximate marginal content; opaque compaction and server-side context can prevent exact attribution. Aggregate totals also cannot uniquely separate retry and context effects. These limits follow from the [capture evidence](context-attribution-limits.md), and ACEM itself acknowledges factor-identification difficulties.
+
+The practical sequence is to establish complete, scoped ticket outcomes and reconciled usage first, then test whole-ticket forecasts against simple baselines. ACEM-specific explanatory factors require separate evidence and validation. Detailed flame graphs help audit the measurements, but drawing a graph does not create missing context provenance or accepted-delivery labels.
+
 The following is a proposed evaluation design, not a finding that an existing product implements it.
 
 **Define the endpoint first.** “One attempt,” “patch passes tests,” “review accepted,” and “deployed and accepted” are different labels. Store the specified acceptance endpoint, specification version, repository revision and delivery policy with each forecast. Include failed/cancelled attempts, escalation and agent-generated review/rework in the observed outcome. Report any excluded human or infrastructure costs separately.

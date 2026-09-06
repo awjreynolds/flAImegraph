@@ -15,3 +15,7 @@ Can a small prototype from representative captured evidence expose internal oper
 ## Review artifact prepared
 
 [Capture-depth prototype](https://github.com/awjreynolds/flAImegraph/tree/codex/prototype-capture-depth/prototypes/capture-depth) contains a self-contained HTML profile, sanitized real evidence, and a narrow extractor. Six measures conserve quantities across three groupings and every tree level; JavaScript/JSON parsing passes. Browser URL policy blocked local-page loading, so rendering and interactions remain unverified. This is ready for a later user review, not an accepted UI or complete capture integration. [Evidence and limitations](../../../docs/research/codex-capture-validation.md).
+
+## Cost-baseline clarification
+
+The user requires monetary cost to determine rectangle width. The original token-weighted prototype does not meet this condition. A separate public-Pi cost example uses recorded model-price estimates and the existing FlameGraph renderer; [requirements and evidence](../../../docs/research/cost-baseline.md). Actual billed cost remains a distinct basis requiring financial evidence.
