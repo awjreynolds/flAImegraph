@@ -1,0 +1,172 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/awjreynolds/flAImegraph/v0.1.0/spec/0.1/schemas/work-item.schema.json",
+  "title": "Agent Cost Interchange work item sidecar",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "dataset_id",
+    "work_item_id",
+    "scope",
+    "acceptance_criteria",
+    "outcome",
+    "attempts",
+    "estimates"
+  ],
+  "properties": {
+    "schema_version": { "const": "0.1.0" },
+    "dataset_id": { "$ref": "#/$defs/id" },
+    "work_item_id": { "$ref": "#/$defs/id" },
+    "title": { "type": "string", "minLength": 1 },
+    "scope": { "$ref": "#/$defs/scope" },
+    "scope_history": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/scope" }
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "outcome": { "$ref": "#/$defs/outcome" },
+    "attempts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/attempt" }
+    },
+    "estimates": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/estimate" }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1 },
+    "dateTime": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})$"
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["revision", "description"],
+      "properties": {
+        "revision": { "$ref": "#/$defs/id" },
+        "description": { "type": "string", "minLength": 1 },
+        "specification": { "type": "string", "minLength": 1 },
+        "repository_revision": { "$ref": "#/$defs/id" }
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "enum": [
+            "planned",
+            "in_progress",
+            "accepted",
+            "failed",
+            "interrupted",
+            "capped",
+            "cancelled",
+            "unknown"
+          ]
+        },
+        "recorded_at": { "$ref": "#/$defs/dateTime" },
+        "summary": { "type": "string", "minLength": 1 }
+      }
+    },
+    "attempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["attempt_id", "status", "observation_ids"],
+      "properties": {
+        "attempt_id": { "$ref": "#/$defs/id" },
+        "status": {
+          "enum": [
+            "planned",
+            "in_progress",
+            "accepted",
+            "failed",
+            "interrupted",
+            "capped",
+            "cancelled",
+            "unknown"
+          ]
+        },
+        "observation_ids": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "started_at": { "$ref": "#/$defs/dateTime" },
+        "ended_at": { "$ref": "#/$defs/dateTime" }
+      }
+    },
+    "pointEstimate": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["scale_id", "scale_version", "kind", "value"],
+          "properties": {
+            "scale_id": { "$ref": "#/$defs/id" },
+            "scale_version": { "$ref": "#/$defs/id" },
+            "kind": { "const": "decimal" },
+            "value": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["scale_id", "scale_version", "kind", "value"],
+          "properties": {
+            "scale_id": { "$ref": "#/$defs/id" },
+            "scale_version": { "$ref": "#/$defs/id" },
+            "kind": { "const": "ordinal" },
+            "value": { "type": "string", "minLength": 1 }
+          }
+        }
+      ]
+    },
+    "estimate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "estimate_id",
+        "estimate_version",
+        "scope_revision",
+        "created_at",
+        "timing",
+        "information_basis",
+        "estimator",
+        "point_estimate"
+      ],
+      "properties": {
+        "estimate_id": { "$ref": "#/$defs/id" },
+        "estimate_version": { "type": "integer", "minimum": 1 },
+        "scope_revision": { "$ref": "#/$defs/id" },
+        "created_at": { "$ref": "#/$defs/dateTime" },
+        "timing": {
+          "enum": ["pre_execution", "during_execution", "post_execution"]
+        },
+        "information_basis": {
+          "enum": ["specification_only", "repository_inspection", "probe_assisted"]
+        },
+        "estimator": { "$ref": "#/$defs/id" },
+        "confidence": { "enum": ["low", "medium", "high", "unknown"] },
+        "point_estimate": {
+          "anyOf": [{ "$ref": "#/$defs/pointEstimate" }, { "type": "null" }]
+        },
+        "unestimated_reason": { "type": "string", "minLength": 1 },
+        "rationale": { "type": "string", "minLength": 1 },
+        "supersedes_estimate_id": { "$ref": "#/$defs/id" }
+      }
+    }
+  }
+}

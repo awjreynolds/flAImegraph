@@ -1,0 +1,6 @@
+{"type":"assistant","session_id":"claude-session","parent_tool_use_id":null,"message":{"id":"msg-1","role":"assistant","model":"claude-sonnet","usage":{"input_tokens":100,"cache_read_input_tokens":40,"cache_creation_input_tokens":5,"output_tokens":10,"reasoning_output_tokens":2},"stop_reason":null}}
+{"type":"assistant","session_id":"claude-session","message":{"id":"msg-1","role":"assistant","model":"claude-sonnet","usage":{"input_tokens":100,"cache_read_input_tokens":40,"cache_creation_input_tokens":5,"output_tokens":12,"reasoning_output_tokens":3},"stop_reason":"end_turn"}}
+{"type":"assistant","session_id":"claude-session","message":{"id":"msg-2","role":"assistant","model":"claude-sonnet","usage":{"input_tokens":100,"cache_read_input_tokens":40,"cache_creation_input_tokens":5,"output_tokens":12,"reasoning_output_tokens":3},"stop_reason":"end_turn"}}
+{"type":"tool_use","session_id":"claude-session","tool_use_id":"tool-1","name":"Read","status":"ok"}
+{"type":"subagent_completed","session_id":"claude-session","agent_id":"child-1","total_tokens":75,"status":"completed"}
+{"type":"compaction","session_id":"claude-session","tokens_before":1000,"tokens_after":400}

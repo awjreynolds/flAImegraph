@@ -1,0 +1,2 @@
+{"v":4,"kind":"header","storageVersion":1,"sessionId":"pi-missing-input"}
+{"kind":"transaction","writes":[{"kind":"entry","entry":{"id":"pi-entry-missing-input","type":"message","message":{"role":"assistant","provider":"anthropic","model":"pi-v4","timestamp":"2026-09-06T10:11:00.000Z"}}},{"kind":"usage","row":{"id":"pi-row-missing-input","seq":1,"entryId":"pi-entry-missing-input","usage":{"output":6,"cacheRead":8,"cacheWrite":1,"reasoning":2,"totalTokens":15}}}]}

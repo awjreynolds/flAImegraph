@@ -1,0 +1,1 @@
+{"type":"assistant","id":"omp-missing-input","message":{"role":"assistant","provider":"anthropic","model":"omp-model","timestamp":"2026-09-06T10:12:00.000Z","usage":{"output":5,"cacheRead":3,"cacheWrite":0,"reasoning":1,"totalTokens":8},"stopReason":"stop"}}

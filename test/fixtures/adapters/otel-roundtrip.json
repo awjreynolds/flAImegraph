@@ -1,0 +1,41 @@
+{
+  "resourceSpans": [{
+    "resource": {
+      "attributes": [
+        {"key":"service.name","value":{"stringValue":"flAImegraph"}}
+      ]
+    },
+    "scopeSpans": [{"spans": [{
+      "traceId":"0123456789abcdef0123456789abcdef",
+      "spanId":"0123456789abcdef",
+      "name":"roundtrip.model",
+      "startTimeUnixNano":"1725624000123456789",
+      "endTimeUnixNano":"1725624001123456789",
+      "attributes":[
+        {"key":"flAImegraph.observation_id","value":{"stringValue":"native-observation-1"}},
+        {"key":"flAImegraph.observation.kind","value":{"stringValue":"model"}},
+        {"key":"flAImegraph.accounting_scope","value":{"stringValue":"direct"}},
+        {"key":"flAImegraph.status","value":{"stringValue":"ok"}},
+        {"key":"flAImegraph.operation","value":{"stringValue":"roundtrip.model"}},
+        {"key":"flAImegraph.model_identity","value":{"stringValue":"response"}},
+        {"key":"flAImegraph.agent_id","value":{"stringValue":"agent-1"}},
+        {"key":"flAImegraph.session_id","value":{"stringValue":"session-1"}},
+        {"key":"flAImegraph.turn_id","value":{"stringValue":"turn-1"}},
+        {"key":"flAImegraph.work_item_id","value":{"stringValue":"work-1"}},
+        {"key":"flAImegraph.product","value":{"stringValue":"roundtrip"}},
+        {"key":"gen_ai.response.model","value":{"stringValue":"gpt-roundtrip"}},
+        {"key":"gen_ai.provider.name","value":{"stringValue":"openai"}},
+        {"key":"gen_ai.operation.name","value":{"stringValue":"chat"}},
+        {"key":"gen_ai.usage.input_tokens","value":{"intValue":"10"}},
+        {"key":"gen_ai.usage.output_tokens","value":{"intValue":"5"}},
+        {"key":"flAImegraph.usage.cache_read_input_tokens","value":{"intValue":"4"}},
+        {"key":"flAImegraph.usage.cache_write_input_tokens","value":{"intValue":"1"}},
+        {"key":"flAImegraph.usage.reasoning_output_tokens","value":{"intValue":"2"}},
+        {"key":"flAImegraph.recorded_cost.amount","value":{"stringValue":"0.005"}},
+        {"key":"flAImegraph.recorded_cost.currency","value":{"stringValue":"USD"}},
+        {"key":"flAImegraph.recorded_cost.basis","value":{"stringValue":"provider_reported"}}
+      ],
+      "status":{"code":1}
+    }]}]
+  }]
+}

@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/awjreynolds/flAImegraph/v0.1.0/spec/0.1/schemas/rate-card.schema.json",
+  "title": "Agent Cost Interchange rate card",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "currency", "basis", "source_url", "retrieved_at", "assumptions", "rules"],
+  "properties": {
+    "schema_version": { "const": "0.1.0" },
+    "id": { "$ref": "#/$defs/id" },
+    "currency": { "$ref": "#/$defs/id" },
+    "basis": {
+      "enum": ["enterprise_scenario", "contract_estimate", "model_price_estimate"]
+    },
+    "source_url": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9+.-]*:[^\\s]+$"
+    },
+    "retrieved_at": { "$ref": "#/$defs/dateTime" },
+    "assumptions": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "rules": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/rule" }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1 },
+    "quantity": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)$"
+    },
+    "decimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+    },
+    "dateTime": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})$"
+    },
+    "dateOrDateTime": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2}))?$"
+    },
+    "rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "model", "rates", "unit_tokens"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "model": { "$ref": "#/$defs/id" },
+        "provider": { "$ref": "#/$defs/id" },
+        "product": { "$ref": "#/$defs/id" },
+        "valid_from": {
+          "anyOf": [{ "$ref": "#/$defs/dateOrDateTime" }, { "type": "null" }]
+        },
+        "valid_to": {
+          "anyOf": [{ "$ref": "#/$defs/dateOrDateTime" }, { "type": "null" }]
+        },
+        "rates": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["input", "cache_read", "cache_write", "output"],
+          "properties": {
+            "input": { "anyOf": [{ "$ref": "#/$defs/decimal" }, { "type": "null" }] },
+            "cache_read": { "anyOf": [{ "$ref": "#/$defs/decimal" }, { "type": "null" }] },
+            "cache_write": { "anyOf": [{ "$ref": "#/$defs/decimal" }, { "type": "null" }] },
+            "output": { "anyOf": [{ "$ref": "#/$defs/decimal" }, { "type": "null" }] }
+          }
+        },
+        "unit_tokens": { "$ref": "#/$defs/quantity" }
+      }
+    }
+  }
+}

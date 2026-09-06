@@ -1,0 +1,170 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/awjreynolds/flAImegraph/v0.1.0/spec/0.1/schemas/evidence.schema.json",
+  "title": "Agent Cost Interchange evidence bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "dataset_id", "sources", "observations", "relationships", "issues"],
+  "properties": {
+    "schema_version": { "const": "0.1.0" },
+    "dataset_id": { "$ref": "#/$defs/id" },
+    "sources": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/source" }
+    },
+    "observations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/observation" }
+    },
+    "relationships": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/relationship" }
+    },
+    "issues": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/issue" }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1 },
+    "quantity": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)$"
+    },
+    "decimal": {
+      "type": "string",
+      "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+    },
+    "dateTime": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?(Z|[+-][0-9]{2}:[0-9]{2})$"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "harness", "format", "coverage"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "harness": { "$ref": "#/$defs/id" },
+        "format": { "$ref": "#/$defs/id" },
+        "version": { "$ref": "#/$defs/id" },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{64}$"
+        },
+        "coverage": { "enum": ["complete", "partial", "unknown"] },
+        "description": { "type": "string" }
+      }
+    },
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "record"],
+      "properties": {
+        "source_id": { "$ref": "#/$defs/id" },
+        "record": { "$ref": "#/$defs/id" }
+      }
+    },
+    "usage": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": [
+        "input_tokens",
+        "output_tokens",
+        "cache_read_input_tokens",
+        "cache_write_input_tokens",
+        "reasoning_output_tokens"
+      ],
+      "properties": {
+        "input_tokens": { "anyOf": [{ "$ref": "#/$defs/quantity" }, { "type": "null" }] },
+        "output_tokens": { "anyOf": [{ "$ref": "#/$defs/quantity" }, { "type": "null" }] },
+        "cache_read_input_tokens": { "anyOf": [{ "$ref": "#/$defs/quantity" }, { "type": "null" }] },
+        "cache_write_input_tokens": { "anyOf": [{ "$ref": "#/$defs/quantity" }, { "type": "null" }] },
+        "reasoning_output_tokens": { "anyOf": [{ "$ref": "#/$defs/quantity" }, { "type": "null" }] },
+        "unclassified_tokens": {
+          "anyOf": [{ "$ref": "#/$defs/quantity" }, { "type": "null" }]
+        }
+      }
+    },
+    "recordedCost": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["amount", "currency", "basis"],
+      "properties": {
+        "amount": { "$ref": "#/$defs/decimal" },
+        "currency": { "$ref": "#/$defs/id" },
+        "basis": {
+          "enum": [
+            "model_price_estimate",
+            "provider_reported",
+            "billed",
+            "enterprise_scenario",
+            "contract_estimate"
+          ]
+        }
+      }
+    },
+    "attributes": {
+      "type": "object",
+      "additionalProperties": { "type": ["string", "number", "boolean"] }
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "source_refs", "kind", "operation", "status", "accounting_scope", "usage"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/sourceRef" }
+        },
+        "kind": { "enum": ["model", "tool", "activity"] },
+        "operation": { "$ref": "#/$defs/id" },
+        "status": { "enum": ["ok", "error", "cancelled", "unknown"] },
+        "accounting_scope": { "enum": ["direct", "aggregate", "snapshot", "unknown"] },
+        "subject_id": { "$ref": "#/$defs/id" },
+        "grain": { "enum": ["attempt", "operation", "session", "event", "unknown"] },
+        "count_basis": { "enum": ["provider_native", "billable", "consumed", "unknown"] },
+        "timestamp": { "$ref": "#/$defs/dateTime" },
+        "end_time": { "$ref": "#/$defs/dateTime" },
+        "agent_id": { "$ref": "#/$defs/id" },
+        "session_id": { "$ref": "#/$defs/id" },
+        "turn_id": { "$ref": "#/$defs/id" },
+        "parent_id": { "$ref": "#/$defs/id" },
+        "trace_id": { "$ref": "#/$defs/id" },
+        "span_id": { "$ref": "#/$defs/id" },
+        "provider": { "$ref": "#/$defs/id" },
+        "product": { "$ref": "#/$defs/id" },
+        "model": { "$ref": "#/$defs/id" },
+        "model_identity": { "enum": ["response", "setting", "unknown"] },
+        "work_item_id": { "$ref": "#/$defs/id" },
+        "usage": { "$ref": "#/$defs/usage" },
+        "recorded_cost": { "$ref": "#/$defs/recordedCost" },
+        "attributes": { "$ref": "#/$defs/attributes" }
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "to", "kind"],
+      "properties": {
+        "from": { "$ref": "#/$defs/id" },
+        "to": { "$ref": "#/$defs/id" },
+        "kind": { "enum": ["parent", "delegates", "context_from", "adjusts", "corresponds_to"] }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message", "severity"],
+      "properties": {
+        "code": { "$ref": "#/$defs/id" },
+        "message": { "$ref": "#/$defs/id" },
+        "severity": { "enum": ["info", "warning", "error"] },
+        "observation_id": { "$ref": "#/$defs/id" },
+        "source_id": { "$ref": "#/$defs/id" }
+      }
+    }
+  }
+}

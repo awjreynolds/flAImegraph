@@ -1,0 +1,55 @@
+{
+  "schema_version": "0.1.0",
+  "dataset_id": "core-fixture",
+  "sources": [
+    {
+      "id": "core-source",
+      "harness": "fixture",
+      "format": "agent-cost-json",
+      "coverage": "complete"
+    }
+  ],
+  "observations": [
+    {
+      "id": "core-direct",
+      "source_refs": [{ "source_id": "core-source", "record": "direct-1" }],
+      "kind": "model",
+      "operation": "inference",
+      "status": "ok",
+      "accounting_scope": "direct",
+      "timestamp": "2026-03-01T00:00:00Z",
+      "provider": "fixture-provider",
+      "product": "fixture-product",
+      "model": "fixture-model",
+      "model_identity": "response",
+      "usage": {
+        "input_tokens": "100",
+        "output_tokens": "40",
+        "cache_read_input_tokens": "10",
+        "cache_write_input_tokens": "5",
+        "reasoning_output_tokens": "20",
+        "unclassified_tokens": "0"
+      }
+    },
+    {
+      "id": "core-aggregate",
+      "source_refs": [{ "source_id": "core-source", "record": "aggregate-1" }],
+      "kind": "model",
+      "operation": "inference",
+      "status": "ok",
+      "accounting_scope": "aggregate",
+      "model": "fixture-model",
+      "model_identity": "response",
+      "usage": {
+        "input_tokens": "100",
+        "output_tokens": "40",
+        "cache_read_input_tokens": "10",
+        "cache_write_input_tokens": "5",
+        "reasoning_output_tokens": "20",
+        "unclassified_tokens": "0"
+      }
+    }
+  ],
+  "relationships": [],
+  "issues": []
+}

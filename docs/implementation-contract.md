@@ -1,0 +1,16 @@
+# Implementation interfaces for experimental 0.1
+
+This freezes the initial collaboration seams for the user-authorized goal. The public TypeScript definitions in `src/types.ts` are shared. Owners must propose incompatible changes to the orchestrator before making them. Normative wire schemas and conformance examples will be maintained in `spec/0.1/`.
+
+- `src/core.ts`: `validateEvidence(value: unknown): EvidenceBundle`; `reconcileEvidence(bundles: EvidenceBundle[]): EvidenceBundle`; `valueEvidence(evidence: EvidenceBundle, options: ValuationOptions): Valuation`; `validateRateCard(value: unknown): RateCard`. Public errors expose a stable `code` and readable message. No private content required.
+- `src/adapters/index.ts`: `importEvidence(harness: Harness, input: string, options?: ImportOptions): EvidenceBundle`; `adapterCapabilities(): AdapterCapability[]`. Native input is JSON or JSONL depending on the selected adapter. JSONL parse failures are explicit errors with line references. Never scan the user's home directory implicitly. No network or writes in importers.
+- `src/profile.ts`: `createCostProfile(evidence: EvidenceBundle, valuation: Valuation, options?: ProfileOptions): CostProfile`; `exportFolded(profile: CostProfile): string`; `exportPprof(profile: CostProfile): Uint8Array`; `exportOtlp(evidence: EvidenceBundle): object`. Filesystem/network/renderer execution belongs to the CLI, not these pure functions.
+- `src/cli.ts`: validate, import, value, export, render and demonstrate the above workflows. Owns I/O and exposes JSON artifacts plus human-readable diagnostics.
+
+Tests use these public interfaces and independently specified literal outcomes. TDD is one failing behavioral test followed by the smallest passing implementation, repeated in coherent slices. The user approved the previously proposed export seam and then authorized the full goal and routine repo work. No repeated confirmation is needed for these routine implementation seams.
+
+Quantities use decimal digit strings, not JSON floating-point money. Normalized input includes disjoint cache-read/cache-write subsets. Reasoning is a subset of output. Null means unavailable. Direct, aggregate, snapshot and unknown scopes remain distinguishable; aggregate observations never silently become extra direct charges. Duplicate identities with conflicting quantities are errors rather than arbitrary last-write wins.
+
+All valuation bases remain explicit. Recorded values from different bases cannot quietly form a single monetary profile: reject mixed bases or require an explicit coherent selection. Scenario rules are model/provider/product/date matched; unknown dimensions or quantities produce unpriced observations and coverage issues, not invented zero. Round once per observation to nano-currency units using exact arithmetic. Shared allocations use positive integer weights and deterministic largest remainders to conserve integer totals.
+
+The standard is an open experimental draft, implemented through existing OTLP vocabulary and pprof/folded formats plus narrowly documented binding metadata. No claim of external adoption, every possible native version, exact context-source billing, or complete hidden provider usage is made.

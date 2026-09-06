@@ -1,0 +1,11 @@
+{
+  "schema_version": "0.1.0",
+  "dataset_id": "flaimegraph-dogfood-2026-09-06",
+  "work_item_id": "flaimegraph-research",
+  "title": "Frozen flAImegraph research capture",
+  "scope": { "revision": "capture-2026-09-06T16:36:00Z", "description": "The four explicitly selected research sessions, through the frozen public capture cutoff. This scope excludes later implementation and any hidden provider work.", "specification": "Research an interoperable foundation for monetary agent-work flame graphs" },
+  "acceptance_criteria": ["Publish evidence-backed findings and a reproducible monetary projection with explicit capture limitations"],
+  "outcome": { "status": "unknown", "recorded_at": "2026-09-06T18:30:44Z", "summary": "The capture alone does not establish acceptance of the complete requested work." },
+  "attempts": [],
+  "estimates": [{ "estimate_id": "dogfood-unestimated", "estimate_version": 1, "scope_revision": "capture-2026-09-06T16:36:00Z", "created_at": "2026-09-06T18:30:44Z", "timing": "post_execution", "information_basis": "repository_inspection", "estimator": "flAImegraph retrospective capture annotation", "point_estimate": null, "unestimated_reason": "No Context Points estimate was recorded before this frozen capture. An observed cost must not be relabeled as prior points." }]
+}

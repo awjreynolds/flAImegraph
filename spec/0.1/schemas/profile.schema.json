@@ -1,0 +1,224 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/awjreynolds/flAImegraph/v0.1.0/spec/0.1/schemas/profile.schema.json",
+  "title": "flAImegraph experimental cost profile",
+  "description": "A conservative projection of direct valued observations into a single nonnegative monetary measure.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "currency",
+    "unit",
+    "basis",
+    "valuation_id",
+    "dataset_id",
+    "group_by",
+    "cost_view",
+    "total_nanos",
+    "complete",
+    "samples",
+    "issues",
+    "excluded_observation_ids",
+    "assumptions"
+  ],
+  "properties": {
+    "schema_version": { "const": "0.1.0" },
+    "id": { "type": "string", "minLength": 1 },
+    "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+    "unit": { "type": "string", "pattern": "^nano[A-Z]{3}$" },
+    "basis": {
+      "enum": [
+        "model_price_estimate",
+        "provider_reported",
+        "billed",
+        "enterprise_scenario",
+        "contract_estimate",
+        "mixed"
+      ]
+    },
+    "valuation_id": { "type": "string", "minLength": 1 },
+    "dataset_id": { "type": "string", "minLength": 1 },
+    "group_by": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": ["work_item", "agent", "model", "operation", "session", "turn", "observation"]
+      }
+    },
+    "cost_view": { "enum": ["charges", "credits", "net"] },
+  "total_nanos": { "$ref": "#/definitions/signedInteger" },
+    "complete": { "type": "boolean" },
+    "samples": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/profileSample" }
+    },
+    "issues": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/coverageIssue" }
+    },
+    "excluded_observation_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "assumptions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "metadata": { "$ref": "#/definitions/profileMetadata" }
+  },
+  "definitions": {
+    "signedInteger": {
+      "type": "string",
+      "pattern": "^-?(0|[1-9][0-9]*)$"
+    },
+    "frame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "kind"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "kind": { "type": "string", "minLength": 1 }
+      }
+    },
+    "profileSample": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observation_id", "stack", "value_nanos"],
+      "properties": {
+        "observation_id": { "type": "string", "minLength": 1 },
+        "stack": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/frame" }
+        },
+        "value_nanos": { "$ref": "#/definitions/signedInteger" }
+      }
+    },
+    "coverageIssue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message", "severity"],
+      "properties": {
+        "code": { "type": "string", "minLength": 1 },
+        "message": { "type": "string", "minLength": 1 },
+        "severity": { "enum": ["info", "warning", "error"] },
+        "observation_id": { "type": "string", "minLength": 1 },
+        "source_id": { "type": "string", "minLength": 1 }
+      }
+    },
+    "profileMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "projection",
+        "projection_version",
+        "cost_view",
+        "currency",
+        "unit",
+        "selected_observation_ids",
+        "included_observation_ids",
+        "zero_observation_ids",
+        "unknown_cost_observation_ids",
+        "source_complete",
+        "charges_nanos",
+        "credits_nanos",
+        "net_nanos",
+        "signed_net_summary",
+        "allocation",
+        "root_label",
+        "selection_policy",
+        "path_order",
+        "frame_manifest"
+      ],
+      "properties": {
+        "projection": { "const": "flAImegraph.cost-profile" },
+        "projection_version": { "const": "0.1.0" },
+        "cost_view": { "enum": ["charges", "credits", "net"] },
+        "currency": { "type": "string", "pattern": "^[A-Z]{3}$" },
+        "unit": { "type": "string", "pattern": "^nano[A-Z]{3}$" },
+        "selected_observation_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "included_observation_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "zero_observation_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "unknown_cost_observation_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "source_complete": { "type": "boolean" },
+        "charges_nanos": { "$ref": "#/definitions/signedInteger" },
+        "credits_nanos": { "$ref": "#/definitions/signedInteger" },
+        "net_nanos": { "$ref": "#/definitions/signedInteger" },
+        "signed_net_summary": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["total_nanos", "negative_observation_ids"],
+          "properties": {
+            "total_nanos": { "$ref": "#/definitions/signedInteger" },
+            "negative_observation_ids": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "allocation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["policy", "tie_break", "manifest"],
+          "properties": {
+            "policy": { "enum": ["none", "largest_remainder"] },
+            "tie_break": { "const": "work_item_id_ascending" },
+            "manifest": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/allocationManifestEntry" }
+            }
+          }
+        },
+        "root_label": { "type": "string", "minLength": 1 },
+        "selection_policy": { "const": "direct-only-v1" },
+        "path_order": { "const": "root-first" },
+        "frame_manifest": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/frame" }
+        }
+      }
+    },
+    "allocationManifestEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observation_id", "allocations"],
+      "properties": {
+        "observation_id": { "type": "string", "minLength": 1 },
+        "allocations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["work_item_id", "weight"],
+            "properties": {
+              "work_item_id": { "type": "string", "minLength": 1 },
+              "weight": { "$ref": "#/definitions/signedInteger" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

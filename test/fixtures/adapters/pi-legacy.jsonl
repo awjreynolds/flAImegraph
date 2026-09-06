@@ -1,0 +1,3 @@
+{"type":"message","id":"m-1","parentId":"m-0","message":{"role":"assistant","api":"openai","provider":"openai","model":"gpt-pi","timestamp":"2026-09-06T10:00:00.000Z","usage":{"input":10,"output":5,"cacheRead":3,"cacheWrite":2,"reasoning":1,"totalTokens":20,"cost":{"total":"0.000123","currency":"USD"}},"stopReason":"toolUse","content":[{"type":"toolCall","id":"call-1","name":"read"}]}}
+{"type":"message","id":"m-2","parentId":"m-1","message":{"role":"toolResult","toolCallId":"call-1","toolName":"read","isError":false}}
+{"type":"compaction","id":"c-1","parentId":"m-2","tokensBefore":4000,"summary":"opaque summary"}
