@@ -19,11 +19,15 @@ Establish an evidence-backed route to a common tokenomics profiling model: ident
 
 ## Decisions so far
 
+- [What AI usage and execution semantics already exist?](issues/01-telemetry-coverage.md): reuse substantial existing vocabulary; accounting-grain ambiguities and cost work are already being discussed upstream.
+- [What cost and work-allocation semantics already exist?](issues/02-accounting-coverage.md): FOCUS supplies cost bases and allocation/correction rules; execution-to-financial evidence correspondence remains a candidate bridge.
+- [Can existing profile formats faithfully visualise tokenomics?](issues/03-profile-projection.md): existing exporters can visualise selected measures; accounting meaning and projection losses require explicit treatment.
+
 ## Not yet specified
 
-- The validation corpus and practical capture boundaries, informed by accessible real-world agent records.
-- The smallest portable accounting contract and treatment of incomplete or ambiguous evidence.
-- The extension, contribution, and adoption path once any actual gap is established.
+- The validation corpus and practical capture boundaries, informed by accessible real-world agent records and the first accounting guarantee selected.
+- The smallest portable accounting contract, after comparing the chosen guarantee with AgentMeasure and upstream GenAI conformance work.
+- The extension, contribution, and adoption path once actual discrepancies are demonstrated; OTel and FOCUS already have overlapping active work.
 - How visual views expose accounting uncertainty and different attribution choices without implying false precision.
 
 ## Out of scope
