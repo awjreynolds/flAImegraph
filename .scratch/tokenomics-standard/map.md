@@ -5,12 +5,14 @@ Status: open
 
 ## Destination
 
-Establish a shared understanding of the existing and emerging standards for AI usage, cost, and profiling, then find a way to support ticket-to-epic flame graphs by adopting that work. Propose an upstream extension only if a necessary gap remains after checking released capabilities, planned work, and existing implementations.
+Establish a proven route to detailed tokenomics analysis: capture observable work inside agent runs, connect model usage to operations and available context provenance, and support drill-down and aggregation from individual activity through tickets to epics. Reuse existing and emerging standards; propose an upstream extension only for a demonstrated necessary gap outside existing and planned work.
 
 ## Notes
 
 - Planning effort; no production implementation or external publication is authorised by this map.
 - User's motivating case: collect conversations, model usage, subagent work, retries, and resumed work under tickets and aggregate across epics; visualise tokenomics using flame graphs.
+- User clarified that per-agent spend totals are insufficient. The destination requires detail about what the agent did, with meaningful drill-down and aggregation. Standards research alone does not satisfy this destination.
+- Depth criteria and remaining evidence are recorded in [Detailed analysis readiness](../../docs/research/deep-analysis-readiness.md). No real capture or visual prototype has yet demonstrated them.
 - Existing workplace analysis is high-level. Its raw data and implementation have not been inspected.
 - Do not assume a new exchange format is necessary. OpenTelemetry, OpenInference, FOCUS, and profile formats are candidates to evaluate, not selected architecture.
 - User decision on 2026-09-06: avoiding duplication and understanding industry direction take priority over designing a new convention. A standards-based application or integration can fully satisfy this effort; a new standard is not a required outcome.
@@ -28,10 +30,9 @@ Establish a shared understanding of the existing and emerging standards for AI u
 
 ## Not yet specified
 
-- The precise compatibility assessment across released conventions, accepted drafts, producer implementations, and the selected work scenario.
 - Migration and version handling where useful conventions are still developing; a roadmap item is not a deployed capability.
 - Any upstream clarification or extension only after existing approaches fail the selected scenario and the relevant roadmap has been checked.
-- How visual views expose accounting uncertainty and different attribution choices without implying false precision.
+- Further analysis views revealed by testing detailed traces with the user, including comparisons across repeated efforts and outcomes.
 
 ## Out of scope
 
