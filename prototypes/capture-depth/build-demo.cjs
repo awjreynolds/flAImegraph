@@ -1,0 +1,1 @@
+const fs=require('fs'),path=require('path');const d=fs.readFileSync(path.join(__dirname,'evidence.json'),'utf8');let html=fs.readFileSync(path.join(__dirname,'template.html'),'utf8');fs.writeFileSync(path.join(__dirname,'capture-depth.prototype.html'),html.replace('/* EVIDENCE */',d));
