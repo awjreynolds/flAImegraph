@@ -2,12 +2,12 @@
 
 ## Capture and import
 
-The default `flaimegraph` CLI and package root implement Usage Interchange 0.4. No rates or currency are required. Build from source with `npm ci --ignore-scripts && npm run build`, or install the release archive with `npm install /path/to/flaimegraph-0.4.1.tgz`.
+The default `flaimegraph` CLI and package root implement Usage Interchange 0.4, with optional Lifecycle Interchange 0.5 for durable capture. No rates or currency are required. Build from source with `npm ci --ignore-scripts && npm run build`, or install the release archive with `npm install /path/to/flaimegraph-0.5.0.tgz`.
 
 ```sh
 node dist/cli.js import --format codex --input session.jsonl --dataset-id work-1 --out usage.json
 node dist/cli.js merge --inputs usage-a.json,usage-b.json --out combined.json
-node dist/cli.js report --input usage.json --group-by task,model --out report.json
+node dist/cli.js report --input usage.json --group-by task,operation --out report.json
 node dist/cli.js export --input report.json --meter input_tokens --out-dir profile --svg true
 node dist/cli.js validate --kind usage --input usage.json
 ```
@@ -15,6 +15,10 @@ node dist/cli.js validate --kind usage --input usage.json
 Formats include `usage`, `legacy`, `operations`, `codex`, `pi`, `openai`, `anthropic`, `gemini` and `otel`/`otlp`. Native adapters are conservative offline readers of supported records, not integrations that intercept every provider call. Unavailable facts stay unknown. Codex cumulative/token-count snapshots do not become additive request usage. Usage is canonicalized with explicit cache and reasoning subset relationships; totals never sum subsets into their parents.
 
 A measurement is an exact nonnegative decimal string or null. Missing meters are not reported/applicable; explicit null means unavailable. Native JSON numbers have already passed through the source parser's IEEE-754 representation, so use decimal strings when long fractional precision or large counters must remain exact; unsafe integer numbers become unavailable. Only direct event/interval deltas enter additive totals. Incompatible counting bases fail rather than silently combine. The selected profile carries unknown/excluded observation IDs, and the report retains all evidence.
+
+Since package 0.5, `createUsageProfile`, CLI exports without `--group-by`, and the CLI demo default to **task → operation → observation**. Task grouping uses `task_id`, then a supplied `work_item_id`, then an explicit unassigned frame. Choose `--group-by model` for a model comparison or `--group-by execution` for recorded parent ancestry. Grouping does not establish causal parentage. The frozen native demonstration has no task/work associations; the viewer exposes this gap rather than generating task labels from model names.
+
+The viewer displays token types independently. A cache or reasoning meter appears beneath its declared parent meter, with coverage and an explicit subset label. Unknown, missing, cumulative and other excluded measurements remain distinguishable. Selecting a meter changes graph widths; it never combines cache or reasoning usage with the parent total. The task table allows inspecting the underlying receipts.
 
 ## Associate work with a ticket or custom string
 
@@ -35,7 +39,7 @@ import { createUsageRecorder, createUsageReport } from 'flaimegraph';
 
 const recorder = createUsageRecorder({
   dataset_id: 'delivery-1', source_id: 'worker-capture-1',
-  default_work_item_id: 'work-1', default_agent_id: 'worker-1',
+  default_work_item_id: 'work-1', default_task_id: 'implement-fix', default_agent_id: 'worker-1',
 });
 const call = recorder.startModelCall({
   operation_id: 'request-1',

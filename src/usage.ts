@@ -337,7 +337,7 @@ function validateObservation(value: unknown, path: string): UsageObservation {
   const item = record(value);
   assertKeys(item, ["id", "source_refs", "subject", "accounting_scope", "operation_id", "parent_id", "agent_id", "session_id", "work_item_id", "task_id", "status", "event_at", "started_at", "ended_at", "collected_at", "measurements", "dimensions"], path);
   const measurementsRecord = record(item.measurements);
-  const measurements: Record<string, UsageMeasurement> = {};
+  const measurements: Record<string, UsageMeasurement> = Object.create(null);
   for (const [meterId, measurement] of Object.entries(measurementsRecord)) measurements[meterId] = validateMeasurement(measurement, `${path}.measurements.${meterId}`);
   const result: UsageObservation = {
     id: string(item.id, `${path}.id`), source_refs: validateSourceRefs(item.source_refs, `${path}.source_refs`), subject: item.subject === null ? null : string(item.subject, `${path}.subject`),

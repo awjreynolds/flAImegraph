@@ -141,3 +141,29 @@ _Avoid_: source type, cache hit inferred from repetition.
 **Context Cost Allocation**:
 An explicitly estimated, conserving distribution of a request's selected cost under a declared allocation method. It does not establish per-source billing or the effect of removing a source.
 _Avoid_: exact source cost, causal savings.
+
+## Lifecycle and interruption
+
+**Action**:
+One identified execution attempt, such as a model request or file read, with its own parent relationship and observed lifecycle. A retry is another Action linked to the earlier attempt; resuming an observed pause does not by itself create a new Action.
+_Avoid_: Work Item, which can span many Actions and Attempts.
+
+**Lifecycle Event**:
+An immutable fact about an Action or its producer, such as starting, pausing, resuming or ending. The absence of an ending event means completion was not observed.
+_Avoid_: a mutable latest-state snapshot.
+
+**Producer Epoch**:
+One incarnation of an evidence producer within a Run. Events within an Epoch have a local order; restarting the producer begins another Epoch.
+_Avoid_: a continuation of the same local clock or sequence after restart.
+
+**Interruption**:
+A pause or cessation of progress supported by observed or reported evidence. Its reason and certainty remain distinct from its effect on an Action.
+_Avoid_: a failure or a successful completion inferred from silence.
+
+**Capture Gap**:
+A period or sequence range for which evidence is missing. A Capture Gap alone does not establish whether work stopped, the host slept, the connection failed or telemetry was lost.
+_Avoid_: a confirmed Interruption cause.
+
+**Durability Acknowledgement**:
+A statement of which persistence guarantee has been reached for evidence, qualified by the failure conditions that guarantee covers.
+_Avoid_: an unconditional promise that evidence cannot be lost.

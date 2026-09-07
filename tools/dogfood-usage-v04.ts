@@ -14,6 +14,43 @@ const root = new URL('../', import.meta.url);
 const read = async (path: string) => JSON.parse(await readFile(new URL(path, root), 'utf8'));
 const write = async (path: string, value: unknown) => writeFile(new URL(path, root), JSON.stringify(value, null, 2) + '\n');
 await mkdir(new URL('examples/dogfood/v04/', root), { recursive: true });
+
+// Profile regeneration is deliberately separate from the full dogfood build:
+// it reads the committed browser capture and only updates native derived
+// artifacts, leaving historical captures and declared benchmark fixtures byte
+// for byte untouched.
+if (process.argv.includes('--native-only')) {
+  const bundle = validateUsageBundle(await read('viewer/public/usage-native.json'));
+  const report = createUsageReport(bundle);
+  const grouping = ['task', 'operation'] as const;
+  const profile = createUsageProfile(report, { meter_id: 'input_tokens', group_by: [...grouping] });
+  const svg = renderUsageSvg(profile);
+  if (svg) {
+    await writeFile(new URL('examples/dogfood/v04/native.svg', root), svg);
+    await writeFile(new URL('viewer/public/usage-native.svg', root), svg);
+  }
+  const mobileSvg = renderUsageSvg(profile, 400);
+  if (mobileSvg) await writeFile(new URL('viewer/public/usage-native-mobile.svg', root), mobileSvg);
+  await writeFile(new URL('examples/dogfood/v04/native.folded', root), exportUsageFolded(profile));
+  await writeFile(new URL('examples/dogfood/v04/native.pprof', root), exportUsagePprof(profile));
+  const manifest = await read('examples/dogfood/v04/manifest.json') as { captures?: Record<string, Record<string, unknown>> };
+  if (!manifest.captures?.native) throw new Error('examples/dogfood/v04/manifest.json has no native capture entry');
+  manifest.captures.native = {
+    ...manifest.captures.native,
+    observations: bundle.observations.length,
+    meter: profile.meter_id,
+    total: profile.total,
+    unit: profile.unit,
+    group_by: [...profile.group_by],
+    maximum_stack_depth: Math.max(...profile.samples.map(sample => sample.stack.length)),
+    sha256: createHash('sha256').update(JSON.stringify(bundle)).digest('hex'),
+    actual_tier_observations: bundle.observations.filter(row => row.dimensions.actual_tier?.value != null).length,
+  };
+  await write('examples/dogfood/v04/manifest.json', manifest);
+  console.log(JSON.stringify({ native: manifest.captures.native }));
+  process.exit(0);
+}
+
 const native = validateUsageBundle(fromLegacyEvidence((await read('examples/dogfood/v03/native-report.json')).evidence));
 const files = operationUsage(await read('examples/dogfood/v03/files-operations.json'));
 const nativeLog = await readFile(new URL('examples/dogfood/codex/coordinator.jsonl', root), 'utf8');
@@ -22,7 +59,7 @@ assert.ok(ticketCapture.observations.length > 0);
 assert.ok(ticketCapture.observations.every(row => row.work_item_id === 'FLAI-42 / example work association'));
 await write('examples/dogfood/v04/ticket-usage.json', ticketCapture);
 const manifest: Record<string, unknown> = { schema_version: '0.4.0', basis: 'Native and file operation captures are projected from the committed v0.3 real-work evidence. Benchmark and capacity examples are illustrative declared data.', captures: {} };
-for (const [name, bundle, meter, grouping] of [['native', native, 'input_tokens', ['model']], ['files', files, 'operation_count', ['execution']]] as const) {
+for (const [name, bundle, meter, grouping] of [['native', native, 'input_tokens', ['task', 'operation']], ['files', files, 'operation_count', ['execution']]] as const) {
   const report = createUsageReport(bundle);
   assert.deepEqual(reconcileUsageBundles([bundle, bundle]), reconcileUsageBundles([bundle]));
   const profile = createUsageProfile(report, { meter_id: meter, group_by: [...grouping] });
@@ -36,7 +73,7 @@ for (const [name, bundle, meter, grouping] of [['native', native, 'input_tokens'
   await writeFile(new URL(`examples/dogfood/v04/${name}.folded`, root), exportUsageFolded(profile));
   await writeFile(new URL(`examples/dogfood/v04/${name}.pprof`, root), exportUsagePprof(profile));
   await write(`examples/dogfood/v04/${name}-analysis.json`, analyzeEfficiency(bundle));
-  (manifest.captures as Record<string, unknown>)[name] = { observations: bundle.observations.length, meter, total: profile.total, unit: profile.unit, maximum_stack_depth: Math.max(...profile.samples.map(sample => sample.stack.length)), sha256: createHash('sha256').update(JSON.stringify(bundle)).digest('hex'), actual_tier_observations: bundle.observations.filter(row => row.dimensions.actual_tier?.value != null).length };
+  (manifest.captures as Record<string, unknown>)[name] = { observations: bundle.observations.length, meter, total: profile.total, unit: profile.unit, ...(name === 'native' ? { group_by: [...profile.group_by] } : {}), maximum_stack_depth: Math.max(...profile.samples.map(sample => sample.stack.length)), sha256: createHash('sha256').update(JSON.stringify(bundle)).digest('hex'), actual_tier_observations: bundle.observations.filter(row => row.dimensions.actual_tier?.value != null).length };
 }
 const refs = [{ source_id: 'illustrative-scenario', record: 'declared-fixture' }];
 function benchmark(role: 'baseline' | 'candidate'): BenchmarkInput {

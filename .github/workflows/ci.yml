@@ -41,8 +41,9 @@ jobs:
       - run: node dist/pricing-cli.js validate --kind operation-report --input examples/dogfood/v03/native-report.json
       - run: go run cmd/pprof -top examples/dogfood/v03/files-operations.pprof
       - run: npm pack --pack-destination .local
-      - run: npm install --ignore-scripts --prefix .local/package-smoke .local/flaimegraph-0.4.1.tgz
+      - run: npm install --ignore-scripts --prefix .local/package-smoke .local/flaimegraph-0.5.0.tgz
       - run: node .local/package-smoke/node_modules/flaimegraph/dist/cli.js demo --out-dir .local/package-usage-demo
+      - run: node .local/package-smoke/node_modules/flaimegraph/dist/cli.js validate --kind lifecycle --input examples/dogfood/v05/lifecycle.json
       - run: node .local/package-smoke/node_modules/flaimegraph/dist/pricing-cli.js conformance
       - run: node .local/package-smoke/node_modules/flaimegraph/dist/pricing-cli.js demo --out-dir .local/package-demo
 

@@ -7,6 +7,7 @@ import type { UsageBundle, UsageObservation } from "../src/usage-types.js";
 import { gunzipSync } from "node:zlib";
 import { readFileSync } from "node:fs";
 import protobuf from "protobufjs";
+import { profileTree, profileBars, findProfileNode } from "../viewer/lib/profile-tree.js";
 
 const refs = [{ source_id: "source", record: "request:1" }];
 const fact = (value: string) => ({ value, evidence: "observed" as const, method: "provider response", source_refs: refs });
@@ -68,4 +69,72 @@ test("usage profiles preserve decimal quantities and unknown coverage without an
   const decoded = type.toObject(type.decode(gunzipSync(exportUsagePprof(profile))), { longs: String }) as { sample: Array<{ value: string[] }>; stringTable: string[] };
   assert.deepEqual(decoded.sample.map(row => row.value[0]).sort(), ["125", "375"]);
   assert.ok(decoded.stringTable.includes("0.001 seconds"));
+});
+
+test('default usage profiles start with tasks and operations; model grouping remains explicit', () => {
+  const report = createUsageReport(bundle());
+  const profile = createUsageProfile(report, { meter_id: 'compute_seconds' });
+  assert.deepEqual(profile.group_by, ['task', 'operation']);
+  assert.equal(profile.samples[0].stack[1].label, 'task');
+  assert.equal(profile.samples[0].stack[2].label, 'a');
+  assert.deepEqual(createUsageProfile(report, { meter_id: 'compute_seconds', group_by: ['model'] }).group_by, ['model']);
+});
+
+test('task profiles distinguish a literal missing-label task from unassigned work', () => {
+  const source = bundle();
+  source.observations = [
+    { ...observation('assigned', '1'), task_id: 'Task unassigned' },
+    { ...observation('missing', '2'), task_id: null, work_item_id: null },
+  ];
+  const profile = createUsageProfile(createUsageReport(source), { meter_id: 'compute_seconds', group_by: ['task', 'operation'] });
+  assert.notEqual(profile.samples[0].stack[1].id, profile.samples[1].stack[1].id);
+  assert.equal(profileTree(profile).children.size, 2);
+});
+
+test('interactive task widths conserve exact quantities and zoom preserves observation identity', () => {
+  const source = bundle();
+  source.observations = [
+    { ...observation('first', '9007199254740993'), task_id: 'First task' },
+    { ...observation('second', '9007199254740993'), task_id: 'Second task' },
+    { ...observation('empty', '0'), task_id: 'No recorded usage' },
+    { ...observation('unknown', null), task_id: 'Unknown usage' },
+  ];
+  const profile = createUsageProfile(createUsageReport(source), { meter_id: 'compute_seconds', group_by: ['task', 'operation'] });
+  const tree = profileTree(profile);
+  assert.equal(tree.value, 18014398509481986n);
+  assert.equal(tree.children.size, 2);
+  assert.deepEqual(profileBars(tree).filter(bar => bar.depth === 1).map(bar => bar.width), [50, 50]);
+  const leaf = profileBars(tree).find(bar => bar.node.observationIds.includes('second'))!.node;
+  assert.equal(findProfileNode(tree, leaf.key), leaf);
+  assert.equal(profileBars(leaf)[0].width, 100);
+  assert.deepEqual(leaf.observationIds, ['second']);
+  assert.equal(findProfileNode(tree, 'missing'), null);
+});
+
+test('ID groupings keep literal unassigned labels separate from missing identifiers', () => {
+  for (const grouping of ['operation', 'agent', 'session', 'work_item'] as const) {
+    const field = `${grouping}_id` as const;
+    const source = bundle();
+    source.observations = [
+      { ...observation('assigned', '1'), [field]: `${grouping} unassigned` },
+      { ...observation('missing', '2'), [field]: null },
+    ];
+    const profile = createUsageProfile(createUsageReport(source), { meter_id: 'compute_seconds', group_by: ['task', grouping] });
+    assert.notEqual(profile.samples[0].stack[2].id, profile.samples[1].stack[2].id, grouping);
+  }
+});
+
+test('tiny task remains addressable for selector zoom when its bar is hidden', () => {
+  const source = bundle();
+  source.observations = [
+    { ...observation('large', '9999'), task_id: 'Large task' },
+    { ...observation('tiny', '1'), task_id: 'Tiny task' },
+  ];
+  const tree = profileTree(createUsageProfile(createUsageReport(source), { meter_id: 'compute_seconds', group_by: ['task', 'operation'] }));
+  const tiny = [...tree.children.values()].find(node => node.label === 'Tiny task')!;
+  assert.ok(tiny);
+  assert.equal(profileBars(tree).some(bar => bar.node === tiny), false);
+  assert.equal(findProfileNode(tree, tiny.key), tiny);
+  assert.equal(profileBars(tiny)[0].width, 100);
+  assert.equal(profileBars(tiny).at(-1)!.node.observationIds[0], 'tiny');
 });

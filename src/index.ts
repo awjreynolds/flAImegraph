@@ -10,3 +10,5 @@ export * from "./usage-export.js";
 export * from "./usage-operations.js";
 export * from "./usage-import.js";
 export * from "./usage-recorder.js";
+export * from "./lifecycle.js";
+export * from "./lifecycle-journal.js";

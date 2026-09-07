@@ -1,4 +1,4 @@
-import type { UsageObservation, UsageMeter, UsageTimestamp } from './usage-types';
+import type { UsageDimensionFact, UsageObservation, UsageMeter, UsageTimestamp } from './usage-types';
 import type { Observation } from './types';
 
 export type TimingValue = { value: string; note: string };
@@ -7,6 +7,27 @@ const missing = (note: string): TimingValue => ({ value: 'Not captured', note })
 const timestamp = (fact: UsageTimestamp | null | undefined, label: string): TimingValue => fact?.value
   ? { value: fact.value, note: `${fact.evidence} · ${fact.method}` }
   : missing(fact?.method ?? `No ${label} timestamp was recorded by the source.`);
+
+const lifecycleKey = (name: string) => `flAImegraph.lifecycle.${name}`;
+const lifecycleFact = (observation: UsageObservation, name: string): UsageDimensionFact | undefined => observation.dimensions.extensions?.[lifecycleKey(name)];
+const lifecycleText = (observation: UsageObservation, name: string): string | null => {
+  const value = lifecycleFact(observation, name)?.value;
+  return typeof value === 'string' && value.length > 0 ? value : null;
+};
+const lifecycleInteger = (observation: UsageObservation, name: string): bigint | null => {
+  const value = lifecycleText(observation, name);
+  return value !== null && /^(0|[1-9][0-9]*)$/.test(value) ? BigInt(value) : null;
+};
+const lifecycleState = (observation: UsageObservation): string | null => {
+  const value = lifecycleText(observation, 'state');
+  return value && ['completion_unobserved', 'paused', 'ok', 'error', 'cancelled', 'unknown'].includes(value) ? value : null;
+};
+const lifecycleBoolean = (observation: UsageObservation, name: string): boolean | null => {
+  const fact = lifecycleFact(observation, name)?.value;
+  if (fact === true || fact === 'true') return true;
+  if (fact === false || fact === 'false') return false;
+  return null;
+};
 
 // Keep sub-millisecond precision; Date is used only for the whole-second epoch.
 function epoch(value: string): { seconds: bigint; fraction: string } | null {
@@ -36,21 +57,53 @@ function duration(start: string | null | undefined, end: string | null | undefin
     : { value: seconds(delta, places), note: 'Derived from start and end wall-clock timestamps; subject to their precision and clock adjustments.' };
 }
 export function usageTiming(observation: UsageObservation, meters: UsageMeter[]): ActionTiming {
-  const running = observation.status === 'running';
+  const state = lifecycleState(observation);
+  const lifecycle = state !== null || lifecycleFact(observation, 'clock_continuity') !== undefined || lifecycleFact(observation, 'elapsed_ns') !== undefined;
+  const openLifecycle = state === 'completion_unobserved' || state === 'paused';
+  const running = observation.status === 'running' && !lifecycle;
+  const knownWaitNs = lifecycleInteger(observation, 'known_wait_ns');
+  const qualification = lifecycleBoolean(observation, 'timing_qualified');
+  const continuity = lifecycleText(observation, 'clock_continuity');
+  const elapsedFact = lifecycleFact(observation, 'elapsed_ns');
+  const recordedElapsedNs = lifecycleInteger(observation, 'elapsed_ns');
   let elapsed = duration(observation.started_at?.value, observation.ended_at?.value, running);
   const measured = ['elapsed_ns', 'duration_ns'].map(id => ({ id, value: observation.measurements[id] })).find(({ id, value }) =>
     value?.value != null && value.evidence !== 'unknown' && ['event', 'interval'].includes(value.scope)
     && (value.aggregation === 'delta' || (id === 'elapsed_ns' && value.scope === 'interval' && value.aggregation === 'unknown'))
     && meters.some(meter => meter.id === id && ['ns', 'nanoseconds'].includes(meter.unit)))?.value;
-  if (measured?.value != null) {
+  if (recordedElapsedNs !== null) {
+    const qualificationNote = qualification === null ? 'Timing qualification was not supplied.' : qualification ? 'Timing needs review.' : 'Elapsed interval recorded.';
+    const continuityNote = continuity === 'continuous' ? 'The producer monotonic samples share one epoch.' : continuity === 'unknown' ? 'Producer clock continuity is unknown.' : 'Producer clock continuity was not supplied.';
+    const waitNote = knownWaitNs !== null && knownWaitNs > 0n ? ` Known wait: ${seconds(knownWaitNs, 9)} from explicitly closed pause intervals.` : '';
+    const methodNote = elapsedFact?.method ? ` Method: ${elapsedFact.method}.` : '';
+    elapsed = { value: seconds(recordedElapsedNs, 9), note: `Lifecycle elapsed recorded from monotonic samples; it may include waiting or pauses and is not active CPU time. ${continuityNote} ${qualificationNote}${waitNote}${methodNote}` };
+  } else if (measured?.value != null) {
     const [whole, fraction = ''] = measured.value.split('.');
     elapsed = { value: seconds(BigInt(whole + fraction), 9 + fraction.length), note: `${measured.evidence} recorded duration · ${measured.count_basis} · ${measured.method}. Overlapping action durations are not additive.` };
   }
+  if (lifecycle && recordedElapsedNs === null && measured?.value == null && continuity === 'unknown' && observation.started_at?.value && observation.ended_at?.value) {
+    elapsed = missing('Lifecycle capture spans unknown producer clock epochs; elapsed duration is not derived by subtracting wall-clock timestamps.');
+  } else if (openLifecycle && recordedElapsedNs === null && measured?.value == null) {
+    elapsed = missing(state === 'paused' ? 'The action was paused when this capture ended; no terminal elapsed interval was recorded.' : 'The action has no recorded completion; elapsed duration at capture is unknown.');
+  }
   if (running && !observation.ended_at?.value && measured?.value != null) elapsed = { value: 'In progress', note: `Recorded elapsed so far: ${elapsed.value}. Current liveness is not verified. ${elapsed.note}` };
+  let end: TimingValue;
+  if (state === 'completion_unobserved') {
+    end = { value: 'Completion unobserved', note: 'The lifecycle capture has no terminal event. Current liveness is unknown.' };
+  } else if (state === 'paused') {
+    end = { value: 'Paused at capture', note: 'The lifecycle capture records an explicit pause. It does not establish current liveness or the cause of any later gap.' };
+  } else if (running && !observation.ended_at?.value) {
+    end = { value: 'In progress', note: 'No end was recorded. This describes the captured state, not proof that the action is still running.' };
+  } else {
+    const rawEndedAt = lifecycleText(observation, 'raw_ended_at');
+    end = !observation.ended_at?.value && rawEndedAt && epoch(rawEndedAt)
+      ? { value: utc(rawEndedAt), note: 'Recorded terminal wall timestamp retained by the lifecycle capture; wall-clock ordering was not used to derive elapsed duration.' }
+      : timestamp(observation.ended_at, 'action end');
+  }
   return {
     event: timestamp(observation.event_at, 'event'),
     start: timestamp(observation.started_at, 'action start'),
-    end: running && !observation.ended_at?.value ? { value: 'In progress', note: 'No end was recorded. This describes the captured state, not proof that the action is still running.' } : timestamp(observation.ended_at, 'action end'),
+    end,
     duration: elapsed,
     collected: timestamp(observation.collected_at, 'collection'),
   };
