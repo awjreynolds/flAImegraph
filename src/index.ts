@@ -16,3 +16,4 @@ export * from "./operation-export.js";
 export * from "./operation-recorder.js";
 export * from "./native-operations.js";
 export * from "./pi-operations.js";
+export * from "./operation-budget.js";

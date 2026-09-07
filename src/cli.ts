@@ -33,7 +33,7 @@ Operation workflow (0.3 composes with cost evidence and optional context reports
   operation-import --harness codex|pi --input native.jsonl --dataset-id ID --namespace ID [--evidence evidence.json] --out operations.json
   operation-merge --inputs operations-a.json,operations-b.json --out operations.json
   operation-report --input operations.json --evidence evidence.json --valuation valuation.json [--context-report context-report.json] --out report.json
-  operation-export --input report.json --out-dir operations [--svg true]
+  operation-export --input report.json --out-dir operations [--svg true] [--rate-card rates.json]
   validate --kind operations|operation-report --input FILE
 
 Use --help to show this workflow. No command sends data to a provider.

@@ -1,7 +1,10 @@
 import type { ContextReport, ContextReportOptions, ContextBundle } from './context-types';
-import type { EvidenceBundle, Valuation } from './types';
+import type { EvidenceBundle, Valuation, RateCard } from './types';
+import type { OperationBudget } from './operation-budget';
 import type { OperationBundle, OperationReport } from './operation-types';
 export function validateContextReport(value: unknown): ContextReport;
 export function createContextReport(evidence: EvidenceBundle, valuation: Valuation, context: ContextBundle, options?: ContextReportOptions): ContextReport;
 export function validateOperationBundle(value: unknown): OperationBundle;
 export function validateOperationReport(value: unknown): OperationReport;
+export function validateRateCard(value: unknown): RateCard;
+export function createOperationBudget(report: OperationReport, rateCard?: RateCard, operationId?: string): OperationBudget;

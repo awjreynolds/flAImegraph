@@ -23,7 +23,7 @@ Object.values(schemas).forEach((text, index) => {
 });
 const compiledSchemas = standaloneCode(ajv, validators);
 await build({
-  stdin: { contents: 'export { validateContextReport, createContextReport } from "./src/context-report.ts"; export { validateOperationReport, validateOperationBundle } from "./src/operations.ts";', resolveDir: root, sourcefile: 'browser-validator.ts', loader: 'ts' },
+  stdin: { contents: 'export { validateContextReport, createContextReport } from "./src/context-report.ts"; export { validateOperationReport, validateOperationBundle } from "./src/operations.ts"; export { createOperationBudget } from "./src/operation-budget.ts"; export { validateRateCard } from "./src/core.ts";', resolveDir: root, sourcefile: 'browser-validator.ts', loader: 'ts' },
   outfile: output, bundle: true, format: 'esm', platform: 'browser', target: 'es2022', minify: true,
   define: {'import.meta.url': JSON.stringify('https://embedded.invalid/src/context-report.js')},
   plugins: [{ name: 'offline-validator-resources', setup(builder) {

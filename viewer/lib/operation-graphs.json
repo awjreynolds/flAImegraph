@@ -1,0 +1,74 @@
+{
+  "/operation-native-tokens.svg": {
+    "width": 1400,
+    "height": 158
+  },
+  "/operation-native-execution-charges.svg": {
+    "width": 1400,
+    "height": 158
+  },
+  "/operation-native-source-charges.svg": {
+    "width": 1400,
+    "height": 174
+  },
+  "/operation-native-operations.svg": {
+    "width": 1400,
+    "height": 142
+  },
+  "/operation-native-tokens-mobile.svg": {
+    "width": 400,
+    "height": 172
+  },
+  "/operation-native-execution-charges-mobile.svg": {
+    "width": 400,
+    "height": 172
+  },
+  "/operation-native-source-charges-mobile.svg": {
+    "width": 400,
+    "height": 188
+  },
+  "/operation-native-operations-mobile.svg": {
+    "width": 400,
+    "height": 156
+  },
+  "/operation-routing-tokens.svg": {
+    "width": 1400,
+    "height": 254
+  },
+  "/operation-routing-execution-charges.svg": {
+    "width": 1400,
+    "height": 254
+  },
+  "/operation-routing-source-charges.svg": {
+    "width": 1400,
+    "height": 270
+  },
+  "/operation-routing-operations.svg": {
+    "width": 1400,
+    "height": 238
+  },
+  "/operation-routing-tokens-mobile.svg": {
+    "width": 400,
+    "height": 268
+  },
+  "/operation-routing-execution-charges-mobile.svg": {
+    "width": 400,
+    "height": 268
+  },
+  "/operation-routing-source-charges-mobile.svg": {
+    "width": 400,
+    "height": 284
+  },
+  "/operation-routing-operations-mobile.svg": {
+    "width": 400,
+    "height": 252
+  },
+  "/operation-files-operations.svg": {
+    "width": 1400,
+    "height": 238
+  },
+  "/operation-files-operations-mobile.svg": {
+    "width": 400,
+    "height": 252
+  }
+}

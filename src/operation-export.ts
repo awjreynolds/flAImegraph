@@ -1,11 +1,15 @@
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { gzipSync } from "node:zlib";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { join } from "node:path";
+import { tmpdir } from "node:os";
 import protobuf from "protobufjs";
 import { OperationError, validateOperationReport } from "./operations.js";
+import { createOperationBudget } from "./operation-budget.js";
 import type { OperationReport } from "./operation-types.js";
+import type { RateCard } from "./types.js";
 import { formatMoney } from "./render.js";
 
 export interface OperationExportOptions {
@@ -15,6 +19,50 @@ export interface OperationExportOptions {
 interface Sample { frames: string[]; value: string; observation: string | null }
 const escapeFrame = (value: string) => value.replace(/[%;\s<>&"'\\{}$\u0000-\u001f\u007f]/gu, char => char === " " ? " " : [...Buffer.from(char)].map(byte => `%${byte.toString(16).toUpperCase().padStart(2, "0")}`).join(""));
 const frame = (label: string, id: string) => `${escapeFrame(label)}[${createHash("sha256").update(id).digest("hex").slice(0, 16)}]`;
+const xml = (value: string) => value.replace(/[\u0000-\u001f\u007f]/gu, character => `%${character.charCodeAt(0).toString(16).toUpperCase().padStart(2, "0")}`)
+  .replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" })[character]!);
+const identity = (name: string) => name.match(/\[([0-9a-f]{16})\]$/)?.[1] ?? null;
+const withoutIdentity = (name: string) => identity(name) === null ? name : name.slice(0, -18);
+const hiddenIdentity = (hash: string) => `\u200B${[...hash].map(nibble => "\u200C".repeat(Number.parseInt(nibble, 16) + 1)).join("\u200D")}\u200B`;
+
+interface RenderSample extends Sample { frames: string[] }
+
+function dollarSamples(samples: Sample[], currency: string, observationLabels = new Map<string, string>()): { samples: RenderSample[]; attributes: string[] } {
+  const inclusive = new Map<string, bigint>();
+  for (const sample of samples) {
+    const prefix: string[] = [];
+    const amount = BigInt(sample.value);
+    for (const name of sample.frames) {
+      prefix.push(name);
+      const key = prefix.join(";");
+      inclusive.set(key, (inclusive.get(key) ?? 0n) + amount);
+    }
+  }
+  const total = inclusive.get(samples[0]?.frames[0] ?? "") ?? 0n;
+  const rootLabel = samples[0]?.frames[0] ?? "Execution";
+  const attributes: string[] = [`\ttitle=${xml(`${formatMoney(total.toString(), currency)} ${withoutIdentity(rootLabel)} (100.00%)`)}`];
+  const rendered = samples.map(sample => {
+    const originalPrefix: string[] = [];
+    const frames = sample.frames.map(name => {
+      originalPrefix.push(name);
+      const amount = inclusive.get(originalPrefix.join(";")) ?? 0n;
+      const formatted = formatMoney(amount.toString(), currency);
+      const key = identity(name);
+      const rawLabel = withoutIdentity(name);
+      const label = rawLabel.startsWith("observation:") ? observationLabels.get(rawLabel.slice("observation:".length)) ?? "Valued observation" : rawLabel;
+      const internal = `${formatted} ${label}${key === null ? "" : hiddenIdentity(key)}`;
+      const percent = total === 0n ? "0.00" : ((Number(amount) * 100) / Number(total)).toFixed(2);
+      attributes.push(`${internal}\ttitle=${xml(`${formatted} ${label} (${percent}%)`)}`);
+      return internal;
+    });
+    return { ...sample, frames };
+  });
+  return { samples: rendered, attributes: [...new Set(attributes)] };
+}
+
+function validateSvgWidth(width: number): void {
+  if (!Number.isInteger(width) || width < 320 || width > 2400) throw new OperationError("OPERATION_SVG_WIDTH", "SVG width must be an integer from 320 through 2400");
+}
 
 function prepare(input: OperationReport, options: OperationExportOptions): { report: OperationReport; samples: Sample[]; unit: string } {
   const report = validateOperationReport(input);
@@ -76,20 +124,107 @@ export function exportOperationPprof(input: OperationReport, options: OperationE
   return gzipSync(type.encode(message).finish());
 }
 
-/** Use the vendored, unmodified FlameGraph renderer. Empty views have no width to render. */
-export function renderOperationSvg(input: OperationReport, options: OperationExportOptions): string | null {
-  const { report, samples, unit } = prepare(input, options);
+interface SvgRenderOptions {
+  title: string;
+  subtitle: string;
+  countname: string;
+  nametype: string;
+  monetary: boolean;
+  width: number;
+}
+
+function renderOperationSamplesSvg(report: OperationReport, samples: Sample[], options: SvgRenderOptions): string | null {
+  validateSvgWidth(options.width);
   const total = samples.reduce((sum, sample) => sum + BigInt(sample.value), 0n);
   if (total === 0n) return null;
   if (total > BigInt(Number.MAX_SAFE_INTEGER)) throw new OperationError("OPERATION_SVG_RANGE", "Selected total exceeds the renderer's exact integer range; use JSON, folded or pprof");
-  const title = options.measure === "operations" ? `${total} recorded operations` : `${options.projection === "source" ? "Estimated source allocation" : "Execution"} - ${formatMoney(total.toString(), report.summary.currency)} ${options.measure}`;
-  const result = spawnSync("perl", [fileURLToPath(new URL("../vendor/FlameGraph/flamegraph.pl", import.meta.url)), "--title", title,
-    "--subtitle", options.projection === "source" ? "Estimated information flow | includes output cost | not causal savings" : "Recorded execution ancestry | click to zoom; Ctrl+F to search",
-    "--countname", unit, "--nametype", options.projection === "source" ? "Attribution:" : "Operation:", "--width", "1400", "--minwidth", "0", "--hash"],
-    { input: samples.map(sample => `${sample.frames.join(";")} ${sample.value}\n`).join(""), encoding: "utf8", maxBuffer: 64 * 1024 * 1024,
-      env: { ...process.env, PERL_HASH_SEED: "0", PERL_PERTURB_KEYS: "0" } });
-  if (result.error || result.status !== 0) throw new OperationError("OPERATION_SVG", `Upstream FlameGraph renderer failed: ${result.error?.message ?? result.stderr}`);
-  return result.stdout;
+  const observationLabels = new Map(report.evidence.observations.map(observation => [observation.id, observation.kind === "model" ? "Model request cost" : "Valued observation"]));
+  const prepared = options.monetary ? dollarSamples(samples, report.summary.currency, observationLabels) : { samples, attributes: [] };
+  const temporaryDirectory = options.monetary ? mkdtempSync(join(tmpdir(), "flaimegraph-operation-svg-")) : null;
+  try {
+    const attributesFile = temporaryDirectory === null ? null : join(temporaryDirectory, "nameattr");
+    if (attributesFile !== null) writeFileSync(attributesFile, `${prepared.attributes.join("\n")}\n`, "utf8");
+    const rendererArgs = [fileURLToPath(new URL("../vendor/FlameGraph/flamegraph.pl", import.meta.url)), "--title", options.title,
+      "--subtitle", options.subtitle, "--countname", options.countname, "--nametype", options.nametype, "--width", String(options.width), "--fontsize", String(options.width < 700 ? 14 : 12), "--minwidth", "0", "--hash"];
+    if (attributesFile !== null) rendererArgs.push("--nameattr", attributesFile);
+    const result = spawnSync("perl", rendererArgs,
+      { input: prepared.samples.map(sample => `${sample.frames.join(";")} ${sample.value}\n`).join(""), encoding: "utf8", maxBuffer: 64 * 1024 * 1024,
+        env: { ...process.env, PERL_HASH_SEED: "0", PERL_PERTURB_KEYS: "0" } });
+    if (result.error || result.status !== 0) throw new OperationError("OPERATION_SVG", `Upstream FlameGraph renderer failed: ${result.error?.message ?? result.stderr}`);
+    return result.stdout;
+  } finally {
+    if (temporaryDirectory !== null) rmSync(temporaryDirectory, { recursive: true, force: true });
+  }
+}
+
+/** Use the vendored, unmodified FlameGraph renderer. Empty views have no width to render. */
+export function renderOperationSvg(input: OperationReport, options: OperationExportOptions, width = 1400): string | null {
+  const { report, samples, unit } = prepare(input, options);
+  validateSvgWidth(width);
+  const total = samples.reduce((sum, sample) => sum + BigInt(sample.value), 0n);
+  const title = width < 700
+    ? options.measure === "operations" ? `${total} operations` : formatMoney(total.toString(), report.summary.currency)
+    : options.measure === "operations" ? `${total} recorded operations` : `${options.projection === "source" ? "Estimated source allocation" : "Execution"} - ${formatMoney(total.toString(), report.summary.currency)} ${options.measure}`;
+  const subtitle = width < 700
+    ? options.measure === "operations" ? "Width = operations | tap to zoom" : options.projection === "source" ? "Estimated allocation" : "Width = cost | tap to zoom"
+    : options.projection === "source" ? "Estimated information flow | includes output cost | not causal savings" : "Recorded execution ancestry | click to zoom; Ctrl+F to search";
+  return renderOperationSamplesSvg(report, samples, {
+    title, width, monetary: options.measure !== "operations", countname: options.measure === "operations" ? unit : `${report.summary.currency} ${options.measure}`,
+    nametype: options.projection === "source" ? "Attribution:" : "Operation:",
+    subtitle,
+  });
+}
+
+const budgetCategoryLabels = {
+  input: "Uncached input",
+  cache_read: "Cached input",
+  cache_write: "Cache write",
+  output: "Output",
+} as const;
+
+/** Render positive token-category charges on their recorded execution paths. */
+export function renderOperationBudgetSvg(input: OperationReport, rateCard?: RateCard, width = 1400): string | null {
+  const report = validateOperationReport(input);
+  validateSvgWidth(width);
+  const budget = createOperationBudget(report, rateCard);
+  const spans = new Map(report.operations.spans.map(span => [span.id, span]));
+  const pathFor = (operationId: string): string[] => {
+    const path: string[] = [];
+    let current = spans.get(operationId);
+    while (current) {
+      path.unshift(current.id);
+      current = current.parent_id === null ? undefined : spans.get(current.parent_id);
+    }
+    return path;
+  };
+  const samples: Sample[] = [];
+  for (const row of budget.observations) {
+    if (row.amount_nanos === null || BigInt(row.amount_nanos) <= 0n) continue;
+    const amount = BigInt(row.amount_nanos);
+    const path = row.operation_id === null ? ["Execution_unbound"] : pathFor(row.operation_id).map(id => {
+      const span = spans.get(id)!;
+      return frame(`${span.kind}:${span.label}`, id);
+    });
+    const categories = row.categories.filter(category => BigInt(category.amount_nanos) > 0n);
+    const categoryTotal = categories.reduce((sum, category) => sum + BigInt(category.amount_nanos), 0n);
+    const unattributed = BigInt(row.unattributed_amount_nanos);
+    const rounding = BigInt(row.rounding_adjustment_nanos);
+    const hasNegativeComponent = row.categories.some(category => BigInt(category.amount_nanos) < 0n) || unattributed < 0n;
+    const componentTotal = categoryTotal + (unattributed > 0n ? unattributed : 0n) + (rounding > 0n ? rounding : 0n);
+    if (hasNegativeComponent || rounding < 0n || componentTotal !== amount) {
+      samples.push({ frames: ["Token costs", frame("Unsplit known cost", "budget:unattributed"), ...path], value: amount.toString(), observation: row.observation_id });
+      continue;
+    }
+    for (const category of categories) samples.push({ frames: ["Token costs", frame(budgetCategoryLabels[category.category], `budget:${category.category}`), ...path], value: category.amount_nanos, observation: row.observation_id });
+    if (unattributed > 0n) samples.push({ frames: ["Token costs", frame("Unsplit known cost", "budget:unattributed"), ...path], value: unattributed.toString(), observation: row.observation_id });
+    if (rounding > 0n) samples.push({ frames: ["Token costs", frame("Rounding adjustment", "budget:rounding"), ...path], value: rounding.toString(), observation: row.observation_id });
+  }
+  const total = samples.reduce((sum, sample) => sum + BigInt(sample.value), 0n);
+  return renderOperationSamplesSvg(report, samples, {
+    title: width < 700 ? formatMoney(total.toString(), budget.currency) : `Token cost - ${formatMoney(total.toString(), budget.currency)} charges`,
+    subtitle: width < 700 ? "Token category costs" : "Grouped by token category; recorded ancestry below",
+    countname: `${budget.currency} charges`, nametype: "Operation:", monetary: true, width,
+  });
 }
 
 /** Chrome Trace Event complete events on logical producer lanes, usable in Perfetto. */
