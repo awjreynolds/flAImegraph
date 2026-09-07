@@ -2,7 +2,7 @@
 
 ## Capture and import
 
-The default `flaimegraph` CLI and package root implement Usage Interchange 0.4. No rates or currency are required. Build from source with `npm ci --ignore-scripts && npm run build`, or install the release archive with `npm install /path/to/flaimegraph-0.4.0.tgz`.
+The default `flaimegraph` CLI and package root implement Usage Interchange 0.4. No rates or currency are required. Build from source with `npm ci --ignore-scripts && npm run build`, or install the release archive with `npm install /path/to/flaimegraph-0.4.1.tgz`.
 
 ```sh
 node dist/cli.js import --format codex --input session.jsonl --dataset-id work-1 --out usage.json
@@ -88,3 +88,13 @@ The input supplies resource snapshots, per-accepted demand and an explicit forec
 ## Migrate from 0.3
 
 Use `flaimegraph/pricing` for the old valuation, context-report and cost APIs. The old CLI is `flaimegraph-pricing` (`node dist/pricing-cli.js` in a checkout). The [legacy guide](legacy-usage.md) retains working examples. Old evidence can be projected through `fromLegacyEvidence`; existing monetary artifacts remain readable by the optional consumer. The default viewer now opens usage; context and legacy cost routes remain available.
+
+## Read action timing
+
+The usage and context views show **Start (UTC)**, **End (UTC)** and **Duration** separately. **Not captured** means that the source did not supply that fact; the detail view explains what is missing. A captured running action shows **In progress** until it ends. Event time and collection time remain separate and never substitute for action boundaries.
+
+Recorded elapsed duration takes precedence when available, including monotonic filesystem/operation measurements. Otherwise the usage viewer derives duration from explicit start and end timestamps, preserving fractional precision and identifying it as wall-clock-derived. Negative intervals are shown as **Cannot calculate**, not zero. Overlapping action durations must not be summed as a total elapsed runtime.
+
+Codex imports preserve timestamps and explicit action boundaries on supported nested usage records. Existing exported demonstrations with missing timestamps remain unchanged; re-import the original log to recover timestamps it contains. A legacy event timestamp alone does not establish a start time. The context view can use explicit OTLP span-start evidence and the legacy Codex `flAImegraph.timing.started_at` attribute when present. Re-import the source into a fresh dataset when adding previously omitted timing facts; do not silently merge changed observations into an older immutable capture.
+
+The [interruption resilience audit](reviews/interruption-resilience.md) explains the current replay protections, in-memory capture limitations, clock ambiguity and proposed durable recovery work. Timing support does not imply crash recovery or automatic classification of quota pauses and service outages.

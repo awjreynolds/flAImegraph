@@ -467,3 +467,11 @@ test("numeric native costs are rendered as canonical decimals with an explicit p
   assert.ok(evidence.issues.some((issue) => issue.code === "numeric_cost_precision"));
   assert.doesNotThrow(() => validateEvidence(evidence));
 });
+
+test("Codex preserves the outer record timestamp on nested usage records", () => {
+  const input = JSON.stringify({ type: "token_usage_record", timestamp: "2026-09-07T09:00:00.123Z", payload: { response_id: "timed-call", usage: { input_tokens: 10, output_tokens: 2 }, ended_at: "2026-09-07T09:00:01.456Z" } });
+  const evidence = importEvidence("codex", input, { dataset_id: "timed-import" });
+  assert.equal(evidence.observations[0]?.timestamp, "2026-09-07T09:00:00.123Z");
+  assert.equal(evidence.observations[0]?.end_time, "2026-09-07T09:00:01.456Z");
+  validateEvidence(evidence);
+});
