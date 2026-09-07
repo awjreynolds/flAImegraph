@@ -8,7 +8,7 @@ import { join } from "node:path";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const cli = (...args: string[]) => spawnSync(process.execPath,
-  ["--import", "tsx", "src/cli.ts", ...args], { cwd: root, encoding: "utf8" });
+  ["--import", "tsx", "src/pricing-cli.ts", ...args], { cwd: root, encoding: "utf8" });
 
 test("CLI explains the offline import-to-dollar-profile workflow", () => {
   const result = cli("--help");

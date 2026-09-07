@@ -5,7 +5,7 @@ import test from "node:test";
 
 import { joinWorkItemEvidence, validateValuation, validateWorkItem } from "../src/work-items.js";
 import type { EvidenceBundle, Valuation } from "../src/types.js";
-import { valueEvidence } from "../src/index.js";
+import { valueEvidence } from "../src/pricing.js";
 
 test("validateWorkItem accepts a versioned research item with an unestimated Context Points value", () => {
   const input = {

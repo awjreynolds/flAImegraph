@@ -2,7 +2,7 @@
 import { readFile, writeFile, rm } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
-import { renderOperationSvg, renderOperationBudgetSvg } from '../../dist/index.js';
+import { renderOperationSvg, renderOperationBudgetSvg } from '../../dist/pricing.js';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const publicDirectory = join(root, 'viewer/public');

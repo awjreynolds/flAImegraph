@@ -2,6 +2,8 @@
 
 **Status: experimental contract and reference implementation, checked 6 September 2026.** The immediate deliverable is an adoptable experimental standard with harness adapters, exact USD cost profiles and a visible demonstration using existing FlameGraph tooling. See the [integration evidence](implementation-evidence/integration.md) for current verification. Context Points provide the human-facing planning layer; their scale and forecasting method remain to be calibrated from evidence.
 
+**Direction update, 7 September 2026:** the [usage/pricing separation decision](adr/0001-separate-usage-from-pricing.md) makes usage capture and reports independent of monetary valuation. Pricing is one external consumer; [efficiency analysis and session benchmarking](efficiency-analysis.md) are others, supporting model-selection comparisons and delivery-runway forecasts under subscription or metered capacity constraints. Version 0.4 implements usage capture/import/report/export, custom work identifiers, a usage viewer, deterministic session/benchmark analysis and capacity scenarios. Automatic routing and calibrated model-selection predictions remain future work. The sequence below records the original reference implementation plan; monetary profiles are no longer a prerequisite for usage inspection or outcome analysis.
+
 ## Intent and boundaries
 
 The project connects five questions without collapsing them into one number:

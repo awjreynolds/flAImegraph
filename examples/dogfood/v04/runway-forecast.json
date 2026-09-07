@@ -1,0 +1,24 @@
+{
+  "schema_version": "0.4.0",
+  "status": "limited",
+  "accepted_work": "11",
+  "limiting_snapshot_id": "example-input-pool",
+  "horizon_start": "2026-09-07T12:00:00Z",
+  "horizon_end": "2026-09-08T12:00:00Z",
+  "considered_snapshots": [
+    "example-input-pool",
+    "example-output-pool"
+  ],
+  "limitations": [
+    "snapshot example-input-pool uses derived per-accepted demand",
+    "snapshot example-input-pool uses declared remaining-capacity evidence",
+    "snapshot example-output-pool uses declared per-accepted demand",
+    "snapshot example-output-pool uses declared remaining-capacity evidence"
+  ],
+  "source_refs": [
+    {
+      "source_id": "illustrative-scenario",
+      "record": "declared-fixture"
+    }
+  ]
+}

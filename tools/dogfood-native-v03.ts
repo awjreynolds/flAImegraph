@@ -20,7 +20,7 @@ import {
   type Source,
   type SourceRef,
   type Valuation,
-} from "../src/index.js";
+} from "../src/pricing.js";
 import {
   createOperationReport,
   reconcileOperationBundles,

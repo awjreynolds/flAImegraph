@@ -1,0 +1,199 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://flaimegraph.dev/spec/0.4/schemas/efficiency-input.schema.json",
+  "title": "flAImegraph efficiency analysis input 0.4.0",
+  "$comment": "Wall-clock interval union is reserved for usage meter identities elapsed_ns and elapsed_seconds. Generic duration, audio, video and compute meters remain additive resources even when their descriptions mention elapsed time.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["usage"],
+  "properties": {
+    "usage": {
+      "description": "A UsageBundle or UsageReport from the usage-only 0.4 contract.",
+      "type": "object",
+      "required": ["schema_version", "dataset_id"],
+      "properties": {
+        "schema_version": { "const": "0.4.0" },
+        "dataset_id": { "$ref": "#/$defs/id" },
+        "bundle": { "type": "object" },
+        "sources": { "type": "array" },
+        "meters": { "type": "array" },
+        "observations": { "type": "array" }
+      }
+    },
+    "work_items": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/workItem" }
+    },
+    "cohort": { "$ref": "#/$defs/cohort" },
+    "benchmarks": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/benchmark" }
+    },
+    "capacity_snapshots": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/capacity" }
+    },
+    "context_occurrences": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/contextOccurrence" }
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "minLength": 1 },
+    "evidence": { "enum": ["observed", "declared", "derived", "estimated", "unknown"] },
+    "status": { "enum": ["planned", "in_progress", "accepted", "failed", "interrupted", "capped", "cancelled", "unknown"] },
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "record"],
+      "properties": { "source_id": { "$ref": "#/$defs/id" }, "record": { "$ref": "#/$defs/id" } }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["revision"],
+      "properties": {
+        "revision": { "$ref": "#/$defs/id" },
+        "version": { "$ref": "#/$defs/id" },
+        "description": { "type": "string", "minLength": 1 },
+        "acceptance_criteria": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "acceptance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "evidence"],
+      "properties": {
+        "status": { "$ref": "#/$defs/status" },
+        "version": { "$ref": "#/$defs/id" },
+        "evidence": { "$ref": "#/$defs/evidence" },
+        "recorded_at": { "type": "string", "format": "date-time" },
+        "quality_passed": { "type": ["boolean", "null"] },
+        "source_refs": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" } }
+      }
+    },
+    "attempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["attempt_id", "status"],
+      "properties": {
+        "attempt_id": { "$ref": "#/$defs/id" },
+        "observation_ids": { "type": "array", "items": { "$ref": "#/$defs/id" } },
+        "status": { "$ref": "#/$defs/status" },
+        "kind": { "enum": ["initial", "retry", "escalation", "review", "rework", "delegation", "unknown"] },
+        "retry_of": { "$ref": "#/$defs/id" },
+        "escalated_from": { "$ref": "#/$defs/id" },
+        "source_refs": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" } }
+      }
+    },
+    "workItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["work_item_id", "scope", "acceptance"],
+      "properties": {
+        "work_item_id": { "$ref": "#/$defs/id" },
+        "task_id": { "$ref": "#/$defs/id" },
+        "scope": { "$ref": "#/$defs/scope" },
+        "acceptance": { "$ref": "#/$defs/acceptance" },
+        "attempts": { "type": "array", "items": { "$ref": "#/$defs/attempt" } },
+        "classification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["value", "evidence"],
+          "properties": { "value": { "$ref": "#/$defs/id" }, "evidence": { "$ref": "#/$defs/evidence" }, "method": { "$ref": "#/$defs/id" }, "source_refs": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" } } }
+        },
+        "source_refs": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" } }
+      }
+    },
+    "cohort": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cohort_id": { "$ref": "#/$defs/id" },
+        "task_class": { "$ref": "#/$defs/id" },
+        "scope_revision": { "$ref": "#/$defs/id" },
+        "acceptance_version": { "$ref": "#/$defs/id" },
+        "work_item_ids": { "type": "array", "items": { "$ref": "#/$defs/id" } }
+      }
+    },
+    "quantity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["meter_id", "unit", "quantity", "evidence"],
+      "properties": {
+        "meter_id": { "$ref": "#/$defs/id" },
+        "unit": { "$ref": "#/$defs/id" },
+        "quantity": { "type": "string", "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$" },
+        "evidence": { "$ref": "#/$defs/evidence" },
+        "source_refs": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" } }
+      }
+    },
+    "benchmark": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["benchmark_id", "role", "cohort", "conditions", "model_config", "evaluation", "samples", "provenance"],
+      "properties": {
+        "benchmark_id": { "$ref": "#/$defs/id" },
+        "role": { "enum": ["baseline", "candidate", "control"] },
+        "cohort": { "type": "object" },
+        "conditions": { "type": "object" },
+        "model_config": { "type": "object" },
+        "evaluation": { "enum": ["held_out", "controlled", "historical", "declared"] },
+        "samples": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sample_id", "task_id", "accepted", "meters", "source_refs"],
+            "properties": {
+              "sample_id": { "$ref": "#/$defs/id" },
+              "task_id": { "$ref": "#/$defs/id" },
+              "scope_revision": { "$ref": "#/$defs/id" },
+              "acceptance_version": { "$ref": "#/$defs/id" },
+              "accepted": { "type": ["boolean", "null"] },
+              "passed": { "type": ["boolean", "null"] },
+              "passed_score": { "type": ["string", "null"] },
+              "quality": { "type": "object" },
+              "latency_ns": { "type": ["string", "null"], "pattern": "^(0|[1-9][0-9]*)$" },
+              "attempts": { "type": "string", "pattern": "^(0|[1-9][0-9]*)$" },
+              "meters": { "type": "array", "items": { "$ref": "#/$defs/quantity" } },
+              "source_refs": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" } }
+            }
+          }
+        },
+        "analysis_overhead": { "type": "array", "items": { "$ref": "#/$defs/quantity" } },
+        "provenance": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" }, "minItems": 1 }
+      }
+    },
+    "capacity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["snapshot_id", "meter_id", "unit", "remaining", "scope", "scope_id", "workload_id", "observed_at", "reset_at", "evidence", "coverage", "source_refs"],
+      "properties": {
+        "snapshot_id": { "$ref": "#/$defs/id" },
+        "meter_id": { "$ref": "#/$defs/id" },
+        "unit": { "$ref": "#/$defs/id" },
+        "remaining": { "type": ["string", "null"], "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$" },
+        "scope": { "enum": ["session", "account", "shared_pool"] },
+        "scope_id": { "$ref": "#/$defs/id" },
+        "workload_id": { "type": ["string", "null"], "minLength": 1 },
+        "observed_at": { "type": "string", "format": "date-time" },
+        "reset_at": { "type": ["string", "null"], "format": "date-time" },
+        "evidence": { "$ref": "#/$defs/evidence" },
+        "coverage": { "enum": ["complete", "partial", "unknown"] },
+        "source_refs": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" }, "minItems": 1 }
+      }
+    },
+    "contextOccurrence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "revision_id"],
+      "properties": {
+        "source_id": { "$ref": "#/$defs/id" },
+        "revision_id": { "$ref": "#/$defs/id" },
+        "evidence": { "$ref": "#/$defs/evidence" },
+        "source_refs": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" } }
+      }
+    }
+  }
+}

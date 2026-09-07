@@ -24,12 +24,12 @@ import {
   validateHarnessProfile,
   validateWorkItem,
   valueEvidence,
-} from "../src/index.js";
+} from "../src/pricing.js";
 import type {
   CaptureState,
   ContextBundle,
   HarnessProfile,
-} from "../src/index.js";
+} from "../src/pricing.js";
 import type { EvidenceBundle, Valuation } from "../src/types.js";
 import type { WorkItem, WorkItemEvidenceRecord } from "../src/work-items.js";
 

@@ -218,7 +218,7 @@ test("token budget SVG keeps category dollars on the recorded operation path", (
 
 test("CLI validates, reports and exports operation captures while protecting source artifacts", () => {
   const dir = mkdtempSync(join(tmpdir(), "operation-cli-"));
-  const cli = (...args: string[]) => spawnSync(process.execPath, ["--import", "tsx", "src/cli.ts", ...args], { encoding: "utf8" });
+  const cli = (...args: string[]) => spawnSync(process.execPath, ["--import", "tsx", "src/pricing-cli.ts", ...args], { encoding: "utf8" });
   try {
     const operations = join(dir, "operations.json"), evidenceFile = join(dir, "evidence.json"), valuationFile = join(dir, "valuation.json"), reportFile = join(dir, "report.json");
     const evidence = costEvidence();
@@ -237,7 +237,7 @@ test("CLI validates, reports and exports operation captures while protecting sou
 
 test("CLI imports native operations with explicit dataset identity and protects the native input", () => {
   const dir = mkdtempSync(join(tmpdir(), "native-operation-cli-"));
-  const cli = (...args: string[]) => spawnSync(process.execPath, ["--import", "tsx", "src/cli.ts", ...args], { encoding: "utf8" });
+  const cli = (...args: string[]) => spawnSync(process.execPath, ["--import", "tsx", "src/pricing-cli.ts", ...args], { encoding: "utf8" });
   try {
     const input = join(dir, "native.jsonl"), output = join(dir, "operations.json");
     const fixture = readFileSync("test/fixtures/operations-codex.jsonl", "utf8");

@@ -1,0 +1,84 @@
+{
+  "snapshots": [
+    {
+      "snapshot_id": "example-input-pool",
+      "meter_id": "input_tokens",
+      "unit": "tokens",
+      "remaining": "10000",
+      "scope": "account",
+      "scope_id": "illustrative-account",
+      "workload_id": "illustrative-code-edit",
+      "observed_at": "2026-09-07T12:00:00Z",
+      "reset_at": "2026-09-09T00:00:00Z",
+      "evidence": "declared",
+      "coverage": "complete",
+      "source_refs": [
+        {
+          "source_id": "illustrative-scenario",
+          "record": "declared-fixture"
+        }
+      ]
+    },
+    {
+      "snapshot_id": "example-output-pool",
+      "meter_id": "output_tokens",
+      "unit": "tokens",
+      "remaining": "3000",
+      "scope": "account",
+      "scope_id": "illustrative-account",
+      "workload_id": "illustrative-code-edit",
+      "observed_at": "2026-09-07T12:00:00Z",
+      "reset_at": "2026-09-09T00:00:00Z",
+      "evidence": "declared",
+      "coverage": "complete",
+      "source_refs": [
+        {
+          "source_id": "illustrative-scenario",
+          "record": "declared-fixture"
+        }
+      ]
+    }
+  ],
+  "demand": {
+    "workload_id": "illustrative-code-edit",
+    "scope_id": "illustrative-account",
+    "accepted_count": "3",
+    "per_accepted": [
+      {
+        "meter_id": "input_tokens",
+        "unit": "tokens",
+        "rate": {
+          "numerator": "840",
+          "denominator": "1"
+        },
+        "evidence": "derived",
+        "source_refs": [
+          {
+            "source_id": "illustrative-scenario",
+            "record": "declared-fixture"
+          }
+        ]
+      },
+      {
+        "meter_id": "output_tokens",
+        "unit": "tokens",
+        "rate": {
+          "numerator": "240",
+          "denominator": "1"
+        },
+        "evidence": "declared",
+        "source_refs": [
+          {
+            "source_id": "illustrative-scenario",
+            "record": "declared-fixture"
+          }
+        ]
+      }
+    ]
+  },
+  "options": {
+    "now": "2026-09-07T12:00:00Z",
+    "horizon_end": "2026-09-08T12:00:00Z",
+    "allow_unverified_demand": true
+  }
+}

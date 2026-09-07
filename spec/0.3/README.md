@@ -33,12 +33,12 @@ Source allocation is a separate estimated information-flow projection. It reuses
 ## Commands and examples
 
 ```sh
-node dist/cli.js operation-import --harness codex --input native.jsonl --dataset-id work-1 --namespace root-run --evidence evidence.json --out operations.json
-node dist/cli.js validate --kind operations --input operations.json
-node dist/cli.js operation-report --input operations.json --evidence evidence.json --valuation valuation.json --out report.json
-node dist/cli.js operation-export --input report.json --out-dir operation-views --svg true
-node dist/cli.js operation-export --input report.json --rate-card rates.json --out-dir budget-views --svg true
-node dist/cli.js operation-merge --inputs capture-a.json,capture-b.json --out operations.json
+node dist/pricing-cli.js operation-import --harness codex --input native.jsonl --dataset-id work-1 --namespace root-run --evidence evidence.json --out operations.json
+node dist/pricing-cli.js validate --kind operations --input operations.json
+node dist/pricing-cli.js operation-report --input operations.json --evidence evidence.json --valuation valuation.json --out report.json
+node dist/pricing-cli.js operation-export --input report.json --out-dir operation-views --svg true
+node dist/pricing-cli.js operation-export --input report.json --rate-card rates.json --out-dir budget-views --svg true
+node dist/pricing-cli.js operation-merge --inputs capture-a.json,capture-b.json --out operations.json
 ```
 
 Use cost evidence from the exact same native bytes; import and value it using the existing 0.1 commands. Supplying `--context-report` to `operation-report` enables estimated source allocation when matching manifests and explicit links exist. Outputs cannot overwrite input artifacts, including through aliases.

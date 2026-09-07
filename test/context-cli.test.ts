@@ -5,7 +5,7 @@ import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-const cli = (...args: string[]) => spawnSync(process.execPath, ["--import", "tsx", "src/cli.ts", ...args], { encoding: "utf8" });
+const cli = (...args: string[]) => spawnSync(process.execPath, ["--import", "tsx", "src/pricing-cli.ts", ...args], { encoding: "utf8" });
 test("CLI emits and validates an honest versioned harness profile template", () => {
   const dir = mkdtempSync(join(tmpdir(), "context-cli-"));
   try {

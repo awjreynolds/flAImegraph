@@ -1,0 +1,65 @@
+{
+  "policy_id": "illustrative-routing",
+  "policy_version": "1",
+  "benchmark_id": "illustrative-candidate",
+  "status": "derived",
+  "expected_per_accepted": [
+    {
+      "meter_id": "input_tokens",
+      "unit": "tokens",
+      "rate": {
+        "numerator": "840",
+        "denominator": "1"
+      },
+      "evidence": "derived",
+      "source_refs": [
+        {
+          "source_id": "illustrative-scenario",
+          "record": "declared-fixture"
+        }
+      ]
+    },
+    {
+      "meter_id": "output_tokens",
+      "unit": "tokens",
+      "rate": {
+        "numerator": "240",
+        "denominator": "1"
+      },
+      "evidence": "declared",
+      "source_refs": [
+        {
+          "source_id": "illustrative-scenario",
+          "record": "declared-fixture"
+        }
+      ]
+    }
+  ],
+  "expected_attempts_per_accepted": {
+    "numerator": "4",
+    "denominator": "3"
+  },
+  "analysis_overhead": [
+    {
+      "meter_id": "input_tokens",
+      "unit": "tokens",
+      "quantity": "120",
+      "evidence": "declared",
+      "source_refs": [
+        {
+          "source_id": "illustrative-scenario",
+          "record": "declared-fixture"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "candidate scenario is derived from a historical or declared benchmark, not held-out validation"
+  ],
+  "source_refs": [
+    {
+      "source_id": "illustrative-scenario",
+      "record": "declared-fixture"
+    }
+  ]
+}

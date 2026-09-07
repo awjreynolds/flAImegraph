@@ -1,7 +1,7 @@
 {
   "name": "flaimegraph",
-  "version": "0.3.1",
-  "description": "Open agent cost, context and operation interchange with deep execution profiles",
+  "version": "0.4.0",
+  "description": "Open usage-first AI profiling, capture and interchange; optional analysis and pricing consumers",
   "repository": {
     "type": "git",
     "url": "https://github.com/awjreynolds/flAImegraph.git"
@@ -16,10 +16,22 @@
     "node": ">=22.0.0"
   },
   "bin": {
-    "flaimegraph": "dist/cli.js"
+    "flaimegraph": "dist/cli.js",
+    "flaimegraph-pricing": "dist/pricing-cli.js"
   },
   "exports": {
-    ".": "./dist/index.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./pricing": {
+      "types": "./dist/pricing.d.ts",
+      "import": "./dist/pricing.js"
+    },
+    "./analysis": {
+      "types": "./dist/analysis.d.ts",
+      "import": "./dist/analysis.js"
+    }
   },
   "types": "dist/index.d.ts",
   "files": [
@@ -40,7 +52,8 @@
     "tools/dogfood-v03.ts",
     "tools/dogfood-native-v03.ts",
     "tools/demo-operation-routing.ts",
-    "tools/verify-pi-operations.ts"
+    "tools/verify-pi-operations.ts",
+    "tools/dogfood-usage-v04.ts"
   ],
   "scripts": {
     "build": "tsc",

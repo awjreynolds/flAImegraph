@@ -1,117 +1,90 @@
-# Using and implementing Agent Cost Interchange 0.1
+# Usage-first adoption guide
 
-flAImegraph's reference CLI reads explicit files and writes local artifacts. It does not discover private session directories, contact model providers, or need credentials. Use Node.js 22+, install the locked dependencies with `npm ci --ignore-scripts`, and run `npm run build`. Perl renders SVG; optional `rsvg-convert` renders PNG. See the root README for the complete frozen demo.
+## Capture and import
 
-## Import and combine evidence
-
-```sh
-node dist/cli.js capabilities
-node dist/cli.js import --harness codex --input examples/dogfood/codex/coordinator.jsonl --dataset-id my-work --agent coordinator --work-item my-task --out .local/coordinator.json
-node dist/cli.js import --harness codex --input examples/dogfood/codex/telemetry.jsonl --dataset-id my-work --agent telemetry --work-item my-task --out .local/telemetry.json
-node dist/cli.js merge --inputs .local/coordinator.json,.local/telemetry.json --out .local/evidence.json
-node dist/cli.js validate --input .local/evidence.json
-```
-
-Supported adapter names are `codex`, `pi`, `omp`, `claude`, `gemini`, `opencode`, `otel`, and `copilot`. Pi includes legacy transcripts and the inspected v4 storage export. Formats and coverage differ: inspect the [adapter matrix](adapters.md) before choosing a source. These are format/fixture-tested adapters, not a claim that every product/version has been live-tested.
-
-Use the same `--dataset-id` when importing files that belong in one dataset. `merge` rejects different dataset IDs and conflicting observations. Its comma-separated list requires paths without commas; use the JavaScript API for arbitrary path names. An adapter's source identity is part of its observation namespace. Exact replays are idempotent, but unrelated exporters of the same provider call need an explicit identity/correspondence policy; equal quantities alone cannot deduplicate calls across sources.
-
-The default native source identity includes the input artifact digest. **Do not sum overlapping snapshots of the same log as independent captures.** This version does not automatically reconcile overlapping files with different source identities. Use one capture per source scope, or an upstream producer that supplies canonical observation identities. Reusing `--source-id` for different file contents produces a source metadata conflict; it is not an overlap-resolution mechanism.
-
-Missing values remain unavailable; retained snapshots, aggregates and tools are not automatically additional model charges. Errors are JSON objects on stderr, with exit status 1 for invalid data/execution and 2 for CLI usage. Successful commands write JSON summaries to stdout. Input/output aliases are rejected; output artifacts are replaced atomically, so use a distinct report directory when retaining previous runs.
-
-## Value under an explicit basis
+The default `flaimegraph` CLI and package root implement Usage Interchange 0.4. No rates or currency are required. Build from source with `npm ci --ignore-scripts && npm run build`, or install the release archive with `npm install /path/to/flaimegraph-0.4.0.tgz`.
 
 ```sh
-node dist/cli.js value --input .local/evidence.json --rate-card examples/rates/enterprise-astra-scenario.json --out .local/valuation.json
+node dist/cli.js import --format codex --input session.jsonl --dataset-id work-1 --out usage.json
+node dist/cli.js merge --inputs usage-a.json,usage-b.json --out combined.json
+node dist/cli.js report --input usage.json --group-by task,model --out report.json
+node dist/cli.js export --input report.json --meter input_tokens --out-dir profile --svg true
+node dist/cli.js validate --kind usage --input usage.json
 ```
 
-This card is an explicit public Enterprise scenario for the demo's recorded Astra/Codex setting. It is not a generic price list for other models or a historical bill. The [valuation specification](../spec/0.1/valuation.md) defines exact quantities, disjoint cache buckets, HALF_EVEN rounding, model/provider/product/date matching and incomplete prices. Create a versioned card for the scenario you intend; missing matches stay unpriced. A new valuation preserves the original recorded cost and source usage.
+Formats include `usage`, `legacy`, `operations`, `codex`, `pi`, `openai`, `anthropic`, `gemini` and `otel`/`otlp`. Native adapters are conservative offline readers of supported records, not integrations that intercept every provider call. Unavailable facts stay unknown. Codex cumulative/token-count snapshots do not become additive request usage. Usage is canonicalized with explicit cache and reasoning subset relationships; totals never sum subsets into their parents.
 
-For a source with recorded monetary amounts, use `--mode recorded` instead of `--rate-card`. Recorded bases and currencies cannot be silently mixed into one profile. A known subtotal can remain useful when `complete` is false; inspect `issues` and `assumptions` in the valuation, not just the number.
+A measurement is an exact nonnegative decimal string or null. Missing meters are not reported/applicable; explicit null means unavailable. Native JSON numbers have already passed through the source parser's IEEE-754 representation, so use decimal strings when long fractional precision or large counters must remain exact; unsafe integer numbers become unavailable. Only direct event/interval deltas enter additive totals. Incompatible counting bases fail rather than silently combine. The selected profile carries unknown/excluded observation IDs, and the report retains all evidence.
 
-## Export and inspect costs
+## Associate work with a ticket or custom string
+
+`work_item_id` is a developer-defined string whose meaning is local to the dataset/project. It can be a Jira key, GitHub issue URL or a label such as `Customer A / cache repair`. No ticket-system connection or global registry is required. It identifies the overall work; `task_id` can still identify implementation, test and review tasks beneath it.
 
 ```sh
-node dist/cli.js export --input .local/evidence.json --valuation .local/valuation.json --out-dir .local/report
-node dist/cli.js render --input .local/report/profile.json --out-dir .local/report
-go tool pprof -top .local/report/cost.pprof
+node dist/cli.js import --format codex --input session.jsonl --dataset-id my-repo --work-item "PROJ-142 / cache repair" --out usage.json
+node dist/cli.js report --input usage.json --group-by work_item,model --out report.json
+node dist/cli.js export --input report.json --meter input_tokens --group-by work_item,agent --out-dir ticket-profile --svg true
 ```
 
-Default attribution is Work Item → agent → model → operation → observation. This is an attribution grouping, not an assertion that those categories are execution stack frames. Each leaf identifies a source observation that can be located in `evidence.json`. Set `--group-by work_item,agent,model` for a shallower graph or choose `session` and `turn` where the source supplies them. `--root-label` sets the root description. Unknown dimensions remain explicitly unknown.
+Set `default_work_item_id` on the recorder to tag its events, or set `work_item_id` per event when switching work. Native-log import accepts `--work-item`; it preserves a source mapping and rejects a conflicting assignment. The viewer offers **Work identifier for native log**, grouping and search. Already canonical usage reports retain their original immutable IDs and associations. If a session covers multiple tickets, attach the identifier at each work boundary or import separately bounded captures; a whole-log label does not discover those boundaries automatically. Work labels are metadata and may appear in exported graphs, so use a suitable public identifier when sharing a capture.
 
-Artifacts:
-
-| File | Meaning |
-| --- | --- |
-| `profile.json` | Exact selected costs, attribution paths, basis, coverage, excluded IDs and frame identity manifest |
-| `cost.folded` | Nonnegative integer nano-currency folded stacks for existing tools |
-| `cost.pprof` | Gzip pprof with a declared cost sample type, unit, labels and binding metadata |
-| `evidence.otlp.json` | OTLP span projection with standard GenAI fields and namespaced bridge metadata; not a lossless replacement for the evidence bundle |
-| `export.json` | Profile/evidence/valuation identities and export digests |
-| `cost.svg` | Interactive output from the pinned, unmodified Brendan Gregg FlameGraph renderer |
-| `render.json` | Renderer provenance, monetary total and SVG digest |
-| `render.folded`, `render.nameattr` | Renderer inputs, with per-prefix exact currency tooltips |
-
-Keep `profile.json`, `evidence.json` and `valuation.json` with any shared graph: generic viewers may omit the coverage/basis metadata. The graph's horizontal position is not time; width is cost. Colors do not claim cost causality or model quality. The renderer uses nonnegative integer weights and rejects totals beyond its exact integer range; pprof separately enforces signed int64 bounds. Exact JSON remains available when a target format cannot represent a value. A zero-known-cost profile is valid interchange data but has no positive-width flame graph.
-
-Shared work can be apportioned with `export --allocations allocations.json`. The file maps observation IDs to arrays of `{ "work_item_id": "task-a", "weight": "2" }`. Positive integer weights and deterministic largest remainders conserve every nano-currency unit. Preserve the allocation input with the report. `--cost-view charges` is the default; `credits` shows credit magnitudes, and `net` requires explicitly linked adjustments with a nonnegative resulting stack. See the [profile contract](../spec/0.1/profiles.md).
-
-## Record Context Points and acceptance
-
-A Work Item sidecar preserves scope revisions, versioned estimates, Attempts and the Acceptance Outcome. Start with `examples/work-items/golden.json`, which is explicitly synthetic. Declare your local point scale and method; use `null` when an estimate is unavailable. Estimates retain their creation time and whether they were made before, during or after execution. Known timestamps must support that declaration, and missing timing evidence remains explicit.
-
-```sh
-node dist/cli.js validate --kind work-item --input examples/work-items/golden.json
-node dist/cli.js value --input examples/golden/evidence.json --mode recorded --out .local/golden-valuation.json
-node dist/cli.js work-item --input examples/work-items/golden.json --evidence examples/golden/evidence.json --valuation .local/golden-valuation.json --out .local/work-item-evidence.json
-```
-
-The joined record reports only the selected observations' valuation, preserving the full dataset valuation separately. The real Codex demo includes a retrospective Work Item record with an unavailable point estimate and unknown Acceptance Outcome; it is not a calibration example. See the [Work Item contract](../spec/0.1/work-items.md) for scope history, timing checks and interpretation.
-
-## Use the library or implement another consumer
+## Instrument a producer
 
 ```ts
-import { importEvidence, validateEvidence, valueEvidence, createCostProfile, exportPprof } from "flaimegraph";
+import { createUsageRecorder, createUsageReport } from 'flaimegraph';
 
-const evidence = validateEvidence(importEvidence("pi", nativeJsonl, {
-  dataset_id: "delivery-42", work_item_id: "task-42",
-}));
-const valuation = valueEvidence(evidence, { mode: "recorded" });
-const profile = createCostProfile(evidence, valuation);
-const gzipPprofBytes = exportPprof(profile);
+const recorder = createUsageRecorder({
+  dataset_id: 'delivery-1', source_id: 'worker-capture-1',
+  default_work_item_id: 'work-1', default_agent_id: 'worker-1',
+});
+const call = recorder.startModelCall({
+  operation_id: 'request-1',
+  request: { model: 'configured-model', service_tier: 'priority', reasoning: { effort: 'high' } },
+});
+// Execute the provider call in the application, then supply its actual response metadata.
+call.end({
+  response: { actual_model: 'response-model', actual_tier: 'standard' },
+  measurements: {
+    input_tokens: '1200', cache_read_input_tokens: '1000',
+    output_tokens: '80', reasoning_output_tokens: '40',
+  },
+});
+const report = createUsageReport(recorder.snapshot());
 ```
 
-The package archive can be installed from the GitHub release with `npm install /path/to/flaimegraph-0.1.0.tgz`; registry publication is not required. The CLI can then be run with `npx flaimegraph`. The library seams do no provider I/O. Filesystem/rendering helpers belong to the CLI implementation.
+Use explicit parent observation IDs for relationships between usage events. The existing `OperationRecorder` provides asynchronous nested operation scopes, including filesystem IO. `operationUsage()` converts its bundle to usage observations while retaining parent ancestry; inclusive elapsed intervals remain non-additive. Node operation instrumentation does not expose the internals of an opaque shell command.
 
-An independent producer can start with [the worked evidence JSON](../examples/golden/evidence.json) and the [versioned schemas](../spec/0.1/schemas/). Follow the semantic contracts as well as structural schemas. The portable [accounting vectors](../spec/0.1/fixtures/accounting.json) contain literal expectations and invalid cases; compare your consumer with them. `node dist/cli.js conformance` executes those vectors against this reference implementation and checks profile/folded conservation. `npm run check` also runs adversarial adapter, allocation, identity and profile tests. Independent Go pprof and upstream FlameGraph checks exercise existing consumers; they do not establish independent implementation of this bridge specification.
+Producer event IDs are immutable at reconciliation. Finish a lifecycle before publishing that event; a running snapshot followed by a changed completed event is not an append-only replay. Use separate producer source IDs for independent capture streams. Loss counters are cumulative per source; merging takes each source maximum and sums independent sources. Multi-source captures with drops must provide `coverage.dropped_by_source`.
 
-Propose changes through a repository issue with a concrete failing example and compatibility impact. Declare conformance classes, source versions and limitations. Experimental version changes follow the [evolution policy](../spec/0.1/conformance.md); external adoption and calibration are separate evidence gates. Context Points remain a [versioned local planning proposal](context-points.md), with no universal points-to-token or points-to-dollar conversion.
+Keep raw prompts, results and credentials out of custom metadata. Built-in capture paths omit raw payloads and reject known sensitive metadata keys, but arbitrary caller-supplied labels/values remain a producer trust boundary.
 
-## Context and harness profiles (0.2)
-
-A context report joins 0.1 usage and valuation with a 0.2 context sidecar. Open a report in the Context Explorer to inspect request order, context origin and representation, repeated source revisions, summaries, capture gaps, effective harness settings and exact request cost. Report loading happens in the browser; file contents are not uploaded.
+## Analyze accepted work
 
 ```sh
-node dist/cli.js harness-profile --harness codex --version 0.153.4 --out .local/harness.json
-node dist/cli.js capture --harness codex --input session.jsonl --namespace my-run --dataset-id my-work --out .local/capture.json --evidence-out .local/evidence.json
-# Repeat after complete JSONL records have been appended; exact replay is idempotent.
-node dist/cli.js capture --input session.jsonl --state .local/capture.json --out .local/capture.json --evidence-out .local/evidence.json
-node dist/cli.js value --input .local/evidence.json --mode recorded --out .local/valuation.json
+node dist/cli.js analyze --input report.json --options analysis-options.json --out analysis.json
 ```
 
-A supplied version or model in `harness-profile` is a producer declaration. Observed facts need source references. Recorded valuation leaves missing prices unvalued; a zero known subtotal does not mean free work.
+Options attach `work_items`, task/scope/acceptance cohorts, attempts, benchmarks, candidate policies and capacity snapshots. See the exported types in `flaimegraph/analysis` and [the efficiency input schema](../spec/0.4/schemas/efficiency-input.schema.json). Session totals remain visible without acceptance metadata; per-accepted efficiency does not exist until outcomes are supplied. Attempts can describe retries, escalation, review and rework, and shared observation ownership is rejected.
 
-`context-import` reconstructs a bounded Pi transcript history, or explicit unavailable Codex context, from the exact input artifact named by `--source-id` in an imported EvidenceBundle. It checks the artifact SHA-256. Capture state's merged evidence can reference several immutable prefixes; select the exact matching source, or use `import` for a single input. Pi transcript history is partial and is not a certified final provider request.
+## External benchmark logs
 
 ```sh
-node dist/cli.js context-import --harness codex --input session.jsonl --evidence .local/evidence.json --profile .local/harness.json --source-id EXACT_SOURCE_ID --out .local/context.json
-node dist/cli.js context-report --evidence .local/evidence.json --valuation .local/valuation.json --context .local/context.json --out .local/context-report.json
-node dist/cli.js validate --kind context-report --input .local/context-report.json
+node dist/cli.js benchmark-import --format inspect --input examples/dogfood/v04/inspect-log.json --options examples/dogfood/v04/inspect-options.json --out benchmark.json
+node dist/cli.js benchmark --baseline baseline.json --candidate benchmark.json --out comparison.json
 ```
 
-For instrumentation, call `captureRequestContext` at the boundary you control, or `captureProviderRequest` for OpenAI Responses, Anthropic Messages or Gemini content request objects. These are pure capture functions: they send no provider requests. Raw text/bytes are hashed transiently; exports contain metadata. Annotate known repository instructions, skills or files explicitly; roles alone do not prove semantic origin. Unsupported request fields downgrade coverage. Local byte counts and supplied token estimates are separately classified.
+Inspect AI JSON exports are supported by `importInspectBenchmark` / `importInspectBenchmarkDetailed` from `flaimegraph/analysis`. Convert binary `.eval` logs with Inspect's `inspect log convert` first. Select a scorer and accepted values or numeric threshold explicitly, plus workload, scope revision and acceptance version. Missing/error scores remain unknown. Primary model usage and auxiliary grading-model usage remain separate. Raw prompts, messages and provider cost fields are not imported. Historical is the default evaluation basis; importing a log does not make it a controlled experiment. The detailed API and CLI summary expose missing-condition limitations.
 
-Optional `--allocate-requests id-a,id-b` selects at most one context request per model observation. It estimates portions of the existing whole-request cost using token weights and preserves an unallocated remainder. It does not measure exact per-source billing. Allocation is off by default.
+Benchmark comparison preserves resource vectors, acceptance counts and mean sample latency, and includes declared analysis overhead in total benchmark demand. Matching metadata alone does not establish causal model superiority. See [the analysis contract](efficiency-analysis.md) for limits.
 
-See the [0.2 contract](../spec/0.2/README.md), [capture SDK evidence](implementation-evidence/context-capture.md), [native import evidence](implementation-evidence/native-context.md), and [report examples](../examples/context/README.md). The [viewer source](../viewer/README.md) supports a local build. Standard FlameGraph, pprof and OTLP cost exports continue to work independently.
+## Forecast runway
+
+```sh
+node dist/cli.js runway --input examples/dogfood/v04/runway-input.json --out runway.json
+```
+
+The input supplies resource snapshots, per-accepted demand and an explicit forecast horizon. Units, workload and scope must match. Unknown/stale capacity or resets within the horizon prevent an unsupported precise forecast. Source-backed derived demand produces a limited forecast. Declared or estimated demand requires the explicit `allow_unverified_demand` scenario option. An account subscription percentage is never silently converted into tokens. These deterministic calculations do not call an LLM or automatically change routing or repository settings.
+
+## Migrate from 0.3
+
+Use `flaimegraph/pricing` for the old valuation, context-report and cost APIs. The old CLI is `flaimegraph-pricing` (`node dist/pricing-cli.js` in a checkout). The [legacy guide](legacy-usage.md) retains working examples. Old evidence can be projected through `fromLegacyEvidence`; existing monetary artifacts remain readable by the optional consumer. The default viewer now opens usage; context and legacy cost routes remain available.
