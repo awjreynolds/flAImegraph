@@ -1,0 +1,26 @@
+{
+  "schema_version": "0.3.0",
+  "recorded_at": "2026-09-07T00:30:37.171Z",
+  "files": 5000,
+  "batch_size": 50,
+  "rounds": 3,
+  "baseline_ms": [
+    80.15524999999997,
+    79.90687500000013,
+    82.86891700000001
+  ],
+  "recorded_ms": [
+    217.60625000000005,
+    194.89262500000007,
+    199.2584159999999
+  ],
+  "median_baseline_ms": 80.15524999999997,
+  "median_recorded_ms": 199.2584159999999,
+  "median_delta_ms": 119.10316599999993,
+  "profiler_model_calls": 0,
+  "retained_spans": 5130,
+  "max_depth": 7,
+  "dropped_spans": 0,
+  "method": "Same functions, files, UTF-8 results, batching and warm cache; alternate baseline/recorded order. Timed scan excludes fixture creation, recorder construction, later edit/test, snapshot serialization, validation and export. Local wall time is environment-dependent; these are measurements, not a performance guarantee.",
+  "outcome": "5,000 distinct files read; an actual edit and a passing node:test subprocess followed; exact report validation and replay passed."
+}

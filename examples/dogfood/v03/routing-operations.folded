@@ -1,0 +1,13 @@
+Execution;work:Illustrative direct route · %240.101[d15690f08a575024] 1
+Execution;work:Illustrative direct route · %240.101[d15690f08a575024];agent:Main agent · high-cost model[8f09586345eb9ccf] 1
+Execution;work:Illustrative direct route · %240.101[d15690f08a575024];agent:Main agent · high-cost model[8f09586345eb9ccf];file_read:Read 400-line source[b353aaa7b3faf883] 1
+Execution;work:Illustrative direct route · %240.101[d15690f08a575024];agent:Main agent · high-cost model[8f09586345eb9ccf];model:High-cost model consumes source[5e056bf41dc65bca] 1
+Execution;work:Illustrative summary route · %240.070[d31c5fb7917ed47c] 1
+Execution;work:Illustrative summary route · %240.070[d31c5fb7917ed47c];agent:Main agent · high-cost model[6dcfeb412bb61145] 1
+Execution;work:Illustrative summary route · %240.070[d31c5fb7917ed47c];agent:Main agent · high-cost model[6dcfeb412bb61145];hook:Read policy · more than 350 lines[0648298b48be0319] 1
+Execution;work:Illustrative summary route · %240.070[d31c5fb7917ed47c];agent:Main agent · high-cost model[6dcfeb412bb61145];hook:Read policy · more than 350 lines[0648298b48be0319];delegation:Delegate summary request[6f216e33c5cf9add] 1
+Execution;work:Illustrative summary route · %240.070[d31c5fb7917ed47c];agent:Main agent · high-cost model[6dcfeb412bb61145];hook:Read policy · more than 350 lines[0648298b48be0319];delegation:Delegate summary request[6f216e33c5cf9add];agent:Summary worker · low-cost model[762645d15f6c64fe] 1
+Execution;work:Illustrative summary route · %240.070[d31c5fb7917ed47c];agent:Main agent · high-cost model[6dcfeb412bb61145];hook:Read policy · more than 350 lines[0648298b48be0319];delegation:Delegate summary request[6f216e33c5cf9add];agent:Summary worker · low-cost model[762645d15f6c64fe];file_read:Read source for summarizer[d51311fe33193200] 1
+Execution;work:Illustrative summary route · %240.070[d31c5fb7917ed47c];agent:Main agent · high-cost model[6dcfeb412bb61145];hook:Read policy · more than 350 lines[0648298b48be0319];delegation:Delegate summary request[6f216e33c5cf9add];agent:Summary worker · low-cost model[762645d15f6c64fe];summary:Create compact representation[beb39f21a678c57c] 1
+Execution;work:Illustrative summary route · %240.070[d31c5fb7917ed47c];agent:Main agent · high-cost model[6dcfeb412bb61145];hook:Read policy · more than 350 lines[0648298b48be0319];delegation:Delegate summary request[6f216e33c5cf9add];agent:Summary worker · low-cost model[762645d15f6c64fe];summary:Create compact representation[beb39f21a678c57c];model:Low-cost summarizer[2055f6d9513520c0] 1
+Execution;work:Illustrative summary route · %240.070[d31c5fb7917ed47c];agent:Main agent · high-cost model[6dcfeb412bb61145];model:High-cost model consumes summary[7e533f4a0f875d47] 1

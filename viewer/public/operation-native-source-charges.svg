@@ -1,0 +1,1571 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" width="1400" height="174" onload="init(evt)" viewBox="0 0 1400 174" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!-- Flame graph stack visualization. See https://github.com/brendangregg/FlameGraph for latest version, and http://www.brendangregg.com/flamegraphs.html for examples. -->
+<!-- NOTES:  -->
+<defs>
+	<linearGradient id="background" y1="0" y2="1" x1="0" x2="0" >
+		<stop stop-color="#eeeeee" offset="5%" />
+		<stop stop-color="#eeeeb0" offset="95%" />
+	</linearGradient>
+</defs>
+<style type="text/css">
+	text { font-family:Verdana; font-size:12px; fill:rgb(0,0,0); }
+	#search, #ignorecase { opacity:0.1; cursor:pointer; }
+	#search:hover, #search.show, #ignorecase:hover, #ignorecase.show { opacity:1; }
+	#subtitle { text-anchor:middle; font-color:rgb(160,160,160); }
+	#title { text-anchor:middle; font-size:17px}
+	#unzoom { cursor:pointer; }
+	#frames > *:hover { stroke:black; stroke-width:0.5; cursor:pointer; }
+	.hide { display:none; }
+	.parent { opacity:0.5; }
+</style>
+<script type="text/ecmascript">
+<![CDATA[
+	"use strict";
+	var details, searchbtn, unzoombtn, matchedtxt, svg, searching, currentSearchTerm, ignorecase, ignorecaseBtn;
+	function init(evt) {
+		details = document.getElementById("details").firstChild;
+		searchbtn = document.getElementById("search");
+		ignorecaseBtn = document.getElementById("ignorecase");
+		unzoombtn = document.getElementById("unzoom");
+		matchedtxt = document.getElementById("matched");
+		svg = document.getElementsByTagName("svg")[0];
+		searching = 0;
+		currentSearchTerm = null;
+
+		// use GET parameters to restore a flamegraphs state.
+		var params = get_params();
+		if (params.x && params.y)
+			zoom(find_group(document.querySelector('[x="' + params.x + '"][y="' + params.y + '"]')));
+                if (params.s) search(params.s);
+	}
+
+	// event listeners
+	window.addEventListener("click", function(e) {
+		var target = find_group(e.target);
+		if (target) {
+			if (target.nodeName == "a") {
+				if (e.ctrlKey === false) return;
+				e.preventDefault();
+			}
+			if (target.classList.contains("parent")) unzoom(true);
+			zoom(target);
+			if (!document.querySelector('.parent')) {
+				// we have basically done a clearzoom so clear the url
+				var params = get_params();
+				if (params.x) delete params.x;
+				if (params.y) delete params.y;
+				history.replaceState(null, null, parse_params(params));
+				unzoombtn.classList.add("hide");
+				return;
+			}
+
+			// set parameters for zoom state
+			var el = target.querySelector("rect");
+			if (el && el.attributes && el.attributes.y && el.attributes._orig_x) {
+				var params = get_params()
+				params.x = el.attributes._orig_x.value;
+				params.y = el.attributes.y.value;
+				history.replaceState(null, null, parse_params(params));
+			}
+		}
+		else if (e.target.id == "unzoom") clearzoom();
+		else if (e.target.id == "search") search_prompt();
+		else if (e.target.id == "ignorecase") toggle_ignorecase();
+	}, false)
+
+	// mouse-over for info
+	// show
+	window.addEventListener("mouseover", function(e) {
+		var target = find_group(e.target);
+		if (target) details.nodeValue = "Attribution: " + g_to_text(target);
+	}, false)
+
+	// clear
+	window.addEventListener("mouseout", function(e) {
+		var target = find_group(e.target);
+		if (target) details.nodeValue = ' ';
+	}, false)
+
+	// ctrl-F for search
+	// ctrl-I to toggle case-sensitive search
+	window.addEventListener("keydown",function (e) {
+		if (e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70)) {
+			e.preventDefault();
+			search_prompt();
+		}
+		else if (e.ctrlKey && e.keyCode === 73) {
+			e.preventDefault();
+			toggle_ignorecase();
+		}
+	}, false)
+
+	// functions
+	function get_params() {
+		var params = {};
+		var paramsarr = window.location.search.substr(1).split('&');
+		for (var i = 0; i < paramsarr.length; ++i) {
+			var tmp = paramsarr[i].split("=");
+			if (!tmp[0] || !tmp[1]) continue;
+			params[tmp[0]]  = decodeURIComponent(tmp[1]);
+		}
+		return params;
+	}
+	function parse_params(params) {
+		var uri = "?";
+		for (var key in params) {
+			uri += key + '=' + encodeURIComponent(params[key]) + '&';
+		}
+		if (uri.slice(-1) == "&")
+			uri = uri.substring(0, uri.length - 1);
+		if (uri == '?')
+			uri = window.location.href.split('?')[0];
+		return uri;
+	}
+	function find_child(node, selector) {
+		var children = node.querySelectorAll(selector);
+		if (children.length) return children[0];
+	}
+	function find_group(node) {
+		var parent = node.parentElement;
+		if (!parent) return;
+		if (parent.id == "frames") return node;
+		return find_group(parent);
+	}
+	function orig_save(e, attr, val) {
+		if (e.attributes["_orig_" + attr] != undefined) return;
+		if (e.attributes[attr] == undefined) return;
+		if (val == undefined) val = e.attributes[attr].value;
+		e.setAttribute("_orig_" + attr, val);
+	}
+	function orig_load(e, attr) {
+		if (e.attributes["_orig_"+attr] == undefined) return;
+		e.attributes[attr].value = e.attributes["_orig_" + attr].value;
+		e.removeAttribute("_orig_"+attr);
+	}
+	function g_to_text(e) {
+		var text = find_child(e, "title").firstChild.nodeValue;
+		return (text)
+	}
+	function g_to_func(e) {
+		var func = g_to_text(e);
+		// if there's any manipulation we want to do to the function
+		// name before it's searched, do it here before returning.
+		return (func);
+	}
+	function update_text(e) {
+		var r = find_child(e, "rect");
+		var t = find_child(e, "text");
+		var w = parseFloat(r.attributes.width.value) -3;
+		var txt = find_child(e, "title").textContent.replace(/\([^(]*\)$/,"");
+		t.attributes.x.value = parseFloat(r.attributes.x.value) + 3;
+
+		// Smaller than this size won't fit anything
+		if (w < 2 * 12 * 0.59) {
+			t.textContent = "";
+			return;
+		}
+
+		t.textContent = txt;
+		var sl = t.getSubStringLength(0, txt.length);
+		// check if only whitespace or if we can fit the entire string into width w
+		if (/^ *$/.test(txt) || sl < w)
+			return;
+
+		// this isn't perfect, but gives a good starting point
+		// and avoids calling getSubStringLength too often
+		var start = Math.floor((w/sl) * txt.length);
+		for (var x = start; x > 0; x = x-2) {
+			if (t.getSubStringLength(0, x + 2) <= w) {
+				t.textContent = txt.substring(0, x) + "..";
+				return;
+			}
+		}
+		t.textContent = "";
+	}
+
+	// zoom
+	function zoom_reset(e) {
+		if (e.attributes != undefined) {
+			orig_load(e, "x");
+			orig_load(e, "width");
+		}
+		if (e.childNodes == undefined) return;
+		for (var i = 0, c = e.childNodes; i < c.length; i++) {
+			zoom_reset(c[i]);
+		}
+	}
+	function zoom_child(e, x, ratio) {
+		if (e.attributes != undefined) {
+			if (e.attributes.x != undefined) {
+				orig_save(e, "x");
+				e.attributes.x.value = (parseFloat(e.attributes.x.value) - x - 10) * ratio + 10;
+				if (e.tagName == "text")
+					e.attributes.x.value = find_child(e.parentNode, "rect[x]").attributes.x.value + 3;
+			}
+			if (e.attributes.width != undefined) {
+				orig_save(e, "width");
+				e.attributes.width.value = parseFloat(e.attributes.width.value) * ratio;
+			}
+		}
+
+		if (e.childNodes == undefined) return;
+		for (var i = 0, c = e.childNodes; i < c.length; i++) {
+			zoom_child(c[i], x - 10, ratio);
+		}
+	}
+	function zoom_parent(e) {
+		if (e.attributes) {
+			if (e.attributes.x != undefined) {
+				orig_save(e, "x");
+				e.attributes.x.value = 10;
+			}
+			if (e.attributes.width != undefined) {
+				orig_save(e, "width");
+				e.attributes.width.value = parseInt(svg.width.baseVal.value) - (10 * 2);
+			}
+		}
+		if (e.childNodes == undefined) return;
+		for (var i = 0, c = e.childNodes; i < c.length; i++) {
+			zoom_parent(c[i]);
+		}
+	}
+	function zoom(node) {
+		var attr = find_child(node, "rect").attributes;
+		var width = parseFloat(attr.width.value);
+		var xmin = parseFloat(attr.x.value);
+		var xmax = parseFloat(xmin + width);
+		var ymin = parseFloat(attr.y.value);
+		var ratio = (svg.width.baseVal.value - 2 * 10) / width;
+
+		// XXX: Workaround for JavaScript float issues (fix me)
+		var fudge = 0.0001;
+
+		unzoombtn.classList.remove("hide");
+
+		var el = document.getElementById("frames").children;
+		for (var i = 0; i < el.length; i++) {
+			var e = el[i];
+			var a = find_child(e, "rect").attributes;
+			var ex = parseFloat(a.x.value);
+			var ew = parseFloat(a.width.value);
+			var upstack;
+			// Is it an ancestor
+			if (0 == 0) {
+				upstack = parseFloat(a.y.value) > ymin;
+			} else {
+				upstack = parseFloat(a.y.value) < ymin;
+			}
+			if (upstack) {
+				// Direct ancestor
+				if (ex <= xmin && (ex+ew+fudge) >= xmax) {
+					e.classList.add("parent");
+					zoom_parent(e);
+					update_text(e);
+				}
+				// not in current path
+				else
+					e.classList.add("hide");
+			}
+			// Children maybe
+			else {
+				// no common path
+				if (ex < xmin || ex + fudge >= xmax) {
+					e.classList.add("hide");
+				}
+				else {
+					zoom_child(e, xmin, ratio);
+					update_text(e);
+				}
+			}
+		}
+		search();
+	}
+	function unzoom(dont_update_text) {
+		unzoombtn.classList.add("hide");
+		var el = document.getElementById("frames").children;
+		for(var i = 0; i < el.length; i++) {
+			el[i].classList.remove("parent");
+			el[i].classList.remove("hide");
+			zoom_reset(el[i]);
+			if(!dont_update_text) update_text(el[i]);
+		}
+		search();
+	}
+	function clearzoom() {
+		unzoom();
+
+		// remove zoom state
+		var params = get_params();
+		if (params.x) delete params.x;
+		if (params.y) delete params.y;
+		history.replaceState(null, null, parse_params(params));
+	}
+
+	// search
+	function toggle_ignorecase() {
+		ignorecase = !ignorecase;
+		if (ignorecase) {
+			ignorecaseBtn.classList.add("show");
+		} else {
+			ignorecaseBtn.classList.remove("show");
+		}
+		reset_search();
+		search();
+	}
+	function reset_search() {
+		var el = document.querySelectorAll("#frames rect");
+		for (var i = 0; i < el.length; i++) {
+			orig_load(el[i], "fill")
+		}
+		var params = get_params();
+		delete params.s;
+		history.replaceState(null, null, parse_params(params));
+	}
+	function search_prompt() {
+		if (!searching) {
+			var term = prompt("Enter a search term (regexp " +
+			    "allowed, eg: ^ext4_)"
+			    + (ignorecase ? ", ignoring case" : "")
+			    + "\nPress Ctrl-i to toggle case sensitivity", "");
+			if (term != null) search(term);
+		} else {
+			reset_search();
+			searching = 0;
+			currentSearchTerm = null;
+			searchbtn.classList.remove("show");
+			searchbtn.firstChild.nodeValue = "Search"
+			matchedtxt.classList.add("hide");
+			matchedtxt.firstChild.nodeValue = ""
+		}
+	}
+	function search(term) {
+		if (term) currentSearchTerm = term;
+		if (currentSearchTerm === null) return;
+
+		var re = new RegExp(currentSearchTerm, ignorecase ? 'i' : '');
+		var el = document.getElementById("frames").children;
+		var matches = new Object();
+		var maxwidth = 0;
+		for (var i = 0; i < el.length; i++) {
+			var e = el[i];
+			var func = g_to_func(e);
+			var rect = find_child(e, "rect");
+			if (func == null || rect == null)
+				continue;
+
+			// Save max width. Only works as we have a root frame
+			var w = parseFloat(rect.attributes.width.value);
+			if (w > maxwidth)
+				maxwidth = w;
+
+			if (func.match(re)) {
+				// highlight
+				var x = parseFloat(rect.attributes.x.value);
+				orig_save(rect, "fill");
+				rect.attributes.fill.value = "rgb(230,0,230)";
+
+				// remember matches
+				if (matches[x] == undefined) {
+					matches[x] = w;
+				} else {
+					if (w > matches[x]) {
+						// overwrite with parent
+						matches[x] = w;
+					}
+				}
+				searching = 1;
+			}
+		}
+		if (!searching)
+			return;
+		var params = get_params();
+		params.s = currentSearchTerm;
+		history.replaceState(null, null, parse_params(params));
+
+		searchbtn.classList.add("show");
+		searchbtn.firstChild.nodeValue = "Reset Search";
+
+		// calculate percent matched, excluding vertical overlap
+		var count = 0;
+		var lastx = -1;
+		var lastw = 0;
+		var keys = Array();
+		for (k in matches) {
+			if (matches.hasOwnProperty(k))
+				keys.push(k);
+		}
+		// sort the matched frames by their x location
+		// ascending, then width descending
+		keys.sort(function(a, b){
+			return a - b;
+		});
+		// Step through frames saving only the biggest bottom-up frames
+		// thanks to the sort order. This relies on the tree property
+		// where children are always smaller than their parents.
+		var fudge = 0.0001;	// JavaScript floating point
+		for (var k in keys) {
+			var x = parseFloat(keys[k]);
+			var w = matches[keys[k]];
+			if (x >= lastx + lastw - fudge) {
+				count += w;
+				lastx = x;
+				lastw = w;
+			}
+		}
+		// display matched percent
+		matchedtxt.classList.remove("hide");
+		var pct = 100 * count / maxwidth;
+		if (pct != 100) pct = pct.toFixed(1)
+		matchedtxt.firstChild.nodeValue = "Matched: " + pct + "%";
+	}
+]]>
+</script>
+<rect x="0.0" y="0" width="1400.0" height="174.0" fill="url(#background)"  />
+<text id="title" x="700.00" y="24" >Estimated source allocation - $15.179758 charges</text>
+<text id="subtitle" x="700.00" y="48" >Estimated information flow | includes output cost | not causal savings</text>
+<text id="details" x="10.00" y="157" > </text>
+<text id="unzoom" x="10.00" y="24" class="hide">Reset Zoom</text>
+<text id="search" x="1290.00" y="24" >Search</text>
+<text id="ignorecase" x="1374.00" y="24" >ic</text>
+<text id="matched" x="1290.00" y="157" > </text>
+<g id="frames">
+<g >
+<title>Unallocated_request_cost (146,556,000 USD_nanos, 0.97%)</title><rect x="1047.0" y="77" width="13.4" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1050.03" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[b9cc3db47829051a] (185,142,000 USD_nanos, 1.22%)</title><rect x="1026.2" y="93" width="16.8" height="15.0" fill="rgb(239,140,37)" rx="2" ry="2" />
+<text  x="1029.20" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (267,212,000 USD_nanos, 1.76%)</title><rect x="365.9" y="77" width="24.3" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="368.89" y="87.5" >U..</text>
+</g>
+<g >
+<title>model:model[ada9c9e03530797d] (60,406,000 USD_nanos, 0.40%)</title><rect x="950.9" y="93" width="5.5" height="15.0" fill="rgb(243,140,42)" rx="2" ry="2" />
+<text  x="953.92" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:16dfb150bbd1c99a4ea6b72f9244b2af[f52dd0e0abf9d72d] (89,106,000 USD_nanos, 0.59%)</title><rect x="420.5" y="61" width="8.1" height="15.0" fill="rgb(247,149,46)" rx="2" ry="2" />
+<text  x="423.49" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:b94eb1e916ccc41da9035e7eac042a36[e638b3243a13c917] (113,572,000 USD_nanos, 0.75%)</title><rect x="244.7" y="61" width="10.4" height="15.0" fill="rgb(249,149,48)" rx="2" ry="2" />
+<text  x="247.74" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (158,534,000 USD_nanos, 1.04%)</title><rect x="878.5" y="77" width="14.4" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="881.49" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[175d39f97a7efd9e] (110,436,000 USD_nanos, 0.73%)</title><rect x="74.8" y="93" width="10.0" height="15.0" fill="rgb(241,140,39)" rx="2" ry="2" />
+<text  x="77.77" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[6f436db61b2e9d7c] (93,238,000 USD_nanos, 0.61%)</title><rect x="564.8" y="93" width="8.5" height="15.0" fill="rgb(244,140,43)" rx="2" ry="2" />
+<text  x="567.81" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (96,318,000 USD_nanos, 0.63%)</title><rect x="178.7" y="77" width="8.7" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="181.68" y="87.5" ></text>
+</g>
+<g >
+<title>all (15,179,758,000 USD_nanos, 100%)</title><rect x="10.0" y="125" width="1380.0" height="15.0" fill="rgb(255,230,55)" rx="2" ry="2" />
+<text  x="13.00" y="135.5" ></text>
+</g>
+<g >
+<title>model:model[bfec8b27d5c71e1b] (108,134,000 USD_nanos, 0.71%)</title><rect x="1060.4" y="93" width="9.8" height="15.0" fill="rgb(238,140,36)" rx="2" ry="2" />
+<text  x="1063.35" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[28eb7fae400d0aba] (96,318,000 USD_nanos, 0.63%)</title><rect x="178.7" y="93" width="8.7" height="15.0" fill="rgb(238,140,36)" rx="2" ry="2" />
+<text  x="181.68" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[6cf40ad37a18d244] (165,280,000 USD_nanos, 1.09%)</title><rect x="509.8" y="93" width="15.0" height="15.0" fill="rgb(238,140,36)" rx="2" ry="2" />
+<text  x="512.76" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (252,498,000 USD_nanos, 1.66%)</title><rect x="342.9" y="77" width="23.0" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="345.93" y="87.5" >U..</text>
+</g>
+<g >
+<title>Unallocated_request_cost (251,734,000 USD_nanos, 1.66%)</title><rect x="116.1" y="77" width="22.8" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="119.06" y="87.5" >U..</text>
+</g>
+<g >
+<title>observation:codex:observation:f87885de5ff3fe53b11aab2852e806d1[e5a228c048bfc17e] (142,308,000 USD_nanos, 0.94%)</title><rect x="89.2" y="61" width="12.9" height="15.0" fill="rgb(242,149,41)" rx="2" ry="2" />
+<text  x="92.21" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:e05a231737c2d4da04e3a154438568a7[a3e0b01757d47724] (124,448,000 USD_nanos, 0.82%)</title><rect x="611.6" y="61" width="11.3" height="15.0" fill="rgb(239,149,38)" rx="2" ry="2" />
+<text  x="614.55" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:2c7d89aae3f37e8c0bce25c60a1a787a[759ad19867cb918b] (110,436,000 USD_nanos, 0.73%)</title><rect x="74.8" y="61" width="10.0" height="15.0" fill="rgb(233,149,31)" rx="2" ry="2" />
+<text  x="77.77" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (169,956,000 USD_nanos, 1.12%)</title><rect x="1258.2" y="77" width="15.4" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1261.17" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[74e23edad09edcdb] (194,522,000 USD_nanos, 1.28%)</title><rect x="593.9" y="93" width="17.7" height="15.0" fill="rgb(236,140,34)" rx="2" ry="2" />
+<text  x="596.87" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (108,134,000 USD_nanos, 0.71%)</title><rect x="1060.4" y="77" width="9.8" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1063.35" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:f2c221cda79dbe7ccd9f500a3ac2ca3d[84d3503141942e6e] (100,594,000 USD_nanos, 0.66%)</title><rect x="169.5" y="61" width="9.2" height="15.0" fill="rgb(243,149,42)" rx="2" ry="2" />
+<text  x="172.53" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:54e17381b74fa7e9e09c0630d0aa04d8[ac0d8266b8675ccf] (169,956,000 USD_nanos, 1.12%)</title><rect x="1258.2" y="61" width="15.4" height="15.0" fill="rgb(244,149,43)" rx="2" ry="2" />
+<text  x="1261.17" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[633076c284972847] (238,926,000 USD_nanos, 1.57%)</title><rect x="488.0" y="93" width="21.8" height="15.0" fill="rgb(246,140,46)" rx="2" ry="2" />
+<text  x="491.04" y="103.5" >m..</text>
+</g>
+<g >
+<title>model:model[d340d608d65b6c5a] (204,266,000 USD_nanos, 1.35%)</title><rect x="1155.6" y="93" width="18.5" height="15.0" fill="rgb(236,140,34)" rx="2" ry="2" />
+<text  x="1158.58" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[dc8a504129057b3c] (145,032,000 USD_nanos, 0.96%)</title><rect x="1208.2" y="93" width="13.2" height="15.0" fill="rgb(247,140,46)" rx="2" ry="2" />
+<text  x="1211.21" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[885bd1e229bf9297] (139,306,000 USD_nanos, 0.92%)</title><rect x="680.0" y="93" width="12.6" height="15.0" fill="rgb(243,140,42)" rx="2" ry="2" />
+<text  x="682.96" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (127,218,000 USD_nanos, 0.84%)</title><rect x="753.1" y="77" width="11.6" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="756.12" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[6d8a6f32b553e186] (101,836,000 USD_nanos, 0.67%)</title><rect x="524.8" y="93" width="9.2" height="15.0" fill="rgb(233,140,31)" rx="2" ry="2" />
+<text  x="527.78" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:26ee32d92a0abc692d24cd5dc7eb45bf[c60f75fbec2d1894] (200,490,000 USD_nanos, 1.32%)</title><rect x="546.6" y="61" width="18.2" height="15.0" fill="rgb(234,149,32)" rx="2" ry="2" />
+<text  x="549.59" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (187,658,000 USD_nanos, 1.24%)</title><rect x="1070.2" y="77" width="17.0" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1073.19" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (113,324,000 USD_nanos, 0.75%)</title><rect x="633.7" y="77" width="10.3" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="636.72" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[3b7540760fad5425] (369,868,000 USD_nanos, 2.44%)</title><rect x="296.3" y="93" width="33.6" height="15.0" fill="rgb(238,140,36)" rx="2" ry="2" />
+<text  x="299.32" y="103.5" >mo..</text>
+</g>
+<g >
+<title>model:model[bce883a45c5cff34] (44,048,000 USD_nanos, 0.29%)</title><rect x="1043.0" y="93" width="4.0" height="15.0" fill="rgb(238,140,37)" rx="2" ry="2" />
+<text  x="1046.03" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[4d73fd4855a0a8b2] (138,834,000 USD_nanos, 0.91%)</title><rect x="407.9" y="93" width="12.6" height="15.0" fill="rgb(241,140,40)" rx="2" ry="2" />
+<text  x="410.87" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[a4abe569b3bfb13c] (149,496,000 USD_nanos, 0.98%)</title><rect x="892.9" y="93" width="13.6" height="15.0" fill="rgb(247,140,46)" rx="2" ry="2" />
+<text  x="895.90" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (51,310,000 USD_nanos, 0.34%)</title><rect x="779.8" y="77" width="4.6" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="782.76" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (76,704,000 USD_nanos, 0.51%)</title><rect x="976.4" y="77" width="6.9" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="979.37" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[47093db0480ba36a] (267,212,000 USD_nanos, 1.76%)</title><rect x="365.9" y="93" width="24.3" height="15.0" fill="rgb(235,140,33)" rx="2" ry="2" />
+<text  x="368.89" y="103.5" >m..</text>
+</g>
+<g >
+<title>observation:codex:observation:1af5529b44897f305edf992e6b57d04d[b4513c783497eece] (102,230,000 USD_nanos, 0.67%)</title><rect x="58.6" y="61" width="9.3" height="15.0" fill="rgb(245,149,44)" rx="2" ry="2" />
+<text  x="61.60" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:a8e6f4fd73cc32671d439a46e1ee7935[b632a365a1fba23e] (96,318,000 USD_nanos, 0.63%)</title><rect x="178.7" y="61" width="8.7" height="15.0" fill="rgb(245,149,44)" rx="2" ry="2" />
+<text  x="181.68" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (185,142,000 USD_nanos, 1.22%)</title><rect x="1026.2" y="77" width="16.8" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1029.20" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:9b7b571f92ed641f1fbe859c721e402c[05bbfe7527bd10f4] (194,570,000 USD_nanos, 1.28%)</title><rect x="390.2" y="61" width="17.7" height="15.0" fill="rgb(236,149,34)" rx="2" ry="2" />
+<text  x="393.18" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (80,956,000 USD_nanos, 0.53%)</title><rect x="1325.5" y="77" width="7.4" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1328.55" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:a957a192689df280f13addf2b5f55da8[9d5b62751cb8c6db] (145,032,000 USD_nanos, 0.96%)</title><rect x="1208.2" y="61" width="13.2" height="15.0" fill="rgb(236,149,34)" rx="2" ry="2" />
+<text  x="1211.21" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (44,048,000 USD_nanos, 0.29%)</title><rect x="1043.0" y="77" width="4.0" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1046.03" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[9f9648e4a1decbce] (369,670,000 USD_nanos, 2.44%)</title><rect x="844.9" y="93" width="33.6" height="15.0" fill="rgb(245,140,44)" rx="2" ry="2" />
+<text  x="847.88" y="103.5" >mo..</text>
+</g>
+<g >
+<title>observation:codex:observation:9085d51ab394827e0c8fcd3df00d635d[5cb144b79bb15c63] (226,354,000 USD_nanos, 1.49%)</title><rect x="573.3" y="61" width="20.6" height="15.0" fill="rgb(237,149,36)" rx="2" ry="2" />
+<text  x="576.29" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[19ef816a79a62052] (153,084,000 USD_nanos, 1.01%)</title><rect x="102.1" y="93" width="14.0" height="15.0" fill="rgb(239,140,38)" rx="2" ry="2" />
+<text  x="105.14" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (158,480,000 USD_nanos, 1.04%)</title><rect x="983.3" y="77" width="14.4" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="986.34" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[582481b8b7098bcd] (155,510,000 USD_nanos, 1.02%)</title><rect x="432.7" y="93" width="14.1" height="15.0" fill="rgb(246,140,45)" rx="2" ry="2" />
+<text  x="435.68" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:c120bf4c5bcf69db0331db068d121bf6[59e093cdc7118c18] (93,764,000 USD_nanos, 0.62%)</title><rect x="784.4" y="61" width="8.5" height="15.0" fill="rgb(247,149,47)" rx="2" ry="2" />
+<text  x="787.42" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[a862f62c71281388] (196,602,000 USD_nanos, 1.30%)</title><rect x="906.5" y="93" width="17.9" height="15.0" fill="rgb(243,140,41)" rx="2" ry="2" />
+<text  x="909.49" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[02f465a34911cb6e] (140,308,000 USD_nanos, 0.92%)</title><rect x="10.0" y="93" width="12.8" height="15.0" fill="rgb(243,140,42)" rx="2" ry="2" />
+<text  x="13.00" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (153,600,000 USD_nanos, 1.01%)</title><rect x="1376.0" y="77" width="14.0" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1379.04" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[62a04e154dd05707] (184,020,000 USD_nanos, 1.21%)</title><rect x="471.3" y="93" width="16.7" height="15.0" fill="rgb(249,140,49)" rx="2" ry="2" />
+<text  x="474.31" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[819a8db98ab24237] (100,298,000 USD_nanos, 0.66%)</title><rect x="670.8" y="93" width="9.2" height="15.0" fill="rgb(247,140,46)" rx="2" ry="2" />
+<text  x="673.85" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[e65f8f861a11f4ec] (106,998,000 USD_nanos, 0.70%)</title><rect x="1273.6" y="93" width="9.7" height="15.0" fill="rgb(246,140,45)" rx="2" ry="2" />
+<text  x="1276.62" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (89,106,000 USD_nanos, 0.59%)</title><rect x="420.5" y="77" width="8.1" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="423.49" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:83ed3f247504b37dbadeff83f7ce8231[e213020b0d61cb23] (107,648,000 USD_nanos, 0.71%)</title><rect x="286.5" y="61" width="9.8" height="15.0" fill="rgb(240,149,39)" rx="2" ry="2" />
+<text  x="289.54" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:66405556d884dde99664e14c779392c4[7d0015a294b3d4f8] (139,278,000 USD_nanos, 0.92%)</title><rect x="701.9" y="61" width="12.6" height="15.0" fill="rgb(244,149,43)" rx="2" ry="2" />
+<text  x="704.86" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:51a724125e7c585eabe8d317ddd13ed1[5ccd7d0e6cc02c2e] (196,602,000 USD_nanos, 1.30%)</title><rect x="906.5" y="61" width="17.9" height="15.0" fill="rgb(246,149,45)" rx="2" ry="2" />
+<text  x="909.49" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (133,806,000 USD_nanos, 0.88%)</title><rect x="255.1" y="77" width="12.1" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="258.07" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[c52af61e0626ffd5] (589,632,000 USD_nanos, 3.88%)</title><rect x="1102.0" y="93" width="53.6" height="15.0" fill="rgb(237,140,35)" rx="2" ry="2" />
+<text  x="1104.97" y="103.5" >model..</text>
+</g>
+<g >
+<title>observation:codex:observation:0a9dd848d2b87fa6f6d83b02f97956e4[631f8dc669c3f97c] (151,802,000 USD_nanos, 1.00%)</title><rect x="739.3" y="61" width="13.8" height="15.0" fill="rgb(244,149,43)" rx="2" ry="2" />
+<text  x="742.32" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[8f6c17ccfde45193] (151,802,000 USD_nanos, 1.00%)</title><rect x="739.3" y="93" width="13.8" height="15.0" fill="rgb(235,140,33)" rx="2" ry="2" />
+<text  x="742.32" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:abf820813b4638d67b68c096e64817c0[5df9f0a90800e381] (101,592,000 USD_nanos, 0.67%)</title><rect x="692.6" y="61" width="9.3" height="15.0" fill="rgb(238,149,37)" rx="2" ry="2" />
+<text  x="695.63" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[708afecf2a93a324] (226,354,000 USD_nanos, 1.49%)</title><rect x="573.3" y="93" width="20.6" height="15.0" fill="rgb(239,140,38)" rx="2" ry="2" />
+<text  x="576.29" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:6a9eb20c38ef035d35bce2a3fb7ccc07[b941e47ee3bcab98] (74,154,000 USD_nanos, 0.49%)</title><rect x="732.6" y="61" width="6.7" height="15.0" fill="rgb(242,149,41)" rx="2" ry="2" />
+<text  x="735.58" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (93,764,000 USD_nanos, 0.62%)</title><rect x="784.4" y="77" width="8.5" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="787.42" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (391,082,000 USD_nanos, 2.58%)</title><rect x="792.9" y="77" width="35.6" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="795.95" y="87.5" >Una..</text>
+</g>
+<g >
+<title>model:model[2bbddc4490eff5a4] (214,528,000 USD_nanos, 1.41%)</title><rect x="187.4" y="93" width="19.5" height="15.0" fill="rgb(240,140,38)" rx="2" ry="2" />
+<text  x="190.43" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:222d1dfa841fd2adce2766ba14aa486e[6dc8e7ef14cd12e6] (119,384,000 USD_nanos, 0.79%)</title><rect x="622.9" y="61" width="10.8" height="15.0" fill="rgb(235,149,33)" rx="2" ry="2" />
+<text  x="625.86" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[b8de1552d860f85e] (312,938,000 USD_nanos, 2.06%)</title><rect x="997.7" y="93" width="28.5" height="15.0" fill="rgb(244,140,42)" rx="2" ry="2" />
+<text  x="1000.75" y="103.5" >mo..</text>
+</g>
+<g >
+<title>observation:codex:observation:1e550ac376ba9eaef55199f09b2d2350[f490e1b15588a91c] (155,510,000 USD_nanos, 1.02%)</title><rect x="432.7" y="61" width="14.1" height="15.0" fill="rgb(249,149,48)" rx="2" ry="2" />
+<text  x="435.68" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[5d375e56a4b4b5dd] (126,710,000 USD_nanos, 0.83%)</title><rect x="459.8" y="93" width="11.5" height="15.0" fill="rgb(245,140,44)" rx="2" ry="2" />
+<text  x="462.79" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:c2f84719084112f05f9434bab5d0fcff[1795b336b89fd25b] (153,084,000 USD_nanos, 1.01%)</title><rect x="102.1" y="61" width="14.0" height="15.0" fill="rgb(235,149,33)" rx="2" ry="2" />
+<text  x="105.14" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (101,592,000 USD_nanos, 0.67%)</title><rect x="692.6" y="77" width="9.3" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="695.63" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:e0d55330d6fd48b87dac189a79d72d1c[a64d7487170eecb9] (137,994,000 USD_nanos, 0.91%)</title><rect x="534.0" y="61" width="12.6" height="15.0" fill="rgb(246,149,45)" rx="2" ry="2" />
+<text  x="537.04" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:efb2a4ec7ad6e3b4d2a72f7c4e5b4494[73c6b2931cf0ca88] (158,480,000 USD_nanos, 1.04%)</title><rect x="983.3" y="61" width="14.4" height="15.0" fill="rgb(243,149,41)" rx="2" ry="2" />
+<text  x="986.34" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (138,902,000 USD_nanos, 0.92%)</title><rect x="156.9" y="77" width="12.6" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="159.90" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[e225af0c4a16b09b] (188,318,000 USD_nanos, 1.24%)</title><rect x="1241.0" y="93" width="17.2" height="15.0" fill="rgb(232,140,30)" rx="2" ry="2" />
+<text  x="1244.05" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (145,032,000 USD_nanos, 0.96%)</title><rect x="1208.2" y="77" width="13.2" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1211.21" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:bbfdd4a1646b24085e7126e6b312a546[4249530618331fb5] (369,670,000 USD_nanos, 2.44%)</title><rect x="844.9" y="61" width="33.6" height="15.0" fill="rgb(238,149,36)" rx="2" ry="2" />
+<text  x="847.88" y="71.5" >ob..</text>
+</g>
+<g >
+<title>model:model[a870533bbc9d2ac8] (133,742,000 USD_nanos, 0.88%)</title><rect x="924.4" y="93" width="12.1" height="15.0" fill="rgb(246,140,45)" rx="2" ry="2" />
+<text  x="927.37" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[0911c1ab8bc96ffa] (75,652,000 USD_nanos, 0.50%)</title><rect x="67.9" y="93" width="6.9" height="15.0" fill="rgb(235,140,33)" rx="2" ry="2" />
+<text  x="70.89" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[30e407320902295e] (415,862,000 USD_nanos, 2.74%)</title><rect x="206.9" y="93" width="37.8" height="15.0" fill="rgb(244,140,42)" rx="2" ry="2" />
+<text  x="209.94" y="103.5" >mod..</text>
+</g>
+<g >
+<title>observation:codex:observation:ec5da3cdd545ffa0f9f2e2d738fac3f3[73190da723537824] (146,556,000 USD_nanos, 0.97%)</title><rect x="1047.0" y="61" width="13.4" height="15.0" fill="rgb(239,149,38)" rx="2" ry="2" />
+<text  x="1050.03" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (142,064,000 USD_nanos, 0.94%)</title><rect x="45.7" y="77" width="12.9" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="48.68" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:2fe0b78adc1a8ed698009b14908b6d01[97c6a5d9bb18cc98] (128,710,000 USD_nanos, 0.85%)</title><rect x="1229.3" y="61" width="11.7" height="15.0" fill="rgb(242,149,41)" rx="2" ry="2" />
+<text  x="1232.35" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (75,652,000 USD_nanos, 0.50%)</title><rect x="67.9" y="77" width="6.9" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="70.89" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (200,490,000 USD_nanos, 1.32%)</title><rect x="546.6" y="77" width="18.2" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="549.59" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[ed4e3b42b14318ef] (110,390,000 USD_nanos, 0.73%)</title><rect x="1315.5" y="93" width="10.0" height="15.0" fill="rgb(242,140,41)" rx="2" ry="2" />
+<text  x="1318.51" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[379158424ef759c8] (212,338,000 USD_nanos, 1.40%)</title><rect x="267.2" y="93" width="19.3" height="15.0" fill="rgb(246,140,45)" rx="2" ry="2" />
+<text  x="270.23" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (154,044,000 USD_nanos, 1.01%)</title><rect x="1346.7" y="77" width="14.0" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1349.67" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (149,496,000 USD_nanos, 0.98%)</title><rect x="892.9" y="77" width="13.6" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="895.90" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:1b590b17f10eaa33febd7b0f22b0d12a[0606bfd82f5116ea] (212,338,000 USD_nanos, 1.40%)</title><rect x="267.2" y="61" width="19.3" height="15.0" fill="rgb(236,149,34)" rx="2" ry="2" />
+<text  x="270.23" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:598c7ce692175bb8dfc96a7c8fefe097[135d4645bdce6c78] (101,836,000 USD_nanos, 0.67%)</title><rect x="524.8" y="61" width="9.2" height="15.0" fill="rgb(243,149,42)" rx="2" ry="2" />
+<text  x="527.78" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[6de2578106493d22] (137,994,000 USD_nanos, 0.91%)</title><rect x="534.0" y="93" width="12.6" height="15.0" fill="rgb(241,140,40)" rx="2" ry="2" />
+<text  x="537.04" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:595ad5b0b0a5b9fdd24098c334c716f5[b35f577e7599c2ca] (75,652,000 USD_nanos, 0.50%)</title><rect x="67.9" y="61" width="6.9" height="15.0" fill="rgb(237,149,36)" rx="2" ry="2" />
+<text  x="70.89" y="71.5" ></text>
+</g>
+<g >
+<title>Estimated_source_attribution (15,179,758,000 USD_nanos, 100.00%)</title><rect x="10.0" y="109" width="1380.0" height="15.0" fill="rgb(247,106,46)" rx="2" ry="2" />
+<text  x="13.00" y="119.5" >Estimated_source_attribution</text>
+</g>
+<g >
+<title>observation:codex:observation:1640d272e578c95cda737ece8b5f0aff[82663c7b2d21f5b2] (142,064,000 USD_nanos, 0.94%)</title><rect x="45.7" y="61" width="12.9" height="15.0" fill="rgb(241,149,40)" rx="2" ry="2" />
+<text  x="48.68" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[9c6e37c4f84d6949] (391,082,000 USD_nanos, 2.58%)</title><rect x="792.9" y="93" width="35.6" height="15.0" fill="rgb(244,140,43)" rx="2" ry="2" />
+<text  x="795.95" y="103.5" >mod..</text>
+</g>
+<g >
+<title>model:model[f6052b286951675e] (154,044,000 USD_nanos, 1.01%)</title><rect x="1346.7" y="93" width="14.0" height="15.0" fill="rgb(244,140,42)" rx="2" ry="2" />
+<text  x="1349.67" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[d62b806f0167c8c3] (127,142,000 USD_nanos, 0.84%)</title><rect x="1185.1" y="93" width="11.6" height="15.0" fill="rgb(240,140,38)" rx="2" ry="2" />
+<text  x="1188.11" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (194,570,000 USD_nanos, 1.28%)</title><rect x="390.2" y="77" width="17.7" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="393.18" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[c0e07043506c6519] (162,006,000 USD_nanos, 1.07%)</title><rect x="1087.2" y="93" width="14.8" height="15.0" fill="rgb(246,140,46)" rx="2" ry="2" />
+<text  x="1090.25" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (188,318,000 USD_nanos, 1.24%)</title><rect x="1241.0" y="77" width="17.2" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1244.05" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:6e19468e727da9701d6036964c34b28c[eb1431b1451ef4a7] (87,462,000 USD_nanos, 0.58%)</title><rect x="1221.4" y="61" width="7.9" height="15.0" fill="rgb(249,149,48)" rx="2" ry="2" />
+<text  x="1224.39" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (238,926,000 USD_nanos, 1.57%)</title><rect x="488.0" y="77" width="21.8" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="491.04" y="87.5" >U..</text>
+</g>
+<g >
+<title>Unallocated_request_cost (151,408,000 USD_nanos, 1.00%)</title><rect x="1332.9" y="77" width="13.8" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1335.91" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[e89037878a580e8f] (147,514,000 USD_nanos, 0.97%)</title><rect x="1283.3" y="93" width="13.5" height="15.0" fill="rgb(240,140,39)" rx="2" ry="2" />
+<text  x="1286.34" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[53df5444ad4b67f4] (89,106,000 USD_nanos, 0.59%)</title><rect x="420.5" y="93" width="8.1" height="15.0" fill="rgb(236,140,34)" rx="2" ry="2" />
+<text  x="423.49" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:97da685103720a80a84c67cd68c662c8[3665ce09955b6516] (106,998,000 USD_nanos, 0.70%)</title><rect x="1273.6" y="61" width="9.7" height="15.0" fill="rgb(238,149,36)" rx="2" ry="2" />
+<text  x="1276.62" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:e3a7f34f0acab69f6cf1d94eb1af96e2[87ad9efb4ccb5ae5] (138,902,000 USD_nanos, 0.92%)</title><rect x="156.9" y="61" width="12.6" height="15.0" fill="rgb(236,149,34)" rx="2" ry="2" />
+<text  x="159.90" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[de04c9a961657585] (87,462,000 USD_nanos, 0.58%)</title><rect x="1221.4" y="93" width="7.9" height="15.0" fill="rgb(234,140,32)" rx="2" ry="2" />
+<text  x="1224.39" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (139,278,000 USD_nanos, 0.92%)</title><rect x="701.9" y="77" width="12.6" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="704.86" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[be007be0e87465b6] (146,556,000 USD_nanos, 0.97%)</title><rect x="1047.0" y="93" width="13.4" height="15.0" fill="rgb(237,140,35)" rx="2" ry="2" />
+<text  x="1050.03" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:43e4b6a7bcb6ce6b3a609abc6696caf4[fd95efc5fd02eb43] (185,142,000 USD_nanos, 1.22%)</title><rect x="1026.2" y="61" width="16.8" height="15.0" fill="rgb(239,149,37)" rx="2" ry="2" />
+<text  x="1029.20" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (151,802,000 USD_nanos, 1.00%)</title><rect x="739.3" y="77" width="13.8" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="742.32" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:a4d1af64de4469658f8732bc0f33c086[a137e05f213c364d] (415,862,000 USD_nanos, 2.74%)</title><rect x="206.9" y="61" width="37.8" height="15.0" fill="rgb(245,149,44)" rx="2" ry="2" />
+<text  x="209.94" y="71.5" >obs..</text>
+</g>
+<g >
+<title>model:model[fdb629316c40f045] (153,600,000 USD_nanos, 1.01%)</title><rect x="1376.0" y="93" width="14.0" height="15.0" fill="rgb(237,140,35)" rx="2" ry="2" />
+<text  x="1379.04" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (196,602,000 USD_nanos, 1.30%)</title><rect x="906.5" y="77" width="17.9" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="909.49" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (184,020,000 USD_nanos, 1.21%)</title><rect x="471.3" y="77" width="16.7" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="474.31" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[f7929c42d0c63990] (168,970,000 USD_nanos, 1.11%)</title><rect x="1360.7" y="93" width="15.3" height="15.0" fill="rgb(239,140,37)" rx="2" ry="2" />
+<text  x="1363.67" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:97b6df977ad458240ec372feafcc723d[5f0cb538ac4ca45d] (238,926,000 USD_nanos, 1.57%)</title><rect x="488.0" y="61" width="21.8" height="15.0" fill="rgb(245,149,44)" rx="2" ry="2" />
+<text  x="491.04" y="71.5" >o..</text>
+</g>
+<g >
+<title>model:model[f038f09e20687427] (80,956,000 USD_nanos, 0.53%)</title><rect x="1325.5" y="93" width="7.4" height="15.0" fill="rgb(248,140,47)" rx="2" ry="2" />
+<text  x="1328.55" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[b70dc418a08ffcd8] (76,704,000 USD_nanos, 0.51%)</title><rect x="976.4" y="93" width="6.9" height="15.0" fill="rgb(245,140,44)" rx="2" ry="2" />
+<text  x="979.37" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:94b5b30bad97bf6440bba59cf8b90634[fd40f5b7dd3bc0a0] (76,704,000 USD_nanos, 0.51%)</title><rect x="976.4" y="61" width="6.9" height="15.0" fill="rgb(244,149,43)" rx="2" ry="2" />
+<text  x="979.37" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[6f2b3adb43d3fd15] (200,490,000 USD_nanos, 1.32%)</title><rect x="546.6" y="93" width="18.2" height="15.0" fill="rgb(239,140,37)" rx="2" ry="2" />
+<text  x="549.59" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[ead2fac35fdbd2ea] (206,308,000 USD_nanos, 1.36%)</title><rect x="1296.8" y="93" width="18.7" height="15.0" fill="rgb(236,140,34)" rx="2" ry="2" />
+<text  x="1299.76" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (127,142,000 USD_nanos, 0.84%)</title><rect x="1185.1" y="77" width="11.6" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1188.11" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[e6434aaf24b200dd] (169,956,000 USD_nanos, 1.12%)</title><rect x="1258.2" y="93" width="15.4" height="15.0" fill="rgb(245,140,44)" rx="2" ry="2" />
+<text  x="1261.17" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (142,626,000 USD_nanos, 0.94%)</title><rect x="446.8" y="77" width="13.0" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="449.82" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:cc61a849a6e653f9235a508b109f6727[08a6f5a817fba938] (219,482,000 USD_nanos, 1.45%)</title><rect x="956.4" y="61" width="20.0" height="15.0" fill="rgb(246,149,45)" rx="2" ry="2" />
+<text  x="959.41" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:e3f468f06429551aff76f839eaa57a7a[8083b3e4701c97c7] (391,082,000 USD_nanos, 2.58%)</title><rect x="792.9" y="61" width="35.6" height="15.0" fill="rgb(247,149,46)" rx="2" ry="2" />
+<text  x="795.95" y="71.5" >obs..</text>
+</g>
+<g >
+<title>Unallocated_request_cost (101,836,000 USD_nanos, 0.67%)</title><rect x="524.8" y="77" width="9.2" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="527.78" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[36a1f9c535f8ed7b] (133,806,000 USD_nanos, 0.88%)</title><rect x="255.1" y="93" width="12.1" height="15.0" fill="rgb(233,140,31)" rx="2" ry="2" />
+<text  x="258.07" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:2a5a2a0f53f660b4830cdac03a7f8600[80222b67de433b6a] (63,016,000 USD_nanos, 0.42%)</title><rect x="665.1" y="61" width="5.7" height="15.0" fill="rgb(235,149,33)" rx="2" ry="2" />
+<text  x="668.12" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:610a3338d0adb3a02f69a7459b6e3674[db6d90c821201bf4] (133,806,000 USD_nanos, 0.88%)</title><rect x="255.1" y="61" width="12.1" height="15.0" fill="rgb(236,149,34)" rx="2" ry="2" />
+<text  x="258.07" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:b7865572f053f0521aedf01a617214c4[fc0fb2990ea4a2e0] (197,540,000 USD_nanos, 1.30%)</title><rect x="138.9" y="61" width="18.0" height="15.0" fill="rgb(241,149,40)" rx="2" ry="2" />
+<text  x="141.95" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:b056801808c3777cb3f728885738c48b[685a5bb016c25049] (589,632,000 USD_nanos, 3.88%)</title><rect x="1102.0" y="61" width="53.6" height="15.0" fill="rgb(244,149,43)" rx="2" ry="2" />
+<text  x="1104.97" y="71.5" >obser..</text>
+</g>
+<g >
+<title>model:model[8f1117843a0b602a] (74,154,000 USD_nanos, 0.49%)</title><rect x="732.6" y="93" width="6.7" height="15.0" fill="rgb(238,140,36)" rx="2" ry="2" />
+<text  x="735.58" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:5eeca5a99547566ab3e8664b5aac24f7[feab6eb06e6f4d8d] (120,610,000 USD_nanos, 0.79%)</title><rect x="1174.1" y="61" width="11.0" height="15.0" fill="rgb(243,149,41)" rx="2" ry="2" />
+<text  x="1177.15" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (206,308,000 USD_nanos, 1.36%)</title><rect x="1296.8" y="77" width="18.7" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1299.76" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:bad94ba1b190914b02a9b01ee32df09d[ed73f0bda18baa72] (142,824,000 USD_nanos, 0.94%)</title><rect x="329.9" y="61" width="13.0" height="15.0" fill="rgb(238,149,36)" rx="2" ry="2" />
+<text  x="332.95" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (147,514,000 USD_nanos, 0.97%)</title><rect x="1283.3" y="77" width="13.5" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1286.34" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[1b56e054d7997ab3] (197,540,000 USD_nanos, 1.30%)</title><rect x="138.9" y="93" width="18.0" height="15.0" fill="rgb(240,140,39)" rx="2" ry="2" />
+<text  x="141.95" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:b723980074f71985326d705dbadbb8d0[e5b59186ccdff96a] (194,522,000 USD_nanos, 1.28%)</title><rect x="593.9" y="61" width="17.7" height="15.0" fill="rgb(235,149,33)" rx="2" ry="2" />
+<text  x="596.87" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[755ebdaaf6e33594] (119,384,000 USD_nanos, 0.79%)</title><rect x="622.9" y="93" width="10.8" height="15.0" fill="rgb(234,140,32)" rx="2" ry="2" />
+<text  x="625.86" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (232,072,000 USD_nanos, 1.53%)</title><rect x="644.0" y="77" width="21.1" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="647.02" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (45,038,000 USD_nanos, 0.30%)</title><rect x="428.6" y="77" width="4.1" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="431.59" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (212,338,000 USD_nanos, 1.40%)</title><rect x="267.2" y="77" width="19.3" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="270.23" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:483b0540243254a8f577268765a2b6d6[8bff994d0a38822c] (60,406,000 USD_nanos, 0.40%)</title><rect x="950.9" y="61" width="5.5" height="15.0" fill="rgb(248,149,47)" rx="2" ry="2" />
+<text  x="953.92" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (155,510,000 USD_nanos, 1.02%)</title><rect x="432.7" y="77" width="14.1" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="435.68" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (369,670,000 USD_nanos, 2.44%)</title><rect x="844.9" y="77" width="33.6" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="847.88" y="87.5" >Un..</text>
+</g>
+<g >
+<title>Unallocated_request_cost (165,280,000 USD_nanos, 1.09%)</title><rect x="509.8" y="77" width="15.0" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="512.76" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[3562018398a0f494] (113,572,000 USD_nanos, 0.75%)</title><rect x="244.7" y="93" width="10.4" height="15.0" fill="rgb(234,140,32)" rx="2" ry="2" />
+<text  x="247.74" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (110,390,000 USD_nanos, 0.73%)</title><rect x="1315.5" y="77" width="10.0" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1318.51" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (48,358,000 USD_nanos, 0.32%)</title><rect x="84.8" y="77" width="4.4" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="87.81" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:86d2c315c15b7dce846f5700bc89c37d[cc8c6b1b253bb1fc] (158,534,000 USD_nanos, 1.04%)</title><rect x="878.5" y="61" width="14.4" height="15.0" fill="rgb(245,149,44)" rx="2" ry="2" />
+<text  x="881.49" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[1b27897cdbd74a15] (251,734,000 USD_nanos, 1.66%)</title><rect x="116.1" y="93" width="22.8" height="15.0" fill="rgb(239,140,37)" rx="2" ry="2" />
+<text  x="119.06" y="103.5" >m..</text>
+</g>
+<g >
+<title>model:model[9d20a9e40078468d] (180,188,000 USD_nanos, 1.19%)</title><rect x="828.5" y="93" width="16.4" height="15.0" fill="rgb(243,140,41)" rx="2" ry="2" />
+<text  x="831.50" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:9ad8a26c35c2d2fcacf2e3b3ea803217[a308bd86b7ad5c3b] (267,212,000 USD_nanos, 1.76%)</title><rect x="365.9" y="61" width="24.3" height="15.0" fill="rgb(236,149,34)" rx="2" ry="2" />
+<text  x="368.89" y="71.5" >o..</text>
+</g>
+<g >
+<title>Unallocated_request_cost (60,406,000 USD_nanos, 0.40%)</title><rect x="950.9" y="77" width="5.5" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="953.92" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (214,528,000 USD_nanos, 1.41%)</title><rect x="187.4" y="77" width="19.5" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="190.43" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:7078cbc28ee9d2e6a76da837e63d555c[ebd6bbc835b00e00] (110,390,000 USD_nanos, 0.73%)</title><rect x="1315.5" y="61" width="10.0" height="15.0" fill="rgb(245,149,44)" rx="2" ry="2" />
+<text  x="1318.51" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (139,306,000 USD_nanos, 0.92%)</title><rect x="680.0" y="77" width="12.6" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="682.96" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (120,610,000 USD_nanos, 0.79%)</title><rect x="1174.1" y="77" width="11.0" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1177.15" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:30c77bed3040997d6562455f52d41731[52d9a66b0a8e793c] (158,354,000 USD_nanos, 1.04%)</title><rect x="936.5" y="61" width="14.4" height="15.0" fill="rgb(247,149,46)" rx="2" ry="2" />
+<text  x="939.52" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (137,994,000 USD_nanos, 0.91%)</title><rect x="534.0" y="77" width="12.6" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="537.04" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (102,230,000 USD_nanos, 0.67%)</title><rect x="58.6" y="77" width="9.3" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="61.60" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (106,998,000 USD_nanos, 0.70%)</title><rect x="1273.6" y="77" width="9.7" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1276.62" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:16255153e349edc7050d27ce0b22a65c[d5f52edaf128944e] (187,658,000 USD_nanos, 1.24%)</title><rect x="1070.2" y="61" width="17.0" height="15.0" fill="rgb(244,149,43)" rx="2" ry="2" />
+<text  x="1073.19" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:b3c62a6fe732700b50856073b9c636c4[043780095667dbf7] (51,310,000 USD_nanos, 0.34%)</title><rect x="779.8" y="61" width="4.6" height="15.0" fill="rgb(245,149,44)" rx="2" ry="2" />
+<text  x="782.76" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:8c3368cdbb46946769d4f644fc4026db[2bd894bb6c954878] (127,218,000 USD_nanos, 0.84%)</title><rect x="753.1" y="61" width="11.6" height="15.0" fill="rgb(243,149,42)" rx="2" ry="2" />
+<text  x="756.12" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (124,448,000 USD_nanos, 0.82%)</title><rect x="611.6" y="77" width="11.3" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="614.55" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:146635d66230150d85e5d6c4424a57fb[6b9ccd56d7d59f43] (252,212,000 USD_nanos, 1.66%)</title><rect x="22.8" y="61" width="22.9" height="15.0" fill="rgb(239,149,37)" rx="2" ry="2" />
+<text  x="25.76" y="71.5" >o..</text>
+</g>
+<g >
+<title>model:model[225d32a2c91ef6e5] (100,594,000 USD_nanos, 0.66%)</title><rect x="169.5" y="93" width="9.2" height="15.0" fill="rgb(236,140,34)" rx="2" ry="2" />
+<text  x="172.53" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:45b259559b6d468d4f201f7d2e05b00c[3d011bc5e0dec0db] (151,408,000 USD_nanos, 1.00%)</title><rect x="1332.9" y="61" width="13.8" height="15.0" fill="rgb(236,149,34)" rx="2" ry="2" />
+<text  x="1335.91" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (198,576,000 USD_nanos, 1.31%)</title><rect x="714.5" y="77" width="18.1" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="717.53" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[7e7b9f3cb367198a] (63,016,000 USD_nanos, 0.42%)</title><rect x="665.1" y="93" width="5.7" height="15.0" fill="rgb(234,140,32)" rx="2" ry="2" />
+<text  x="668.12" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[03031cba23ab6ff1] (252,212,000 USD_nanos, 1.66%)</title><rect x="22.8" y="93" width="22.9" height="15.0" fill="rgb(240,140,38)" rx="2" ry="2" />
+<text  x="25.76" y="103.5" >m..</text>
+</g>
+<g >
+<title>observation:codex:observation:fe4e3b5fe396884c0e0b015c19784647[094fcd94cd3098b8] (113,324,000 USD_nanos, 0.75%)</title><rect x="633.7" y="61" width="10.3" height="15.0" fill="rgb(247,149,46)" rx="2" ry="2" />
+<text  x="636.72" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[c023691a483374ec] (187,658,000 USD_nanos, 1.24%)</title><rect x="1070.2" y="93" width="17.0" height="15.0" fill="rgb(246,140,45)" rx="2" ry="2" />
+<text  x="1073.19" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[a1ddd6339125464d] (158,534,000 USD_nanos, 1.04%)</title><rect x="878.5" y="93" width="14.4" height="15.0" fill="rgb(245,140,44)" rx="2" ry="2" />
+<text  x="881.49" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:985ce8c3462831135625ee60573e8749[80ba4f9fbc6a6cbc] (168,970,000 USD_nanos, 1.11%)</title><rect x="1360.7" y="61" width="15.3" height="15.0" fill="rgb(248,149,47)" rx="2" ry="2" />
+<text  x="1363.67" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (158,354,000 USD_nanos, 1.04%)</title><rect x="936.5" y="77" width="14.4" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="939.52" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[a8ee35c47e876f9b] (158,354,000 USD_nanos, 1.04%)</title><rect x="936.5" y="93" width="14.4" height="15.0" fill="rgb(232,140,30)" rx="2" ry="2" />
+<text  x="939.52" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (128,710,000 USD_nanos, 0.85%)</title><rect x="1229.3" y="77" width="11.7" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1232.35" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (126,926,000 USD_nanos, 0.84%)</title><rect x="1196.7" y="77" width="11.5" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1199.67" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:931158399d55e0fa9ee1fea9a12b2219[cfd937ab223d00bd] (184,020,000 USD_nanos, 1.21%)</title><rect x="471.3" y="61" width="16.7" height="15.0" fill="rgb(247,149,46)" rx="2" ry="2" />
+<text  x="474.31" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:b0bffa032fef62264121c6aad242c092[158ebdb2d6b967ce] (45,038,000 USD_nanos, 0.30%)</title><rect x="428.6" y="61" width="4.1" height="15.0" fill="rgb(245,149,44)" rx="2" ry="2" />
+<text  x="431.59" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:55246d7ed16e884445be7ea765c0aecd[dc853028e451bc28] (204,266,000 USD_nanos, 1.35%)</title><rect x="1155.6" y="61" width="18.5" height="15.0" fill="rgb(247,149,46)" rx="2" ry="2" />
+<text  x="1158.58" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (100,298,000 USD_nanos, 0.66%)</title><rect x="670.8" y="77" width="9.2" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="673.85" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:c5b5e200483cfaf796852d967ceddcb2[aa5550524906fac6] (252,498,000 USD_nanos, 1.66%)</title><rect x="342.9" y="61" width="23.0" height="15.0" fill="rgb(236,149,34)" rx="2" ry="2" />
+<text  x="345.93" y="71.5" >o..</text>
+</g>
+<g >
+<title>Unallocated_request_cost (153,084,000 USD_nanos, 1.01%)</title><rect x="102.1" y="77" width="14.0" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="105.14" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (138,834,000 USD_nanos, 0.91%)</title><rect x="407.9" y="77" width="12.6" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="410.87" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (74,154,000 USD_nanos, 0.49%)</title><rect x="732.6" y="77" width="6.7" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="735.58" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[8a4695b64a2f4504] (101,592,000 USD_nanos, 0.67%)</title><rect x="692.6" y="93" width="9.3" height="15.0" fill="rgb(240,140,39)" rx="2" ry="2" />
+<text  x="695.63" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (197,540,000 USD_nanos, 1.30%)</title><rect x="138.9" y="77" width="18.0" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="141.95" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (142,824,000 USD_nanos, 0.94%)</title><rect x="329.9" y="77" width="13.0" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="332.95" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[95f7a857814ff684] (51,310,000 USD_nanos, 0.34%)</title><rect x="779.8" y="93" width="4.6" height="15.0" fill="rgb(235,140,33)" rx="2" ry="2" />
+<text  x="782.76" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[17920aeae85fa2cb] (48,358,000 USD_nanos, 0.32%)</title><rect x="84.8" y="93" width="4.4" height="15.0" fill="rgb(236,140,34)" rx="2" ry="2" />
+<text  x="87.81" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (93,238,000 USD_nanos, 0.61%)</title><rect x="564.8" y="77" width="8.5" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="567.81" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:f594d646db0a56b38614371d33df0da5[211fbd025dcd231d] (312,938,000 USD_nanos, 2.06%)</title><rect x="997.7" y="61" width="28.5" height="15.0" fill="rgb(247,149,47)" rx="2" ry="2" />
+<text  x="1000.75" y="71.5" >ob..</text>
+</g>
+<g >
+<title>observation:codex:observation:d61c6a6a95a554225fefa4a5ed53578a[cd1934a1ba9cab00] (142,626,000 USD_nanos, 0.94%)</title><rect x="446.8" y="61" width="13.0" height="15.0" fill="rgb(245,149,44)" rx="2" ry="2" />
+<text  x="449.82" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[4ce86a7512b43e0e] (194,570,000 USD_nanos, 1.28%)</title><rect x="390.2" y="93" width="17.7" height="15.0" fill="rgb(247,140,46)" rx="2" ry="2" />
+<text  x="393.18" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:a81075cd0967ce3aad6c732d2fcd7737[b5475d377b5d0bb3] (140,308,000 USD_nanos, 0.92%)</title><rect x="10.0" y="61" width="12.8" height="15.0" fill="rgb(240,149,39)" rx="2" ry="2" />
+<text  x="13.00" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (142,308,000 USD_nanos, 0.94%)</title><rect x="89.2" y="77" width="12.9" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="92.21" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (119,384,000 USD_nanos, 0.79%)</title><rect x="622.9" y="77" width="10.8" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="625.86" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (162,006,000 USD_nanos, 1.07%)</title><rect x="1087.2" y="77" width="14.8" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1090.25" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (87,462,000 USD_nanos, 0.58%)</title><rect x="1221.4" y="77" width="7.9" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1224.39" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (100,594,000 USD_nanos, 0.66%)</title><rect x="169.5" y="77" width="9.2" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="172.53" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[448ace881de4fc58] (252,498,000 USD_nanos, 1.66%)</title><rect x="342.9" y="93" width="23.0" height="15.0" fill="rgb(245,140,44)" rx="2" ry="2" />
+<text  x="345.93" y="103.5" >m..</text>
+</g>
+<g >
+<title>observation:codex:observation:655e8101cd159ddd26bcbba417ca879f[0fa4f4ca61a73f40] (232,072,000 USD_nanos, 1.53%)</title><rect x="644.0" y="61" width="21.1" height="15.0" fill="rgb(242,149,41)" rx="2" ry="2" />
+<text  x="647.02" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[3956e3d2296d5d91] (107,648,000 USD_nanos, 0.71%)</title><rect x="286.5" y="93" width="9.8" height="15.0" fill="rgb(238,140,36)" rx="2" ry="2" />
+<text  x="289.54" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:2aa1ae06bdc43d10d3629a92831c6962[a9b7041f3264d887] (108,134,000 USD_nanos, 0.71%)</title><rect x="1060.4" y="61" width="9.8" height="15.0" fill="rgb(244,149,43)" rx="2" ry="2" />
+<text  x="1063.35" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[224babae5243abed] (138,902,000 USD_nanos, 0.92%)</title><rect x="156.9" y="93" width="12.6" height="15.0" fill="rgb(245,140,44)" rx="2" ry="2" />
+<text  x="159.90" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:1a8beb755fb7ce31f95c844e7a7c3352[3277f685c144be9e] (206,308,000 USD_nanos, 1.36%)</title><rect x="1296.8" y="61" width="18.7" height="15.0" fill="rgb(241,149,39)" rx="2" ry="2" />
+<text  x="1299.76" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[08aa056f936b2073] (102,230,000 USD_nanos, 0.67%)</title><rect x="58.6" y="93" width="9.3" height="15.0" fill="rgb(237,140,35)" rx="2" ry="2" />
+<text  x="61.60" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[d4ffddbc2156f9f2] (120,610,000 USD_nanos, 0.79%)</title><rect x="1174.1" y="93" width="11.0" height="15.0" fill="rgb(239,140,37)" rx="2" ry="2" />
+<text  x="1177.15" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:1a1c32ba3ea4bd71ed1fc9bdc05e746b[5edfa9a06c832c1e] (48,358,000 USD_nanos, 0.32%)</title><rect x="84.8" y="61" width="4.4" height="15.0" fill="rgb(246,149,46)" rx="2" ry="2" />
+<text  x="87.81" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (312,938,000 USD_nanos, 2.06%)</title><rect x="997.7" y="77" width="28.5" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1000.75" y="87.5" >Un..</text>
+</g>
+<g >
+<title>observation:codex:observation:0ad9f408ec443ec7090813ff67e73e6c[51ded28cb8b22834] (100,298,000 USD_nanos, 0.66%)</title><rect x="670.8" y="61" width="9.2" height="15.0" fill="rgb(238,149,37)" rx="2" ry="2" />
+<text  x="673.85" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:e06c49df06e124f8a2cb7c3c69267966[95aed27a2efaf47c] (139,306,000 USD_nanos, 0.92%)</title><rect x="680.0" y="61" width="12.6" height="15.0" fill="rgb(244,149,43)" rx="2" ry="2" />
+<text  x="682.96" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (133,742,000 USD_nanos, 0.88%)</title><rect x="924.4" y="77" width="12.1" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="927.37" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[b356e58a67865127] (219,482,000 USD_nanos, 1.45%)</title><rect x="956.4" y="93" width="20.0" height="15.0" fill="rgb(248,140,47)" rx="2" ry="2" />
+<text  x="959.41" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:de17bb2568242e5de8efcb93f244d8f6[039c2890a29c77d6] (93,238,000 USD_nanos, 0.61%)</title><rect x="564.8" y="61" width="8.5" height="15.0" fill="rgb(236,149,34)" rx="2" ry="2" />
+<text  x="567.81" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[17e5f2a756360eb9] (142,308,000 USD_nanos, 0.94%)</title><rect x="89.2" y="93" width="12.9" height="15.0" fill="rgb(246,140,45)" rx="2" ry="2" />
+<text  x="92.21" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[d89c5d90fb42d61f] (126,926,000 USD_nanos, 0.84%)</title><rect x="1196.7" y="93" width="11.5" height="15.0" fill="rgb(245,140,44)" rx="2" ry="2" />
+<text  x="1199.67" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (63,016,000 USD_nanos, 0.42%)</title><rect x="665.1" y="77" width="5.7" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="668.12" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[7790b1fb20e901ce] (113,324,000 USD_nanos, 0.75%)</title><rect x="633.7" y="93" width="10.3" height="15.0" fill="rgb(245,140,44)" rx="2" ry="2" />
+<text  x="636.72" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (252,212,000 USD_nanos, 1.66%)</title><rect x="22.8" y="77" width="22.9" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="25.76" y="87.5" >U..</text>
+</g>
+<g >
+<title>Unallocated_request_cost (110,436,000 USD_nanos, 0.73%)</title><rect x="74.8" y="77" width="10.0" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="77.77" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:93f235bebc16e134f3def03842ce3574[7fb33244923e1493] (133,742,000 USD_nanos, 0.88%)</title><rect x="924.4" y="61" width="12.1" height="15.0" fill="rgb(235,149,33)" rx="2" ry="2" />
+<text  x="927.37" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[8bcf773d471c47fb] (198,576,000 USD_nanos, 1.31%)</title><rect x="714.5" y="93" width="18.1" height="15.0" fill="rgb(234,140,32)" rx="2" ry="2" />
+<text  x="717.53" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[f5db98f348328d42] (151,408,000 USD_nanos, 1.00%)</title><rect x="1332.9" y="93" width="13.8" height="15.0" fill="rgb(240,140,38)" rx="2" ry="2" />
+<text  x="1335.91" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[b8bcad372378d3c1] (158,480,000 USD_nanos, 1.04%)</title><rect x="983.3" y="93" width="14.4" height="15.0" fill="rgb(242,140,40)" rx="2" ry="2" />
+<text  x="986.34" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[5a1dd7f4d0fd8070] (142,626,000 USD_nanos, 0.94%)</title><rect x="446.8" y="93" width="13.0" height="15.0" fill="rgb(240,140,39)" rx="2" ry="2" />
+<text  x="449.82" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:161a3f709e512ebc18508b3455c658b3[413efd8de35a8e3a] (369,868,000 USD_nanos, 2.44%)</title><rect x="296.3" y="61" width="33.6" height="15.0" fill="rgb(237,149,36)" rx="2" ry="2" />
+<text  x="299.32" y="71.5" >ob..</text>
+</g>
+<g >
+<title>Unallocated_request_cost (180,188,000 USD_nanos, 1.19%)</title><rect x="828.5" y="77" width="16.4" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="831.50" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (165,802,000 USD_nanos, 1.09%)</title><rect x="764.7" y="77" width="15.1" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="767.69" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:61b262f3e21ed93b2a0b98f54d6cfccb[0c8244996075e57e] (214,528,000 USD_nanos, 1.41%)</title><rect x="187.4" y="61" width="19.5" height="15.0" fill="rgb(242,149,41)" rx="2" ry="2" />
+<text  x="190.43" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:ba5d0fe60efb4e085a7455534f68d646[6a642f307498652a] (180,188,000 USD_nanos, 1.19%)</title><rect x="828.5" y="61" width="16.4" height="15.0" fill="rgb(238,149,36)" rx="2" ry="2" />
+<text  x="831.50" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (415,862,000 USD_nanos, 2.74%)</title><rect x="206.9" y="77" width="37.8" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="209.94" y="87.5" >Una..</text>
+</g>
+<g >
+<title>model:model[91b461abaa584ff2] (165,802,000 USD_nanos, 1.09%)</title><rect x="764.7" y="93" width="15.1" height="15.0" fill="rgb(239,140,37)" rx="2" ry="2" />
+<text  x="767.69" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[9167c06b29e6d61e] (127,218,000 USD_nanos, 0.84%)</title><rect x="753.1" y="93" width="11.6" height="15.0" fill="rgb(246,140,46)" rx="2" ry="2" />
+<text  x="756.12" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:6c1a21a29915d2471f1b9f31daa6b37d[aea905e241855fcc] (138,834,000 USD_nanos, 0.91%)</title><rect x="407.9" y="61" width="12.6" height="15.0" fill="rgb(247,149,46)" rx="2" ry="2" />
+<text  x="410.87" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:4e479f8851c7ca7cd5aed6d5b5a4d88a[9dc3a7f4d3fa4929] (153,600,000 USD_nanos, 1.01%)</title><rect x="1376.0" y="61" width="14.0" height="15.0" fill="rgb(246,149,45)" rx="2" ry="2" />
+<text  x="1379.04" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:d85e9a4466e5cb3148ca0a1ff8fbae0f[e83033c1e88b3297] (198,576,000 USD_nanos, 1.31%)</title><rect x="714.5" y="61" width="18.1" height="15.0" fill="rgb(243,149,42)" rx="2" ry="2" />
+<text  x="717.53" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[42edf1b7ea2b501e] (142,824,000 USD_nanos, 0.94%)</title><rect x="329.9" y="93" width="13.0" height="15.0" fill="rgb(246,140,46)" rx="2" ry="2" />
+<text  x="332.95" y="103.5" ></text>
+</g>
+<g >
+<title>model:model[55c6d79f53cf4a32] (45,038,000 USD_nanos, 0.30%)</title><rect x="428.6" y="93" width="4.1" height="15.0" fill="rgb(241,140,39)" rx="2" ry="2" />
+<text  x="431.59" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:f9faab8733a62681587a7058c0599505[8db0fc6976eaea6c] (165,802,000 USD_nanos, 1.09%)</title><rect x="764.7" y="61" width="15.1" height="15.0" fill="rgb(245,149,44)" rx="2" ry="2" />
+<text  x="767.69" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[06b7f0bc26b7b1c8] (142,064,000 USD_nanos, 0.94%)</title><rect x="45.7" y="93" width="12.9" height="15.0" fill="rgb(246,140,45)" rx="2" ry="2" />
+<text  x="48.68" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:45da49580dc9fe61092e7d9eef4446ae[c202c5c36c682c3f] (147,514,000 USD_nanos, 0.97%)</title><rect x="1283.3" y="61" width="13.5" height="15.0" fill="rgb(244,149,43)" rx="2" ry="2" />
+<text  x="1286.34" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (107,648,000 USD_nanos, 0.71%)</title><rect x="286.5" y="77" width="9.8" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="289.54" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (589,632,000 USD_nanos, 3.88%)</title><rect x="1102.0" y="77" width="53.6" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1104.97" y="87.5" >Unall..</text>
+</g>
+<g >
+<title>Unallocated_request_cost (168,970,000 USD_nanos, 1.11%)</title><rect x="1360.7" y="77" width="15.3" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1363.67" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[dfbf47d34671a7f5] (128,710,000 USD_nanos, 0.85%)</title><rect x="1229.3" y="93" width="11.7" height="15.0" fill="rgb(235,140,33)" rx="2" ry="2" />
+<text  x="1232.35" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:e8d0616c4e447fc16e921f0ec10d2fa1[69a3296f33a098f7] (165,280,000 USD_nanos, 1.09%)</title><rect x="509.8" y="61" width="15.0" height="15.0" fill="rgb(245,149,44)" rx="2" ry="2" />
+<text  x="512.76" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:b3385b11314b6f89e60abbb17ab733dd[b0fd2bf5dfa745e1] (251,734,000 USD_nanos, 1.66%)</title><rect x="116.1" y="61" width="22.8" height="15.0" fill="rgb(240,149,39)" rx="2" ry="2" />
+<text  x="119.06" y="71.5" >o..</text>
+</g>
+<g >
+<title>Unallocated_request_cost (226,354,000 USD_nanos, 1.49%)</title><rect x="573.3" y="77" width="20.6" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="576.29" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:2b5e2c1ca61ef9b23fc36dd5c03fa6e4[cd637a37ad6d648c] (127,142,000 USD_nanos, 0.84%)</title><rect x="1185.1" y="61" width="11.6" height="15.0" fill="rgb(244,149,43)" rx="2" ry="2" />
+<text  x="1188.11" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (194,522,000 USD_nanos, 1.28%)</title><rect x="593.9" y="77" width="17.7" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="596.87" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[74eb4c24fc0bb3d2] (124,448,000 USD_nanos, 0.82%)</title><rect x="611.6" y="93" width="11.3" height="15.0" fill="rgb(240,140,38)" rx="2" ry="2" />
+<text  x="614.55" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:4b743afd4e08be1449fd7dc7ee2729d2[67ac11f249c74f3f] (80,956,000 USD_nanos, 0.53%)</title><rect x="1325.5" y="61" width="7.4" height="15.0" fill="rgb(244,149,43)" rx="2" ry="2" />
+<text  x="1328.55" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (113,572,000 USD_nanos, 0.75%)</title><rect x="244.7" y="77" width="10.4" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="247.74" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[97c73b3034d87810] (93,764,000 USD_nanos, 0.62%)</title><rect x="784.4" y="93" width="8.5" height="15.0" fill="rgb(244,140,43)" rx="2" ry="2" />
+<text  x="787.42" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:542b1637ab2a216d059c8161c4af1d04[297d843c10fe727e] (162,006,000 USD_nanos, 1.07%)</title><rect x="1087.2" y="61" width="14.8" height="15.0" fill="rgb(242,149,41)" rx="2" ry="2" />
+<text  x="1090.25" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (140,308,000 USD_nanos, 0.92%)</title><rect x="10.0" y="77" width="12.8" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="13.00" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (219,482,000 USD_nanos, 1.45%)</title><rect x="956.4" y="77" width="20.0" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="959.41" y="87.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (204,266,000 USD_nanos, 1.35%)</title><rect x="1155.6" y="77" width="18.5" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="1158.58" y="87.5" ></text>
+</g>
+<g >
+<title>model:model[7c8181761275b62f] (232,072,000 USD_nanos, 1.53%)</title><rect x="644.0" y="93" width="21.1" height="15.0" fill="rgb(245,140,44)" rx="2" ry="2" />
+<text  x="647.02" y="103.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (369,868,000 USD_nanos, 2.44%)</title><rect x="296.3" y="77" width="33.6" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="299.32" y="87.5" >Un..</text>
+</g>
+<g >
+<title>observation:codex:observation:41a1ac2b958e8364df7f048370cf3090[bb4c139e2cf0a8d3] (126,710,000 USD_nanos, 0.83%)</title><rect x="459.8" y="61" width="11.5" height="15.0" fill="rgb(239,149,37)" rx="2" ry="2" />
+<text  x="462.79" y="71.5" ></text>
+</g>
+<g >
+<title>Unallocated_request_cost (126,710,000 USD_nanos, 0.83%)</title><rect x="459.8" y="77" width="11.5" height="15.0" fill="rgb(236,186,35)" rx="2" ry="2" />
+<text  x="462.79" y="87.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:66134f816dfdfe3c0f62dfd7a079d403[445c0526f5fe78d9] (154,044,000 USD_nanos, 1.01%)</title><rect x="1346.7" y="61" width="14.0" height="15.0" fill="rgb(244,149,43)" rx="2" ry="2" />
+<text  x="1349.67" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:913cc113973e4de6964a55283688c149[0cc2cda83199dc40] (44,048,000 USD_nanos, 0.29%)</title><rect x="1043.0" y="61" width="4.0" height="15.0" fill="rgb(242,149,41)" rx="2" ry="2" />
+<text  x="1046.03" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:394eebd039ebc0d55b2850cf47ed184c[9a56965ea2b32a18] (188,318,000 USD_nanos, 1.24%)</title><rect x="1241.0" y="61" width="17.2" height="15.0" fill="rgb(247,149,47)" rx="2" ry="2" />
+<text  x="1244.05" y="71.5" ></text>
+</g>
+<g >
+<title>model:model[8bc6c8b363de8e24] (139,278,000 USD_nanos, 0.92%)</title><rect x="701.9" y="93" width="12.6" height="15.0" fill="rgb(239,140,38)" rx="2" ry="2" />
+<text  x="704.86" y="103.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:8da948c42441f9c81aca4953fb505684[6da1b03cf4246ac2] (126,926,000 USD_nanos, 0.84%)</title><rect x="1196.7" y="61" width="11.5" height="15.0" fill="rgb(241,149,39)" rx="2" ry="2" />
+<text  x="1199.67" y="71.5" ></text>
+</g>
+<g >
+<title>observation:codex:observation:a817247920079c805f325d3c535543af[f1b5205b81568ffe] (149,496,000 USD_nanos, 0.98%)</title><rect x="892.9" y="61" width="13.6" height="15.0" fill="rgb(243,149,42)" rx="2" ry="2" />
+<text  x="895.90" y="71.5" ></text>
+</g>
+</g>
+</svg>

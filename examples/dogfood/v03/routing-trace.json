@@ -1,0 +1,24 @@
+{
+  "traceEvents": [],
+  "displayTimeUnit": "ms",
+  "missing_timing_operation_ids": [
+    "direct",
+    "direct-agent",
+    "direct-read",
+    "direct-model",
+    "summary-route",
+    "summary-agent",
+    "hook",
+    "delegate",
+    "summary-worker",
+    "summary-read",
+    "summary-op",
+    "summary-model",
+    "consume-summary"
+  ],
+  "assumptions": [
+    "Lanes represent logical producer streams and agents, not OS threads. Asynchronous intervals can overlap.",
+    "Timeline positions use recorded wall-clock starts relative to the earliest start. Clock skew across producers is not corrected.",
+    "Trace Event time values use floating-point microseconds; exact recorded nanoseconds remain in the operation report."
+  ]
+}

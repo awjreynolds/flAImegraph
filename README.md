@@ -4,12 +4,15 @@ flAImegraph is an open experimental project for understanding AI-assisted softwa
 
 The project also adopts **Context Points** as a human-facing way to size and compare anticipated AI effort, alongside the familiar ideas of T-shirt sizing, story points and function points. A Context Points estimate belongs to a specified Work Item and Acceptance Outcome. It remains separate from observed tokens, calls, context-related measurements, human or infrastructure resources, selected USD valuation and the result that was accepted. The scale and estimation method still need empirical calibration; this repository does not declare a universal points-to-token or points-to-dollar conversion.
 
-The [experimental 0.2 context contract](spec/0.2/README.md) and frozen [0.1 cost contract](spec/0.1/README.md) have a working offline reference implementation. The [project plan](docs/project-plan.md) describes the route from complete work evidence to a calibrated planning measure. The [Context Points proposal](docs/context-points.md) explains the vocabulary and boundaries, and the [domain glossary](CONTEXT.md) keeps the terms consistent. See the [integration evidence](docs/implementation-evidence/integration.md) for verification and its limits.
+The [experimental 0.3 operation contract](spec/0.3/README.md), [0.2 context contract](spec/0.2/README.md) and frozen [0.1 cost contract](spec/0.1/README.md) have a working offline reference implementation. The [project plan](docs/project-plan.md) describes the route from complete work evidence to a calibrated planning measure. The [Context Points proposal](docs/context-points.md) explains the vocabulary and boundaries, and the [domain glossary](CONTEXT.md) keeps the terms consistent. See the [integration evidence](docs/implementation-evidence/integration.md) for verification and its limits.
 
 Version 0.2 adds ordered context manifests, source/revision reuse, summary lineage, versioned harness profiles, provider request capture and incremental Codex/Pi capture. Exact cost stays separate from estimated context allocation. The Context Explorer lets you load metadata reports locally in the browser and inspect context, profiles, coverage and request costs. Its [source and local build instructions](viewer/README.md) and [report examples](examples/context/README.md) are included.
 
+Version 0.3 adds deep operation capture: actual nested function/tool/IO scopes, a live Pi tool bridge, conservative native Codex/Pi import, exact execution-cost profiles, separate estimated source allocation and an Operations explorer. The [5,000-file demonstration](examples/dogfood/v03/README.md) records 5,130 operations at seven levels, an edit and a passing test, with no model calls. Capture remains explicit about opaque shell internals and unavailable context.
+
 Start here:
 
+- [Operation Interchange 0.3 and capture commands](spec/0.3/README.md)
 - [Context Points proposal and GitHub issue draft](docs/context-points.md)
 - [Project plan and acceptance gates](docs/project-plan.md)
 - [Context Interchange experimental specification 0.2](spec/0.2/README.md)
@@ -60,4 +63,4 @@ Public prototypes and wayfinding:
 - [Throwaway capture-depth prototype](https://github.com/awjreynolds/flAImegraph/tree/codex/prototype-capture-depth/prototypes/capture-depth)
 - [GitHub wayfinding map](https://github.com/awjreynolds/flAImegraph/issues/1)
 
-Research checked on 6 September 2026. Reports distinguish observed records, source-code behavior, draft standards and unverified runtime coverage. The current public enterprise scenario is a partial, reproducible $41.046242 model-token subtotal; it is a demonstration baseline, not a total project cost or a calibrated dataset. The reference CLI, independent pprof/OTLP decoding and static SVG/PNG rendering are verified. Browser interaction testing remains unverified. No raw conversations or tool-result contents are published.
+Research checked on 6 September 2026. Reports distinguish observed records, source-code behavior, draft standards and unverified runtime coverage. The current public enterprise scenario is a partial, reproducible $41.046242 model-token subtotal; it is a demonstration baseline, not a total project cost or a calibrated dataset. The reference CLI, independent pprof/OTLP decoding and static SVG/PNG rendering are verified. Operation browser drilldown, paging, graph zoom and routing/context links are verified; see the [v0.3 verification evidence](docs/implementation-evidence/operations-v03.md). No raw conversations or tool-result contents are published.

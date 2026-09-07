@@ -1,0 +1,86 @@
+{
+  "schema_version": "0.3.0",
+  "dataset_id": "native-dogfood-v03",
+  "harness": "codex",
+  "selection": {
+    "start_at": "2026-09-06T23:29:51.200Z",
+    "cutoff_at": "2026-09-07T00:17:07.300Z",
+    "inclusive": true,
+    "selected_lines": 837,
+    "selected_bytes": 3459484,
+    "first_timestamp": "2026-09-06T23:29:51.210Z",
+    "last_timestamp": "2026-09-07T00:17:07.278Z",
+    "first_source_line": 5960,
+    "last_source_line": 6796,
+    "first_source_ordinal": 5959,
+    "last_source_ordinal": 6795
+  },
+  "source": {
+    "raw_source_sha256": "6d256c020dea27ffa365f9435751f54d9cc7a7d5c2811d601a6917ca20e6f8c5",
+    "selected_source_sha256": "6a583e367d5564421e2af955dc5617335befc5111ca797fb0626b4fe58fd7396",
+    "raw_nonempty_lines": 7859
+  },
+  "evidence": {
+    "observations": 584,
+    "models": 321,
+    "direct_models": 103,
+    "direct_model_models": {
+      "gpt-6-astra": 94,
+      "unknown": 9
+    },
+    "activities": 263,
+    "issues": 110,
+    "usage_sums": {
+      "input_tokens": "11993223",
+      "output_tokens": "70124",
+      "cache_read_input_tokens": "11761792",
+      "cache_write_input_tokens": "0",
+      "reasoning_output_tokens": "20579"
+    }
+  },
+  "operations": {
+    "spans": 207,
+    "by_kind": {
+      "command": 69,
+      "file_read": 1,
+      "file_write": 1,
+      "model": 103,
+      "tool": 33
+    },
+    "by_status": {
+      "ok": 103,
+      "unknown": 104
+    },
+    "joined_observations": 103,
+    "parented_spans": 0,
+    "max_depth": 1,
+    "dropped_spans": 3,
+    "dropped_links": 0
+  },
+  "valuation": {
+    "basis": "enterprise_scenario",
+    "currency": "USD",
+    "total_nanos": "15179758000",
+    "complete": false,
+    "priced_direct": 94,
+    "unpriced_direct": 9,
+    "unpriced_non_direct": 481,
+    "issues": 695
+  },
+  "replay": {
+    "same_snapshot": true,
+    "exact_import": true,
+    "exact_merge": true
+  },
+  "privacy": {
+    "checked": true,
+    "candidate_values_checked": 1553,
+    "leaks": 0,
+    "rule": "metadata-only outputs are scanned against selected raw ID/body fields and the caller input path"
+  },
+  "limitations": [
+    "Native Codex records expose outer transcript calls and usage rows; hidden provider retries, model internals, shell internals and complete child-thread operation coverage remain outside this capture.",
+    "The source window begins after the first call and ends after a call whose result is outside the window; partial lifecycle halves are retained with unknown status or timing where necessary.",
+    "The selected Enterprise rate card is a scenario for gpt-6-astra. Unknown-model direct observations remain unpriced, and the amount is not an invoice."
+  ]
+}

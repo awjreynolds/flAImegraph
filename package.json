@@ -1,7 +1,7 @@
 {
   "name": "flaimegraph",
-  "version": "0.2.0",
-  "description": "Open agent cost and context interchange, exact valuation and inspectable request manifests",
+  "version": "0.3.0",
+  "description": "Open agent cost, context and operation interchange with deep execution profiles",
   "repository": {
     "type": "git",
     "url": "https://github.com/awjreynolds/flAImegraph.git"
@@ -36,7 +36,11 @@
     "tools/context-producer-python",
     "tools/viewer",
     "viewer",
-    "tools/dogfood-v02.ts"
+    "tools/dogfood-v02.ts",
+    "tools/dogfood-v03.ts",
+    "tools/dogfood-native-v03.ts",
+    "tools/demo-operation-routing.ts",
+    "tools/verify-pi-operations.ts"
   ],
   "scripts": {
     "build": "tsc",
@@ -47,6 +51,7 @@
   },
   "dependencies": {
     "ajv": "8.20.0",
+    "file-type": "21.3.4",
     "protobufjs": "8.8.0"
   },
   "devDependencies": {

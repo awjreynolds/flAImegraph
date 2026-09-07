@@ -1,0 +1,113 @@
+{
+  "schema_version": "0.1.0",
+  "dataset_id": "synthetic-summary-routing",
+  "sources": [
+    {
+      "id": "synthetic-routing",
+      "harness": "illustrative-harness",
+      "format": "synthetic-walkthrough",
+      "coverage": "partial",
+      "description": "Invented operations, usage, costs and policy facts for explanation. No model requests ran."
+    }
+  ],
+  "observations": [
+    {
+      "id": "direct-request",
+      "kind": "model",
+      "operation": "synthetic-generation",
+      "status": "unknown",
+      "accounting_scope": "direct",
+      "model": "illustrative-high",
+      "usage": {
+        "input_tokens": "1000",
+        "output_tokens": "100",
+        "cache_read_input_tokens": "0",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": null
+      },
+      "recorded_cost": {
+        "amount": "0.101",
+        "currency": "USD",
+        "basis": "enterprise_scenario"
+      },
+      "attributes": {
+        "synthetic": true,
+        "quality_verified": false
+      },
+      "source_refs": [
+        {
+          "source_id": "synthetic-routing",
+          "record": "direct-request"
+        }
+      ]
+    },
+    {
+      "id": "summary-request",
+      "kind": "model",
+      "operation": "synthetic-generation",
+      "status": "unknown",
+      "accounting_scope": "direct",
+      "model": "illustrative-low",
+      "usage": {
+        "input_tokens": "1000",
+        "output_tokens": "100",
+        "cache_read_input_tokens": "0",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": null
+      },
+      "recorded_cost": {
+        "amount": "0.030",
+        "currency": "USD",
+        "basis": "enterprise_scenario"
+      },
+      "attributes": {
+        "synthetic": true,
+        "quality_verified": false
+      },
+      "source_refs": [
+        {
+          "source_id": "synthetic-routing",
+          "record": "summary-request"
+        }
+      ]
+    },
+    {
+      "id": "consumer-request",
+      "kind": "model",
+      "operation": "synthetic-generation",
+      "status": "unknown",
+      "accounting_scope": "direct",
+      "model": "illustrative-high",
+      "usage": {
+        "input_tokens": "400",
+        "output_tokens": "100",
+        "cache_read_input_tokens": "0",
+        "cache_write_input_tokens": "0",
+        "reasoning_output_tokens": null
+      },
+      "recorded_cost": {
+        "amount": "0.040",
+        "currency": "USD",
+        "basis": "enterprise_scenario"
+      },
+      "attributes": {
+        "synthetic": true,
+        "quality_verified": false
+      },
+      "source_refs": [
+        {
+          "source_id": "synthetic-routing",
+          "record": "consumer-request"
+        }
+      ]
+    }
+  ],
+  "relationships": [],
+  "issues": [
+    {
+      "code": "SYNTHETIC",
+      "severity": "warning",
+      "message": "All usage and costs are invented illustrative values. This is not a provider rate card, actual bill or measured savings experiment."
+    }
+  ]
+}

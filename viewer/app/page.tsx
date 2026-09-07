@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -309,6 +310,7 @@ export default function Home() {
           <span className="muted">/ Context explorer</span>
         </div>
         <div className="actions">
+          <Link href="/operations/">Operation explorer →</Link>
           <span className="badge">Experimental 0.2</span>
           <Button variant="outline" onClick={() => inputRef.current?.click()}>
             Open report

@@ -1,0 +1,16 @@
+{
+  "schema_version": "0.1.0",
+  "id": "val-dc7311ed1370057b44e52a6a33dd1332c5071bac659a1fc35a994142f158fb4d",
+  "dataset_id": "operation-depth-files",
+  "selection_policy": "direct-only-v1",
+  "currency": "USD",
+  "basis": "mixed",
+  "assumptions": [
+    "selection policy: direct-only-v1",
+    "recorded monetary amounts are rounded once to nano-currency using HALF_EVEN"
+  ],
+  "observations": [],
+  "total_nanos": "0",
+  "complete": true,
+  "issues": []
+}
