@@ -1,0 +1,1 @@
+{"type":"event_msg","timestamp":"2026-09-07T10:00:00.000Z","payload":{"type":"token_count","turn_id":"turn-1","info":{"last_token_usage":{"input_tokens":"40","output_tokens":"8"},"total_token_usage":{"input_tokens":"100","output_tokens":"20","total_tokens":"120"}}}}

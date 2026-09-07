@@ -1,0 +1,123 @@
+{
+  "benchmark": {
+    "benchmark_id": "illustrative-inspect",
+    "role": "candidate",
+    "cohort": {
+      "workload_id": "illustrative-code-edit",
+      "scope_revision": "example-v1",
+      "acceptance_version": "tests-v1"
+    },
+    "conditions": {
+      "harness": "inspect-ai"
+    },
+    "model_config": {
+      "model": "example/model-small",
+      "provider": "example"
+    },
+    "evaluation": "declared",
+    "samples": [
+      {
+        "sample_id": "inspect:task-1:epoch:1",
+        "task_id": "inspect:task-1:epoch:1",
+        "accepted": true,
+        "quality": {
+          "passed": true,
+          "evidence": "derived",
+          "score": "C",
+          "source_refs": [
+            {
+              "source_id": "source-91ff101a81dac59b8517d8dd",
+              "record": "sha256:91ff101a81dac59b8517d8dd1fa840a85be3d8802da92d2f422cff5066140164"
+            },
+            {
+              "source_id": "source-91ff101a81dac59b8517d8dd",
+              "record": "sample:task-1:epoch:1"
+            }
+          ]
+        },
+        "passed": true,
+        "passed_score": "C",
+        "meters": [
+          {
+            "meter_id": "cache_read_input_tokens",
+            "unit": "tokens",
+            "quantity": "400",
+            "evidence": "observed",
+            "source_refs": [
+              {
+                "source_id": "source-91ff101a81dac59b8517d8dd",
+                "record": "sha256:91ff101a81dac59b8517d8dd1fa840a85be3d8802da92d2f422cff5066140164"
+              },
+              {
+                "source_id": "source-91ff101a81dac59b8517d8dd",
+                "record": "sample:task-1:epoch:1"
+              }
+            ]
+          },
+          {
+            "meter_id": "input_tokens",
+            "unit": "tokens",
+            "quantity": "600",
+            "evidence": "observed",
+            "source_refs": [
+              {
+                "source_id": "source-91ff101a81dac59b8517d8dd",
+                "record": "sha256:91ff101a81dac59b8517d8dd1fa840a85be3d8802da92d2f422cff5066140164"
+              },
+              {
+                "source_id": "source-91ff101a81dac59b8517d8dd",
+                "record": "sample:task-1:epoch:1"
+              }
+            ]
+          },
+          {
+            "meter_id": "output_tokens",
+            "unit": "tokens",
+            "quantity": "180",
+            "evidence": "observed",
+            "source_refs": [
+              {
+                "source_id": "source-91ff101a81dac59b8517d8dd",
+                "record": "sha256:91ff101a81dac59b8517d8dd1fa840a85be3d8802da92d2f422cff5066140164"
+              },
+              {
+                "source_id": "source-91ff101a81dac59b8517d8dd",
+                "record": "sample:task-1:epoch:1"
+              }
+            ]
+          }
+        ],
+        "source_refs": [
+          {
+            "source_id": "source-91ff101a81dac59b8517d8dd",
+            "record": "sha256:91ff101a81dac59b8517d8dd1fa840a85be3d8802da92d2f422cff5066140164"
+          },
+          {
+            "source_id": "source-91ff101a81dac59b8517d8dd",
+            "record": "sample:task-1:epoch:1"
+          }
+        ],
+        "scope_revision": "example-v1",
+        "acceptance_version": "tests-v1",
+        "latency_ns": "7000000000"
+      }
+    ],
+    "provenance": [
+      {
+        "source_id": "source-91ff101a81dac59b8517d8dd",
+        "record": "sha256:91ff101a81dac59b8517d8dd1fa840a85be3d8802da92d2f422cff5066140164"
+      },
+      {
+        "source_id": "source-91ff101a81dac59b8517d8dd",
+        "record": "eval:illustrative-inspect"
+      }
+    ]
+  },
+  "limitations": [
+    "Inspect condition harness_version was not recorded; benchmark comparison is limited",
+    "Inspect condition tools_version was not recorded; benchmark comparison is limited",
+    "Inspect condition cache was not recorded; benchmark comparison is limited",
+    "Inspect condition context_policy was not recorded; benchmark comparison is limited",
+    "Inspect condition routing_policy was not recorded; benchmark comparison is limited"
+  ]
+}

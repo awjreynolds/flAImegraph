@@ -18,7 +18,7 @@ The pinned, unmodified **Brendan Gregg FlameGraph renderer** consumed integer na
 
 ## Contract and native evidence
 
-`npm run check` runs strict TypeScript checking and the automated suite. `node dist/cli.js conformance` passes all **10 portable accounting vectors**, including exact HALF_EVEN rounding, incomplete quantities, duplicate identities and invalid cache subsets. The adversarial suite additionally covers allocations, corrections, scope changes, estimate timing, output aliases, OTLP identities and renderer label injection. Independent reviews and repair verifications are retained in [docs/reviews](../reviews/).
+`npm run check` runs strict TypeScript checking and the automated suite. `node dist/pricing-cli.js conformance` passes all **10 portable accounting vectors**, including exact HALF_EVEN rounding, incomplete quantities, duplicate identities and invalid cache subsets. The adversarial suite additionally covers allocations, corrections, scope changes, estimate timing, output aliases, OTLP identities and renderer label injection. Independent reviews and repair verifications are retained in [docs/reviews](../reviews/).
 
 All eight adapter names have version/format-specific fixtures: Codex, Pi, OMP, Claude, Gemini, OpenCode, OTLP and Copilot. A cross-harness test maps equivalent Codex and Pi token partitions to the same `150750000 nanoUSD` valuation and folded representation. The public legacy Pi fixture preserves 484 model calls and reproduces **$42.5959075** in recorded model-price estimates. The Codex demo reproduces the separate **$41.046242 enterprise-scenario subtotal**. These values have different declared bases and are not summed.
 

@@ -26,19 +26,25 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npm run check
       - run: npm run build
-      - run: node dist/cli.js conformance
-      - run: node dist/cli.js demo --out-dir .local/ci-demo
-      - run: go tool pprof -top .local/ci-demo/cost.pprof
+      - run: node dist/cli.js demo --out-dir .local/usage-demo
+      - run: go run cmd/pprof -top .local/usage-demo/usage.pprof
+      - run: node dist/cli.js analyze --input examples/dogfood/v04/native-usage.json --out .local/usage-analysis.json
+      - run: node dist/cli.js benchmark --baseline examples/dogfood/v04/baseline.json --candidate examples/dogfood/v04/candidate.json --out .local/comparison.json
+      - run: node dist/cli.js runway --input examples/dogfood/v04/runway-input.json --out .local/runway.json
+      - run: node dist/pricing-cli.js conformance
+      - run: node dist/pricing-cli.js demo --out-dir .local/ci-demo
+      - run: go run cmd/pprof -top .local/ci-demo/cost.pprof
       - run: go run . ../../.local/ci-demo/evidence.otlp.json 784
         working-directory: tools/verify-otlp
-      - run: node dist/cli.js validate --kind operation-report --input examples/dogfood/v03/files-report.json
-      - run: node dist/cli.js validate --kind operation-report --input examples/dogfood/v03/routing-report.json
-      - run: node dist/cli.js validate --kind operation-report --input examples/dogfood/v03/native-report.json
-      - run: go tool pprof -top examples/dogfood/v03/files-operations.pprof
+      - run: node dist/pricing-cli.js validate --kind operation-report --input examples/dogfood/v03/files-report.json
+      - run: node dist/pricing-cli.js validate --kind operation-report --input examples/dogfood/v03/routing-report.json
+      - run: node dist/pricing-cli.js validate --kind operation-report --input examples/dogfood/v03/native-report.json
+      - run: go run cmd/pprof -top examples/dogfood/v03/files-operations.pprof
       - run: npm pack --pack-destination .local
-      - run: npm install --ignore-scripts --prefix .local/package-smoke .local/flaimegraph-0.3.1.tgz
-      - run: node .local/package-smoke/node_modules/flaimegraph/dist/cli.js conformance
-      - run: node .local/package-smoke/node_modules/flaimegraph/dist/cli.js demo --out-dir .local/package-demo
+      - run: npm install --ignore-scripts --prefix .local/package-smoke .local/flaimegraph-0.4.0.tgz
+      - run: node .local/package-smoke/node_modules/flaimegraph/dist/cli.js demo --out-dir .local/package-usage-demo
+      - run: node .local/package-smoke/node_modules/flaimegraph/dist/pricing-cli.js conformance
+      - run: node .local/package-smoke/node_modules/flaimegraph/dist/pricing-cli.js demo --out-dir .local/package-demo
 
   viewer:
     runs-on: ubuntu-latest

@@ -1,0 +1,4 @@
+{"type":"request","request_id":"request-anthropic","model":"claude-requested","provider":"anthropic","service_tier":"priority","thinking":{"type":"enabled"},"cache_control":{"ttl":"1h"}}
+{"type":"response","request_id":"request-anthropic","id":"response-anthropic","model":"claude-applied","provider":"anthropic","service_tier":"standard","usage":{"input_tokens":100,"cache_creation_input_tokens":3,"output_tokens":12}}
+{"type":"request","request_id":"request-gemini","model":"gemini-requested","provider":"google","generationConfig":{"thinkingConfig":{"thinkingBudget":128}}}
+{"type":"response","request_id":"request-gemini","id":"response-gemini","modelVersion":"gemini-applied","provider":"google","usageMetadata":{"promptTokenCount":100,"cachedContentTokenCount":30,"candidatesTokenCount":22,"thoughtsTokenCount":6,"totalTokenCount":122}}

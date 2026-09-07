@@ -157,7 +157,7 @@ test("operation-export emits the budget and optional token SVG while protecting 
     const output = join(directory, "export");
     writeFileSync(reportFile, JSON.stringify(report));
     writeFileSync(rateFile, JSON.stringify(card()));
-    const run = (...args: string[]) => spawnSync(process.execPath, ["--import", "tsx", "src/cli.ts", "operation-export", ...args], { encoding: "utf8" });
+    const run = (...args: string[]) => spawnSync(process.execPath, ["--import", "tsx", "src/pricing-cli.ts", "operation-export", ...args], { encoding: "utf8" });
     const result = run("--input", reportFile, "--out-dir", output, "--rate-card", rateFile, "--svg", "true");
     assert.equal(result.status, 0, result.stderr);
     const manifest = JSON.parse(readFileSync(join(output, "export.json"), "utf8"));

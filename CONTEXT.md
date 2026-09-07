@@ -8,6 +8,10 @@ This context names the concepts used to describe the size, evidence, valuation a
 A versioned unit of specified work with a declared scope and Acceptance Outcome. A Work Item may have multiple Attempts and observations.
 _Avoid_: ticket when the acceptance boundary is different.
 
+**Work Identifier**:
+A developer-defined string linking observations to intended work within a dataset or project. It may be a ticket key, issue URL or custom label, stored as `work_item_id`. Several tasks and agents can share it. The identifier does not itself declare Scope or an Acceptance Outcome and requires no ticket-system integration.
+_Avoid_: a verified outcome or a globally registered ticket identity.
+
 **Scope**:
 The work and conditions included in a Work Item at a stated revision or time.
 _Avoid_: everything an agent happened to touch.
@@ -43,8 +47,16 @@ A measured or explicitly estimated quantity associated with an Observation, such
 _Avoid_: points, cost.
 
 **Resource Usage**:
-The observed consumption of model, harness, human or infrastructure resources attributable to an Attempt or Work Item. It describes what was consumed, not what the Work Item delivered.
+The observed consumption of model, harness, human or infrastructure resources attributable to an Attempt or Work Item, retained independently of whether anyone pays for that consumption. It describes what was consumed, not what the Work Item delivered.
 _Avoid_: effort points.
+
+**Pricing Dimension**:
+A provenance-backed fact about Resource Usage that an external pricing policy may use, such as its service, model version, processing tier, region or usage time. A Pricing Dimension records the conditions of consumption without assigning a rate or monetary value.
+_Avoid_: price, surcharge, billable flag inferred from usage.
+
+**Meter**:
+A defined Resource Usage measurement with a quantity, unit, scope and aggregation meaning, including whether it overlaps another measurement. A Meter can describe tokens, calls, compute duration, storage over time or provider-specific consumption units.
+_Avoid_: charge, unqualified total.
 
 **Coverage**:
 The declared included, excluded, missing and uncertain portions of an Observation or report. Coverage describes the evidence supporting a quantity; it does not certify completeness.
@@ -54,11 +66,27 @@ _Avoid_: completeness certificate.
 A versioned prediction of Resource Usage, an Acceptance Outcome or both, made for a stated stage and working condition.
 _Avoid_: promise, budget cap.
 
+**Delivery Runway**:
+A forecast of the accepted work achievable before a declared capacity constraint or time horizon is reached, under a stated workload mix and execution policy. It depends on remaining allowances, resource demand and uncertainty rather than on cash spend alone.
+_Avoid_: token balance, subscription price, guaranteed deliveries.
+
+**Efficiency Analysis**:
+A derived comparison of Resource Usage and time against Acceptance Outcomes under declared working conditions. It includes unsuccessful Attempts, review, rework and analysis overhead and keeps different resource measures distinct.
+_Avoid_: smallest token count, cheapest call, quality-free efficiency score.
+
+**Session Benchmark**:
+A versioned comparison of an Attempt or session with a declared baseline or cohort using matched work, acceptance criteria and relevant execution conditions. Observed results and forecasts about alternative model choices remain separately identified.
+_Avoid_: universal model ranking, proof that another model would succeed.
+
 **Calibration Record**:
 A linked Context Points estimate, Observation, valuation, Scope, working condition and Acceptance Outcome used to evaluate a scale or Forecast.
 _Avoid_: training example when the record's provenance is not known.
 
 ## Valuation and views
+
+**Pricing Policy**:
+An external, versioned set of commercial rules that interprets Resource Usage and Pricing Dimensions, including historical rates, customer contracts, subscription allowances and fixed fees. The same evidence can be interpreted under multiple Pricing Policies.
+_Avoid_: capture rule, universal price list.
 
 **Valuation**:
 A versioned application of declared rates or a commercial scenario to a quantity, with its currency, date, source and assumptions. A Valuation can describe a scenario or contract basis without being an invoice.

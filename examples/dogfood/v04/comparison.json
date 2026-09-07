@@ -1,0 +1,67 @@
+{
+  "schema_version": "0.4.0",
+  "baseline_id": "illustrative-baseline",
+  "candidate_id": "illustrative-candidate",
+  "status": "limited",
+  "evaluation": "declared",
+  "sample_sizes": {
+    "baseline": "4",
+    "candidate": "4"
+  },
+  "accepted_counts": {
+    "baseline": "3",
+    "candidate": "3"
+  },
+  "acceptance_rate_delta": "0/1",
+  "resource_deltas": [
+    {
+      "meter_id": "input_tokens",
+      "unit": "tokens",
+      "delta": "1480/3",
+      "baseline": {
+        "numerator": "4000",
+        "denominator": "3"
+      },
+      "candidate": {
+        "numerator": "840",
+        "denominator": "1"
+      },
+      "evidence": "derived"
+    },
+    {
+      "meter_id": "output_tokens",
+      "unit": "tokens",
+      "delta": "80/3",
+      "baseline": {
+        "numerator": "800",
+        "denominator": "3"
+      },
+      "candidate": {
+        "numerator": "240",
+        "denominator": "1"
+      },
+      "evidence": "derived"
+    }
+  ],
+  "latency_ns": {
+    "baseline": {
+      "numerator": "10000000000",
+      "denominator": "1"
+    },
+    "candidate": {
+      "numerator": "7000000000",
+      "denominator": "1"
+    },
+    "delta": "3000000000"
+  },
+  "limitations": [
+    "baseline is not held-out or controlled",
+    "candidate is not held-out or controlled"
+  ],
+  "source_refs": [
+    {
+      "source_id": "illustrative-scenario",
+      "record": "declared-fixture"
+    }
+  ]
+}

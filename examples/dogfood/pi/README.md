@@ -7,10 +7,10 @@ All 1,003 physical records remain in order so fallback line identities remain me
 The independently worked expectation is **42,595,907,500 nanoUSD ($42.5959075)** after rounding each recorded `cost.total` once to nanoUSD. Native cost is a model-price estimate under Pi's USD convention; it is not proof of billing. Zero usage on aborted/error records and missing compactions do not prove zero provider expenditure. Details and source interpretation are in the [capture research](../../../docs/research/pi-capture-fidelity.md).
 
 ```sh
-node dist/cli.js import --harness pi --input examples/dogfood/pi/before-compaction.jsonl --agent pi --work-item public-fixture --out .local/pi/evidence.json
-node dist/cli.js value --input .local/pi/evidence.json --mode recorded --out .local/pi/valuation.json
-node dist/cli.js export --input .local/pi/evidence.json --valuation .local/pi/valuation.json --out-dir .local/pi
-node dist/cli.js render --input .local/pi/profile.json --out-dir .local/pi
+node dist/pricing-cli.js import --harness pi --input examples/dogfood/pi/before-compaction.jsonl --agent pi --work-item public-fixture --out .local/pi/evidence.json
+node dist/pricing-cli.js value --input .local/pi/evidence.json --mode recorded --out .local/pi/valuation.json
+node dist/pricing-cli.js export --input .local/pi/evidence.json --valuation .local/pi/valuation.json --out-dir .local/pi
+node dist/pricing-cli.js render --input .local/pi/profile.json --out-dir .local/pi
 ```
 
 The graph is produced through the same valuation/profile/renderer path as the Codex demo. Work item and agent labels in these commands are analyst-supplied. This fixture demonstrates a second native harness and existing consumer compatibility; it does not establish an independent implementation of the interchange specification.

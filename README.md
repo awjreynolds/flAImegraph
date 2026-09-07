@@ -1,51 +1,46 @@
 # flAImegraph
 
-flAImegraph is an open experimental project for understanding AI-assisted software delivery: preserve evidence of the work, value model usage under a declared scenario, and make the result inspectable in monetary flame graphs and other existing profile views.
+Record AI resource usage and the conditions that produced it. Visualize tokens or operations, compare accepted work, evaluate alternative model configurations, and estimate delivery runway from explicit capacity evidence.
 
-The project also adopts **Context Points** as a human-facing way to size and compare anticipated AI effort, alongside the familiar ideas of T-shirt sizing, story points and function points. A Context Points estimate belongs to a specified Work Item and Acceptance Outcome. It remains separate from observed tokens, calls, context-related measurements, human or infrastructure resources, selected USD valuation and the result that was accepted. The scale and estimation method still need empirical calibration; this repository does not declare a universal points-to-token or points-to-dollar conversion.
+Version **0.4.0** makes usage the default. The capture SDK, interchange and reports contain no rates, currency or subscription rules. Historical or customer-specific pricing is an optional consumer through `flaimegraph/pricing` and `flaimegraph-pricing`.
 
-The [experimental 0.3 operation contract](spec/0.3/README.md), [0.2 context contract](spec/0.2/README.md) and frozen [0.1 cost contract](spec/0.1/README.md) have a working offline reference implementation. The [project plan](docs/project-plan.md) describes the route from complete work evidence to a calibrated planning measure. The [Context Points proposal](docs/context-points.md) explains the vocabulary and boundaries, and the [domain glossary](CONTEXT.md) keeps the terms consistent. See the [integration evidence](docs/implementation-evidence/integration.md) for verification and its limits.
+Measurements retain exact decimal quantities, UTC timing, provenance, requested versus confirmed model/tier/reasoning settings, and unknown values. Input, cache and reasoning meters remain separate with declared subset relationships. The downstream analyzer distinguishes measured findings, candidate policies and unsupported conclusions. It does not infer that a model choice was wrong from token counts alone.
 
-Version 0.2 adds ordered context manifests, source/revision reuse, summary lineage, versioned harness profiles, provider request capture and incremental Codex/Pi capture. Exact cost stays separate from estimated context allocation. The Context Explorer lets you load metadata reports locally in the browser and inspect context, profiles, coverage and request costs. Its [source and local build instructions](viewer/README.md) and [report examples](examples/context/README.md) are included.
+## Run locally
 
-Version 0.3 adds deep operation capture: actual nested function/tool/IO scopes, a live Pi tool bridge, conservative native Codex/Pi import, exact execution-cost profiles, separate estimated source allocation and an Operations explorer. The [5,000-file demonstration](examples/dogfood/v03/README.md) records 5,130 operations at seven levels, an edit and a passing test, with no model calls. Capture remains explicit about opaque shell internals and unavailable context.
-
-Version 0.3.1 makes dollar budgeting the default view. Monetary flamegraph frames show their inclusive dollar amount, and a token-cost layer separates uncached input, cached input, cache writes and output when matching declared rates are available. The explorer compares activity/model/agent costs and selected-operation token mixes. Missing category prices stay unsplit, credits stay separate, and source allocation remains explicitly estimated. See [dollar budgeting](docs/implementation-evidence/dollar-budgeting.md).
-
-Start here:
-
-- [Operation Interchange 0.3 and capture commands](spec/0.3/README.md)
-- [Context Points proposal and GitHub issue draft](docs/context-points.md)
-- [Project plan and acceptance gates](docs/project-plan.md)
-- [Context Interchange experimental specification 0.2](spec/0.2/README.md)
-- [Agent Cost Interchange experimental specification 0.1](spec/0.1/README.md)
-- [Implementation contract](docs/implementation-contract.md)
-- [Dogfooding on this project's own work](docs/dogfooding.md)
-
-## Run the reference implementation
-
-Requires Node.js 22 or newer and Perl for SVG rendering. Everything below runs locally using the published, sanitized fixtures; no provider account or API key is required.
+Requires Node.js 22+ and Perl for the upstream FlameGraph renderer. These commands use committed metadata-only examples; no model provider account is needed.
 
 ```sh
-git clone https://github.com/awjreynolds/flAImegraph.git
-cd flAImegraph
 npm ci --ignore-scripts
 npm run build
-node dist/cli.js conformance
-node dist/cli.js demo --out-dir .local/demo
+node dist/cli.js demo --out-dir .local/usage-demo
+node dist/cli.js analyze --input .local/usage-demo/report.json --out .local/analysis.json
 ```
 
-Open `.local/demo/cost.svg` in a browser. Frame width represents cost; hover for exact dollars, click to zoom, and use Ctrl+F to search. The demo imports four native Codex evidence fixtures, reconciles 177 direct model observations, applies the declared enterprise scenario, and reproduces a **$41.046242 known subtotal**. It also writes the evidence, rate card, valuation, profile manifest, folded stacks, gzip pprof, OTLP projection, and coverage summary.
+Open `.local/usage-demo/usage.svg` for the interactive flame graph. Width represents input tokens. The export also includes exact report/profile JSON, folded stacks and gzip pprof. Use `go tool pprof -top .local/usage-demo/usage.pprof` with an independent consumer.
 
-The cost view represents a selected pricing scenario with incomplete capture. It is not an invoice or the cost of all work on this repository. The [fixture provenance](examples/dogfood/README.md) describes its frozen cutoff and sanitization.
+The demo migrates **584 recorded development observations** from the existing native capture. A separate **5,130-operation file workload** retains actual nested ancestry. Both are partial observations of the work; neither establishes model suitability or a complete account total. The benchmark and runway examples are explicitly illustrative.
 
-[![Dollar-weighted flame graph of the frozen four-agent capture](docs/demo/cost.png)](docs/demo/README.md)
+## Capture, inspect and compare
 
-The [checked-in demonstration](docs/demo/README.md) includes the SVG, PNG and rendering evidence. Each agent's width is proportional to its selected dollar cost; the uppermost row contains individual observations.
+```sh
+node dist/cli.js import --format codex --input session.jsonl --dataset-id work-1 --out usage.json
+node dist/cli.js report --input usage.json --group-by task,model --out report.json
+node dist/cli.js export --input report.json --meter output_tokens --out-dir output-profile --svg true
+node dist/cli.js benchmark --baseline examples/dogfood/v04/baseline.json --candidate examples/dogfood/v04/candidate.json --out comparison.json
+node dist/cli.js runway --input examples/dogfood/v04/runway-input.json --out runway.json
+```
 
-For a PNG, install `rsvg-convert` and append `--png true` to the demo command. An independent pprof viewer can inspect `.local/demo/cost.pprof`, for example `go tool pprof -top .local/demo/cost.pprof`. Nano-USD is the exact integer interchange unit; the SVG presents decimal USD in its title and tooltips.
+The [local viewer](viewer/README.md) loads sessions in the browser, inspects measurements and processing conditions, shows session findings, compares benchmark configurations and explores capacity scenarios. Existing context and monetary views remain available.
 
-See the [usage and adoption guide](docs/usage.md) for other harnesses, rate cards, shared work allocations and the TypeScript API. Run `node dist/cli.js capabilities` for accepted formats and tested coverage. This release is experimental and has no independently maintained producer adoption claim.
+- [Usage guide and SDK examples](docs/usage.md)
+- [Usage Interchange 0.4](spec/0.4/README.md)
+- [Efficiency, benchmarks and runway](docs/efficiency-analysis.md)
+- [Reproducible examples and their limits](examples/dogfood/v04/README.md)
+- [Legacy pricing and migration](docs/legacy-usage.md)
+- [Architecture decision](docs/adr/0001-separate-usage-from-pricing.md), [domain glossary](CONTEXT.md) and [project plan](docs/project-plan.md)
+
+Operation Interchange 0.3, Context Interchange 0.2 and Cost Interchange 0.1 remain supported through their existing types and optional legacy tooling. Context Points remain a proposed human-facing sizing scale, requiring calibration; no universal conversion to tokens, money or capacity is claimed.
 
 Research and design index:
 
@@ -64,5 +59,3 @@ Public prototypes and wayfinding:
 - [Enterprise-rate scenario for the frozen capture](https://github.com/awjreynolds/flAImegraph/tree/codex/prototype-capture-depth/prototypes/enterprise-valuation)
 - [Throwaway capture-depth prototype](https://github.com/awjreynolds/flAImegraph/tree/codex/prototype-capture-depth/prototypes/capture-depth)
 - [GitHub wayfinding map](https://github.com/awjreynolds/flAImegraph/issues/1)
-
-Research checked on 6 September 2026. Reports distinguish observed records, source-code behavior, draft standards and unverified runtime coverage. The current public enterprise scenario is a partial, reproducible $41.046242 model-token subtotal; it is a demonstration baseline, not a total project cost or a calibrated dataset. The reference CLI, independent pprof/OTLP decoding and static SVG/PNG rendering are verified. Operation browser drilldown, paging, graph zoom and routing/context links are verified; see the [v0.3 verification evidence](docs/implementation-evidence/operations-v03.md). No raw conversations or tool-result contents are published.

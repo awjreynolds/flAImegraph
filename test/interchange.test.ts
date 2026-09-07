@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { importEvidence, validateEvidence, valueEvidence, createCostProfile, exportFolded } from "../src/index.js";
+import { importEvidence, validateEvidence, valueEvidence, createCostProfile, exportFolded } from "../src/pricing.js";
 import type { RateCard } from "../src/types.js";
 
 test("equivalent Codex and Pi partitions produce the same monetary projection without harness logic downstream", () => {

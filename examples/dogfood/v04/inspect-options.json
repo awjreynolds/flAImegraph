@@ -1,0 +1,11 @@
+{
+  "role": "candidate",
+  "scorer": "tests",
+  "accepted_values": [
+    "C"
+  ],
+  "workload_id": "illustrative-code-edit",
+  "scope_revision": "example-v1",
+  "acceptance_version": "tests-v1",
+  "evaluation": "declared"
+}

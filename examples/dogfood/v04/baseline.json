@@ -1,0 +1,157 @@
+{
+  "benchmark_id": "illustrative-baseline",
+  "role": "baseline",
+  "cohort": {
+    "workload_id": "illustrative-code-edit",
+    "scope_revision": "example-v1",
+    "acceptance_version": "tests-v1",
+    "task_class": "bounded-edit"
+  },
+  "conditions": {
+    "harness": "illustrative",
+    "harness_version": "1",
+    "tools_version": "1",
+    "cache": "warm",
+    "context_policy": "same-files",
+    "routing_policy": "single-model"
+  },
+  "model_config": {
+    "model": "example-large",
+    "reasoning": "high",
+    "tier": "standard"
+  },
+  "evaluation": "declared",
+  "samples": [
+    {
+      "sample_id": "baseline-1",
+      "task_id": "task-1",
+      "accepted": true,
+      "meters": [
+        {
+          "meter_id": "input_tokens",
+          "unit": "tokens",
+          "quantity": "1000",
+          "evidence": "declared"
+        },
+        {
+          "meter_id": "output_tokens",
+          "unit": "tokens",
+          "quantity": "200",
+          "evidence": "declared"
+        }
+      ],
+      "source_refs": [
+        {
+          "source_id": "illustrative-scenario",
+          "record": "declared-fixture"
+        }
+      ],
+      "latency_ns": "10000000000",
+      "attempts": "1",
+      "quality": {
+        "passed": true,
+        "evidence": "declared"
+      }
+    },
+    {
+      "sample_id": "baseline-2",
+      "task_id": "task-2",
+      "accepted": true,
+      "meters": [
+        {
+          "meter_id": "input_tokens",
+          "unit": "tokens",
+          "quantity": "1000",
+          "evidence": "declared"
+        },
+        {
+          "meter_id": "output_tokens",
+          "unit": "tokens",
+          "quantity": "200",
+          "evidence": "declared"
+        }
+      ],
+      "source_refs": [
+        {
+          "source_id": "illustrative-scenario",
+          "record": "declared-fixture"
+        }
+      ],
+      "latency_ns": "10000000000",
+      "attempts": "1",
+      "quality": {
+        "passed": true,
+        "evidence": "declared"
+      }
+    },
+    {
+      "sample_id": "baseline-3",
+      "task_id": "task-3",
+      "accepted": true,
+      "meters": [
+        {
+          "meter_id": "input_tokens",
+          "unit": "tokens",
+          "quantity": "1000",
+          "evidence": "declared"
+        },
+        {
+          "meter_id": "output_tokens",
+          "unit": "tokens",
+          "quantity": "200",
+          "evidence": "declared"
+        }
+      ],
+      "source_refs": [
+        {
+          "source_id": "illustrative-scenario",
+          "record": "declared-fixture"
+        }
+      ],
+      "latency_ns": "10000000000",
+      "attempts": "1",
+      "quality": {
+        "passed": true,
+        "evidence": "declared"
+      }
+    },
+    {
+      "sample_id": "baseline-4",
+      "task_id": "task-4",
+      "accepted": false,
+      "meters": [
+        {
+          "meter_id": "input_tokens",
+          "unit": "tokens",
+          "quantity": "1000",
+          "evidence": "declared"
+        },
+        {
+          "meter_id": "output_tokens",
+          "unit": "tokens",
+          "quantity": "200",
+          "evidence": "declared"
+        }
+      ],
+      "source_refs": [
+        {
+          "source_id": "illustrative-scenario",
+          "record": "declared-fixture"
+        }
+      ],
+      "latency_ns": "10000000000",
+      "attempts": "1",
+      "quality": {
+        "passed": false,
+        "evidence": "declared"
+      }
+    }
+  ],
+  "provenance": [
+    {
+      "source_id": "illustrative-scenario",
+      "record": "declared-fixture"
+    }
+  ],
+  "analysis_overhead": []
+}

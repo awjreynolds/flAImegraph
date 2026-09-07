@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "eval": {
+    "eval_id": "illustrative-inspect",
+    "task": "code-edit",
+    "model": "example/model-small",
+    "created": "2026-09-07T12:00:00Z"
+  },
+  "samples": [
+    {
+      "id": "task-1",
+      "epoch": 1,
+      "scores": {
+        "tests": {
+          "value": "C"
+        }
+      },
+      "model_usage": {
+        "example/model-small": {
+          "input_tokens": 600,
+          "output_tokens": 180,
+          "input_tokens_cache_read": 400
+        }
+      },
+      "total_time": 7
+    }
+  ]
+}

@@ -1,0 +1,635 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/awjreynolds/flAImegraph/v0.4.0/spec/0.4/schemas/usage.schema.json",
+  "title": "flAImegraph usage-only interchange bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "dataset_id",
+    "sources",
+    "meters",
+    "observations"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.4.0"
+    },
+    "dataset_id": {
+      "$ref": "#/$defs/id"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "meters": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/meter"
+      }
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/observation"
+      }
+    },
+    "coverage": {
+      "$ref": "#/$defs/coverage"
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/issue"
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "quantity": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+    },
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "record"
+      ],
+      "properties": {
+        "source_id": {
+          "$ref": "#/$defs/id"
+        },
+        "record": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    "sourceRefs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/sourceRef"
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "harness",
+        "format",
+        "coverage"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "harness": {
+          "$ref": "#/$defs/id"
+        },
+        "format": {
+          "$ref": "#/$defs/id"
+        },
+        "version": {
+          "$ref": "#/$defs/id"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{64}$"
+        },
+        "coverage": {
+          "enum": [
+            "complete",
+            "partial",
+            "unknown"
+          ]
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "meter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "unit",
+        "description",
+        "subset_of",
+        "overlap"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "unit": {
+          "$ref": "#/$defs/id"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subset_of": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "overlap": {
+          "enum": [
+            "disjoint",
+            "subset",
+            "overlap",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "evidence": {
+      "enum": [
+        "observed",
+        "declared",
+        "derived",
+        "estimated",
+        "unknown"
+      ]
+    },
+    "timestamp": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "evidence",
+        "method",
+        "source_refs"
+      ],
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/dateTime"
+            }
+          ]
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence"
+        },
+        "method": {
+          "$ref": "#/$defs/id"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/sourceRefs"
+        }
+      }
+    },
+    "fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "evidence",
+        "method",
+        "source_refs"
+      ],
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence"
+        },
+        "method": {
+          "$ref": "#/$defs/id"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/sourceRefs"
+        }
+      }
+    },
+    "dimensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "requested_provider": {
+          "$ref": "#/$defs/fact"
+        },
+        "actual_provider": {
+          "$ref": "#/$defs/fact"
+        },
+        "provider": {
+          "$ref": "#/$defs/fact"
+        },
+        "service": {
+          "$ref": "#/$defs/fact"
+        },
+        "product": {
+          "$ref": "#/$defs/fact"
+        },
+        "api_operation": {
+          "$ref": "#/$defs/fact"
+        },
+        "requested_model": {
+          "$ref": "#/$defs/fact"
+        },
+        "actual_model": {
+          "$ref": "#/$defs/fact"
+        },
+        "model": {
+          "$ref": "#/$defs/fact"
+        },
+        "requested_tier": {
+          "$ref": "#/$defs/fact"
+        },
+        "actual_tier": {
+          "$ref": "#/$defs/fact"
+        },
+        "tier": {
+          "$ref": "#/$defs/fact"
+        },
+        "requested_reasoning": {
+          "$ref": "#/$defs/fact"
+        },
+        "actual_reasoning": {
+          "$ref": "#/$defs/fact"
+        },
+        "reasoning": {
+          "$ref": "#/$defs/fact"
+        },
+        "requested_region": {
+          "$ref": "#/$defs/fact"
+        },
+        "actual_region": {
+          "$ref": "#/$defs/fact"
+        },
+        "region": {
+          "$ref": "#/$defs/fact"
+        },
+        "cache_ttl": {
+          "$ref": "#/$defs/fact"
+        },
+        "cache_behavior": {
+          "$ref": "#/$defs/fact"
+        },
+        "deployment": {
+          "$ref": "#/$defs/fact"
+        },
+        "sku": {
+          "$ref": "#/$defs/fact"
+        },
+        "extensions": {
+          "type": "object",
+          "propertyNames": {
+            "allOf": [
+              {
+                "pattern": "^[A-Za-z][A-Za-z0-9_-]*(?:[.:/][A-Za-z0-9_.:/-]+)+$"
+              },
+              {
+                "not": {
+                  "pattern": "(?:^|[.:/_-])([Aa][Mm][Oo][Uu][Nn][Tt]|[Cc][Oo][Ss][Tt]|[Cc][Uu][Rr][Rr][Ee][Nn][Cc][Yy]|[Pp][Rr][Ii][Cc][Ee]|[Rr][Aa][Tt][Ee])(?:$|[.:/_-])"
+                }
+              }
+            ]
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/fact"
+          }
+        }
+      }
+    },
+    "measurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "evidence",
+        "method",
+        "source_refs",
+        "count_basis",
+        "aggregation",
+        "scope"
+      ],
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/quantity"
+            }
+          ]
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence"
+        },
+        "method": {
+          "$ref": "#/$defs/id"
+        },
+        "source_refs": {
+          "$ref": "#/$defs/sourceRefs"
+        },
+        "count_basis": {
+          "enum": [
+            "provider_native",
+            "consumed",
+            "billable",
+            "allocated",
+            "unknown"
+          ]
+        },
+        "aggregation": {
+          "enum": [
+            "delta",
+            "cumulative",
+            "unknown"
+          ]
+        },
+        "scope": {
+          "enum": [
+            "event",
+            "interval",
+            "snapshot",
+            "aggregate",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source_refs",
+        "subject",
+        "accounting_scope",
+        "operation_id",
+        "parent_id",
+        "agent_id",
+        "session_id",
+        "work_item_id",
+        "task_id",
+        "status",
+        "event_at",
+        "started_at",
+        "ended_at",
+        "collected_at",
+        "measurements",
+        "dimensions"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/sourceRef"
+          }
+        },
+        "subject": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/id"
+            }
+          ]
+        },
+        "accounting_scope": {
+          "enum": [
+            "direct",
+            "aggregate",
+            "snapshot",
+            "unknown"
+          ]
+        },
+        "operation_id": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/id"
+            }
+          ]
+        },
+        "parent_id": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/id"
+            }
+          ]
+        },
+        "agent_id": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/id"
+            }
+          ]
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/id"
+            }
+          ]
+        },
+        "work_item_id": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/id"
+            }
+          ]
+        },
+        "task_id": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/id"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "running",
+            "ok",
+            "error",
+            "cancelled",
+            "unknown"
+          ]
+        },
+        "event_at": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/timestamp"
+            }
+          ]
+        },
+        "started_at": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/timestamp"
+            }
+          ]
+        },
+        "ended_at": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/timestamp"
+            }
+          ]
+        },
+        "collected_at": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/timestamp"
+            }
+          ]
+        },
+        "measurements": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/measurement"
+          }
+        },
+        "dimensions": {
+          "$ref": "#/$defs/dimensions"
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "boundary",
+        "complete",
+        "dropped_observations",
+        "limitations"
+      ],
+      "properties": {
+        "boundary": {
+          "enum": [
+            "instrumented",
+            "native_transcript",
+            "mixed",
+            "unknown"
+          ]
+        },
+        "complete": {
+          "type": "boolean"
+        },
+        "dropped_observations": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "dropped_by_source": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "message",
+        "severity"
+      ],
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/id"
+        },
+        "message": {
+          "$ref": "#/$defs/id"
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "warning",
+            "error"
+          ]
+        },
+        "observation_id": {
+          "$ref": "#/$defs/id"
+        },
+        "meter_id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_id": {
+          "$ref": "#/$defs/id"
+        }
+      }
+    },
+    "dateTime": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]+)?Z$"
+    }
+  }
+}
