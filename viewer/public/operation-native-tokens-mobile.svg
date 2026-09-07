@@ -1,0 +1,1583 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" width="400" height="172" onload="init(evt)" viewBox="0 0 400 172" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!-- Flame graph stack visualization. See https://github.com/brendangregg/FlameGraph for latest version, and http://www.brendangregg.com/flamegraphs.html for examples. -->
+<!-- NOTES:  -->
+<defs>
+	<linearGradient id="background" y1="0" y2="1" x1="0" x2="0" >
+		<stop stop-color="#eeeeee" offset="5%" />
+		<stop stop-color="#eeeeb0" offset="95%" />
+	</linearGradient>
+</defs>
+<style type="text/css">
+	text { font-family:Verdana; font-size:14px; fill:rgb(0,0,0); }
+	#search, #ignorecase { opacity:0.1; cursor:pointer; }
+	#search:hover, #search.show, #ignorecase:hover, #ignorecase.show { opacity:1; }
+	#subtitle { text-anchor:middle; font-color:rgb(160,160,160); }
+	#title { text-anchor:middle; font-size:19px}
+	#unzoom { cursor:pointer; }
+	#frames > *:hover { stroke:black; stroke-width:0.5; cursor:pointer; }
+	.hide { display:none; }
+	.parent { opacity:0.5; }
+</style>
+<script type="text/ecmascript">
+<![CDATA[
+	"use strict";
+	var details, searchbtn, unzoombtn, matchedtxt, svg, searching, currentSearchTerm, ignorecase, ignorecaseBtn;
+	function init(evt) {
+		details = document.getElementById("details").firstChild;
+		searchbtn = document.getElementById("search");
+		ignorecaseBtn = document.getElementById("ignorecase");
+		unzoombtn = document.getElementById("unzoom");
+		matchedtxt = document.getElementById("matched");
+		svg = document.getElementsByTagName("svg")[0];
+		searching = 0;
+		currentSearchTerm = null;
+
+		// use GET parameters to restore a flamegraphs state.
+		var params = get_params();
+		if (params.x && params.y)
+			zoom(find_group(document.querySelector('[x="' + params.x + '"][y="' + params.y + '"]')));
+                if (params.s) search(params.s);
+	}
+
+	// event listeners
+	window.addEventListener("click", function(e) {
+		var target = find_group(e.target);
+		if (target) {
+			if (target.nodeName == "a") {
+				if (e.ctrlKey === false) return;
+				e.preventDefault();
+			}
+			if (target.classList.contains("parent")) unzoom(true);
+			zoom(target);
+			if (!document.querySelector('.parent')) {
+				// we have basically done a clearzoom so clear the url
+				var params = get_params();
+				if (params.x) delete params.x;
+				if (params.y) delete params.y;
+				history.replaceState(null, null, parse_params(params));
+				unzoombtn.classList.add("hide");
+				return;
+			}
+
+			// set parameters for zoom state
+			var el = target.querySelector("rect");
+			if (el && el.attributes && el.attributes.y && el.attributes._orig_x) {
+				var params = get_params()
+				params.x = el.attributes._orig_x.value;
+				params.y = el.attributes.y.value;
+				history.replaceState(null, null, parse_params(params));
+			}
+		}
+		else if (e.target.id == "unzoom") clearzoom();
+		else if (e.target.id == "search") search_prompt();
+		else if (e.target.id == "ignorecase") toggle_ignorecase();
+	}, false)
+
+	// mouse-over for info
+	// show
+	window.addEventListener("mouseover", function(e) {
+		var target = find_group(e.target);
+		if (target) details.nodeValue = "Operation: " + g_to_text(target);
+	}, false)
+
+	// clear
+	window.addEventListener("mouseout", function(e) {
+		var target = find_group(e.target);
+		if (target) details.nodeValue = ' ';
+	}, false)
+
+	// ctrl-F for search
+	// ctrl-I to toggle case-sensitive search
+	window.addEventListener("keydown",function (e) {
+		if (e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70)) {
+			e.preventDefault();
+			search_prompt();
+		}
+		else if (e.ctrlKey && e.keyCode === 73) {
+			e.preventDefault();
+			toggle_ignorecase();
+		}
+	}, false)
+
+	// functions
+	function get_params() {
+		var params = {};
+		var paramsarr = window.location.search.substr(1).split('&');
+		for (var i = 0; i < paramsarr.length; ++i) {
+			var tmp = paramsarr[i].split("=");
+			if (!tmp[0] || !tmp[1]) continue;
+			params[tmp[0]]  = decodeURIComponent(tmp[1]);
+		}
+		return params;
+	}
+	function parse_params(params) {
+		var uri = "?";
+		for (var key in params) {
+			uri += key + '=' + encodeURIComponent(params[key]) + '&';
+		}
+		if (uri.slice(-1) == "&")
+			uri = uri.substring(0, uri.length - 1);
+		if (uri == '?')
+			uri = window.location.href.split('?')[0];
+		return uri;
+	}
+	function find_child(node, selector) {
+		var children = node.querySelectorAll(selector);
+		if (children.length) return children[0];
+	}
+	function find_group(node) {
+		var parent = node.parentElement;
+		if (!parent) return;
+		if (parent.id == "frames") return node;
+		return find_group(parent);
+	}
+	function orig_save(e, attr, val) {
+		if (e.attributes["_orig_" + attr] != undefined) return;
+		if (e.attributes[attr] == undefined) return;
+		if (val == undefined) val = e.attributes[attr].value;
+		e.setAttribute("_orig_" + attr, val);
+	}
+	function orig_load(e, attr) {
+		if (e.attributes["_orig_"+attr] == undefined) return;
+		e.attributes[attr].value = e.attributes["_orig_" + attr].value;
+		e.removeAttribute("_orig_"+attr);
+	}
+	function g_to_text(e) {
+		var text = find_child(e, "title").firstChild.nodeValue;
+		return (text)
+	}
+	function g_to_func(e) {
+		var func = g_to_text(e);
+		// if there's any manipulation we want to do to the function
+		// name before it's searched, do it here before returning.
+		return (func);
+	}
+	function update_text(e) {
+		var r = find_child(e, "rect");
+		var t = find_child(e, "text");
+		var w = parseFloat(r.attributes.width.value) -3;
+		var txt = find_child(e, "title").textContent.replace(/\([^(]*\)$/,"");
+		t.attributes.x.value = parseFloat(r.attributes.x.value) + 3;
+
+		// Smaller than this size won't fit anything
+		if (w < 2 * 14 * 0.59) {
+			t.textContent = "";
+			return;
+		}
+
+		t.textContent = txt;
+		var sl = t.getSubStringLength(0, txt.length);
+		// check if only whitespace or if we can fit the entire string into width w
+		if (/^ *$/.test(txt) || sl < w)
+			return;
+
+		// this isn't perfect, but gives a good starting point
+		// and avoids calling getSubStringLength too often
+		var start = Math.floor((w/sl) * txt.length);
+		for (var x = start; x > 0; x = x-2) {
+			if (t.getSubStringLength(0, x + 2) <= w) {
+				t.textContent = txt.substring(0, x) + "..";
+				return;
+			}
+		}
+		t.textContent = "";
+	}
+
+	// zoom
+	function zoom_reset(e) {
+		if (e.attributes != undefined) {
+			orig_load(e, "x");
+			orig_load(e, "width");
+		}
+		if (e.childNodes == undefined) return;
+		for (var i = 0, c = e.childNodes; i < c.length; i++) {
+			zoom_reset(c[i]);
+		}
+	}
+	function zoom_child(e, x, ratio) {
+		if (e.attributes != undefined) {
+			if (e.attributes.x != undefined) {
+				orig_save(e, "x");
+				e.attributes.x.value = (parseFloat(e.attributes.x.value) - x - 10) * ratio + 10;
+				if (e.tagName == "text")
+					e.attributes.x.value = find_child(e.parentNode, "rect[x]").attributes.x.value + 3;
+			}
+			if (e.attributes.width != undefined) {
+				orig_save(e, "width");
+				e.attributes.width.value = parseFloat(e.attributes.width.value) * ratio;
+			}
+		}
+
+		if (e.childNodes == undefined) return;
+		for (var i = 0, c = e.childNodes; i < c.length; i++) {
+			zoom_child(c[i], x - 10, ratio);
+		}
+	}
+	function zoom_parent(e) {
+		if (e.attributes) {
+			if (e.attributes.x != undefined) {
+				orig_save(e, "x");
+				e.attributes.x.value = 10;
+			}
+			if (e.attributes.width != undefined) {
+				orig_save(e, "width");
+				e.attributes.width.value = parseInt(svg.width.baseVal.value) - (10 * 2);
+			}
+		}
+		if (e.childNodes == undefined) return;
+		for (var i = 0, c = e.childNodes; i < c.length; i++) {
+			zoom_parent(c[i]);
+		}
+	}
+	function zoom(node) {
+		var attr = find_child(node, "rect").attributes;
+		var width = parseFloat(attr.width.value);
+		var xmin = parseFloat(attr.x.value);
+		var xmax = parseFloat(xmin + width);
+		var ymin = parseFloat(attr.y.value);
+		var ratio = (svg.width.baseVal.value - 2 * 10) / width;
+
+		// XXX: Workaround for JavaScript float issues (fix me)
+		var fudge = 0.0001;
+
+		unzoombtn.classList.remove("hide");
+
+		var el = document.getElementById("frames").children;
+		for (var i = 0; i < el.length; i++) {
+			var e = el[i];
+			var a = find_child(e, "rect").attributes;
+			var ex = parseFloat(a.x.value);
+			var ew = parseFloat(a.width.value);
+			var upstack;
+			// Is it an ancestor
+			if (0 == 0) {
+				upstack = parseFloat(a.y.value) > ymin;
+			} else {
+				upstack = parseFloat(a.y.value) < ymin;
+			}
+			if (upstack) {
+				// Direct ancestor
+				if (ex <= xmin && (ex+ew+fudge) >= xmax) {
+					e.classList.add("parent");
+					zoom_parent(e);
+					update_text(e);
+				}
+				// not in current path
+				else
+					e.classList.add("hide");
+			}
+			// Children maybe
+			else {
+				// no common path
+				if (ex < xmin || ex + fudge >= xmax) {
+					e.classList.add("hide");
+				}
+				else {
+					zoom_child(e, xmin, ratio);
+					update_text(e);
+				}
+			}
+		}
+		search();
+	}
+	function unzoom(dont_update_text) {
+		unzoombtn.classList.add("hide");
+		var el = document.getElementById("frames").children;
+		for(var i = 0; i < el.length; i++) {
+			el[i].classList.remove("parent");
+			el[i].classList.remove("hide");
+			zoom_reset(el[i]);
+			if(!dont_update_text) update_text(el[i]);
+		}
+		search();
+	}
+	function clearzoom() {
+		unzoom();
+
+		// remove zoom state
+		var params = get_params();
+		if (params.x) delete params.x;
+		if (params.y) delete params.y;
+		history.replaceState(null, null, parse_params(params));
+	}
+
+	// search
+	function toggle_ignorecase() {
+		ignorecase = !ignorecase;
+		if (ignorecase) {
+			ignorecaseBtn.classList.add("show");
+		} else {
+			ignorecaseBtn.classList.remove("show");
+		}
+		reset_search();
+		search();
+	}
+	function reset_search() {
+		var el = document.querySelectorAll("#frames rect");
+		for (var i = 0; i < el.length; i++) {
+			orig_load(el[i], "fill")
+		}
+		var params = get_params();
+		delete params.s;
+		history.replaceState(null, null, parse_params(params));
+	}
+	function search_prompt() {
+		if (!searching) {
+			var term = prompt("Enter a search term (regexp " +
+			    "allowed, eg: ^ext4_)"
+			    + (ignorecase ? ", ignoring case" : "")
+			    + "\nPress Ctrl-i to toggle case sensitivity", "");
+			if (term != null) search(term);
+		} else {
+			reset_search();
+			searching = 0;
+			currentSearchTerm = null;
+			searchbtn.classList.remove("show");
+			searchbtn.firstChild.nodeValue = "Search"
+			matchedtxt.classList.add("hide");
+			matchedtxt.firstChild.nodeValue = ""
+		}
+	}
+	function search(term) {
+		if (term) currentSearchTerm = term;
+		if (currentSearchTerm === null) return;
+
+		var re = new RegExp(currentSearchTerm, ignorecase ? 'i' : '');
+		var el = document.getElementById("frames").children;
+		var matches = new Object();
+		var maxwidth = 0;
+		for (var i = 0; i < el.length; i++) {
+			var e = el[i];
+			var func = g_to_func(e);
+			var rect = find_child(e, "rect");
+			if (func == null || rect == null)
+				continue;
+
+			// Save max width. Only works as we have a root frame
+			var w = parseFloat(rect.attributes.width.value);
+			if (w > maxwidth)
+				maxwidth = w;
+
+			if (func.match(re)) {
+				// highlight
+				var x = parseFloat(rect.attributes.x.value);
+				orig_save(rect, "fill");
+				rect.attributes.fill.value = "rgb(230,0,230)";
+
+				// remember matches
+				if (matches[x] == undefined) {
+					matches[x] = w;
+				} else {
+					if (w > matches[x]) {
+						// overwrite with parent
+						matches[x] = w;
+					}
+				}
+				searching = 1;
+			}
+		}
+		if (!searching)
+			return;
+		var params = get_params();
+		params.s = currentSearchTerm;
+		history.replaceState(null, null, parse_params(params));
+
+		searchbtn.classList.add("show");
+		searchbtn.firstChild.nodeValue = "Reset Search";
+
+		// calculate percent matched, excluding vertical overlap
+		var count = 0;
+		var lastx = -1;
+		var lastw = 0;
+		var keys = Array();
+		for (k in matches) {
+			if (matches.hasOwnProperty(k))
+				keys.push(k);
+		}
+		// sort the matched frames by their x location
+		// ascending, then width descending
+		keys.sort(function(a, b){
+			return a - b;
+		});
+		// Step through frames saving only the biggest bottom-up frames
+		// thanks to the sort order. This relies on the tree property
+		// where children are always smaller than their parents.
+		var fudge = 0.0001;	// JavaScript floating point
+		for (var k in keys) {
+			var x = parseFloat(keys[k]);
+			var w = matches[keys[k]];
+			if (x >= lastx + lastw - fudge) {
+				count += w;
+				lastx = x;
+				lastw = w;
+			}
+		}
+		// display matched percent
+		matchedtxt.classList.remove("hide");
+		var pct = 100 * count / maxwidth;
+		if (pct != 100) pct = pct.toFixed(1)
+		matchedtxt.firstChild.nodeValue = "Matched: " + pct + "%";
+	}
+]]>
+</script>
+<rect x="0.0" y="0" width="400.0" height="172.0" fill="url(#background)"  />
+<text id="title" x="200.00" y="28" >$15.179758</text>
+<text id="subtitle" x="200.00" y="56" >Token category costs</text>
+<text id="details" x="10.00" y="153" > </text>
+<text id="unzoom" x="10.00" y="28" class="hide">Reset Zoom</text>
+<text id="search" x="290.00" y="28" >Search</text>
+<text id="ignorecase" x="374.00" y="28" >ic</text>
+<text id="matched" x="290.00" y="153" > </text>
+<g id="frames">
+<g >
+<title>$0.0077 model:model (0.05%)</title><rect x="66.4" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="69.38" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0083 model:model (0.05%)</title><rect x="67.2" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="70.17" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0521 model:model (0.34%)</title><rect x="90.7" y="71" width="1.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="93.69" y="81.5" ></text>
+</g>
+<g >
+<title>$0.10176 model:model (0.67%)</title><rect x="222.5" y="71" width="2.5" height="15.0" fill="rgb(233,129,31)" rx="2" ry="2" />
+<text  x="225.47" y="81.5" ></text>
+</g>
+<g >
+<title>$0.067072 model:model (0.44%)</title><rect x="164.1" y="71" width="1.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="167.09" y="81.5" ></text>
+</g>
+<g >
+<title>$0.034432 model:model (0.23%)</title><rect x="144.2" y="71" width="0.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="147.19" y="81.5" ></text>
+</g>
+<g >
+<title>$9.906048 Cached input (65.26%)</title><rect x="142.0" y="87" width="248.0" height="15.0" fill="rgb(234,139,32)" rx="2" ry="2" />
+<text  x="145.02" y="97.5" >$9.906048 Cached input​‌‌‌‌‌..</text>
+</g>
+<g >
+<title>$0.174592 model:model (1.15%)</title><rect x="353.9" y="71" width="4.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="356.90" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0051 model:model (0.03%)</title><rect x="11.7" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="14.68" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01931 model:model (0.13%)</title><rect x="23.7" y="71" width="0.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="26.67" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0078 model:model (0.05%)</title><rect x="66.6" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="69.58" y="81.5" ></text>
+</g>
+<g >
+<title>$0.02365 model:model (0.16%)</title><rect x="73.9" y="71" width="0.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="76.86" y="81.5" ></text>
+</g>
+<g >
+<title>$0.07759 model:model (0.51%)</title><rect x="44.3" y="71" width="1.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="47.27" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0112 model:model (0.07%)</title><rect x="67.9" y="71" width="0.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="70.92" y="81.5" ></text>
+</g>
+<g >
+<title>$15.179758 Token costs (100.00%)</title><rect x="10.0" y="119" width="380.0" height="15.0" fill="rgb(255,230,55)" rx="2" ry="2" />
+<text  x="13.00" y="129.5" ></text>
+</g>
+<g >
+<title>$0.10624 model:model (0.70%)</title><rect x="227.7" y="71" width="2.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="230.66" y="81.5" ></text>
+</g>
+<g >
+<title>$0.43925 model:model (2.89%)</title><rect x="131.0" y="71" width="11.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="134.02" y="81.5" ></text>
+</g>
+<g >
+<title>$0.117632 model:model (0.77%)</title><rect x="261.5" y="71" width="2.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="264.49" y="81.5" ></text>
+</g>
+<g >
+<title>$0.034048 model:model (0.22%)</title><rect x="143.3" y="71" width="0.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="146.34" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00581 model:model (0.04%)</title><rect x="12.2" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="15.21" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00331 model:model (0.02%)</title><rect x="11.0" y="71" width="0.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.96" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01848 model:model (0.12%)</title><rect x="22.7" y="71" width="0.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="25.74" y="81.5" ></text>
+</g>
+<g >
+<title>$0.092288 model:model (0.61%)</title><rect x="203.3" y="71" width="2.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="206.29" y="81.5" ></text>
+</g>
+<g >
+<title>$0.02825 model:model (0.19%)</title><rect x="77.1" y="71" width="0.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="80.11" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01106 model:model (0.07%)</title><rect x="16.4" y="71" width="0.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="19.39" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0067 model:model (0.04%)</title><rect x="65.3" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="68.34" y="81.5" ></text>
+</g>
+<g >
+<title>$0.04135 model:model (0.27%)</title><rect x="86.1" y="71" width="1.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="89.13" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0149 model:model (0.10%)</title><rect x="70.1" y="71" width="0.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="73.15" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01546 model:model (0.10%)</title><rect x="18.9" y="71" width="0.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="21.86" y="81.5" ></text>
+</g>
+<g >
+<title>$0.132864 model:model (0.88%)</title><rect x="286.4" y="71" width="3.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="289.42" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0023 model:model (0.02%)</title><rect x="10.2" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.20" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0097 model:model (0.06%)</title><rect x="14.3" y="71" width="0.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="17.31" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00621 model:model (0.04%)</title><rect x="12.4" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="15.36" y="81.5" ></text>
+</g>
+<g >
+<title>$0.072064 model:model (0.47%)</title><rect x="171.0" y="71" width="1.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="173.99" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0033 model:model (0.02%)</title><rect x="10.9" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.88" y="81.5" ></text>
+</g>
+<g >
+<title>$0.077568 model:model (0.51%)</title><rect x="180.3" y="71" width="1.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="183.30" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01375 model:model (0.09%)</title><rect x="69.4" y="71" width="0.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="72.43" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0916 model:model (0.60%)</title><rect x="105.1" y="71" width="2.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="108.15" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01829 model:model (0.12%)</title><rect x="22.3" y="71" width="0.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="25.28" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0069 model:model (0.05%)</title><rect x="65.8" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="68.84" y="81.5" ></text>
+</g>
+<g >
+<title>$0.094208 model:model (0.62%)</title><rect x="210.2" y="71" width="2.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="213.23" y="81.5" ></text>
+</g>
+<g >
+<title>$0.02243 model:model (0.15%)</title><rect x="25.2" y="71" width="0.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="28.19" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00465 model:model (0.03%)</title><rect x="63.4" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="66.39" y="81.5" ></text>
+</g>
+<g >
+<title>$0.158208 model:model (1.04%)</title><rect x="329.0" y="71" width="3.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="331.97" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00769 model:model (0.05%)</title><rect x="13.0" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="16.05" y="81.5" ></text>
+</g>
+<g >
+<title>$0.097664 model:model (0.64%)</title><rect x="215.0" y="71" width="2.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="218.03" y="81.5" ></text>
+</g>
+<g >
+<title>$0.07105 model:model (0.47%)</title><rect x="99.4" y="71" width="1.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="102.42" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00315 model:model (0.02%)</title><rect x="62.6" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="65.61" y="81.5" ></text>
+</g>
+<g >
+<title>$0.03094 model:model (0.20%)</title><rect x="30.4" y="71" width="0.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="33.38" y="81.5" ></text>
+</g>
+<g >
+<title>$0.117248 model:model (0.77%)</title><rect x="252.7" y="71" width="2.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="255.67" y="81.5" ></text>
+</g>
+<g >
+<title>$0.16384 model:model (1.08%)</title><rect x="337.0" y="71" width="4.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="339.97" y="81.5" ></text>
+</g>
+<g >
+<title>$0.02225 model:model (0.15%)</title><rect x="73.3" y="71" width="0.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="76.30" y="81.5" ></text>
+</g>
+<g >
+<title>$0.076032 model:model (0.50%)</title><rect x="178.4" y="71" width="1.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="181.40" y="81.5" ></text>
+</g>
+<g >
+<title>$0.04785 model:model (0.32%)</title><rect x="88.3" y="71" width="1.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="91.27" y="81.5" ></text>
+</g>
+<g >
+<title>$0.039936 model:model (0.26%)</title><rect x="148.0" y="71" width="1.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="151.03" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01749 model:model (0.12%)</title><rect x="20.5" y="71" width="0.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="23.49" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0041 model:model (0.03%)</title><rect x="63.1" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="66.07" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0608 model:model (0.40%)</title><rect x="42.7" y="71" width="1.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="45.75" y="81.5" ></text>
+</g>
+<g >
+<title>$0.04415 model:model (0.29%)</title><rect x="87.2" y="71" width="1.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="90.17" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00908 model:model (0.06%)</title><rect x="13.9" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="16.86" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0054 model:model (0.04%)</title><rect x="64.0" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="66.99" y="81.5" ></text>
+</g>
+<g >
+<title>$0.121088 model:model (0.80%)</title><rect x="264.4" y="71" width="3.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="267.43" y="81.5" ></text>
+</g>
+<g >
+<title>$0.1409 model:model (0.93%)</title><rect x="118.1" y="71" width="3.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="121.08" y="81.5" ></text>
+</g>
+<g >
+<title>$0.039808 model:model (0.26%)</title><rect x="146.0" y="71" width="1.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="149.03" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00405 model:model (0.03%)</title><rect x="63.0" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="65.97" y="81.5" ></text>
+</g>
+<g >
+<title>$0.004 model:model (0.03%)</title><rect x="62.9" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="65.87" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01225 model:model (0.08%)</title><rect x="68.5" y="71" width="0.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="71.50" y="81.5" ></text>
+</g>
+<g >
+<title>$3.1851 Output (20.98%)</title><rect x="62.3" y="87" width="79.7" height="15.0" fill="rgb(234,114,32)" rx="2" ry="2" />
+<text  x="65.28" y="97.5" >$3.1851..</text>
+</g>
+<g >
+<title>$0.00506 model:model (0.03%)</title><rect x="11.6" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="14.55" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0057 model:model (0.04%)</title><rect x="64.3" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="67.27" y="81.5" ></text>
+</g>
+<g >
+<title>$0.073728 model:model (0.49%)</title><rect x="172.8" y="71" width="1.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="175.79" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0123 model:model (0.08%)</title><rect x="68.8" y="71" width="0.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="71.80" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00272 model:model (0.02%)</title><rect x="10.4" y="71" width="0.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.37" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00218 model:model (0.01%)</title><rect x="10.1" y="71" width="0.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.09" y="81.5" ></text>
+</g>
+<g >
+<title>$0.065664 model:model (0.43%)</title><rect x="159.1" y="71" width="1.7" height="15.0" fill="rgb(233,129,31)" rx="2" ry="2" />
+<text  x="162.14" y="81.5" ></text>
+</g>
+<g >
+<title>$0.070656 model:model (0.47%)</title><rect x="169.2" y="71" width="1.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="172.22" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0154 model:model (0.10%)</title><rect x="18.5" y="71" width="0.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="21.47" y="81.5" ></text>
+</g>
+<g >
+<title>$0.04295 model:model (0.28%)</title><rect x="39.3" y="71" width="1.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="42.32" y="81.5" ></text>
+</g>
+<g >
+<title>$0.148992 model:model (0.98%)</title><rect x="317.3" y="71" width="3.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="320.34" y="81.5" ></text>
+</g>
+<g >
+<title>$0.122112 model:model (0.80%)</title><rect x="267.5" y="71" width="3.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="270.46" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0227 model:model (0.15%)</title><rect x="25.8" y="71" width="0.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="28.76" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0068 model:model (0.04%)</title><rect x="65.5" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="68.50" y="81.5" ></text>
+</g>
+<g >
+<title>$0.03455 model:model (0.23%)</title><rect x="83.4" y="71" width="0.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="86.37" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00244 model:model (0.02%)</title><rect x="10.3" y="71" width="0.1" height="15.0" fill="rgb(233,129,31)" rx="2" ry="2" />
+<text  x="13.31" y="81.5" ></text>
+</g>
+<g >
+<title>$0.079744 model:model (0.53%)</title><rect x="184.2" y="71" width="2.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="187.24" y="81.5" ></text>
+</g>
+<g >
+<title>$0.03255 model:model (0.21%)</title><rect x="31.9" y="71" width="0.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="34.93" y="81.5" ></text>
+</g>
+<g >
+<title>$0.117376 model:model (0.77%)</title><rect x="255.6" y="71" width="2.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="258.61" y="81.5" ></text>
+</g>
+<g >
+<title>$0.19275 model:model (1.27%)</title><rect x="126.2" y="71" width="4.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="129.20" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0816 model:model (0.54%)</title><rect x="103.1" y="71" width="2.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="106.10" y="81.5" ></text>
+</g>
+<g >
+<title>$0.182912 model:model (1.20%)</title><rect x="380.7" y="71" width="4.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="383.74" y="81.5" ></text>
+</g>
+<g >
+<title>$0.133248 model:model (0.88%)</title><rect x="289.7" y="71" width="3.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="292.75" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01099 model:model (0.07%)</title><rect x="15.8" y="71" width="0.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="18.84" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00525 model:model (0.03%)</title><rect x="11.9" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="14.94" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0118 model:model (0.08%)</title><rect x="17.2" y="71" width="0.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="20.23" y="81.5" ></text>
+</g>
+<g >
+<title>$0.066176 model:model (0.44%)</title><rect x="162.4" y="71" width="1.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="165.43" y="81.5" ></text>
+</g>
+<g >
+<title>$0.135936 model:model (0.90%)</title><rect x="299.8" y="71" width="3.4" height="15.0" fill="rgb(233,129,31)" rx="2" ry="2" />
+<text  x="302.80" y="81.5" ></text>
+</g>
+<g >
+<title>$0.161152 model:model (1.06%)</title><rect x="332.9" y="71" width="4.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="335.93" y="81.5" ></text>
+</g>
+<g >
+<title>$0.057472 model:model (0.38%)</title><rect x="151.4" y="71" width="1.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="154.35" y="81.5" ></text>
+</g>
+<g >
+<title>$0.02584 model:model (0.17%)</title><rect x="26.9" y="71" width="0.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="29.90" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0538 model:model (0.35%)</title><rect x="92.0" y="71" width="1.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="94.99" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00231 model:model (0.02%)</title><rect x="10.3" y="71" width="0.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.25" y="81.5" ></text>
+</g>
+<g >
+<title>$0.067456 model:model (0.44%)</title><rect x="165.8" y="71" width="1.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="168.77" y="81.5" ></text>
+</g>
+<g >
+<title>$0.11264 model:model (0.74%)</title><rect x="241.3" y="71" width="2.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="244.31" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0063 model:model (0.04%)</title><rect x="65.0" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="68.02" y="81.5" ></text>
+</g>
+<g >
+<title>$0.03113 model:model (0.21%)</title><rect x="31.2" y="71" width="0.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="34.15" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01076 model:model (0.07%)</title><rect x="15.6" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="18.57" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00805 model:model (0.05%)</title><rect x="67.0" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="69.97" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0049 model:model (0.03%)</title><rect x="63.6" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="66.62" y="81.5" ></text>
+</g>
+<g >
+<title>$0.148992 model:model (0.98%)</title><rect x="313.6" y="71" width="3.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="316.61" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00359 model:model (0.02%)</title><rect x="11.1" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="14.14" y="81.5" ></text>
+</g>
+<g >
+<title>$0.011 model:model (0.07%)</title><rect x="67.6" y="71" width="0.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="70.64" y="81.5" ></text>
+</g>
+<g >
+<title>$0.04095 model:model (0.27%)</title><rect x="85.1" y="71" width="1.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="88.11" y="81.5" ></text>
+</g>
+<g >
+<title>$0.04865 model:model (0.32%)</title><rect x="89.5" y="71" width="1.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="92.47" y="81.5" ></text>
+</g>
+<g >
+<title>$0.136064 model:model (0.90%)</title><rect x="303.2" y="71" width="3.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="306.20" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00185 model:model (0.01%)</title><rect x="62.3" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="65.35" y="81.5" ></text>
+</g>
+<g >
+<title>$0.007 model:model (0.05%)</title><rect x="66.0" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="69.02" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01825 model:model (0.12%)</title><rect x="21.8" y="71" width="0.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="24.82" y="81.5" ></text>
+</g>
+<g >
+<title>$0.027 model:model (0.18%)</title><rect x="75.1" y="71" width="0.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="78.05" y="81.5" ></text>
+</g>
+<g >
+<title>$0.081792 model:model (0.54%)</title><rect x="188.3" y="71" width="2.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="191.27" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0029 model:model (0.02%)</title><rect x="10.6" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.58" y="81.5" ></text>
+</g>
+<g >
+<title>$0.07595 model:model (0.50%)</title><rect x="101.2" y="71" width="1.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="104.20" y="81.5" ></text>
+</g>
+<g >
+<title>$0.001 model:model (0.01%)</title><rect x="62.3" y="71" width="0.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="65.28" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00765 model:model (0.05%)</title><rect x="66.2" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="69.19" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01869 model:model (0.12%)</title><rect x="23.2" y="71" width="0.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="26.20" y="81.5" ></text>
+</g>
+<g >
+<title>$0.085632 model:model (0.56%)</title><rect x="192.4" y="71" width="2.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="195.41" y="81.5" ></text>
+</g>
+<g >
+<title>$0.105344 model:model (0.69%)</title><rect x="225.0" y="71" width="2.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="228.02" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01237 model:model (0.08%)</title><rect x="17.8" y="71" width="0.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="20.83" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00294 model:model (0.02%)</title><rect x="10.7" y="71" width="0.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.65" y="81.5" ></text>
+</g>
+<g >
+<title>$0.174208 model:model (1.15%)</title><rect x="349.5" y="71" width="4.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="352.54" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00395 model:model (0.03%)</title><rect x="62.8" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="65.77" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0059 model:model (0.04%)</title><rect x="64.4" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="67.41" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01714 model:model (0.11%)</title><rect x="20.1" y="71" width="0.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="23.06" y="81.5" ></text>
+</g>
+<g >
+<title>$0.107136 model:model (0.71%)</title><rect x="230.3" y="71" width="2.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="233.32" y="81.5" ></text>
+</g>
+<g >
+<title>$0.03375 model:model (0.22%)</title><rect x="82.5" y="71" width="0.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="85.53" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00369 model:model (0.02%)</title><rect x="11.2" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="14.23" y="81.5" ></text>
+</g>
+<g >
+<title>$0.06208 model:model (0.41%)</title><rect x="154.3" y="71" width="1.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="157.34" y="81.5" ></text>
+</g>
+<g >
+<title>$0.123264 model:model (0.81%)</title><rect x="273.6" y="71" width="3.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="276.59" y="81.5" ></text>
+</g>
+<g >
+<title>$0.028 model:model (0.18%)</title><rect x="76.4" y="71" width="0.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="79.41" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00995 model:model (0.07%)</title><rect x="14.8" y="71" width="0.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="17.80" y="81.5" ></text>
+</g>
+<g >
+<title>$0.1143 model:model (0.75%)</title><rect x="112.1" y="71" width="2.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="115.13" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01751 model:model (0.12%)</title><rect x="20.9" y="71" width="0.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="23.93" y="81.5" ></text>
+</g>
+<g >
+<title>$0.083584 model:model (0.55%)</title><rect x="190.3" y="71" width="2.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="193.32" y="81.5" ></text>
+</g>
+<g >
+<title>$0.075136 model:model (0.49%)</title><rect x="174.6" y="71" width="1.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="177.64" y="81.5" ></text>
+</g>
+<g >
+<title>$0.03275 model:model (0.22%)</title><rect x="80.9" y="71" width="0.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="83.88" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00478 model:model (0.03%)</title><rect x="11.4" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="14.43" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01935 model:model (0.13%)</title><rect x="71.8" y="71" width="0.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="74.78" y="81.5" ></text>
+</g>
+<g >
+<title>$0.10497 model:model (0.69%)</title><rect x="48.8" y="71" width="2.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="51.83" y="81.5" ></text>
+</g>
+<g >
+<title>$2.08861 Uncached input (13.76%)</title><rect x="10.0" y="87" width="52.3" height="15.0" fill="rgb(234,119,32)" rx="2" ry="2" />
+<text  x="13.00" y="97.5" >$2.0..</text>
+</g>
+<g >
+<title>$0.10112 model:model (0.67%)</title><rect x="219.9" y="71" width="2.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="222.94" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0955 model:model (0.63%)</title><rect x="109.7" y="71" width="2.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="112.74" y="81.5" ></text>
+</g>
+<g >
+<title>$0.177792 model:model (1.17%)</title><rect x="358.3" y="71" width="4.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="361.27" y="81.5" ></text>
+</g>
+<g >
+<title>$0.039808 model:model (0.26%)</title><rect x="147.0" y="71" width="1.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="150.03" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0864 model:model (0.57%)</title><rect x="194.6" y="71" width="2.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="197.56" y="81.5" ></text>
+</g>
+<g >
+<title>$0.181248 model:model (1.19%)</title><rect x="376.2" y="71" width="4.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="379.20" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00155 model:model (0.01%)</title><rect x="62.3" y="71" width="0.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="65.31" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01102 model:model (0.07%)</title><rect x="16.1" y="71" width="0.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="19.11" y="81.5" ></text>
+</g>
+<g >
+<title>$0.092544 model:model (0.61%)</title><rect x="207.9" y="71" width="2.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="210.92" y="81.5" ></text>
+</g>
+<g >
+<title>$0.157696 model:model (1.04%)</title><rect x="321.1" y="71" width="3.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="324.07" y="81.5" ></text>
+</g>
+<g >
+<title>$0.122624 model:model (0.81%)</title><rect x="270.5" y="71" width="3.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="273.52" y="81.5" ></text>
+</g>
+<g >
+<title>$0.112768 model:model (0.74%)</title><rect x="247.0" y="71" width="2.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="249.95" y="81.5" ></text>
+</g>
+<g >
+<title>$0.061824 model:model (0.41%)</title><rect x="152.8" y="71" width="1.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="155.79" y="81.5" ></text>
+</g>
+<g >
+<title>$0.04113 model:model (0.27%)</title><rect x="37.2" y="71" width="1.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="40.22" y="81.5" ></text>
+</g>
+<g >
+<title>$0.04565 model:model (0.30%)</title><rect x="40.4" y="71" width="1.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="43.39" y="81.5" ></text>
+</g>
+<g >
+<title>$0.065024 model:model (0.43%)</title><rect x="157.5" y="71" width="1.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="160.51" y="81.5" ></text>
+</g>
+<g >
+<title>$0.086528 model:model (0.57%)</title><rect x="196.7" y="71" width="2.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="199.72" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0047 model:model (0.03%)</title><rect x="63.5" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="66.51" y="81.5" ></text>
+</g>
+<g >
+<title>$0.03853 model:model (0.25%)</title><rect x="36.3" y="71" width="0.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="39.25" y="81.5" ></text>
+</g>
+<g >
+<title>$0.03746 model:model (0.25%)</title><rect x="35.3" y="71" width="1.0" height="15.0" fill="rgb(233,129,31)" rx="2" ry="2" />
+<text  x="38.31" y="81.5" ></text>
+</g>
+<g >
+<title>$0.187008 model:model (1.23%)</title><rect x="385.3" y="71" width="4.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="388.32" y="81.5" ></text>
+</g>
+<g >
+<title>$0.03383 model:model (0.22%)</title><rect x="33.6" y="71" width="0.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="36.57" y="81.5" ></text>
+</g>
+<g >
+<title>$0.02717 model:model (0.18%)</title><rect x="27.5" y="71" width="0.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="30.55" y="81.5" ></text>
+</g>
+<g >
+<title>$0.164992 model:model (1.09%)</title><rect x="341.1" y="71" width="4.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="344.07" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0171 model:model (0.11%)</title><rect x="70.9" y="71" width="0.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="73.91" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00139 model:model (0.01%)</title><rect x="10.0" y="71" width="0.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.00" y="81.5" ></text>
+</g>
+<g >
+<title>$0.054 model:model (0.36%)</title><rect x="93.3" y="71" width="1.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="96.34" y="81.5" ></text>
+</g>
+<g >
+<title>$0.03115 model:model (0.21%)</title><rect x="80.1" y="71" width="0.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="83.10" y="81.5" ></text>
+</g>
+<g >
+<title>$0.02837 model:model (0.19%)</title><rect x="28.2" y="71" width="0.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="31.23" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00824 model:model (0.05%)</title><rect x="13.4" y="71" width="0.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="16.44" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00605 model:model (0.04%)</title><rect x="64.6" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="67.56" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00815 model:model (0.05%)</title><rect x="13.2" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="16.24" y="81.5" ></text>
+</g>
+<g >
+<title>$0.1312 model:model (0.86%)</title><rect x="279.8" y="71" width="3.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="282.81" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0148 model:model (0.10%)</title><rect x="69.8" y="71" width="0.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="72.77" y="81.5" ></text>
+</g>
+<g >
+<title>$0.02395 model:model (0.16%)</title><rect x="74.5" y="71" width="0.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="77.45" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01755 model:model (0.12%)</title><rect x="71.3" y="71" width="0.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="74.34" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00831 model:model (0.05%)</title><rect x="13.7" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="16.65" y="81.5" ></text>
+</g>
+<g >
+<title>$0.1833 model:model (1.21%)</title><rect x="121.6" y="71" width="4.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="124.61" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00912 model:model (0.06%)</title><rect x="14.1" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="17.09" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00685 model:model (0.05%)</title><rect x="65.7" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="68.67" y="81.5" ></text>
+</g>
+<g >
+<title>$0.12544 model:model (0.83%)</title><rect x="276.7" y="71" width="3.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="279.67" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01812 model:model (0.12%)</title><rect x="21.4" y="71" width="0.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="24.37" y="81.5" ></text>
+</g>
+<g >
+<title>$0.24627 model:model (1.62%)</title><rect x="56.1" y="71" width="6.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="59.12" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00455 model:model (0.03%)</title><rect x="11.3" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="14.32" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00605 model:model (0.04%)</title><rect x="64.7" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="67.71" y="81.5" ></text>
+</g>
+<g >
+<title>$0.17344 model:model (1.14%)</title><rect x="345.2" y="71" width="4.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="348.20" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00673 model:model (0.04%)</title><rect x="12.5" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="15.51" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00575 model:model (0.04%)</title><rect x="12.1" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="15.07" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00518 model:model (0.03%)</title><rect x="11.8" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="14.81" y="81.5" ></text>
+</g>
+<g >
+<title>$0.051584 model:model (0.34%)</title><rect x="150.1" y="71" width="1.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="153.06" y="81.5" ></text>
+</g>
+<g >
+<title>$0.088576 model:model (0.58%)</title><rect x="201.1" y="71" width="2.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="204.08" y="81.5" ></text>
+</g>
+<g >
+<title>$0.179456 model:model (1.18%)</title><rect x="367.2" y="71" width="4.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="370.20" y="81.5" ></text>
+</g>
+<g >
+<title>$0.09728 model:model (0.64%)</title><rect x="212.6" y="71" width="2.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="215.59" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00295 model:model (0.02%)</title><rect x="62.5" y="71" width="0.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="65.46" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0307 model:model (0.20%)</title><rect x="79.3" y="71" width="0.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="82.34" y="81.5" ></text>
+</g>
+<g >
+<title>$0.02134 model:model (0.14%)</title><rect x="24.7" y="71" width="0.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="27.66" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01149 model:model (0.08%)</title><rect x="16.9" y="71" width="0.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="19.95" y="81.5" ></text>
+</g>
+<g >
+<title>$0.079616 model:model (0.52%)</title><rect x="182.2" y="71" width="2.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="185.24" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01308 model:model (0.09%)</title><rect x="18.1" y="71" width="0.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="21.14" y="81.5" ></text>
+</g>
+<g >
+<title>$0.178688 model:model (1.18%)</title><rect x="362.7" y="71" width="4.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="365.72" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0061 model:model (0.04%)</title><rect x="64.9" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="67.86" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01119 model:model (0.07%)</title><rect x="16.7" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="19.67" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00305 model:model (0.02%)</title><rect x="62.5" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="65.53" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0079 model:model (0.05%)</title><rect x="66.8" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="69.77" y="81.5" ></text>
+</g>
+<g >
+<title>$0.132736 model:model (0.87%)</title><rect x="283.1" y="71" width="3.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="286.10" y="81.5" ></text>
+</g>
+<g >
+<title>$0.133248 model:model (0.88%)</title><rect x="293.1" y="71" width="3.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="296.08" y="81.5" ></text>
+</g>
+<g >
+<title>$0.081408 model:model (0.54%)</title><rect x="186.2" y="71" width="2.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="189.23" y="81.5" ></text>
+</g>
+<g >
+<title>$0.11136 model:model (0.73%)</title><rect x="235.7" y="71" width="2.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="238.72" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0346 model:model (0.23%)</title><rect x="84.2" y="71" width="0.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="87.24" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0064 model:model (0.04%)</title><rect x="65.2" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="68.17" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00308 model:model (0.02%)</title><rect x="10.7" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.73" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0307 model:model (0.20%)</title><rect x="78.6" y="71" width="0.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="81.57" y="81.5" ></text>
+</g>
+<g >
+<title>$0.02302 model:model (0.15%)</title><rect x="26.3" y="71" width="0.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="29.32" y="81.5" ></text>
+</g>
+<g >
+<title>$0.03587 model:model (0.24%)</title><rect x="34.4" y="71" width="0.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="37.42" y="81.5" ></text>
+</g>
+<g >
+<title>$0.021248 model:model (0.14%)</title><rect x="142.0" y="71" width="0.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="145.02" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0034 model:model (0.02%)</title><rect x="62.7" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="65.69" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00768 model:model (0.05%)</title><rect x="12.9" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="15.86" y="81.5" ></text>
+</g>
+<g >
+<title>$0.041344 model:model (0.27%)</title><rect x="149.0" y="71" width="1.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="152.03" y="81.5" ></text>
+</g>
+<g >
+<title>$0.15808 model:model (1.04%)</title><rect x="325.0" y="71" width="4.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="328.01" y="81.5" ></text>
+</g>
+<g >
+<title>$0.134912 model:model (0.89%)</title><rect x="296.4" y="71" width="3.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="299.42" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01045 model:model (0.07%)</title><rect x="67.4" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="70.38" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01026 model:model (0.07%)</title><rect x="15.1" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="18.05" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01219 model:model (0.08%)</title><rect x="17.5" y="71" width="0.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="20.53" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0026 model:model (0.02%)</title><rect x="62.4" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="65.40" y="81.5" ></text>
+</g>
+<g >
+<title>$0.143616 model:model (0.95%)</title><rect x="310.0" y="71" width="3.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="313.01" y="81.5" ></text>
+</g>
+<g >
+<title>$0.112 model:model (0.74%)</title><rect x="238.5" y="71" width="2.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="241.51" y="81.5" ></text>
+</g>
+<g >
+<title>$0.075136 model:model (0.49%)</title><rect x="176.5" y="71" width="1.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="179.52" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00212 model:model (0.01%)</title><rect x="10.0" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.03" y="81.5" ></text>
+</g>
+<g >
+<title>$0.115712 model:model (0.76%)</title><rect x="249.8" y="71" width="2.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="252.77" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01555 model:model (0.10%)</title><rect x="70.5" y="71" width="0.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="73.52" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01037 model:model (0.07%)</title><rect x="15.3" y="71" width="0.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="18.31" y="81.5" ></text>
+</g>
+<g >
+<title>$0.02036 model:model (0.13%)</title><rect x="24.2" y="71" width="0.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="27.15" y="81.5" ></text>
+</g>
+<g >
+<title>$0.09856 model:model (0.65%)</title><rect x="217.5" y="71" width="2.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="220.47" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01205 model:model (0.08%)</title><rect x="68.2" y="71" width="0.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="71.20" y="81.5" ></text>
+</g>
+<g >
+<title>$0.087552 model:model (0.58%)</title><rect x="198.9" y="71" width="2.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="201.88" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0049 model:model (0.03%)</title><rect x="63.7" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="66.75" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00425 model:model (0.03%)</title><rect x="63.3" y="71" width="0.1" height="15.0" fill="rgb(233,129,31)" rx="2" ry="2" />
+<text  x="66.28" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00282 model:model (0.02%)</title><rect x="10.5" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.51" y="81.5" ></text>
+</g>
+<g >
+<title>$0.065664 model:model (0.43%)</title><rect x="160.8" y="71" width="1.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="163.79" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0649 model:model (0.43%)</title><rect x="97.8" y="71" width="1.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="100.80" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0211 model:model (0.14%)</title><rect x="72.8" y="71" width="0.5" height="15.0" fill="rgb(233,129,31)" rx="2" ry="2" />
+<text  x="75.78" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01651 model:model (0.11%)</title><rect x="19.6" y="71" width="0.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="22.65" y="81.5" ></text>
+</g>
+<g >
+<title>$0.02975 model:model (0.20%)</title><rect x="77.8" y="71" width="0.8" height="15.0" fill="rgb(233,129,31)" rx="2" ry="2" />
+<text  x="80.82" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0206 model:model (0.14%)</title><rect x="72.3" y="71" width="0.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="75.26" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0626 model:model (0.41%)</title><rect x="96.2" y="71" width="1.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="99.23" y="81.5" ></text>
+</g>
+<g >
+<title>$0.04838 model:model (0.32%)</title><rect x="41.5" y="71" width="1.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="44.54" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00565 model:model (0.04%)</title><rect x="64.1" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="67.13" y="81.5" ></text>
+</g>
+<g >
+<title>$0.03904 model:model (0.26%)</title><rect x="145.1" y="71" width="0.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="148.06" y="81.5" ></text>
+</g>
+<g >
+<title>$0.108672 model:model (0.72%)</title><rect x="233.0" y="71" width="2.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="236.00" y="81.5" ></text>
+</g>
+<g >
+<title>$0.09175 model:model (0.60%)</title><rect x="107.4" y="71" width="2.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="110.44" y="81.5" ></text>
+</g>
+<g >
+<title>$0.01618 model:model (0.11%)</title><rect x="19.2" y="71" width="0.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="22.24" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0274 model:model (0.18%)</title><rect x="75.7" y="71" width="0.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="78.73" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00986 model:model (0.06%)</title><rect x="14.6" y="71" width="0.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="17.56" y="81.5" ></text>
+</g>
+<g >
+<title>$0.04279 model:model (0.28%)</title><rect x="38.2" y="71" width="1.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="41.25" y="81.5" ></text>
+</g>
+<g >
+<title>$0.1236 model:model (0.81%)</title><rect x="115.0" y="71" width="3.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="117.99" y="81.5" ></text>
+</g>
+<g >
+<title>$0.136064 model:model (0.90%)</title><rect x="306.6" y="71" width="3.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="309.61" y="81.5" ></text>
+</g>
+<g >
+<title>$0.112768 model:model (0.74%)</title><rect x="244.1" y="71" width="2.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="247.13" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00275 model:model (0.02%)</title><rect x="10.4" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.44" y="81.5" ></text>
+</g>
+<g >
+<title>$0.064768 model:model (0.43%)</title><rect x="155.9" y="71" width="1.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="158.89" y="81.5" ></text>
+</g>
+<g >
+<title>$0.005 model:model (0.03%)</title><rect x="63.9" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="66.87" y="81.5" ></text>
+</g>
+<g >
+<title>$0.031616 model:model (0.21%)</title><rect x="142.6" y="71" width="0.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="145.55" y="81.5" ></text>
+</g>
+<g >
+<title>$0.18605 model:model (1.23%)</title><rect x="51.5" y="71" width="4.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="54.46" y="81.5" ></text>
+</g>
+<g >
+<title>$0.092416 model:model (0.61%)</title><rect x="205.6" y="71" width="2.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="208.60" y="81.5" ></text>
+</g>
+<g >
+<title>$0.02895 model:model (0.19%)</title><rect x="29.7" y="71" width="0.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="32.65" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0127 model:model (0.08%)</title><rect x="69.1" y="71" width="0.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="72.11" y="81.5" ></text>
+</g>
+<g >
+<title>$15.179758 Token costs (100.00%)</title><rect x="10.0" y="103" width="380.0" height="15.0" fill="rgb(234,140,32)" rx="2" ry="2" />
+<text  x="13.00" y="113.5" >$15.179758 Token costs</text>
+</g>
+<g >
+<title>$0.070528 model:model (0.46%)</title><rect x="167.5" y="71" width="1.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="170.45" y="81.5" ></text>
+</g>
+<g >
+<title>$0.033 model:model (0.22%)</title><rect x="81.7" y="71" width="0.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="84.70" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00219 model:model (0.01%)</title><rect x="10.1" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.14" y="81.5" ></text>
+</g>
+<g >
+<title>$0.1048 model:model (0.69%)</title><rect x="46.2" y="71" width="2.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="49.21" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0031 model:model (0.02%)</title><rect x="10.8" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.80" y="81.5" ></text>
+</g>
+<g >
+<title>$0.02866 model:model (0.19%)</title><rect x="28.9" y="71" width="0.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="31.94" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00351 model:model (0.02%)</title><rect x="11.0" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="14.05" y="81.5" ></text>
+</g>
+<g >
+<title>$0.0616 model:model (0.41%)</title><rect x="94.7" y="71" width="1.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="97.69" y="81.5" ></text>
+</g>
+<g >
+<title>$0.007 model:model (0.05%)</title><rect x="12.7" y="71" width="0.2" height="15.0" fill="rgb(233,129,31)" rx="2" ry="2" />
+<text  x="15.68" y="81.5" ></text>
+</g>
+<g >
+<title>$0.03283 model:model (0.22%)</title><rect x="32.7" y="71" width="0.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="35.75" y="81.5" ></text>
+</g>
+<g >
+<title>$0.00425 model:model (0.03%)</title><rect x="63.2" y="71" width="0.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="66.18" y="81.5" ></text>
+</g>
+<g >
+<title>$0.117504 model:model (0.77%)</title><rect x="258.5" y="71" width="3.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="261.54" y="81.5" ></text>
+</g>
+<g >
+<title>$0.180352 model:model (1.19%)</title><rect x="371.7" y="71" width="4.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="374.69" y="81.5" ></text>
+</g>
+</g>
+</svg>

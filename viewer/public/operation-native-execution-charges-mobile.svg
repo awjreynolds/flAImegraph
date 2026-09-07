@@ -1,0 +1,1195 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" width="400" height="172" onload="init(evt)" viewBox="0 0 400 172" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!-- Flame graph stack visualization. See https://github.com/brendangregg/FlameGraph for latest version, and http://www.brendangregg.com/flamegraphs.html for examples. -->
+<!-- NOTES:  -->
+<defs>
+	<linearGradient id="background" y1="0" y2="1" x1="0" x2="0" >
+		<stop stop-color="#eeeeee" offset="5%" />
+		<stop stop-color="#eeeeb0" offset="95%" />
+	</linearGradient>
+</defs>
+<style type="text/css">
+	text { font-family:Verdana; font-size:14px; fill:rgb(0,0,0); }
+	#search, #ignorecase { opacity:0.1; cursor:pointer; }
+	#search:hover, #search.show, #ignorecase:hover, #ignorecase.show { opacity:1; }
+	#subtitle { text-anchor:middle; font-color:rgb(160,160,160); }
+	#title { text-anchor:middle; font-size:19px}
+	#unzoom { cursor:pointer; }
+	#frames > *:hover { stroke:black; stroke-width:0.5; cursor:pointer; }
+	.hide { display:none; }
+	.parent { opacity:0.5; }
+</style>
+<script type="text/ecmascript">
+<![CDATA[
+	"use strict";
+	var details, searchbtn, unzoombtn, matchedtxt, svg, searching, currentSearchTerm, ignorecase, ignorecaseBtn;
+	function init(evt) {
+		details = document.getElementById("details").firstChild;
+		searchbtn = document.getElementById("search");
+		ignorecaseBtn = document.getElementById("ignorecase");
+		unzoombtn = document.getElementById("unzoom");
+		matchedtxt = document.getElementById("matched");
+		svg = document.getElementsByTagName("svg")[0];
+		searching = 0;
+		currentSearchTerm = null;
+
+		// use GET parameters to restore a flamegraphs state.
+		var params = get_params();
+		if (params.x && params.y)
+			zoom(find_group(document.querySelector('[x="' + params.x + '"][y="' + params.y + '"]')));
+                if (params.s) search(params.s);
+	}
+
+	// event listeners
+	window.addEventListener("click", function(e) {
+		var target = find_group(e.target);
+		if (target) {
+			if (target.nodeName == "a") {
+				if (e.ctrlKey === false) return;
+				e.preventDefault();
+			}
+			if (target.classList.contains("parent")) unzoom(true);
+			zoom(target);
+			if (!document.querySelector('.parent')) {
+				// we have basically done a clearzoom so clear the url
+				var params = get_params();
+				if (params.x) delete params.x;
+				if (params.y) delete params.y;
+				history.replaceState(null, null, parse_params(params));
+				unzoombtn.classList.add("hide");
+				return;
+			}
+
+			// set parameters for zoom state
+			var el = target.querySelector("rect");
+			if (el && el.attributes && el.attributes.y && el.attributes._orig_x) {
+				var params = get_params()
+				params.x = el.attributes._orig_x.value;
+				params.y = el.attributes.y.value;
+				history.replaceState(null, null, parse_params(params));
+			}
+		}
+		else if (e.target.id == "unzoom") clearzoom();
+		else if (e.target.id == "search") search_prompt();
+		else if (e.target.id == "ignorecase") toggle_ignorecase();
+	}, false)
+
+	// mouse-over for info
+	// show
+	window.addEventListener("mouseover", function(e) {
+		var target = find_group(e.target);
+		if (target) details.nodeValue = "Operation: " + g_to_text(target);
+	}, false)
+
+	// clear
+	window.addEventListener("mouseout", function(e) {
+		var target = find_group(e.target);
+		if (target) details.nodeValue = ' ';
+	}, false)
+
+	// ctrl-F for search
+	// ctrl-I to toggle case-sensitive search
+	window.addEventListener("keydown",function (e) {
+		if (e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70)) {
+			e.preventDefault();
+			search_prompt();
+		}
+		else if (e.ctrlKey && e.keyCode === 73) {
+			e.preventDefault();
+			toggle_ignorecase();
+		}
+	}, false)
+
+	// functions
+	function get_params() {
+		var params = {};
+		var paramsarr = window.location.search.substr(1).split('&');
+		for (var i = 0; i < paramsarr.length; ++i) {
+			var tmp = paramsarr[i].split("=");
+			if (!tmp[0] || !tmp[1]) continue;
+			params[tmp[0]]  = decodeURIComponent(tmp[1]);
+		}
+		return params;
+	}
+	function parse_params(params) {
+		var uri = "?";
+		for (var key in params) {
+			uri += key + '=' + encodeURIComponent(params[key]) + '&';
+		}
+		if (uri.slice(-1) == "&")
+			uri = uri.substring(0, uri.length - 1);
+		if (uri == '?')
+			uri = window.location.href.split('?')[0];
+		return uri;
+	}
+	function find_child(node, selector) {
+		var children = node.querySelectorAll(selector);
+		if (children.length) return children[0];
+	}
+	function find_group(node) {
+		var parent = node.parentElement;
+		if (!parent) return;
+		if (parent.id == "frames") return node;
+		return find_group(parent);
+	}
+	function orig_save(e, attr, val) {
+		if (e.attributes["_orig_" + attr] != undefined) return;
+		if (e.attributes[attr] == undefined) return;
+		if (val == undefined) val = e.attributes[attr].value;
+		e.setAttribute("_orig_" + attr, val);
+	}
+	function orig_load(e, attr) {
+		if (e.attributes["_orig_"+attr] == undefined) return;
+		e.attributes[attr].value = e.attributes["_orig_" + attr].value;
+		e.removeAttribute("_orig_"+attr);
+	}
+	function g_to_text(e) {
+		var text = find_child(e, "title").firstChild.nodeValue;
+		return (text)
+	}
+	function g_to_func(e) {
+		var func = g_to_text(e);
+		// if there's any manipulation we want to do to the function
+		// name before it's searched, do it here before returning.
+		return (func);
+	}
+	function update_text(e) {
+		var r = find_child(e, "rect");
+		var t = find_child(e, "text");
+		var w = parseFloat(r.attributes.width.value) -3;
+		var txt = find_child(e, "title").textContent.replace(/\([^(]*\)$/,"");
+		t.attributes.x.value = parseFloat(r.attributes.x.value) + 3;
+
+		// Smaller than this size won't fit anything
+		if (w < 2 * 14 * 0.59) {
+			t.textContent = "";
+			return;
+		}
+
+		t.textContent = txt;
+		var sl = t.getSubStringLength(0, txt.length);
+		// check if only whitespace or if we can fit the entire string into width w
+		if (/^ *$/.test(txt) || sl < w)
+			return;
+
+		// this isn't perfect, but gives a good starting point
+		// and avoids calling getSubStringLength too often
+		var start = Math.floor((w/sl) * txt.length);
+		for (var x = start; x > 0; x = x-2) {
+			if (t.getSubStringLength(0, x + 2) <= w) {
+				t.textContent = txt.substring(0, x) + "..";
+				return;
+			}
+		}
+		t.textContent = "";
+	}
+
+	// zoom
+	function zoom_reset(e) {
+		if (e.attributes != undefined) {
+			orig_load(e, "x");
+			orig_load(e, "width");
+		}
+		if (e.childNodes == undefined) return;
+		for (var i = 0, c = e.childNodes; i < c.length; i++) {
+			zoom_reset(c[i]);
+		}
+	}
+	function zoom_child(e, x, ratio) {
+		if (e.attributes != undefined) {
+			if (e.attributes.x != undefined) {
+				orig_save(e, "x");
+				e.attributes.x.value = (parseFloat(e.attributes.x.value) - x - 10) * ratio + 10;
+				if (e.tagName == "text")
+					e.attributes.x.value = find_child(e.parentNode, "rect[x]").attributes.x.value + 3;
+			}
+			if (e.attributes.width != undefined) {
+				orig_save(e, "width");
+				e.attributes.width.value = parseFloat(e.attributes.width.value) * ratio;
+			}
+		}
+
+		if (e.childNodes == undefined) return;
+		for (var i = 0, c = e.childNodes; i < c.length; i++) {
+			zoom_child(c[i], x - 10, ratio);
+		}
+	}
+	function zoom_parent(e) {
+		if (e.attributes) {
+			if (e.attributes.x != undefined) {
+				orig_save(e, "x");
+				e.attributes.x.value = 10;
+			}
+			if (e.attributes.width != undefined) {
+				orig_save(e, "width");
+				e.attributes.width.value = parseInt(svg.width.baseVal.value) - (10 * 2);
+			}
+		}
+		if (e.childNodes == undefined) return;
+		for (var i = 0, c = e.childNodes; i < c.length; i++) {
+			zoom_parent(c[i]);
+		}
+	}
+	function zoom(node) {
+		var attr = find_child(node, "rect").attributes;
+		var width = parseFloat(attr.width.value);
+		var xmin = parseFloat(attr.x.value);
+		var xmax = parseFloat(xmin + width);
+		var ymin = parseFloat(attr.y.value);
+		var ratio = (svg.width.baseVal.value - 2 * 10) / width;
+
+		// XXX: Workaround for JavaScript float issues (fix me)
+		var fudge = 0.0001;
+
+		unzoombtn.classList.remove("hide");
+
+		var el = document.getElementById("frames").children;
+		for (var i = 0; i < el.length; i++) {
+			var e = el[i];
+			var a = find_child(e, "rect").attributes;
+			var ex = parseFloat(a.x.value);
+			var ew = parseFloat(a.width.value);
+			var upstack;
+			// Is it an ancestor
+			if (0 == 0) {
+				upstack = parseFloat(a.y.value) > ymin;
+			} else {
+				upstack = parseFloat(a.y.value) < ymin;
+			}
+			if (upstack) {
+				// Direct ancestor
+				if (ex <= xmin && (ex+ew+fudge) >= xmax) {
+					e.classList.add("parent");
+					zoom_parent(e);
+					update_text(e);
+				}
+				// not in current path
+				else
+					e.classList.add("hide");
+			}
+			// Children maybe
+			else {
+				// no common path
+				if (ex < xmin || ex + fudge >= xmax) {
+					e.classList.add("hide");
+				}
+				else {
+					zoom_child(e, xmin, ratio);
+					update_text(e);
+				}
+			}
+		}
+		search();
+	}
+	function unzoom(dont_update_text) {
+		unzoombtn.classList.add("hide");
+		var el = document.getElementById("frames").children;
+		for(var i = 0; i < el.length; i++) {
+			el[i].classList.remove("parent");
+			el[i].classList.remove("hide");
+			zoom_reset(el[i]);
+			if(!dont_update_text) update_text(el[i]);
+		}
+		search();
+	}
+	function clearzoom() {
+		unzoom();
+
+		// remove zoom state
+		var params = get_params();
+		if (params.x) delete params.x;
+		if (params.y) delete params.y;
+		history.replaceState(null, null, parse_params(params));
+	}
+
+	// search
+	function toggle_ignorecase() {
+		ignorecase = !ignorecase;
+		if (ignorecase) {
+			ignorecaseBtn.classList.add("show");
+		} else {
+			ignorecaseBtn.classList.remove("show");
+		}
+		reset_search();
+		search();
+	}
+	function reset_search() {
+		var el = document.querySelectorAll("#frames rect");
+		for (var i = 0; i < el.length; i++) {
+			orig_load(el[i], "fill")
+		}
+		var params = get_params();
+		delete params.s;
+		history.replaceState(null, null, parse_params(params));
+	}
+	function search_prompt() {
+		if (!searching) {
+			var term = prompt("Enter a search term (regexp " +
+			    "allowed, eg: ^ext4_)"
+			    + (ignorecase ? ", ignoring case" : "")
+			    + "\nPress Ctrl-i to toggle case sensitivity", "");
+			if (term != null) search(term);
+		} else {
+			reset_search();
+			searching = 0;
+			currentSearchTerm = null;
+			searchbtn.classList.remove("show");
+			searchbtn.firstChild.nodeValue = "Search"
+			matchedtxt.classList.add("hide");
+			matchedtxt.firstChild.nodeValue = ""
+		}
+	}
+	function search(term) {
+		if (term) currentSearchTerm = term;
+		if (currentSearchTerm === null) return;
+
+		var re = new RegExp(currentSearchTerm, ignorecase ? 'i' : '');
+		var el = document.getElementById("frames").children;
+		var matches = new Object();
+		var maxwidth = 0;
+		for (var i = 0; i < el.length; i++) {
+			var e = el[i];
+			var func = g_to_func(e);
+			var rect = find_child(e, "rect");
+			if (func == null || rect == null)
+				continue;
+
+			// Save max width. Only works as we have a root frame
+			var w = parseFloat(rect.attributes.width.value);
+			if (w > maxwidth)
+				maxwidth = w;
+
+			if (func.match(re)) {
+				// highlight
+				var x = parseFloat(rect.attributes.x.value);
+				orig_save(rect, "fill");
+				rect.attributes.fill.value = "rgb(230,0,230)";
+
+				// remember matches
+				if (matches[x] == undefined) {
+					matches[x] = w;
+				} else {
+					if (w > matches[x]) {
+						// overwrite with parent
+						matches[x] = w;
+					}
+				}
+				searching = 1;
+			}
+		}
+		if (!searching)
+			return;
+		var params = get_params();
+		params.s = currentSearchTerm;
+		history.replaceState(null, null, parse_params(params));
+
+		searchbtn.classList.add("show");
+		searchbtn.firstChild.nodeValue = "Reset Search";
+
+		// calculate percent matched, excluding vertical overlap
+		var count = 0;
+		var lastx = -1;
+		var lastw = 0;
+		var keys = Array();
+		for (k in matches) {
+			if (matches.hasOwnProperty(k))
+				keys.push(k);
+		}
+		// sort the matched frames by their x location
+		// ascending, then width descending
+		keys.sort(function(a, b){
+			return a - b;
+		});
+		// Step through frames saving only the biggest bottom-up frames
+		// thanks to the sort order. This relies on the tree property
+		// where children are always smaller than their parents.
+		var fudge = 0.0001;	// JavaScript floating point
+		for (var k in keys) {
+			var x = parseFloat(keys[k]);
+			var w = matches[keys[k]];
+			if (x >= lastx + lastw - fudge) {
+				count += w;
+				lastx = x;
+				lastw = w;
+			}
+		}
+		// display matched percent
+		matchedtxt.classList.remove("hide");
+		var pct = 100 * count / maxwidth;
+		if (pct != 100) pct = pct.toFixed(1)
+		matchedtxt.firstChild.nodeValue = "Matched: " + pct + "%";
+	}
+]]>
+</script>
+<rect x="0.0" y="0" width="400.0" height="172.0" fill="url(#background)"  />
+<text id="title" x="200.00" y="28" >$15.179758</text>
+<text id="subtitle" x="200.00" y="56" >Width = cost | tap to zoom</text>
+<text id="details" x="10.00" y="153" > </text>
+<text id="unzoom" x="10.00" y="28" class="hide">Reset Zoom</text>
+<text id="search" x="290.00" y="28" >Search</text>
+<text id="ignorecase" x="374.00" y="28" >ic</text>
+<text id="matched" x="290.00" y="153" > </text>
+<g id="frames">
+<g >
+<title>$0.119384 Model request cost (0.79%)</title><rect x="69.0" y="71" width="3.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="71.99" y="81.5" ></text>
+</g>
+<g >
+<title>$0.238926 Model request cost (1.57%)</title><rect x="297.1" y="71" width="6.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="300.09" y="81.5" ></text>
+</g>
+<g >
+<title>$0.107648 model:model (0.71%)</title><rect x="52.4" y="87" width="2.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="55.38" y="97.5" ></text>
+</g>
+<g >
+<title>$0.165802 model:model (1.09%)</title><rect x="193.8" y="87" width="4.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="196.76" y="97.5" ></text>
+</g>
+<g >
+<title>$0.194522 Model request cost (1.28%)</title><rect x="229.6" y="71" width="4.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="232.55" y="81.5" ></text>
+</g>
+<g >
+<title>$15.179758 Execution (100.00%)</title><rect x="10.0" y="119" width="380.0" height="15.0" fill="rgb(255,230,55)" rx="2" ry="2" />
+<text  x="13.00" y="129.5" ></text>
+</g>
+<g >
+<title>$0.137994 model:model (0.91%)</title><rect x="100.8" y="87" width="3.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="103.75" y="97.5" ></text>
+</g>
+<g >
+<title>$0.142308 model:model (0.94%)</title><rect x="125.2" y="87" width="3.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="128.20" y="97.5" ></text>
+</g>
+<g >
+<title>$0.149496 model:model (0.98%)</title><rect x="146.9" y="87" width="3.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="149.90" y="97.5" ></text>
+</g>
+<g >
+<title>$0.252498 Model request cost (1.66%)</title><rect x="315.7" y="71" width="6.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="318.68" y="81.5" ></text>
+</g>
+<g >
+<title>$0.127218 Model request cost (0.84%)</title><rect x="87.6" y="71" width="3.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="90.65" y="81.5" ></text>
+</g>
+<g >
+<title>$0.226354 Model request cost (1.49%)</title><rect x="285.6" y="71" width="5.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="288.61" y="81.5" ></text>
+</g>
+<g >
+<title>$0.101836 Model request cost (0.67%)</title><rect x="44.6" y="71" width="2.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="47.60" y="81.5" ></text>
+</g>
+<g >
+<title>$0.165802 Model request cost (1.09%)</title><rect x="193.8" y="71" width="4.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="196.76" y="81.5" ></text>
+</g>
+<g >
+<title>$0.10223 model:model (0.67%)</title><rect x="47.1" y="87" width="2.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="50.15" y="97.5" ></text>
+</g>
+<g >
+<title>$0.154044 Model request cost (1.01%)</title><rect x="165.9" y="71" width="3.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="168.91" y="81.5" ></text>
+</g>
+<g >
+<title>$0.312938 Model request cost (2.06%)</title><rect x="328.7" y="71" width="7.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="331.69" y="81.5" ></text>
+</g>
+<g >
+<title>$0.10223 Model request cost (0.67%)</title><rect x="47.1" y="71" width="2.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="50.15" y="81.5" ></text>
+</g>
+<g >
+<title>$0.093238 Model request cost (0.61%)</title><rect x="29.9" y="71" width="2.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="32.93" y="81.5" ></text>
+</g>
+<g >
+<title>$0.075652 model:model (0.50%)</title><rect x="19.7" y="87" width="1.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="22.67" y="97.5" ></text>
+</g>
+<g >
+<title>$0.589632 model:model (3.88%)</title><rect x="375.2" y="87" width="14.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="378.24" y="97.5" ></text>
+</g>
+<g >
+<title>$0.369868 model:model (2.44%)</title><rect x="345.8" y="87" width="9.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="348.78" y="97.5" ></text>
+</g>
+<g >
+<title>$0.214528 Model request cost (1.41%)</title><rect x="274.7" y="71" width="5.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="277.74" y="81.5" ></text>
+</g>
+<g >
+<title>$0.138902 Model request cost (0.92%)</title><rect x="107.7" y="71" width="3.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="110.68" y="81.5" ></text>
+</g>
+<g >
+<title>$0.15848 Model request cost (1.04%)</title><rect x="177.6" y="71" width="4.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="180.63" y="81.5" ></text>
+</g>
+<g >
+<title>$0.1536 Model request cost (1.01%)</title><rect x="162.1" y="71" width="3.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="165.07" y="81.5" ></text>
+</g>
+<g >
+<title>$0.045038 Model request cost (0.30%)</title><rect x="11.1" y="71" width="1.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="14.10" y="81.5" ></text>
+</g>
+<g >
+<title>$0.139306 Model request cost (0.92%)</title><rect x="114.6" y="71" width="3.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="117.65" y="81.5" ></text>
+</g>
+<g >
+<title>$0.124448 Model request cost (0.82%)</title><rect x="75.0" y="71" width="3.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="78.00" y="81.5" ></text>
+</g>
+<g >
+<title>$0.391082 model:model (2.58%)</title><rect x="355.0" y="87" width="9.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="358.04" y="97.5" ></text>
+</g>
+<g >
+<title>$0.267212 Model request cost (1.76%)</title><rect x="322.0" y="71" width="6.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="325.00" y="81.5" ></text>
+</g>
+<g >
+<title>$0.153084 Model request cost (1.01%)</title><rect x="158.2" y="71" width="3.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="161.24" y="81.5" ></text>
+</g>
+<g >
+<title>$0.05131 Model request cost (0.34%)</title><rect x="13.4" y="71" width="1.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="16.44" y="81.5" ></text>
+</g>
+<g >
+<title>$0.12061 Model request cost (0.79%)</title><rect x="72.0" y="71" width="3.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="74.98" y="81.5" ></text>
+</g>
+<g >
+<title>$0.198576 model:model (1.31%)</title><rect x="249.2" y="87" width="4.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="252.16" y="97.5" ></text>
+</g>
+<g >
+<title>$0.212338 model:model (1.40%)</title><rect x="269.4" y="87" width="5.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="272.43" y="97.5" ></text>
+</g>
+<g >
+<title>$0.093238 model:model (0.61%)</title><rect x="29.9" y="87" width="2.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="32.93" y="97.5" ></text>
+</g>
+<g >
+<title>$0.101836 model:model (0.67%)</title><rect x="44.6" y="87" width="2.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="47.60" y="97.5" ></text>
+</g>
+<g >
+<title>$0.080956 Model request cost (0.53%)</title><rect x="23.5" y="71" width="2.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="26.49" y="81.5" ></text>
+</g>
+<g >
+<title>$0.151802 model:model (1.00%)</title><rect x="154.4" y="87" width="3.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="157.44" y="97.5" ></text>
+</g>
+<g >
+<title>$0.100298 model:model (0.66%)</title><rect x="37.0" y="87" width="2.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="40.02" y="97.5" ></text>
+</g>
+<g >
+<title>$0.096318 model:model (0.63%)</title><rect x="34.6" y="87" width="2.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="37.61" y="97.5" ></text>
+</g>
+<g >
+<title>$0.18402 Model request cost (1.21%)</title><rect x="210.9" y="71" width="4.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="213.90" y="81.5" ></text>
+</g>
+<g >
+<title>$0.185142 Model request cost (1.22%)</title><rect x="215.5" y="71" width="4.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="218.51" y="81.5" ></text>
+</g>
+<g >
+<title>$0.12671 model:model (0.83%)</title><rect x="78.1" y="87" width="3.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="81.12" y="97.5" ></text>
+</g>
+<g >
+<title>$0.151802 Model request cost (1.00%)</title><rect x="154.4" y="71" width="3.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="157.44" y="81.5" ></text>
+</g>
+<g >
+<title>$0.169956 Model request cost (1.12%)</title><rect x="202.1" y="71" width="4.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="205.14" y="81.5" ></text>
+</g>
+<g >
+<title>$0.087462 Model request cost (0.58%)</title><rect x="25.5" y="71" width="2.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="28.51" y="81.5" ></text>
+</g>
+<g >
+<title>$0.188318 Model request cost (1.24%)</title><rect x="224.8" y="71" width="4.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="227.84" y="81.5" ></text>
+</g>
+<g >
+<title>$0.162006 model:model (1.07%)</title><rect x="185.6" y="87" width="4.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="188.56" y="97.5" ></text>
+</g>
+<g >
+<title>$0.158354 model:model (1.04%)</title><rect x="173.7" y="87" width="3.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="176.66" y="97.5" ></text>
+</g>
+<g >
+<title>$0.151408 Model request cost (1.00%)</title><rect x="150.6" y="71" width="3.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="153.65" y="81.5" ></text>
+</g>
+<g >
+<title>$0.19457 model:model (1.28%)</title><rect x="234.4" y="87" width="4.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="237.42" y="97.5" ></text>
+</g>
+<g >
+<title>$0.108134 Model request cost (0.71%)</title><rect x="55.1" y="71" width="2.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="58.08" y="81.5" ></text>
+</g>
+<g >
+<title>$0.101592 model:model (0.67%)</title><rect x="42.1" y="87" width="2.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="45.05" y="97.5" ></text>
+</g>
+<g >
+<title>$0.219482 model:model (1.45%)</title><rect x="280.1" y="87" width="5.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="283.12" y="97.5" ></text>
+</g>
+<g >
+<title>$0.232072 model:model (1.53%)</title><rect x="291.3" y="87" width="5.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="294.28" y="97.5" ></text>
+</g>
+<g >
+<title>$0.19754 Model request cost (1.30%)</title><rect x="244.2" y="71" width="5.0" height="15.0" fill="rgb(233,129,31)" rx="2" ry="2" />
+<text  x="247.22" y="81.5" ></text>
+</g>
+<g >
+<title>$0.142064 Model request cost (0.94%)</title><rect x="121.6" y="71" width="3.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="124.65" y="81.5" ></text>
+</g>
+<g >
+<title>$0.048358 model:model (0.32%)</title><rect x="12.2" y="87" width="1.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="15.23" y="97.5" ></text>
+</g>
+<g >
+<title>$0.15551 Model request cost (1.02%)</title><rect x="169.8" y="71" width="3.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="172.77" y="81.5" ></text>
+</g>
+<g >
+<title>$0.391082 Model request cost (2.58%)</title><rect x="355.0" y="71" width="9.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="358.04" y="81.5" ></text>
+</g>
+<g >
+<title>$0.589632 Model request cost (3.88%)</title><rect x="375.2" y="71" width="14.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="378.24" y="81.5" ></text>
+</g>
+<g >
+<title>$0.142824 model:model (0.94%)</title><rect x="132.3" y="87" width="3.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="135.34" y="97.5" ></text>
+</g>
+<g >
+<title>$15.179758 Execution (100.00%)</title><rect x="10.0" y="103" width="380.0" height="15.0" fill="rgb(247,140,46)" rx="2" ry="2" />
+<text  x="13.00" y="113.5" >$15.179758 Execution</text>
+</g>
+<g >
+<title>$0.415862 model:model (2.74%)</title><rect x="364.8" y="87" width="10.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="367.83" y="97.5" ></text>
+</g>
+<g >
+<title>$0.187658 model:model (1.24%)</title><rect x="220.1" y="87" width="4.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="223.14" y="97.5" ></text>
+</g>
+<g >
+<title>$0.142824 Model request cost (0.94%)</title><rect x="132.3" y="71" width="3.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="135.34" y="81.5" ></text>
+</g>
+<g >
+<title>$0.169956 model:model (1.12%)</title><rect x="202.1" y="87" width="4.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="205.14" y="97.5" ></text>
+</g>
+<g >
+<title>$0.158534 Model request cost (1.04%)</title><rect x="181.6" y="71" width="4.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="184.59" y="81.5" ></text>
+</g>
+<g >
+<title>$0.063016 Model request cost (0.42%)</title><rect x="16.2" y="71" width="1.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="19.24" y="81.5" ></text>
+</g>
+<g >
+<title>$0.196602 model:model (1.30%)</title><rect x="239.3" y="87" width="4.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="242.29" y="97.5" ></text>
+</g>
+<g >
+<title>$0.12061 model:model (0.79%)</title><rect x="72.0" y="87" width="3.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="74.98" y="97.5" ></text>
+</g>
+<g >
+<title>$0.093764 model:model (0.62%)</title><rect x="32.3" y="87" width="2.3" height="15.0" fill="rgb(233,129,31)" rx="2" ry="2" />
+<text  x="35.27" y="97.5" ></text>
+</g>
+<g >
+<title>$0.080956 model:model (0.53%)</title><rect x="23.5" y="87" width="2.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="26.49" y="97.5" ></text>
+</g>
+<g >
+<title>$0.185142 model:model (1.22%)</title><rect x="215.5" y="87" width="4.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="218.51" y="97.5" ></text>
+</g>
+<g >
+<title>$0.158354 Model request cost (1.04%)</title><rect x="173.7" y="71" width="3.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="176.66" y="81.5" ></text>
+</g>
+<g >
+<title>$0.11039 model:model (0.73%)</title><rect x="57.8" y="87" width="2.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="60.79" y="97.5" ></text>
+</g>
+<g >
+<title>$0.133806 model:model (0.88%)</title><rect x="97.4" y="87" width="3.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="100.40" y="97.5" ></text>
+</g>
+<g >
+<title>$0.140308 Model request cost (0.92%)</title><rect x="118.1" y="71" width="3.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="121.13" y="81.5" ></text>
+</g>
+<g >
+<title>$0.076704 model:model (0.51%)</title><rect x="21.6" y="87" width="1.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="24.56" y="97.5" ></text>
+</g>
+<g >
+<title>$0.19754 model:model (1.30%)</title><rect x="244.2" y="87" width="5.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="247.22" y="97.5" ></text>
+</g>
+<g >
+<title>$0.113324 model:model (0.75%)</title><rect x="63.3" y="87" width="2.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="66.31" y="97.5" ></text>
+</g>
+<g >
+<title>$0.142308 Model request cost (0.94%)</title><rect x="125.2" y="71" width="3.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="128.20" y="81.5" ></text>
+</g>
+<g >
+<title>$0.138834 Model request cost (0.91%)</title><rect x="104.2" y="71" width="3.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="107.21" y="81.5" ></text>
+</g>
+<g >
+<title>$0.087462 model:model (0.58%)</title><rect x="25.5" y="87" width="2.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="28.51" y="97.5" ></text>
+</g>
+<g >
+<title>$0.204266 Model request cost (1.35%)</title><rect x="259.2" y="71" width="5.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="262.15" y="81.5" ></text>
+</g>
+<g >
+<title>$0.101592 Model request cost (0.67%)</title><rect x="42.1" y="71" width="2.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="45.05" y="81.5" ></text>
+</g>
+<g >
+<title>$0.206308 model:model (1.36%)</title><rect x="264.3" y="87" width="5.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="267.26" y="97.5" ></text>
+</g>
+<g >
+<title>$0.110436 Model request cost (0.73%)</title><rect x="60.5" y="71" width="2.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="63.55" y="81.5" ></text>
+</g>
+<g >
+<title>$0.127142 model:model (0.84%)</title><rect x="84.5" y="87" width="3.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="87.47" y="97.5" ></text>
+</g>
+<g >
+<title>$0.063016 model:model (0.42%)</title><rect x="16.2" y="87" width="1.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="19.24" y="97.5" ></text>
+</g>
+<g >
+<title>$0.1536 model:model (1.01%)</title><rect x="162.1" y="87" width="3.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="165.07" y="97.5" ></text>
+</g>
+<g >
+<title>$0.147514 Model request cost (0.97%)</title><rect x="143.2" y="71" width="3.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="146.21" y="81.5" ></text>
+</g>
+<g >
+<title>$0.251734 model:model (1.66%)</title><rect x="303.1" y="87" width="6.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="306.07" y="97.5" ></text>
+</g>
+<g >
+<title>$0.138834 model:model (0.91%)</title><rect x="104.2" y="87" width="3.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="107.21" y="97.5" ></text>
+</g>
+<g >
+<title>$0.074154 Model request cost (0.49%)</title><rect x="17.8" y="71" width="1.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="20.81" y="81.5" ></text>
+</g>
+<g >
+<title>$0.16528 Model request cost (1.09%)</title><rect x="189.6" y="71" width="4.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="192.62" y="81.5" ></text>
+</g>
+<g >
+<title>$0.146556 model:model (0.97%)</title><rect x="139.5" y="87" width="3.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="142.54" y="97.5" ></text>
+</g>
+<g >
+<title>$0.252212 model:model (1.66%)</title><rect x="309.4" y="87" width="6.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="312.37" y="97.5" ></text>
+</g>
+<g >
+<title>$0.113572 Model request cost (0.75%)</title><rect x="66.2" y="71" width="2.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="69.15" y="81.5" ></text>
+</g>
+<g >
+<title>$0.187658 Model request cost (1.24%)</title><rect x="220.1" y="71" width="4.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="223.14" y="81.5" ></text>
+</g>
+<g >
+<title>$0.127142 Model request cost (0.84%)</title><rect x="84.5" y="71" width="3.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="87.47" y="81.5" ></text>
+</g>
+<g >
+<title>$0.127218 model:model (0.84%)</title><rect x="87.6" y="87" width="3.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="90.65" y="97.5" ></text>
+</g>
+<g >
+<title>$0.089106 model:model (0.59%)</title><rect x="27.7" y="87" width="2.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="30.70" y="97.5" ></text>
+</g>
+<g >
+<title>$0.060406 Model request cost (0.40%)</title><rect x="14.7" y="71" width="1.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="17.73" y="81.5" ></text>
+</g>
+<g >
+<title>$0.16897 model:model (1.11%)</title><rect x="197.9" y="87" width="4.2" height="15.0" fill="rgb(233,129,31)" rx="2" ry="2" />
+<text  x="200.91" y="97.5" ></text>
+</g>
+<g >
+<title>$0.126926 model:model (0.84%)</title><rect x="81.3" y="87" width="3.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="84.29" y="97.5" ></text>
+</g>
+<g >
+<title>$0.133742 model:model (0.88%)</title><rect x="94.1" y="87" width="3.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="97.06" y="97.5" ></text>
+</g>
+<g >
+<title>$0.214528 model:model (1.41%)</title><rect x="274.7" y="87" width="5.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="277.74" y="97.5" ></text>
+</g>
+<g >
+<title>$0.137994 Model request cost (0.91%)</title><rect x="100.8" y="71" width="3.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="103.75" y="81.5" ></text>
+</g>
+<g >
+<title>$0.108134 model:model (0.71%)</title><rect x="55.1" y="87" width="2.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="58.08" y="97.5" ></text>
+</g>
+<g >
+<title>$0.146556 Model request cost (0.97%)</title><rect x="139.5" y="71" width="3.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="142.54" y="81.5" ></text>
+</g>
+<g >
+<title>$0.188318 model:model (1.24%)</title><rect x="224.8" y="87" width="4.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="227.84" y="97.5" ></text>
+</g>
+<g >
+<title>$0.126926 Model request cost (0.84%)</title><rect x="81.3" y="71" width="3.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="84.29" y="81.5" ></text>
+</g>
+<g >
+<title>$0.36967 Model request cost (2.44%)</title><rect x="336.5" y="71" width="9.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="339.53" y="81.5" ></text>
+</g>
+<g >
+<title>$0.100594 model:model (0.66%)</title><rect x="39.5" y="87" width="2.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="42.54" y="97.5" ></text>
+</g>
+<g >
+<title>$0.15848 model:model (1.04%)</title><rect x="177.6" y="87" width="4.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="180.63" y="97.5" ></text>
+</g>
+<g >
+<title>$0.415862 Model request cost (2.74%)</title><rect x="364.8" y="71" width="10.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="367.83" y="81.5" ></text>
+</g>
+<g >
+<title>$0.180188 model:model (1.19%)</title><rect x="206.4" y="87" width="4.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="209.39" y="97.5" ></text>
+</g>
+<g >
+<title>$0.252498 model:model (1.66%)</title><rect x="315.7" y="87" width="6.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="318.68" y="97.5" ></text>
+</g>
+<g >
+<title>$0.20049 Model request cost (1.32%)</title><rect x="254.1" y="71" width="5.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="257.13" y="81.5" ></text>
+</g>
+<g >
+<title>$0.154044 model:model (1.01%)</title><rect x="165.9" y="87" width="3.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="168.91" y="97.5" ></text>
+</g>
+<g >
+<title>$0.153084 model:model (1.01%)</title><rect x="158.2" y="87" width="3.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="161.24" y="97.5" ></text>
+</g>
+<g >
+<title>$0.151408 model:model (1.00%)</title><rect x="150.6" y="87" width="3.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="153.65" y="97.5" ></text>
+</g>
+<g >
+<title>$0.198576 Model request cost (1.31%)</title><rect x="249.2" y="71" width="4.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="252.16" y="81.5" ></text>
+</g>
+<g >
+<title>$0.044048 Model request cost (0.29%)</title><rect x="10.0" y="71" width="1.1" height="15.0" fill="rgb(233,129,31)" rx="2" ry="2" />
+<text  x="13.00" y="81.5" ></text>
+</g>
+<g >
+<title>$0.16897 Model request cost (1.11%)</title><rect x="197.9" y="71" width="4.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="200.91" y="81.5" ></text>
+</g>
+<g >
+<title>$0.36967 model:model (2.44%)</title><rect x="336.5" y="87" width="9.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="339.53" y="97.5" ></text>
+</g>
+<g >
+<title>$0.113324 Model request cost (0.75%)</title><rect x="63.3" y="71" width="2.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="66.31" y="81.5" ></text>
+</g>
+<g >
+<title>$0.113572 model:model (0.75%)</title><rect x="66.2" y="87" width="2.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="69.15" y="97.5" ></text>
+</g>
+<g >
+<title>$0.12871 Model request cost (0.85%)</title><rect x="90.8" y="71" width="3.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="93.83" y="81.5" ></text>
+</g>
+<g >
+<title>$0.044048 model:model (0.29%)</title><rect x="10.0" y="87" width="1.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.00" y="97.5" ></text>
+</g>
+<g >
+<title>$0.100298 Model request cost (0.66%)</title><rect x="37.0" y="71" width="2.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="40.02" y="81.5" ></text>
+</g>
+<g >
+<title>$0.226354 model:model (1.49%)</title><rect x="285.6" y="87" width="5.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="288.61" y="97.5" ></text>
+</g>
+<g >
+<title>$0.074154 model:model (0.49%)</title><rect x="17.8" y="87" width="1.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="20.81" y="97.5" ></text>
+</g>
+<g >
+<title>$0.139278 model:model (0.92%)</title><rect x="111.2" y="87" width="3.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="114.16" y="97.5" ></text>
+</g>
+<g >
+<title>$0.100594 Model request cost (0.66%)</title><rect x="39.5" y="71" width="2.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="42.54" y="81.5" ></text>
+</g>
+<g >
+<title>$0.252212 Model request cost (1.66%)</title><rect x="309.4" y="71" width="6.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="312.37" y="81.5" ></text>
+</g>
+<g >
+<title>$0.196602 Model request cost (1.30%)</title><rect x="239.3" y="71" width="4.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="242.29" y="81.5" ></text>
+</g>
+<g >
+<title>$0.106998 model:model (0.70%)</title><rect x="49.7" y="87" width="2.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="52.70" y="97.5" ></text>
+</g>
+<g >
+<title>$0.05131 model:model (0.34%)</title><rect x="13.4" y="87" width="1.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="16.44" y="97.5" ></text>
+</g>
+<g >
+<title>$0.18402 model:model (1.21%)</title><rect x="210.9" y="87" width="4.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="213.90" y="97.5" ></text>
+</g>
+<g >
+<title>$0.15551 model:model (1.02%)</title><rect x="169.8" y="87" width="3.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="172.77" y="97.5" ></text>
+</g>
+<g >
+<title>$0.076704 Model request cost (0.51%)</title><rect x="21.6" y="71" width="1.9" height="15.0" fill="rgb(233,129,31)" rx="2" ry="2" />
+<text  x="24.56" y="81.5" ></text>
+</g>
+<g >
+<title>$0.093764 Model request cost (0.62%)</title><rect x="32.3" y="71" width="2.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="35.27" y="81.5" ></text>
+</g>
+<g >
+<title>$0.060406 model:model (0.40%)</title><rect x="14.7" y="87" width="1.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="17.73" y="97.5" ></text>
+</g>
+<g >
+<title>$0.158534 model:model (1.04%)</title><rect x="181.6" y="87" width="4.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="184.59" y="97.5" ></text>
+</g>
+<g >
+<title>$0.106998 Model request cost (0.70%)</title><rect x="49.7" y="71" width="2.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="52.70" y="81.5" ></text>
+</g>
+<g >
+<title>$0.238926 model:model (1.57%)</title><rect x="297.1" y="87" width="6.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="300.09" y="97.5" ></text>
+</g>
+<g >
+<title>$0.133742 Model request cost (0.88%)</title><rect x="94.1" y="71" width="3.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="97.06" y="81.5" ></text>
+</g>
+<g >
+<title>$0.219482 Model request cost (1.45%)</title><rect x="280.1" y="71" width="5.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="283.12" y="81.5" ></text>
+</g>
+<g >
+<title>$0.138902 model:model (0.92%)</title><rect x="107.7" y="87" width="3.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="110.68" y="97.5" ></text>
+</g>
+<g >
+<title>$0.149496 Model request cost (0.98%)</title><rect x="146.9" y="71" width="3.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="149.90" y="81.5" ></text>
+</g>
+<g >
+<title>$0.204266 model:model (1.35%)</title><rect x="259.2" y="87" width="5.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="262.15" y="97.5" ></text>
+</g>
+<g >
+<title>$0.232072 Model request cost (1.53%)</title><rect x="291.3" y="71" width="5.8" height="15.0" fill="rgb(233,129,31)" rx="2" ry="2" />
+<text  x="294.28" y="81.5" ></text>
+</g>
+<g >
+<title>$0.096318 Model request cost (0.63%)</title><rect x="34.6" y="71" width="2.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="37.61" y="81.5" ></text>
+</g>
+<g >
+<title>$0.267212 model:model (1.76%)</title><rect x="322.0" y="87" width="6.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="325.00" y="97.5" ></text>
+</g>
+<g >
+<title>$0.145032 Model request cost (0.96%)</title><rect x="135.9" y="71" width="3.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="138.91" y="81.5" ></text>
+</g>
+<g >
+<title>$0.133806 Model request cost (0.88%)</title><rect x="97.4" y="71" width="3.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="100.40" y="81.5" ></text>
+</g>
+<g >
+<title>$0.089106 Model request cost (0.59%)</title><rect x="27.7" y="71" width="2.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="30.70" y="81.5" ></text>
+</g>
+<g >
+<title>$0.139306 model:model (0.92%)</title><rect x="114.6" y="87" width="3.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="117.65" y="97.5" ></text>
+</g>
+<g >
+<title>$0.12671 Model request cost (0.83%)</title><rect x="78.1" y="71" width="3.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="81.12" y="81.5" ></text>
+</g>
+<g >
+<title>$0.12871 model:model (0.85%)</title><rect x="90.8" y="87" width="3.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="93.83" y="97.5" ></text>
+</g>
+<g >
+<title>$0.140308 model:model (0.92%)</title><rect x="118.1" y="87" width="3.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="121.13" y="97.5" ></text>
+</g>
+<g >
+<title>$0.212338 Model request cost (1.40%)</title><rect x="269.4" y="71" width="5.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="272.43" y="81.5" ></text>
+</g>
+<g >
+<title>$0.251734 Model request cost (1.66%)</title><rect x="303.1" y="71" width="6.3" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="306.07" y="81.5" ></text>
+</g>
+<g >
+<title>$0.147514 model:model (0.97%)</title><rect x="143.2" y="87" width="3.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="146.21" y="97.5" ></text>
+</g>
+<g >
+<title>$0.11039 Model request cost (0.73%)</title><rect x="57.8" y="71" width="2.7" height="15.0" fill="rgb(233,129,31)" rx="2" ry="2" />
+<text  x="60.79" y="81.5" ></text>
+</g>
+<g >
+<title>$0.142064 model:model (0.94%)</title><rect x="121.6" y="87" width="3.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="124.65" y="97.5" ></text>
+</g>
+<g >
+<title>$0.194522 model:model (1.28%)</title><rect x="229.6" y="87" width="4.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="232.55" y="97.5" ></text>
+</g>
+<g >
+<title>$0.206308 Model request cost (1.36%)</title><rect x="264.3" y="71" width="5.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="267.26" y="81.5" ></text>
+</g>
+<g >
+<title>$0.124448 model:model (0.82%)</title><rect x="75.0" y="87" width="3.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="78.00" y="97.5" ></text>
+</g>
+<g >
+<title>$0.142626 model:model (0.94%)</title><rect x="128.8" y="87" width="3.5" height="15.0" fill="rgb(233,129,31)" rx="2" ry="2" />
+<text  x="131.76" y="97.5" ></text>
+</g>
+<g >
+<title>$0.312938 model:model (2.06%)</title><rect x="328.7" y="87" width="7.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="331.69" y="97.5" ></text>
+</g>
+<g >
+<title>$0.16528 model:model (1.09%)</title><rect x="189.6" y="87" width="4.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="192.62" y="97.5" ></text>
+</g>
+<g >
+<title>$0.075652 Model request cost (0.50%)</title><rect x="19.7" y="71" width="1.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="22.67" y="81.5" ></text>
+</g>
+<g >
+<title>$0.180188 Model request cost (1.19%)</title><rect x="206.4" y="71" width="4.5" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="209.39" y="81.5" ></text>
+</g>
+<g >
+<title>$0.139278 Model request cost (0.92%)</title><rect x="111.2" y="71" width="3.4" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="114.16" y="81.5" ></text>
+</g>
+<g >
+<title>$0.162006 Model request cost (1.07%)</title><rect x="185.6" y="71" width="4.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="188.56" y="81.5" ></text>
+</g>
+<g >
+<title>$0.145032 model:model (0.96%)</title><rect x="135.9" y="87" width="3.6" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="138.91" y="97.5" ></text>
+</g>
+<g >
+<title>$0.19457 Model request cost (1.28%)</title><rect x="234.4" y="71" width="4.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="237.42" y="81.5" ></text>
+</g>
+<g >
+<title>$0.20049 model:model (1.32%)</title><rect x="254.1" y="87" width="5.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="257.13" y="97.5" ></text>
+</g>
+<g >
+<title>$0.142626 Model request cost (0.94%)</title><rect x="128.8" y="71" width="3.5" height="15.0" fill="rgb(233,129,31)" rx="2" ry="2" />
+<text  x="131.76" y="81.5" ></text>
+</g>
+<g >
+<title>$0.369868 Model request cost (2.44%)</title><rect x="345.8" y="71" width="9.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="348.78" y="81.5" ></text>
+</g>
+<g >
+<title>$0.107648 Model request cost (0.71%)</title><rect x="52.4" y="71" width="2.7" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="55.38" y="81.5" ></text>
+</g>
+<g >
+<title>$0.110436 model:model (0.73%)</title><rect x="60.5" y="87" width="2.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="63.55" y="97.5" ></text>
+</g>
+<g >
+<title>$0.119384 model:model (0.79%)</title><rect x="69.0" y="87" width="3.0" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="71.99" y="97.5" ></text>
+</g>
+<g >
+<title>$0.045038 model:model (0.30%)</title><rect x="11.1" y="87" width="1.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="14.10" y="97.5" ></text>
+</g>
+<g >
+<title>$0.048358 Model request cost (0.32%)</title><rect x="12.2" y="71" width="1.2" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="15.23" y="81.5" ></text>
+</g>
+</g>
+</svg>

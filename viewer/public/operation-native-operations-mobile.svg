@@ -1,0 +1,1271 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" width="400" height="156" onload="init(evt)" viewBox="0 0 400 156" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<!-- Flame graph stack visualization. See https://github.com/brendangregg/FlameGraph for latest version, and http://www.brendangregg.com/flamegraphs.html for examples. -->
+<!-- NOTES:  -->
+<defs>
+	<linearGradient id="background" y1="0" y2="1" x1="0" x2="0" >
+		<stop stop-color="#eeeeee" offset="5%" />
+		<stop stop-color="#eeeeb0" offset="95%" />
+	</linearGradient>
+</defs>
+<style type="text/css">
+	text { font-family:Verdana; font-size:14px; fill:rgb(0,0,0); }
+	#search, #ignorecase { opacity:0.1; cursor:pointer; }
+	#search:hover, #search.show, #ignorecase:hover, #ignorecase.show { opacity:1; }
+	#subtitle { text-anchor:middle; font-color:rgb(160,160,160); }
+	#title { text-anchor:middle; font-size:19px}
+	#unzoom { cursor:pointer; }
+	#frames > *:hover { stroke:black; stroke-width:0.5; cursor:pointer; }
+	.hide { display:none; }
+	.parent { opacity:0.5; }
+</style>
+<script type="text/ecmascript">
+<![CDATA[
+	"use strict";
+	var details, searchbtn, unzoombtn, matchedtxt, svg, searching, currentSearchTerm, ignorecase, ignorecaseBtn;
+	function init(evt) {
+		details = document.getElementById("details").firstChild;
+		searchbtn = document.getElementById("search");
+		ignorecaseBtn = document.getElementById("ignorecase");
+		unzoombtn = document.getElementById("unzoom");
+		matchedtxt = document.getElementById("matched");
+		svg = document.getElementsByTagName("svg")[0];
+		searching = 0;
+		currentSearchTerm = null;
+
+		// use GET parameters to restore a flamegraphs state.
+		var params = get_params();
+		if (params.x && params.y)
+			zoom(find_group(document.querySelector('[x="' + params.x + '"][y="' + params.y + '"]')));
+                if (params.s) search(params.s);
+	}
+
+	// event listeners
+	window.addEventListener("click", function(e) {
+		var target = find_group(e.target);
+		if (target) {
+			if (target.nodeName == "a") {
+				if (e.ctrlKey === false) return;
+				e.preventDefault();
+			}
+			if (target.classList.contains("parent")) unzoom(true);
+			zoom(target);
+			if (!document.querySelector('.parent')) {
+				// we have basically done a clearzoom so clear the url
+				var params = get_params();
+				if (params.x) delete params.x;
+				if (params.y) delete params.y;
+				history.replaceState(null, null, parse_params(params));
+				unzoombtn.classList.add("hide");
+				return;
+			}
+
+			// set parameters for zoom state
+			var el = target.querySelector("rect");
+			if (el && el.attributes && el.attributes.y && el.attributes._orig_x) {
+				var params = get_params()
+				params.x = el.attributes._orig_x.value;
+				params.y = el.attributes.y.value;
+				history.replaceState(null, null, parse_params(params));
+			}
+		}
+		else if (e.target.id == "unzoom") clearzoom();
+		else if (e.target.id == "search") search_prompt();
+		else if (e.target.id == "ignorecase") toggle_ignorecase();
+	}, false)
+
+	// mouse-over for info
+	// show
+	window.addEventListener("mouseover", function(e) {
+		var target = find_group(e.target);
+		if (target) details.nodeValue = "Operation: " + g_to_text(target);
+	}, false)
+
+	// clear
+	window.addEventListener("mouseout", function(e) {
+		var target = find_group(e.target);
+		if (target) details.nodeValue = ' ';
+	}, false)
+
+	// ctrl-F for search
+	// ctrl-I to toggle case-sensitive search
+	window.addEventListener("keydown",function (e) {
+		if (e.keyCode === 114 || (e.ctrlKey && e.keyCode === 70)) {
+			e.preventDefault();
+			search_prompt();
+		}
+		else if (e.ctrlKey && e.keyCode === 73) {
+			e.preventDefault();
+			toggle_ignorecase();
+		}
+	}, false)
+
+	// functions
+	function get_params() {
+		var params = {};
+		var paramsarr = window.location.search.substr(1).split('&');
+		for (var i = 0; i < paramsarr.length; ++i) {
+			var tmp = paramsarr[i].split("=");
+			if (!tmp[0] || !tmp[1]) continue;
+			params[tmp[0]]  = decodeURIComponent(tmp[1]);
+		}
+		return params;
+	}
+	function parse_params(params) {
+		var uri = "?";
+		for (var key in params) {
+			uri += key + '=' + encodeURIComponent(params[key]) + '&';
+		}
+		if (uri.slice(-1) == "&")
+			uri = uri.substring(0, uri.length - 1);
+		if (uri == '?')
+			uri = window.location.href.split('?')[0];
+		return uri;
+	}
+	function find_child(node, selector) {
+		var children = node.querySelectorAll(selector);
+		if (children.length) return children[0];
+	}
+	function find_group(node) {
+		var parent = node.parentElement;
+		if (!parent) return;
+		if (parent.id == "frames") return node;
+		return find_group(parent);
+	}
+	function orig_save(e, attr, val) {
+		if (e.attributes["_orig_" + attr] != undefined) return;
+		if (e.attributes[attr] == undefined) return;
+		if (val == undefined) val = e.attributes[attr].value;
+		e.setAttribute("_orig_" + attr, val);
+	}
+	function orig_load(e, attr) {
+		if (e.attributes["_orig_"+attr] == undefined) return;
+		e.attributes[attr].value = e.attributes["_orig_" + attr].value;
+		e.removeAttribute("_orig_"+attr);
+	}
+	function g_to_text(e) {
+		var text = find_child(e, "title").firstChild.nodeValue;
+		return (text)
+	}
+	function g_to_func(e) {
+		var func = g_to_text(e);
+		// if there's any manipulation we want to do to the function
+		// name before it's searched, do it here before returning.
+		return (func);
+	}
+	function update_text(e) {
+		var r = find_child(e, "rect");
+		var t = find_child(e, "text");
+		var w = parseFloat(r.attributes.width.value) -3;
+		var txt = find_child(e, "title").textContent.replace(/\([^(]*\)$/,"");
+		t.attributes.x.value = parseFloat(r.attributes.x.value) + 3;
+
+		// Smaller than this size won't fit anything
+		if (w < 2 * 14 * 0.59) {
+			t.textContent = "";
+			return;
+		}
+
+		t.textContent = txt;
+		var sl = t.getSubStringLength(0, txt.length);
+		// check if only whitespace or if we can fit the entire string into width w
+		if (/^ *$/.test(txt) || sl < w)
+			return;
+
+		// this isn't perfect, but gives a good starting point
+		// and avoids calling getSubStringLength too often
+		var start = Math.floor((w/sl) * txt.length);
+		for (var x = start; x > 0; x = x-2) {
+			if (t.getSubStringLength(0, x + 2) <= w) {
+				t.textContent = txt.substring(0, x) + "..";
+				return;
+			}
+		}
+		t.textContent = "";
+	}
+
+	// zoom
+	function zoom_reset(e) {
+		if (e.attributes != undefined) {
+			orig_load(e, "x");
+			orig_load(e, "width");
+		}
+		if (e.childNodes == undefined) return;
+		for (var i = 0, c = e.childNodes; i < c.length; i++) {
+			zoom_reset(c[i]);
+		}
+	}
+	function zoom_child(e, x, ratio) {
+		if (e.attributes != undefined) {
+			if (e.attributes.x != undefined) {
+				orig_save(e, "x");
+				e.attributes.x.value = (parseFloat(e.attributes.x.value) - x - 10) * ratio + 10;
+				if (e.tagName == "text")
+					e.attributes.x.value = find_child(e.parentNode, "rect[x]").attributes.x.value + 3;
+			}
+			if (e.attributes.width != undefined) {
+				orig_save(e, "width");
+				e.attributes.width.value = parseFloat(e.attributes.width.value) * ratio;
+			}
+		}
+
+		if (e.childNodes == undefined) return;
+		for (var i = 0, c = e.childNodes; i < c.length; i++) {
+			zoom_child(c[i], x - 10, ratio);
+		}
+	}
+	function zoom_parent(e) {
+		if (e.attributes) {
+			if (e.attributes.x != undefined) {
+				orig_save(e, "x");
+				e.attributes.x.value = 10;
+			}
+			if (e.attributes.width != undefined) {
+				orig_save(e, "width");
+				e.attributes.width.value = parseInt(svg.width.baseVal.value) - (10 * 2);
+			}
+		}
+		if (e.childNodes == undefined) return;
+		for (var i = 0, c = e.childNodes; i < c.length; i++) {
+			zoom_parent(c[i]);
+		}
+	}
+	function zoom(node) {
+		var attr = find_child(node, "rect").attributes;
+		var width = parseFloat(attr.width.value);
+		var xmin = parseFloat(attr.x.value);
+		var xmax = parseFloat(xmin + width);
+		var ymin = parseFloat(attr.y.value);
+		var ratio = (svg.width.baseVal.value - 2 * 10) / width;
+
+		// XXX: Workaround for JavaScript float issues (fix me)
+		var fudge = 0.0001;
+
+		unzoombtn.classList.remove("hide");
+
+		var el = document.getElementById("frames").children;
+		for (var i = 0; i < el.length; i++) {
+			var e = el[i];
+			var a = find_child(e, "rect").attributes;
+			var ex = parseFloat(a.x.value);
+			var ew = parseFloat(a.width.value);
+			var upstack;
+			// Is it an ancestor
+			if (0 == 0) {
+				upstack = parseFloat(a.y.value) > ymin;
+			} else {
+				upstack = parseFloat(a.y.value) < ymin;
+			}
+			if (upstack) {
+				// Direct ancestor
+				if (ex <= xmin && (ex+ew+fudge) >= xmax) {
+					e.classList.add("parent");
+					zoom_parent(e);
+					update_text(e);
+				}
+				// not in current path
+				else
+					e.classList.add("hide");
+			}
+			// Children maybe
+			else {
+				// no common path
+				if (ex < xmin || ex + fudge >= xmax) {
+					e.classList.add("hide");
+				}
+				else {
+					zoom_child(e, xmin, ratio);
+					update_text(e);
+				}
+			}
+		}
+		search();
+	}
+	function unzoom(dont_update_text) {
+		unzoombtn.classList.add("hide");
+		var el = document.getElementById("frames").children;
+		for(var i = 0; i < el.length; i++) {
+			el[i].classList.remove("parent");
+			el[i].classList.remove("hide");
+			zoom_reset(el[i]);
+			if(!dont_update_text) update_text(el[i]);
+		}
+		search();
+	}
+	function clearzoom() {
+		unzoom();
+
+		// remove zoom state
+		var params = get_params();
+		if (params.x) delete params.x;
+		if (params.y) delete params.y;
+		history.replaceState(null, null, parse_params(params));
+	}
+
+	// search
+	function toggle_ignorecase() {
+		ignorecase = !ignorecase;
+		if (ignorecase) {
+			ignorecaseBtn.classList.add("show");
+		} else {
+			ignorecaseBtn.classList.remove("show");
+		}
+		reset_search();
+		search();
+	}
+	function reset_search() {
+		var el = document.querySelectorAll("#frames rect");
+		for (var i = 0; i < el.length; i++) {
+			orig_load(el[i], "fill")
+		}
+		var params = get_params();
+		delete params.s;
+		history.replaceState(null, null, parse_params(params));
+	}
+	function search_prompt() {
+		if (!searching) {
+			var term = prompt("Enter a search term (regexp " +
+			    "allowed, eg: ^ext4_)"
+			    + (ignorecase ? ", ignoring case" : "")
+			    + "\nPress Ctrl-i to toggle case sensitivity", "");
+			if (term != null) search(term);
+		} else {
+			reset_search();
+			searching = 0;
+			currentSearchTerm = null;
+			searchbtn.classList.remove("show");
+			searchbtn.firstChild.nodeValue = "Search"
+			matchedtxt.classList.add("hide");
+			matchedtxt.firstChild.nodeValue = ""
+		}
+	}
+	function search(term) {
+		if (term) currentSearchTerm = term;
+		if (currentSearchTerm === null) return;
+
+		var re = new RegExp(currentSearchTerm, ignorecase ? 'i' : '');
+		var el = document.getElementById("frames").children;
+		var matches = new Object();
+		var maxwidth = 0;
+		for (var i = 0; i < el.length; i++) {
+			var e = el[i];
+			var func = g_to_func(e);
+			var rect = find_child(e, "rect");
+			if (func == null || rect == null)
+				continue;
+
+			// Save max width. Only works as we have a root frame
+			var w = parseFloat(rect.attributes.width.value);
+			if (w > maxwidth)
+				maxwidth = w;
+
+			if (func.match(re)) {
+				// highlight
+				var x = parseFloat(rect.attributes.x.value);
+				orig_save(rect, "fill");
+				rect.attributes.fill.value = "rgb(230,0,230)";
+
+				// remember matches
+				if (matches[x] == undefined) {
+					matches[x] = w;
+				} else {
+					if (w > matches[x]) {
+						// overwrite with parent
+						matches[x] = w;
+					}
+				}
+				searching = 1;
+			}
+		}
+		if (!searching)
+			return;
+		var params = get_params();
+		params.s = currentSearchTerm;
+		history.replaceState(null, null, parse_params(params));
+
+		searchbtn.classList.add("show");
+		searchbtn.firstChild.nodeValue = "Reset Search";
+
+		// calculate percent matched, excluding vertical overlap
+		var count = 0;
+		var lastx = -1;
+		var lastw = 0;
+		var keys = Array();
+		for (k in matches) {
+			if (matches.hasOwnProperty(k))
+				keys.push(k);
+		}
+		// sort the matched frames by their x location
+		// ascending, then width descending
+		keys.sort(function(a, b){
+			return a - b;
+		});
+		// Step through frames saving only the biggest bottom-up frames
+		// thanks to the sort order. This relies on the tree property
+		// where children are always smaller than their parents.
+		var fudge = 0.0001;	// JavaScript floating point
+		for (var k in keys) {
+			var x = parseFloat(keys[k]);
+			var w = matches[keys[k]];
+			if (x >= lastx + lastw - fudge) {
+				count += w;
+				lastx = x;
+				lastw = w;
+			}
+		}
+		// display matched percent
+		matchedtxt.classList.remove("hide");
+		var pct = 100 * count / maxwidth;
+		if (pct != 100) pct = pct.toFixed(1)
+		matchedtxt.firstChild.nodeValue = "Matched: " + pct + "%";
+	}
+]]>
+</script>
+<rect x="0.0" y="0" width="400.0" height="156.0" fill="url(#background)"  />
+<text id="title" x="200.00" y="28" >207 operations</text>
+<text id="subtitle" x="200.00" y="56" >Width = operations | tap to zoom</text>
+<text id="details" x="10.00" y="137" > </text>
+<text id="unzoom" x="10.00" y="28" class="hide">Reset Zoom</text>
+<text id="search" x="290.00" y="28" >Search</text>
+<text id="ignorecase" x="374.00" y="28" >ic</text>
+<text id="matched" x="290.00" y="137" > </text>
+<g id="frames">
+<g >
+<title>command:command[6f7994b8fc620adf] (1 operations, 0.48%)</title><rect x="63.2" y="71" width="1.9" height="15.0" fill="rgb(243,149,42)" rx="2" ry="2" />
+<text  x="66.24" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[94b3eccfb380d98b] (1 operations, 0.48%)</title><rect x="79.8" y="71" width="1.8" height="15.0" fill="rgb(233,149,31)" rx="2" ry="2" />
+<text  x="82.76" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[17920aeae85fa2cb] (1 operations, 0.48%)</title><rect x="158.7" y="71" width="1.8" height="15.0" fill="rgb(236,140,34)" rx="2" ry="2" />
+<text  x="161.70" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[c0e07043506c6519] (1 operations, 0.48%)</title><rect x="290.9" y="71" width="1.8" height="15.0" fill="rgb(246,140,46)" rx="2" ry="2" />
+<text  x="293.87" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[582481b8b7098bcd] (1 operations, 0.48%)</title><rect x="200.9" y="71" width="1.9" height="15.0" fill="rgb(246,140,45)" rx="2" ry="2" />
+<text  x="203.92" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[9167c06b29e6d61e] (1 operations, 0.48%)</title><rect x="246.8" y="71" width="1.8" height="15.0" fill="rgb(246,140,46)" rx="2" ry="2" />
+<text  x="249.81" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[f9bb6c5d5247178e] (1 operations, 0.48%)</title><rect x="133.0" y="71" width="1.8" height="15.0" fill="rgb(241,149,40)" rx="2" ry="2" />
+<text  x="136.00" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[60c6c85969c2d455] (1 operations, 0.48%)</title><rect x="52.2" y="71" width="1.9" height="15.0" fill="rgb(236,149,34)" rx="2" ry="2" />
+<text  x="55.22" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[6de2578106493d22] (1 operations, 0.48%)</title><rect x="213.8" y="71" width="1.8" height="15.0" fill="rgb(241,140,40)" rx="2" ry="2" />
+<text  x="216.77" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[8f6c17ccfde45193] (1 operations, 0.48%)</title><rect x="243.1" y="71" width="1.9" height="15.0" fill="rgb(235,140,33)" rx="2" ry="2" />
+<text  x="246.14" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[93669895dbb0229c] (1 operations, 0.48%)</title><rect x="250.5" y="71" width="1.8" height="15.0" fill="rgb(243,140,42)" rx="2" ry="2" />
+<text  x="253.48" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[b70dc418a08ffcd8] (1 operations, 0.48%)</title><rect x="276.2" y="71" width="1.8" height="15.0" fill="rgb(245,140,44)" rx="2" ry="2" />
+<text  x="279.18" y="81.5" ></text>
+</g>
+<g >
+<title>tool:followup_task[beaefbdca979ac8f] (1 operations, 0.48%)</title><rect x="333.1" y="71" width="1.8" height="15.0" fill="rgb(240,167,39)" rx="2" ry="2" />
+<text  x="336.09" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[b8de1552d860f85e] (1 operations, 0.48%)</title><rect x="279.9" y="71" width="1.8" height="15.0" fill="rgb(244,140,42)" rx="2" ry="2" />
+<text  x="282.86" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[9d42e84ca3c8bf75] (1 operations, 0.48%)</title><rect x="88.9" y="71" width="1.9" height="15.0" fill="rgb(235,149,33)" rx="2" ry="2" />
+<text  x="91.94" y="81.5" ></text>
+</g>
+<g >
+<title>tool:tool[44e7c4511facc187] (1 operations, 0.48%)</title><rect x="388.2" y="71" width="1.8" height="15.0" fill="rgb(244,167,43)" rx="2" ry="2" />
+<text  x="391.16" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[bfec8b27d5c71e1b] (1 operations, 0.48%)</title><rect x="287.2" y="71" width="1.8" height="15.0" fill="rgb(238,140,36)" rx="2" ry="2" />
+<text  x="290.20" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[37f8948c93b1d8d0] (1 operations, 0.48%)</title><rect x="41.2" y="71" width="1.8" height="15.0" fill="rgb(242,149,41)" rx="2" ry="2" />
+<text  x="44.21" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[6119858290bac658] (1 operations, 0.48%)</title><rect x="54.1" y="71" width="1.8" height="15.0" fill="rgb(245,149,44)" rx="2" ry="2" />
+<text  x="57.06" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[904c0eee988b7f1a] (1 operations, 0.48%)</title><rect x="245.0" y="71" width="1.8" height="15.0" fill="rgb(239,140,37)" rx="2" ry="2" />
+<text  x="247.98" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[0d17a498b99dc238] (1 operations, 0.48%)</title><rect x="153.2" y="71" width="1.8" height="15.0" fill="rgb(246,140,45)" rx="2" ry="2" />
+<text  x="156.19" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[dc4ae76f5cd6d2de] (1 operations, 0.48%)</title><rect x="114.6" y="71" width="1.9" height="15.0" fill="rgb(244,149,43)" rx="2" ry="2" />
+<text  x="117.64" y="81.5" ></text>
+</g>
+<g >
+<title>all (207 operations, 100%)</title><rect x="10.0" y="103" width="380.0" height="15.0" fill="rgb(255,230,55)" rx="2" ry="2" />
+<text  x="13.00" y="113.5" ></text>
+</g>
+<g >
+<title>command:command[93af7806c04c3e2f] (1 operations, 0.48%)</title><rect x="77.9" y="71" width="1.9" height="15.0" fill="rgb(245,149,44)" rx="2" ry="2" />
+<text  x="80.92" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[0cdff83701320807] (1 operations, 0.48%)</title><rect x="151.4" y="71" width="1.8" height="15.0" fill="rgb(249,140,49)" rx="2" ry="2" />
+<text  x="154.35" y="81.5" ></text>
+</g>
+<g >
+<title>tool:new_context[5222d7631556740b] (1 operations, 0.48%)</title><rect x="342.3" y="71" width="1.8" height="15.0" fill="rgb(238,167,37)" rx="2" ry="2" />
+<text  x="345.27" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[9c6e37c4f84d6949] (1 operations, 0.48%)</title><rect x="257.8" y="71" width="1.9" height="15.0" fill="rgb(244,140,43)" rx="2" ry="2" />
+<text  x="260.83" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[bce883a45c5cff34] (1 operations, 0.48%)</title><rect x="283.5" y="71" width="1.9" height="15.0" fill="rgb(238,140,37)" rx="2" ry="2" />
+<text  x="286.53" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[e225af0c4a16b09b] (1 operations, 0.48%)</title><rect x="309.2" y="71" width="1.9" height="15.0" fill="rgb(232,140,30)" rx="2" ry="2" />
+<text  x="312.23" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[1bd26229149e07fe] (1 operations, 0.48%)</title><rect x="19.2" y="71" width="1.8" height="15.0" fill="rgb(243,149,42)" rx="2" ry="2" />
+<text  x="22.18" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[9bb89fb0decf6584] (1 operations, 0.48%)</title><rect x="85.3" y="71" width="1.8" height="15.0" fill="rgb(235,149,33)" rx="2" ry="2" />
+<text  x="88.27" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[d89c5d90fb42d61f] (1 operations, 0.48%)</title><rect x="301.9" y="71" width="1.8" height="15.0" fill="rgb(245,140,44)" rx="2" ry="2" />
+<text  x="304.88" y="81.5" ></text>
+</g>
+<g >
+<title>tool:send_message[02e74facdd1a1ecd] (1 operations, 0.48%)</title><rect x="344.1" y="71" width="1.8" height="15.0" fill="rgb(246,167,45)" rx="2" ry="2" />
+<text  x="347.11" y="81.5" ></text>
+</g>
+<g >
+<title>tool:send_message[8cebf394edd58545] (1 operations, 0.48%)</title><rect x="364.3" y="71" width="1.8" height="15.0" fill="rgb(237,167,35)" rx="2" ry="2" />
+<text  x="367.30" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[de04c9a961657585] (1 operations, 0.48%)</title><rect x="305.6" y="71" width="1.8" height="15.0" fill="rgb(234,140,32)" rx="2" ry="2" />
+<text  x="308.56" y="81.5" ></text>
+</g>
+<g >
+<title>tool:spawn_agent[eda989dc987d917a] (1 operations, 0.48%)</title><rect x="386.3" y="71" width="1.9" height="15.0" fill="rgb(235,167,33)" rx="2" ry="2" />
+<text  x="389.33" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[a2e1815dd5e698d8] (1 operations, 0.48%)</title><rect x="92.6" y="71" width="1.8" height="15.0" fill="rgb(245,149,44)" rx="2" ry="2" />
+<text  x="95.61" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[62a04e154dd05707] (1 operations, 0.48%)</title><rect x="206.4" y="71" width="1.9" height="15.0" fill="rgb(249,140,49)" rx="2" ry="2" />
+<text  x="209.43" y="81.5" ></text>
+</g>
+<g >
+<title>tool:spawn_agent[6b7d33d58e51029c] (1 operations, 0.48%)</title><rect x="382.7" y="71" width="1.8" height="15.0" fill="rgb(243,167,42)" rx="2" ry="2" />
+<text  x="385.66" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[99f49c2cee2c0c3c] (1 operations, 0.48%)</title><rect x="83.4" y="71" width="1.9" height="15.0" fill="rgb(247,149,46)" rx="2" ry="2" />
+<text  x="86.43" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[08aa056f936b2073] (1 operations, 0.48%)</title><rect x="147.7" y="71" width="1.8" height="15.0" fill="rgb(237,140,35)" rx="2" ry="2" />
+<text  x="150.68" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[f45bc64c0366454f] (1 operations, 0.48%)</title><rect x="131.2" y="71" width="1.8" height="15.0" fill="rgb(243,149,42)" rx="2" ry="2" />
+<text  x="134.16" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[0911c1ab8bc96ffa] (1 operations, 0.48%)</title><rect x="149.5" y="71" width="1.9" height="15.0" fill="rgb(235,140,33)" rx="2" ry="2" />
+<text  x="152.52" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[7539b43f46ab1aff] (1 operations, 0.48%)</title><rect x="66.9" y="71" width="1.8" height="15.0" fill="rgb(242,149,41)" rx="2" ry="2" />
+<text  x="69.91" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[7b0d650af24d4dd8] (1 operations, 0.48%)</title><rect x="68.7" y="71" width="1.9" height="15.0" fill="rgb(245,149,44)" rx="2" ry="2" />
+<text  x="71.74" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[74e23edad09edcdb] (1 operations, 0.48%)</title><rect x="221.1" y="71" width="1.8" height="15.0" fill="rgb(236,140,34)" rx="2" ry="2" />
+<text  x="224.11" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[2b444379ab222a2d] (1 operations, 0.48%)</title><rect x="30.2" y="71" width="1.8" height="15.0" fill="rgb(247,149,46)" rx="2" ry="2" />
+<text  x="33.19" y="81.5" ></text>
+</g>
+<g >
+<title>tool:send_message[48e129ed5add7f71] (1 operations, 0.48%)</title><rect x="357.0" y="71" width="1.8" height="15.0" fill="rgb(239,167,37)" rx="2" ry="2" />
+<text  x="359.96" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[a02213791eda4786] (1 operations, 0.48%)</title><rect x="90.8" y="71" width="1.8" height="15.0" fill="rgb(233,149,31)" rx="2" ry="2" />
+<text  x="93.77" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[f7929c42d0c63990] (1 operations, 0.48%)</title><rect x="325.7" y="71" width="1.9" height="15.0" fill="rgb(239,140,37)" rx="2" ry="2" />
+<text  x="328.75" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[b356e58a67865127] (1 operations, 0.48%)</title><rect x="274.3" y="71" width="1.9" height="15.0" fill="rgb(248,140,47)" rx="2" ry="2" />
+<text  x="277.35" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[95f7a857814ff684] (1 operations, 0.48%)</title><rect x="252.3" y="71" width="1.9" height="15.0" fill="rgb(235,140,33)" rx="2" ry="2" />
+<text  x="255.32" y="81.5" ></text>
+</g>
+<g >
+<title>tool:spawn_agent[2236f2b6f88a4582] (1 operations, 0.48%)</title><rect x="380.8" y="71" width="1.9" height="15.0" fill="rgb(237,167,35)" rx="2" ry="2" />
+<text  x="383.82" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[24e55f77b77117f6] (1 operations, 0.48%)</title><rect x="22.9" y="71" width="1.8" height="15.0" fill="rgb(234,149,32)" rx="2" ry="2" />
+<text  x="25.85" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[d62b806f0167c8c3] (1 operations, 0.48%)</title><rect x="300.0" y="71" width="1.9" height="15.0" fill="rgb(240,140,38)" rx="2" ry="2" />
+<text  x="303.05" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[8653b61460f9222b] (1 operations, 0.48%)</title><rect x="74.3" y="71" width="1.8" height="15.0" fill="rgb(237,149,35)" rx="2" ry="2" />
+<text  x="77.25" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[8245be33c80e9942] (1 operations, 0.48%)</title><rect x="72.4" y="71" width="1.9" height="15.0" fill="rgb(240,149,38)" rx="2" ry="2" />
+<text  x="75.42" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[b8fbf6fd405dd1ae] (1 operations, 0.48%)</title><rect x="105.5" y="71" width="1.8" height="15.0" fill="rgb(246,149,46)" rx="2" ry="2" />
+<text  x="108.46" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[be007be0e87465b6] (1 operations, 0.48%)</title><rect x="285.4" y="71" width="1.8" height="15.0" fill="rgb(237,140,35)" rx="2" ry="2" />
+<text  x="288.36" y="81.5" ></text>
+</g>
+<g >
+<title>tool:send_message[ae2320de8384513d] (1 operations, 0.48%)</title><rect x="366.1" y="71" width="1.9" height="15.0" fill="rgb(246,167,45)" rx="2" ry="2" />
+<text  x="369.14" y="81.5" ></text>
+</g>
+<g >
+<title>tool:send_message[f33e4b7978b7eb08] (1 operations, 0.48%)</title><rect x="379.0" y="71" width="1.8" height="15.0" fill="rgb(248,167,48)" rx="2" ry="2" />
+<text  x="381.99" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[be5865df7b23b6b7] (1 operations, 0.48%)</title><rect x="107.3" y="71" width="1.8" height="15.0" fill="rgb(248,149,47)" rx="2" ry="2" />
+<text  x="110.29" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[42edf1b7ea2b501e] (1 operations, 0.48%)</title><rect x="188.1" y="71" width="1.8" height="15.0" fill="rgb(246,140,46)" rx="2" ry="2" />
+<text  x="191.07" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[b1ad10dcc4a1b1c0] (1 operations, 0.48%)</title><rect x="103.6" y="71" width="1.9" height="15.0" fill="rgb(243,149,42)" rx="2" ry="2" />
+<text  x="106.62" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[ada9c9e03530797d] (1 operations, 0.48%)</title><rect x="272.5" y="71" width="1.8" height="15.0" fill="rgb(243,140,42)" rx="2" ry="2" />
+<text  x="275.51" y="81.5" ></text>
+</g>
+<g >
+<title>tool:send_message[e2d30e5bdbd35d2a] (1 operations, 0.48%)</title><rect x="375.3" y="71" width="1.8" height="15.0" fill="rgb(238,167,36)" rx="2" ry="2" />
+<text  x="378.31" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[7790b1fb20e901ce] (1 operations, 0.48%)</title><rect x="226.6" y="71" width="1.9" height="15.0" fill="rgb(245,140,44)" rx="2" ry="2" />
+<text  x="229.62" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[f166e1d1067273e8] (1 operations, 0.48%)</title><rect x="123.8" y="71" width="1.9" height="15.0" fill="rgb(245,149,44)" rx="2" ry="2" />
+<text  x="126.82" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[55c6d79f53cf4a32] (1 operations, 0.48%)</title><rect x="199.1" y="71" width="1.8" height="15.0" fill="rgb(241,140,39)" rx="2" ry="2" />
+<text  x="202.08" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[3956e3d2296d5d91] (1 operations, 0.48%)</title><rect x="184.4" y="71" width="1.8" height="15.0" fill="rgb(238,140,36)" rx="2" ry="2" />
+<text  x="187.40" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[5d375e56a4b4b5dd] (1 operations, 0.48%)</title><rect x="204.6" y="71" width="1.8" height="15.0" fill="rgb(245,140,44)" rx="2" ry="2" />
+<text  x="207.59" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[375c8cc8489228de] (1 operations, 0.48%)</title><rect x="39.4" y="71" width="1.8" height="15.0" fill="rgb(244,149,43)" rx="2" ry="2" />
+<text  x="42.37" y="81.5" ></text>
+</g>
+<g >
+<title>tool:list_agents[d5e38a62a164192d] (1 operations, 0.48%)</title><rect x="336.8" y="71" width="1.8" height="15.0" fill="rgb(247,167,46)" rx="2" ry="2" />
+<text  x="339.76" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[c60aa9b00d188303] (1 operations, 0.48%)</title><rect x="294.5" y="71" width="1.9" height="15.0" fill="rgb(242,140,40)" rx="2" ry="2" />
+<text  x="297.54" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[d340d608d65b6c5a] (1 operations, 0.48%)</title><rect x="296.4" y="71" width="1.8" height="15.0" fill="rgb(236,140,34)" rx="2" ry="2" />
+<text  x="299.38" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[e65f8f861a11f4ec] (1 operations, 0.48%)</title><rect x="312.9" y="71" width="1.8" height="15.0" fill="rgb(246,140,45)" rx="2" ry="2" />
+<text  x="315.90" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[3562018398a0f494] (1 operations, 0.48%)</title><rect x="178.9" y="71" width="1.8" height="15.0" fill="rgb(234,140,32)" rx="2" ry="2" />
+<text  x="181.89" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[17e5f2a756360eb9] (1 operations, 0.48%)</title><rect x="160.5" y="71" width="1.9" height="15.0" fill="rgb(246,140,45)" rx="2" ry="2" />
+<text  x="163.53" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[8bc6c8b363de8e24] (1 operations, 0.48%)</title><rect x="237.6" y="71" width="1.9" height="15.0" fill="rgb(239,140,38)" rx="2" ry="2" />
+<text  x="240.63" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[91b461abaa584ff2] (1 operations, 0.48%)</title><rect x="248.6" y="71" width="1.9" height="15.0" fill="rgb(239,140,37)" rx="2" ry="2" />
+<text  x="251.65" y="81.5" ></text>
+</g>
+<g >
+<title>tool:list_items[89d66b29795a21d1] (1 operations, 0.48%)</title><rect x="340.4" y="71" width="1.9" height="15.0" fill="rgb(241,167,40)" rx="2" ry="2" />
+<text  x="343.43" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[f0845b4a23b88e34] (1 operations, 0.48%)</title><rect x="122.0" y="71" width="1.8" height="15.0" fill="rgb(238,149,37)" rx="2" ry="2" />
+<text  x="124.98" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[8a4695b64a2f4504] (1 operations, 0.48%)</title><rect x="235.8" y="71" width="1.8" height="15.0" fill="rgb(240,140,39)" rx="2" ry="2" />
+<text  x="238.80" y="81.5" ></text>
+</g>
+<g >
+<title>tool:send_message[323e8b7d578d1765] (1 operations, 0.48%)</title><rect x="351.4" y="71" width="1.9" height="15.0" fill="rgb(235,167,33)" rx="2" ry="2" />
+<text  x="354.45" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[ae41f63396a80cc4] (1 operations, 0.48%)</title><rect x="100.0" y="71" width="1.8" height="15.0" fill="rgb(238,149,37)" rx="2" ry="2" />
+<text  x="102.95" y="81.5" ></text>
+</g>
+<g >
+<title>tool:send_message[42c85776f07c3f7e] (1 operations, 0.48%)</title><rect x="353.3" y="71" width="1.8" height="15.0" fill="rgb(242,167,41)" rx="2" ry="2" />
+<text  x="356.29" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[8bcf773d471c47fb] (1 operations, 0.48%)</title><rect x="239.5" y="71" width="1.8" height="15.0" fill="rgb(234,140,32)" rx="2" ry="2" />
+<text  x="242.47" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[19a2aad6f07427ce] (1 operations, 0.48%)</title><rect x="17.3" y="71" width="1.9" height="15.0" fill="rgb(245,149,44)" rx="2" ry="2" />
+<text  x="20.34" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[448ace881de4fc58] (1 operations, 0.48%)</title><rect x="189.9" y="71" width="1.8" height="15.0" fill="rgb(245,140,44)" rx="2" ry="2" />
+<text  x="192.90" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[e6434aaf24b200dd] (1 operations, 0.48%)</title><rect x="311.1" y="71" width="1.8" height="15.0" fill="rgb(245,140,44)" rx="2" ry="2" />
+<text  x="314.06" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[4f5fd85370568edd] (1 operations, 0.48%)</title><rect x="48.6" y="71" width="1.8" height="15.0" fill="rgb(245,149,44)" rx="2" ry="2" />
+<text  x="51.55" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[ae49ac48007957ea] (1 operations, 0.48%)</title><rect x="101.8" y="71" width="1.8" height="15.0" fill="rgb(236,149,34)" rx="2" ry="2" />
+<text  x="104.79" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[755ebdaaf6e33594] (1 operations, 0.48%)</title><rect x="224.8" y="71" width="1.8" height="15.0" fill="rgb(234,140,32)" rx="2" ry="2" />
+<text  x="227.78" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[a862f62c71281388] (1 operations, 0.48%)</title><rect x="267.0" y="71" width="1.8" height="15.0" fill="rgb(243,140,41)" rx="2" ry="2" />
+<text  x="270.00" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[224babae5243abed] (1 operations, 0.48%)</title><rect x="169.7" y="71" width="1.8" height="15.0" fill="rgb(245,140,44)" rx="2" ry="2" />
+<text  x="172.71" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[b8bcad372378d3c1] (1 operations, 0.48%)</title><rect x="278.0" y="71" width="1.9" height="15.0" fill="rgb(242,140,40)" rx="2" ry="2" />
+<text  x="281.02" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[9f9648e4a1decbce] (1 operations, 0.48%)</title><rect x="261.5" y="71" width="1.8" height="15.0" fill="rgb(245,140,44)" rx="2" ry="2" />
+<text  x="264.50" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[8195013db7ad34c6] (1 operations, 0.48%)</title><rect x="70.6" y="71" width="1.8" height="15.0" fill="rgb(236,149,34)" rx="2" ry="2" />
+<text  x="73.58" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[8f1117843a0b602a] (1 operations, 0.48%)</title><rect x="241.3" y="71" width="1.8" height="15.0" fill="rgb(238,140,36)" rx="2" ry="2" />
+<text  x="244.30" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[a8ee35c47e876f9b] (1 operations, 0.48%)</title><rect x="270.7" y="71" width="1.8" height="15.0" fill="rgb(232,140,30)" rx="2" ry="2" />
+<text  x="273.68" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[f5db98f348328d42] (1 operations, 0.48%)</title><rect x="322.1" y="71" width="1.8" height="15.0" fill="rgb(240,140,38)" rx="2" ry="2" />
+<text  x="325.08" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[69dd70c177ae0222] (1 operations, 0.48%)</title><rect x="59.6" y="71" width="1.8" height="15.0" fill="rgb(241,149,40)" rx="2" ry="2" />
+<text  x="62.57" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[7e7b9f3cb367198a] (1 operations, 0.48%)</title><rect x="230.3" y="71" width="1.8" height="15.0" fill="rgb(234,140,32)" rx="2" ry="2" />
+<text  x="233.29" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[dc8a504129057b3c] (1 operations, 0.48%)</title><rect x="303.7" y="71" width="1.9" height="15.0" fill="rgb(247,140,46)" rx="2" ry="2" />
+<text  x="306.72" y="81.5" ></text>
+</g>
+<g >
+<title>file_write:write[35a004b5f6e7930e] (1 operations, 0.48%)</title><rect x="138.5" y="71" width="1.8" height="15.0" fill="rgb(247,183,46)" rx="2" ry="2" />
+<text  x="141.50" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[a1ddd6339125464d] (1 operations, 0.48%)</title><rect x="263.3" y="71" width="1.9" height="15.0" fill="rgb(245,140,44)" rx="2" ry="2" />
+<text  x="266.33" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[1b27897cdbd74a15] (1 operations, 0.48%)</title><rect x="166.0" y="71" width="1.9" height="15.0" fill="rgb(239,140,37)" rx="2" ry="2" />
+<text  x="169.04" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[295665ae548bd332] (1 operations, 0.48%)</title><rect x="28.4" y="71" width="1.8" height="15.0" fill="rgb(241,149,39)" rx="2" ry="2" />
+<text  x="31.36" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[14380bb2fd2deba0] (1 operations, 0.48%)</title><rect x="10.0" y="71" width="1.8" height="15.0" fill="rgb(244,149,43)" rx="2" ry="2" />
+<text  x="13.00" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[0fd78c21e4924a7a] (1 operations, 0.48%)</title><rect x="155.0" y="71" width="1.9" height="15.0" fill="rgb(235,140,33)" rx="2" ry="2" />
+<text  x="158.02" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[a870533bbc9d2ac8] (1 operations, 0.48%)</title><rect x="268.8" y="71" width="1.9" height="15.0" fill="rgb(246,140,45)" rx="2" ry="2" />
+<text  x="271.84" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[4d73fd4855a0a8b2] (1 operations, 0.48%)</title><rect x="195.4" y="71" width="1.8" height="15.0" fill="rgb(241,140,40)" rx="2" ry="2" />
+<text  x="198.41" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[53df5444ad4b67f4] (1 operations, 0.48%)</title><rect x="197.2" y="71" width="1.9" height="15.0" fill="rgb(236,140,34)" rx="2" ry="2" />
+<text  x="200.25" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[98e2f32af5df7ccb] (1 operations, 0.48%)</title><rect x="81.6" y="71" width="1.8" height="15.0" fill="rgb(236,149,34)" rx="2" ry="2" />
+<text  x="84.59" y="81.5" ></text>
+</g>
+<g >
+<title>tool:send_message[455cf698ef1a2494] (1 operations, 0.48%)</title><rect x="355.1" y="71" width="1.9" height="15.0" fill="rgb(234,167,32)" rx="2" ry="2" />
+<text  x="358.12" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[340c7ca10f461d94] (1 operations, 0.48%)</title><rect x="35.7" y="71" width="1.8" height="15.0" fill="rgb(234,149,32)" rx="2" ry="2" />
+<text  x="38.70" y="81.5" ></text>
+</g>
+<g >
+<title>tool:spawn_agent[d840de6a4e7755b7] (1 operations, 0.48%)</title><rect x="384.5" y="71" width="1.8" height="15.0" fill="rgb(248,167,47)" rx="2" ry="2" />
+<text  x="387.49" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[1494d0fa25603162] (1 operations, 0.48%)</title><rect x="11.8" y="71" width="1.9" height="15.0" fill="rgb(239,149,37)" rx="2" ry="2" />
+<text  x="14.84" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[26b98d01c550cfcf] (1 operations, 0.48%)</title><rect x="24.7" y="71" width="1.8" height="15.0" fill="rgb(244,149,43)" rx="2" ry="2" />
+<text  x="27.69" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[06b7f0bc26b7b1c8] (1 operations, 0.48%)</title><rect x="145.8" y="71" width="1.9" height="15.0" fill="rgb(246,140,45)" rx="2" ry="2" />
+<text  x="148.85" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[dfbf47d34671a7f5] (1 operations, 0.48%)</title><rect x="307.4" y="71" width="1.8" height="15.0" fill="rgb(235,140,33)" rx="2" ry="2" />
+<text  x="310.39" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[adfe82d0e1a2c7e2] (1 operations, 0.48%)</title><rect x="98.1" y="71" width="1.9" height="15.0" fill="rgb(239,149,38)" rx="2" ry="2" />
+<text  x="101.12" y="81.5" ></text>
+</g>
+<g >
+<title>tool:send_message[7d6e672194533a0d] (1 operations, 0.48%)</title><rect x="362.5" y="71" width="1.8" height="15.0" fill="rgb(248,167,48)" rx="2" ry="2" />
+<text  x="365.46" y="81.5" ></text>
+</g>
+<g >
+<title>tool:send_message[e63d26dac0873c23] (1 operations, 0.48%)</title><rect x="377.1" y="71" width="1.9" height="15.0" fill="rgb(240,167,39)" rx="2" ry="2" />
+<text  x="380.15" y="81.5" ></text>
+</g>
+<g >
+<title>tool:send_message[755f12dc4c857f17] (1 operations, 0.48%)</title><rect x="360.6" y="71" width="1.9" height="15.0" fill="rgb(249,167,48)" rx="2" ry="2" />
+<text  x="363.63" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[4ce86a7512b43e0e] (1 operations, 0.48%)</title><rect x="193.6" y="71" width="1.8" height="15.0" fill="rgb(247,140,46)" rx="2" ry="2" />
+<text  x="196.57" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[f6052b286951675e] (1 operations, 0.48%)</title><rect x="323.9" y="71" width="1.8" height="15.0" fill="rgb(244,140,42)" rx="2" ry="2" />
+<text  x="326.91" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[40ae84dd31c21e1f] (1 operations, 0.48%)</title><rect x="44.9" y="71" width="1.8" height="15.0" fill="rgb(245,149,44)" rx="2" ry="2" />
+<text  x="47.88" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[d4ffddbc2156f9f2] (1 operations, 0.48%)</title><rect x="298.2" y="71" width="1.8" height="15.0" fill="rgb(239,140,37)" rx="2" ry="2" />
+<text  x="301.21" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[47093db0480ba36a] (1 operations, 0.48%)</title><rect x="191.7" y="71" width="1.9" height="15.0" fill="rgb(235,140,33)" rx="2" ry="2" />
+<text  x="194.74" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[686fe5b1d3742da3] (1 operations, 0.48%)</title><rect x="57.7" y="71" width="1.9" height="15.0" fill="rgb(241,149,40)" rx="2" ry="2" />
+<text  x="60.73" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[633076c284972847] (1 operations, 0.48%)</title><rect x="208.3" y="71" width="1.8" height="15.0" fill="rgb(246,140,46)" rx="2" ry="2" />
+<text  x="211.26" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[e387ad2fcf843e70] (1 operations, 0.48%)</title><rect x="120.1" y="71" width="1.9" height="15.0" fill="rgb(240,149,39)" rx="2" ry="2" />
+<text  x="123.14" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[e081c00087136f46] (1 operations, 0.48%)</title><rect x="118.3" y="71" width="1.8" height="15.0" fill="rgb(236,149,34)" rx="2" ry="2" />
+<text  x="121.31" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[379158424ef759c8] (1 operations, 0.48%)</title><rect x="182.6" y="71" width="1.8" height="15.0" fill="rgb(246,140,45)" rx="2" ry="2" />
+<text  x="185.56" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[2cdad60031805e93] (1 operations, 0.48%)</title><rect x="32.0" y="71" width="1.9" height="15.0" fill="rgb(235,149,33)" rx="2" ry="2" />
+<text  x="35.03" y="81.5" ></text>
+</g>
+<g >
+<title>tool:send_message[22b0bb75b04f78cb] (1 operations, 0.48%)</title><rect x="347.8" y="71" width="1.8" height="15.0" fill="rgb(236,167,34)" rx="2" ry="2" />
+<text  x="350.78" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[708afecf2a93a324] (1 operations, 0.48%)</title><rect x="219.3" y="71" width="1.8" height="15.0" fill="rgb(239,140,38)" rx="2" ry="2" />
+<text  x="222.28" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[c96d4e05447689ec] (1 operations, 0.48%)</title><rect x="111.0" y="71" width="1.8" height="15.0" fill="rgb(246,149,45)" rx="2" ry="2" />
+<text  x="113.97" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[885bd1e229bf9297] (1 operations, 0.48%)</title><rect x="234.0" y="71" width="1.8" height="15.0" fill="rgb(243,140,42)" rx="2" ry="2" />
+<text  x="236.96" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[9c7654e17ee06e8a] (1 operations, 0.48%)</title><rect x="87.1" y="71" width="1.8" height="15.0" fill="rgb(234,149,32)" rx="2" ry="2" />
+<text  x="90.10" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[6f2b3adb43d3fd15] (1 operations, 0.48%)</title><rect x="215.6" y="71" width="1.8" height="15.0" fill="rgb(239,140,37)" rx="2" ry="2" />
+<text  x="218.60" y="81.5" ></text>
+</g>
+<g >
+<title>tool:followup_task[63de435e0ec3f6fb] (1 operations, 0.48%)</title><rect x="331.3" y="71" width="1.8" height="15.0" fill="rgb(234,167,32)" rx="2" ry="2" />
+<text  x="334.26" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[1928e49193195fe2] (1 operations, 0.48%)</title><rect x="15.5" y="71" width="1.8" height="15.0" fill="rgb(239,149,38)" rx="2" ry="2" />
+<text  x="18.51" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[6cf40ad37a18d244] (1 operations, 0.48%)</title><rect x="210.1" y="71" width="1.8" height="15.0" fill="rgb(238,140,36)" rx="2" ry="2" />
+<text  x="213.10" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[9d20a9e40078468d] (1 operations, 0.48%)</title><rect x="259.7" y="71" width="1.8" height="15.0" fill="rgb(243,140,41)" rx="2" ry="2" />
+<text  x="262.66" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[02f465a34911cb6e] (1 operations, 0.48%)</title><rect x="140.3" y="71" width="1.9" height="15.0" fill="rgb(243,140,42)" rx="2" ry="2" />
+<text  x="143.34" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[ed4e3b42b14318ef] (1 operations, 0.48%)</title><rect x="318.4" y="71" width="1.8" height="15.0" fill="rgb(242,140,41)" rx="2" ry="2" />
+<text  x="321.41" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[664a640b7f6ed92b] (1 operations, 0.48%)</title><rect x="55.9" y="71" width="1.8" height="15.0" fill="rgb(237,149,35)" rx="2" ry="2" />
+<text  x="58.89" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[2036d1fbbf423de9] (1 operations, 0.48%)</title><rect x="21.0" y="71" width="1.9" height="15.0" fill="rgb(244,149,42)" rx="2" ry="2" />
+<text  x="24.01" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[2bbddc4490eff5a4] (1 operations, 0.48%)</title><rect x="175.2" y="71" width="1.9" height="15.0" fill="rgb(240,140,38)" rx="2" ry="2" />
+<text  x="178.22" y="81.5" ></text>
+</g>
+<g >
+<title>tool:send_message[5469f1df25c0c1ed] (1 operations, 0.48%)</title><rect x="358.8" y="71" width="1.8" height="15.0" fill="rgb(245,167,44)" rx="2" ry="2" />
+<text  x="361.79" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[74eb4c24fc0bb3d2] (1 operations, 0.48%)</title><rect x="222.9" y="71" width="1.9" height="15.0" fill="rgb(240,140,38)" rx="2" ry="2" />
+<text  x="225.95" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[71e7efc472720069] (1 operations, 0.48%)</title><rect x="65.1" y="71" width="1.8" height="15.0" fill="rgb(243,149,42)" rx="2" ry="2" />
+<text  x="68.07" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[45f196171ace9cae] (1 operations, 0.48%)</title><rect x="46.7" y="71" width="1.9" height="15.0" fill="rgb(246,149,46)" rx="2" ry="2" />
+<text  x="49.71" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[3f2d6c6e38206a52] (1 operations, 0.48%)</title><rect x="43.0" y="71" width="1.9" height="15.0" fill="rgb(239,149,38)" rx="2" ry="2" />
+<text  x="46.04" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[28eb7fae400d0aba] (1 operations, 0.48%)</title><rect x="173.4" y="71" width="1.8" height="15.0" fill="rgb(238,140,36)" rx="2" ry="2" />
+<text  x="176.38" y="81.5" ></text>
+</g>
+<g >
+<title>tool:send_message[d841507b9e65de50] (1 operations, 0.48%)</title><rect x="373.5" y="71" width="1.8" height="15.0" fill="rgb(241,167,40)" rx="2" ry="2" />
+<text  x="376.48" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[86c9ece2e1458d43] (1 operations, 0.48%)</title><rect x="76.1" y="71" width="1.8" height="15.0" fill="rgb(239,149,37)" rx="2" ry="2" />
+<text  x="79.09" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[c52af61e0626ffd5] (1 operations, 0.48%)</title><rect x="292.7" y="71" width="1.8" height="15.0" fill="rgb(237,140,35)" rx="2" ry="2" />
+<text  x="295.71" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[28c05cba07af4eb6] (1 operations, 0.48%)</title><rect x="26.5" y="71" width="1.9" height="15.0" fill="rgb(237,149,35)" rx="2" ry="2" />
+<text  x="29.52" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[3393b6ebce2a4119] (1 operations, 0.48%)</title><rect x="33.9" y="71" width="1.8" height="15.0" fill="rgb(246,149,46)" rx="2" ry="2" />
+<text  x="36.86" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[6d8a6f32b553e186] (1 operations, 0.48%)</title><rect x="211.9" y="71" width="1.9" height="15.0" fill="rgb(233,140,31)" rx="2" ry="2" />
+<text  x="214.93" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[f2c1838fad921842] (1 operations, 0.48%)</title><rect x="129.3" y="71" width="1.9" height="15.0" fill="rgb(240,149,38)" rx="2" ry="2" />
+<text  x="132.32" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[36a1f9c535f8ed7b] (1 operations, 0.48%)</title><rect x="180.7" y="71" width="1.9" height="15.0" fill="rgb(233,140,31)" rx="2" ry="2" />
+<text  x="183.72" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[3b7540760fad5425] (1 operations, 0.48%)</title><rect x="186.2" y="71" width="1.9" height="15.0" fill="rgb(238,140,36)" rx="2" ry="2" />
+<text  x="189.23" y="81.5" ></text>
+</g>
+<g >
+<title>tool:followup_task[410a923f3f403430] (1 operations, 0.48%)</title><rect x="329.4" y="71" width="1.9" height="15.0" fill="rgb(243,167,42)" rx="2" ry="2" />
+<text  x="332.42" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[fe86e2a4cb3c09dc] (1 operations, 0.48%)</title><rect x="134.8" y="71" width="1.9" height="15.0" fill="rgb(246,149,46)" rx="2" ry="2" />
+<text  x="137.83" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[1802ea44863b0c8c] (1 operations, 0.48%)</title><rect x="162.4" y="71" width="1.8" height="15.0" fill="rgb(244,140,43)" rx="2" ry="2" />
+<text  x="165.37" y="81.5" ></text>
+</g>
+<g >
+<title>tool:list_agents[f8564896f8d7c83a] (1 operations, 0.48%)</title><rect x="338.6" y="71" width="1.8" height="15.0" fill="rgb(237,167,36)" rx="2" ry="2" />
+<text  x="341.60" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[fdb629316c40f045] (1 operations, 0.48%)</title><rect x="327.6" y="71" width="1.8" height="15.0" fill="rgb(237,140,35)" rx="2" ry="2" />
+<text  x="330.58" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[19ef816a79a62052] (1 operations, 0.48%)</title><rect x="164.2" y="71" width="1.8" height="15.0" fill="rgb(239,140,38)" rx="2" ry="2" />
+<text  x="167.20" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[f038f09e20687427] (1 operations, 0.48%)</title><rect x="320.2" y="71" width="1.9" height="15.0" fill="rgb(248,140,47)" rx="2" ry="2" />
+<text  x="323.24" y="81.5" ></text>
+</g>
+<g >
+<title>tool:send_message[29ef1a77cbe9e94b] (1 operations, 0.48%)</title><rect x="349.6" y="71" width="1.8" height="15.0" fill="rgb(236,167,34)" rx="2" ry="2" />
+<text  x="352.61" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[ad7421a9bda72fde] (1 operations, 0.48%)</title><rect x="96.3" y="71" width="1.8" height="15.0" fill="rgb(244,149,43)" rx="2" ry="2" />
+<text  x="99.28" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[f20c6eb5d74aaecc] (1 operations, 0.48%)</title><rect x="127.5" y="71" width="1.8" height="15.0" fill="rgb(247,149,46)" rx="2" ry="2" />
+<text  x="130.49" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[de484ef7df7e9ca9] (1 operations, 0.48%)</title><rect x="116.5" y="71" width="1.8" height="15.0" fill="rgb(246,149,46)" rx="2" ry="2" />
+<text  x="119.47" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[30e407320902295e] (1 operations, 0.48%)</title><rect x="177.1" y="71" width="1.8" height="15.0" fill="rgb(244,140,42)" rx="2" ry="2" />
+<text  x="180.05" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[175d39f97a7efd9e] (1 operations, 0.48%)</title><rect x="156.9" y="71" width="1.8" height="15.0" fill="rgb(241,140,39)" rx="2" ry="2" />
+<text  x="159.86" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[a4abe569b3bfb13c] (1 operations, 0.48%)</title><rect x="265.2" y="71" width="1.8" height="15.0" fill="rgb(247,140,46)" rx="2" ry="2" />
+<text  x="268.17" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[a9171e8d932b27e6] (1 operations, 0.48%)</title><rect x="94.4" y="71" width="1.9" height="15.0" fill="rgb(235,149,33)" rx="2" ry="2" />
+<text  x="97.44" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[1b56e054d7997ab3] (1 operations, 0.48%)</title><rect x="167.9" y="71" width="1.8" height="15.0" fill="rgb(240,140,39)" rx="2" ry="2" />
+<text  x="170.87" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[178ce6d09baa0672] (1 operations, 0.48%)</title><rect x="13.7" y="71" width="1.8" height="15.0" fill="rgb(238,149,36)" rx="2" ry="2" />
+<text  x="16.67" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[ead2fac35fdbd2ea] (1 operations, 0.48%)</title><rect x="316.6" y="71" width="1.8" height="15.0" fill="rgb(236,140,34)" rx="2" ry="2" />
+<text  x="319.57" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[c023691a483374ec] (1 operations, 0.48%)</title><rect x="289.0" y="71" width="1.9" height="15.0" fill="rgb(246,140,45)" rx="2" ry="2" />
+<text  x="292.03" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[03031cba23ab6ff1] (1 operations, 0.48%)</title><rect x="142.2" y="71" width="1.8" height="15.0" fill="rgb(240,140,38)" rx="2" ry="2" />
+<text  x="145.17" y="81.5" ></text>
+</g>
+<g >
+<title>tool:send_message[cf836059be66e0bc] (1 operations, 0.48%)</title><rect x="371.6" y="71" width="1.9" height="15.0" fill="rgb(248,167,47)" rx="2" ry="2" />
+<text  x="374.64" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[f18706d2e495d18c] (1 operations, 0.48%)</title><rect x="125.7" y="71" width="1.8" height="15.0" fill="rgb(244,149,43)" rx="2" ry="2" />
+<text  x="128.65" y="81.5" ></text>
+</g>
+<g >
+<title>tool:send_message[c51c1dbac60a84ee] (1 operations, 0.48%)</title><rect x="369.8" y="71" width="1.8" height="15.0" fill="rgb(244,167,42)" rx="2" ry="2" />
+<text  x="372.81" y="81.5" ></text>
+</g>
+<g >
+<title>tool:send_message[ae4906bf108ae9eb] (1 operations, 0.48%)</title><rect x="368.0" y="71" width="1.8" height="15.0" fill="rgb(235,167,33)" rx="2" ry="2" />
+<text  x="370.97" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[0379486ce9cf18ac] (1 operations, 0.48%)</title><rect x="144.0" y="71" width="1.8" height="15.0" fill="rgb(249,140,48)" rx="2" ry="2" />
+<text  x="147.01" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[996d13e80446c776] (1 operations, 0.48%)</title><rect x="256.0" y="71" width="1.8" height="15.0" fill="rgb(233,140,31)" rx="2" ry="2" />
+<text  x="258.99" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[819a8db98ab24237] (1 operations, 0.48%)</title><rect x="232.1" y="71" width="1.9" height="15.0" fill="rgb(247,140,46)" rx="2" ry="2" />
+<text  x="235.13" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[d4d0fbc920681dad] (1 operations, 0.48%)</title><rect x="112.8" y="71" width="1.8" height="15.0" fill="rgb(247,149,47)" rx="2" ry="2" />
+<text  x="115.80" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[225d32a2c91ef6e5] (1 operations, 0.48%)</title><rect x="171.5" y="71" width="1.9" height="15.0" fill="rgb(236,140,34)" rx="2" ry="2" />
+<text  x="174.55" y="81.5" ></text>
+</g>
+<g >
+<title>tool:followup_task[dfc283c21bf95af4] (1 operations, 0.48%)</title><rect x="334.9" y="71" width="1.9" height="15.0" fill="rgb(236,167,34)" rx="2" ry="2" />
+<text  x="337.93" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[5b9325fae85d8f46] (1 operations, 0.48%)</title><rect x="50.4" y="71" width="1.8" height="15.0" fill="rgb(236,149,34)" rx="2" ry="2" />
+<text  x="53.39" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[7c8181761275b62f] (1 operations, 0.48%)</title><rect x="228.5" y="71" width="1.8" height="15.0" fill="rgb(245,140,44)" rx="2" ry="2" />
+<text  x="231.45" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[c44316f45dbfd1b2] (1 operations, 0.48%)</title><rect x="109.1" y="71" width="1.9" height="15.0" fill="rgb(241,149,40)" rx="2" ry="2" />
+<text  x="112.13" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[b9cc3db47829051a] (1 operations, 0.48%)</title><rect x="281.7" y="71" width="1.8" height="15.0" fill="rgb(239,140,37)" rx="2" ry="2" />
+<text  x="284.69" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[36a2926762a66da5] (1 operations, 0.48%)</title><rect x="37.5" y="71" width="1.9" height="15.0" fill="rgb(239,149,37)" rx="2" ry="2" />
+<text  x="40.54" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[6f436db61b2e9d7c] (1 operations, 0.48%)</title><rect x="217.4" y="71" width="1.9" height="15.0" fill="rgb(244,140,43)" rx="2" ry="2" />
+<text  x="220.44" y="81.5" ></text>
+</g>
+<g >
+<title>Execution (207 operations, 100.00%)</title><rect x="10.0" y="87" width="380.0" height="15.0" fill="rgb(247,91,46)" rx="2" ry="2" />
+<text  x="13.00" y="97.5" >Execution</text>
+</g>
+<g >
+<title>model:model[5a1dd7f4d0fd8070] (1 operations, 0.48%)</title><rect x="202.8" y="71" width="1.8" height="15.0" fill="rgb(240,140,39)" rx="2" ry="2" />
+<text  x="205.75" y="81.5" ></text>
+</g>
+<g >
+<title>file_read:read[88cb7471fc863e1f] (1 operations, 0.48%)</title><rect x="136.7" y="71" width="1.8" height="15.0" fill="rgb(245,183,44)" rx="2" ry="2" />
+<text  x="139.67" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[e89037878a580e8f] (1 operations, 0.48%)</title><rect x="314.7" y="71" width="1.9" height="15.0" fill="rgb(240,140,39)" rx="2" ry="2" />
+<text  x="317.73" y="81.5" ></text>
+</g>
+<g >
+<title>tool:send_message[0c69759eeba72a69] (1 operations, 0.48%)</title><rect x="345.9" y="71" width="1.9" height="15.0" fill="rgb(243,167,42)" rx="2" ry="2" />
+<text  x="348.94" y="81.5" ></text>
+</g>
+<g >
+<title>model:model[97c73b3034d87810] (1 operations, 0.48%)</title><rect x="254.2" y="71" width="1.8" height="15.0" fill="rgb(244,140,43)" rx="2" ry="2" />
+<text  x="257.15" y="81.5" ></text>
+</g>
+<g >
+<title>command:command[6e4b36fe72f3f5b5] (1 operations, 0.48%)</title><rect x="61.4" y="71" width="1.8" height="15.0" fill="rgb(238,149,36)" rx="2" ry="2" />
+<text  x="64.40" y="81.5" ></text>
+</g>
+</g>
+</svg>

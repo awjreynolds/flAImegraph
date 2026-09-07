@@ -37,9 +37,12 @@ node dist/cli.js operation-import --harness codex --input native.jsonl --dataset
 node dist/cli.js validate --kind operations --input operations.json
 node dist/cli.js operation-report --input operations.json --evidence evidence.json --valuation valuation.json --out report.json
 node dist/cli.js operation-export --input report.json --out-dir operation-views --svg true
+node dist/cli.js operation-export --input report.json --rate-card rates.json --out-dir budget-views --svg true
 node dist/cli.js operation-merge --inputs capture-a.json,capture-b.json --out operations.json
 ```
 
 Use cost evidence from the exact same native bytes; import and value it using the existing 0.1 commands. Supplying `--context-report` to `operation-report` enables estimated source allocation when matching manifests and explicit links exist. Outputs cannot overwrite input artifacts, including through aliases.
+
+The 0.3.1 implementation also exports `operation-budget.json` and, with SVG enabled, `token-costs.svg`. `createOperationBudget(report, rateCard?, operationId?)` provides the same whole-run or subtree analysis through the SDK. A matching supplied rate card can split known amounts into uncached input, cached input, cache writes and output. Cache subsets are removed from inclusive input; reasoning remains inside output. The split must reconcile to each selected valuation line. Missing prices, unmatched rates, recorded amounts without rate identities and unsplittable credits remain explicit. Per-category rounding has a signed adjustment so totals remain exact. SVGs show positive charges; a negative rounding adjustment keeps that observation unsplit in the SVG. This derived analysis does not change the frozen report or valuation contracts and is not a provider-billed category breakdown.
 
 [The v0.3 evidence collection](../../examples/dogfood/v03/README.md) contains a 5,000-file real IO workload, real Pi tool execution, a bounded sanitized Codex development capture, and a clearly synthetic summary-routing walkthrough. These establish different boundaries and must not be conflated with a paired live model experiment.

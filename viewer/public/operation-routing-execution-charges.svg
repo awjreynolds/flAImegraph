@@ -432,68 +432,68 @@
 <text id="matched" x="1290.00" y="237" > </text>
 <g id="frames">
 <g >
-<title>work:Illustrative direct route · %240.101[d15690f08a575024] (101,000,000 USD_nanos, 59.06%)</title><rect x="10.0" y="173" width="815.1" height="15.0" fill="rgb(239,133,38)" rx="2" ry="2" />
-<text  x="13.00" y="183.5" >work:Illustrative direct route · %240.101[d15690f08a575024]</text>
+<title>$0.07 agent:Main agent · high-cost model (40.94%)</title><rect x="10.0" y="157" width="564.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.00" y="167.5" >$0.07 agent:Main agent · high-cost model​‌‌‌‌‌‌‌‍‌‌‌‌‌‌‌‌‌‌‌‌‌‌‍‌‌‌‌‌‌‌‌‌‌‌‌‌..</text>
 </g>
 <g >
-<title>observation:consumer-request[70beda6c31a0311a] (40,000,000 USD_nanos, 23.39%)</title><rect x="1067.2" y="125" width="322.8" height="15.0" fill="rgb(239,149,37)" rx="2" ry="2" />
-<text  x="1070.19" y="135.5" >observation:consumer-request[70beda6c31a031..</text>
+<title>$0.03 agent:Summary worker · low-cost model (17.54%)</title><rect x="10.0" y="109" width="242.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.00" y="119.5" >$0.03 agent:Summary worker · low..</text>
 </g>
 <g >
-<title>model:High-cost model consumes summary[7e533f4a0f875d47] (40,000,000 USD_nanos, 23.39%)</title><rect x="1067.2" y="141" width="322.8" height="15.0" fill="rgb(246,140,46)" rx="2" ry="2" />
-<text  x="1070.19" y="151.5" >model:High-cost model consumes summary[7e53..</text>
+<title>$0.03 hook:Read policy · more than 350 lines (17.54%)</title><rect x="10.0" y="141" width="242.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.00" y="151.5" >$0.03 hook:Read policy · more th..</text>
 </g>
 <g >
-<title>work:Illustrative summary route · %240.070[d31c5fb7917ed47c] (70,000,000 USD_nanos, 40.94%)</title><rect x="825.1" y="173" width="564.9" height="15.0" fill="rgb(244,133,43)" rx="2" ry="2" />
-<text  x="828.09" y="183.5" >work:Illustrative summary route · %240.070[d31c5fb7917ed47c]</text>
+<title>$0.101 Model request cost (59.06%)</title><rect x="574.9" y="125" width="815.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="577.91" y="135.5" >$0.101 Model request cost​‌‌‌‌‌‌‌‍‌‌‌‌‌‌‌‌‌‌‌‌‌‌‌‍‌‌‌‌‌‌‌‌‌‌‍‌‌‌‌‌‌‌‌‌‌‌‍‌‌‌‌‌‌‌‌‍‌‌‍‌‌‌‌‌‌‌‌‌‍‌‌‌‌‌‌‌‌‌‌‌‍‌‌‌‌‌‌..</text>
 </g>
 <g >
-<title>model:Low-cost summarizer[2055f6d9513520c0] (30,000,000 USD_nanos, 17.54%)</title><rect x="825.1" y="77" width="242.1" height="15.0" fill="rgb(243,140,42)" rx="2" ry="2" />
-<text  x="828.09" y="87.5" >model:Low-cost summarizer[2055f6..</text>
+<title>$0.101 model:High-cost model consumes source (59.06%)</title><rect x="574.9" y="141" width="815.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="577.91" y="151.5" >$0.101 model:High-cost model consumes source​‌‌‌‌‌‌‍‌‌‌‌‌‌‌‌‌‌‌‌‌‌‌‍‌‍‌‌‌‌‌‌‍‌‌‌‌‌‌‌‍‌‌‌‌‌‌‌‌‌‌‌‌‍‌‌‌‌‌‌‌‌‌‌‌‌‌‌‌..</text>
 </g>
 <g >
-<title>all (171,000,000 USD_nanos, 100%)</title><rect x="10.0" y="205" width="1380.0" height="15.0" fill="rgb(255,230,55)" rx="2" ry="2" />
+<title>$0.171 Execution (100.00%)</title><rect x="10.0" y="189" width="1380.0" height="15.0" fill="rgb(247,129,46)" rx="2" ry="2" />
+<text  x="13.00" y="199.5" >$0.171 Execution</text>
+</g>
+<g >
+<title>$0.101 work:Illustrative direct route · %240.101 (59.06%)</title><rect x="574.9" y="173" width="815.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="577.91" y="183.5" >$0.101 work:Illustrative direct route · %240.101​‌‌‌‌‌‌‌‌‌‌‌‌‌‌‍‌‌‍‌‌‌‌‌‌‍‌‌‌‌‌‌‌‍‌‌‌‌‌‌‌‌‌‌‍‌‍‌‌‌‌‌‌‌‌‌‌‌‌‌‌‌‌‍‌..</text>
+</g>
+<g >
+<title>$0.03 delegation:Delegate summary request (17.54%)</title><rect x="10.0" y="125" width="242.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.00" y="135.5" >$0.03 delegation:Delegate summar..</text>
+</g>
+<g >
+<title>$0.101 agent:Main agent · high-cost model (59.06%)</title><rect x="574.9" y="157" width="815.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="577.91" y="167.5" >$0.101 agent:Main agent · high-cost model​‌‌‌‌‌‌‌‌‌‍‌‌‌‌‌‌‌‌‌‌‌‌‌‌‌‌‍‌‍‌‌‌‌‌‌‌‌‌‌‍‌‌‌‌‌‌‍‌‌‌‌‌‌‌‌‌‍‌‌‌‌‌‌‌‍‌‌‌‌‍‌..</text>
+</g>
+<g >
+<title>$0.07 work:Illustrative summary route · %240.070 (40.94%)</title><rect x="10.0" y="173" width="564.9" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.00" y="183.5" >$0.07 work:Illustrative summary route · %240.070​‌‌‌‌‌‌‌‌‌‌‌‌‌‌‍‌‌‌‌‍‌‌‍‌‌‌‌‌..</text>
+</g>
+<g >
+<title>$0.171 Execution (100.00%)</title><rect x="10.0" y="205" width="1380.0" height="15.0" fill="rgb(255,230,55)" rx="2" ry="2" />
 <text  x="13.00" y="215.5" ></text>
 </g>
 <g >
-<title>model:High-cost model consumes source[5e056bf41dc65bca] (101,000,000 USD_nanos, 59.06%)</title><rect x="10.0" y="141" width="815.1" height="15.0" fill="rgb(237,140,36)" rx="2" ry="2" />
-<text  x="13.00" y="151.5" >model:High-cost model consumes source[5e056bf41dc65bca]</text>
+<title>$0.03 Model request cost (17.54%)</title><rect x="10.0" y="61" width="242.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.00" y="71.5" >$0.03 Model request cost​‌‌‌‌‍‌‌..</text>
 </g>
 <g >
-<title>agent:Summary worker · low-cost model[762645d15f6c64fe] (30,000,000 USD_nanos, 17.54%)</title><rect x="825.1" y="109" width="242.1" height="15.0" fill="rgb(243,137,42)" rx="2" ry="2" />
-<text  x="828.09" y="119.5" >agent:Summary worker · low-cost ..</text>
+<title>$0.04 model:High-cost model consumes summary (23.39%)</title><rect x="252.1" y="141" width="322.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="255.11" y="151.5" >$0.04 model:High-cost model consumes summar..</text>
 </g>
 <g >
-<title>agent:Main agent · high-cost model[8f09586345eb9ccf] (101,000,000 USD_nanos, 59.06%)</title><rect x="10.0" y="157" width="815.1" height="15.0" fill="rgb(244,137,43)" rx="2" ry="2" />
-<text  x="13.00" y="167.5" >agent:Main agent · high-cost model[8f09586345eb9ccf]</text>
+<title>$0.03 summary:Create compact representation (17.54%)</title><rect x="10.0" y="93" width="242.1" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="13.00" y="103.5" >$0.03 summary:Create compact rep..</text>
 </g>
 <g >
-<title>Execution (171,000,000 USD_nanos, 100.00%)</title><rect x="10.0" y="189" width="1380.0" height="15.0" fill="rgb(247,91,46)" rx="2" ry="2" />
-<text  x="13.00" y="199.5" >Execution</text>
+<title>$0.03 model:Low-cost summarizer (17.54%)</title><rect x="10.0" y="77" width="242.1" height="15.0" fill="rgb(233,129,31)" rx="2" ry="2" />
+<text  x="13.00" y="87.5" >$0.03 model:Low-cost summarizer​..</text>
 </g>
 <g >
-<title>observation:direct-request[6e9a718ac2523177] (101,000,000 USD_nanos, 59.06%)</title><rect x="10.0" y="125" width="815.1" height="15.0" fill="rgb(244,149,43)" rx="2" ry="2" />
-<text  x="13.00" y="135.5" >observation:direct-request[6e9a718ac2523177]</text>
-</g>
-<g >
-<title>summary:Create compact representation[beb39f21a678c57c] (30,000,000 USD_nanos, 17.54%)</title><rect x="825.1" y="93" width="242.1" height="15.0" fill="rgb(244,151,43)" rx="2" ry="2" />
-<text  x="828.09" y="103.5" >summary:Create compact represent..</text>
-</g>
-<g >
-<title>hook:Read policy · more than 350 lines[0648298b48be0319] (30,000,000 USD_nanos, 17.54%)</title><rect x="825.1" y="141" width="242.1" height="15.0" fill="rgb(246,183,46)" rx="2" ry="2" />
-<text  x="828.09" y="151.5" >hook:Read policy · more than 350..</text>
-</g>
-<g >
-<title>agent:Main agent · high-cost model[6dcfeb412bb61145] (70,000,000 USD_nanos, 40.94%)</title><rect x="825.1" y="157" width="564.9" height="15.0" fill="rgb(237,137,35)" rx="2" ry="2" />
-<text  x="828.09" y="167.5" >agent:Main agent · high-cost model[6dcfeb412bb61145]</text>
-</g>
-<g >
-<title>delegation:Delegate summary request[6f216e33c5cf9add] (30,000,000 USD_nanos, 17.54%)</title><rect x="825.1" y="125" width="242.1" height="15.0" fill="rgb(245,219,44)" rx="2" ry="2" />
-<text  x="828.09" y="135.5" >delegation:Delegate summary requ..</text>
-</g>
-<g >
-<title>observation:summary-request[3f278613f129e7d6] (30,000,000 USD_nanos, 17.54%)</title><rect x="825.1" y="61" width="242.1" height="15.0" fill="rgb(236,149,34)" rx="2" ry="2" />
-<text  x="828.09" y="71.5" >observation:summary-request[3f27..</text>
+<title>$0.04 Model request cost (23.39%)</title><rect x="252.1" y="125" width="322.8" height="15.0" fill="rgb(234,129,32)" rx="2" ry="2" />
+<text  x="255.11" y="135.5" >$0.04 Model request cost​‌‌‌‌‌‌‌‌‍‌‍‌‌‌‌‌‌‌..</text>
 </g>
 </g>
 </svg>

@@ -10,6 +10,8 @@ Version 0.2 adds ordered context manifests, source/revision reuse, summary linea
 
 Version 0.3 adds deep operation capture: actual nested function/tool/IO scopes, a live Pi tool bridge, conservative native Codex/Pi import, exact execution-cost profiles, separate estimated source allocation and an Operations explorer. The [5,000-file demonstration](examples/dogfood/v03/README.md) records 5,130 operations at seven levels, an edit and a passing test, with no model calls. Capture remains explicit about opaque shell internals and unavailable context.
 
+Version 0.3.1 makes dollar budgeting the default view. Monetary flamegraph frames show their inclusive dollar amount, and a token-cost layer separates uncached input, cached input, cache writes and output when matching declared rates are available. The explorer compares activity/model/agent costs and selected-operation token mixes. Missing category prices stay unsplit, credits stay separate, and source allocation remains explicitly estimated. See [dollar budgeting](docs/implementation-evidence/dollar-budgeting.md).
+
 Start here:
 
 - [Operation Interchange 0.3 and capture commands](spec/0.3/README.md)

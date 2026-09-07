@@ -3,11 +3,11 @@ import test from "node:test";
 import { validateOperationBundle, createOperationReport, validateOperationReport, reconcileOperationBundles } from "../src/operations.js";
 import type { OperationBundle, OperationSpan } from "../src/operation-types.js";
 import { OPERATION_IO_MEASURES } from "../src/operation-types.js";
-import type { EvidenceBundle } from "../src/types.js";
+import type { EvidenceBundle, RateCard } from "../src/types.js";
 import { valueEvidence } from "../src/core.js";
 import { captureRequestContext, createHarnessProfile } from "../src/context-capture.js";
 import { createContextReport } from "../src/context-report.js";
-import { exportOperationFolded, exportOperationPprof, exportOperationTrace, renderOperationSvg } from "../src/operation-export.js";
+import { exportOperationFolded, exportOperationPprof, exportOperationTrace, renderOperationBudgetSvg, renderOperationSvg } from "../src/operation-export.js";
 import { gunzipSync } from "node:zlib";
 import { readFileSync, mkdtempSync, writeFileSync, rmSync } from "node:fs";
 import { spawnSync } from "node:child_process";
@@ -163,6 +163,57 @@ test("upstream FlameGraph renders nested operation counts while escaping capture
   assert.match(svg!, /%3Cscript%3E/);
   const monetary = renderOperationSvg(report, { projection: "execution", measure: "charges" });
   assert.match(monetary!, /\$0\.000000108/);
+});
+
+test("monetary operation SVG labels show exact inclusive dollars per path", () => {
+  const input = bundle(); input.spans[5]!.observation_id = "model"; input.spans[5]!.label = "<script>alert('private')\n;second</script>";
+  input.spans.push({ ...span("file-2", "directory", 6), kind: "model", observation_id: "model-2" });
+  const evidence = costEvidence();
+  evidence.observations.push({ ...evidence.observations[0]!, id: "model-2", recorded_cost: { amount: "0.000000002", currency: "USD", basis: "provider_reported" } });
+  const report = createOperationReport(input, evidence, valueEvidence(evidence, { mode: "recorded" }));
+  const svg = renderOperationSvg(report, { projection: "execution", measure: "charges" });
+  assert.match(svg!, /\$0\.00000011/);
+  assert.match(svg!, /\$0\.000000103/);
+  assert.match(svg!, /\$0\.000000101/);
+  assert.match(svg!, /<title>[^<]*\$0\.00000011[^<]*100\.00%/);
+  assert.match(svg!, /<title>[^<]*\$0\.000000103[^<]*93\.64%/);
+  assert.doesNotMatch(svg!, /USD_nanos|nanos/);
+  const frameText = [...svg!.matchAll(/<text(?: [^>]*)?>([^<]*)<\/text>/g)].map(match => match[1]!).join("\n");
+  assert.match(frameText, /\$0\.000000101 Model request cost/);
+  assert.doesNotMatch(svg!, /observation:model/);
+  assert.doesNotMatch(frameText, /\[[0-9a-f]{16}\]/);
+  assert.doesNotMatch(frameText, /<script>/);
+  assert.match(svg!, /%3Cscript%3E/);
+});
+
+test("token budget SVG keeps category dollars on the recorded operation path", () => {
+  const input = bundle(); input.spans[5]!.observation_id = "model";
+  const evidence = costEvidence();
+  const model = evidence.observations[0]!;
+  model.model = "model"; model.model_identity = "response"; model.provider = "provider"; model.product = "codex";
+  model.usage = { input_tokens: "100", output_tokens: "100", cache_read_input_tokens: "30", cache_write_input_tokens: "20", reasoning_output_tokens: "0", unclassified_tokens: "0" };
+  delete model.recorded_cost;
+  const rateCard: RateCard = { schema_version: "0.1.0", id: "budget-card", currency: "USD", basis: "enterprise_scenario", source_url: "https://example.test/budget-card", retrieved_at: "2026-09-07T00:00:00Z", assumptions: ["fixture"], rules: [{ id: "budget-rule", model: "model", provider: "provider", product: "codex", valid_from: null, valid_to: null, unit_tokens: "1000", rates: { input: "1", cache_read: "1", cache_write: "1", output: "1" } }] };
+  const report = createOperationReport(input, evidence, valueEvidence(evidence, { mode: "rate_card", rate_card: rateCard }));
+  const svg = renderOperationBudgetSvg(report, rateCard);
+  assert.match(svg!, /\$0\.20/);
+  const frameText = [...svg!.matchAll(/<text(?: [^>]*)?>([^<]*)<\/text>/g)].map(match => match[1]!).join("\n");
+  assert.match(frameText, /\$0\.05 Uncached input/);
+  assert.match(frameText, /\$0\.03 Cached input/);
+  assert.match(frameText, /\$0\.02 Cache write/);
+  assert.match(frameText, /\$0\.10 Output/);
+  assert.match(svg!, /<title>\$0\.20 Token costs \(100\.00%\)<\/title>/);
+  assert.match(svg!, /<title>\$0\.05 work:directory \(25\.00%\)<\/title>/);
+  const mobile = renderOperationBudgetSvg(report, rateCard, 400);
+  assert.match(mobile!, /width="400\.0"/);
+  assert.match(mobile!, /\$0\.20/);
+  assert.match(mobile!, /Token category costs/);
+  assert.doesNotMatch(svg!, /nanos|USD_nanos/);
+  const recorded = costEvidence();
+  const recordedReport = createOperationReport(input, recorded, valueEvidence(recorded, { mode: "recorded" }));
+  const unsplit = renderOperationBudgetSvg(recordedReport);
+  assert.match(unsplit!, /<title>\$0\.000000108 Unsplit known cost \(100\.00%\)<\/title>/);
+  assert.match(unsplit!, /<title>\$0\.000000101 work:directory \(93\.52%\)<\/title>/);
 });
 
 test("CLI validates, reports and exports operation captures while protecting source artifacts", () => {

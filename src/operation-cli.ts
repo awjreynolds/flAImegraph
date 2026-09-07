@@ -3,8 +3,9 @@ import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { protectInputs, writeArtifact } from "./files.js";
 import { OperationError, createOperationReport, reconcileOperationBundles, validateOperationBundle, validateOperationReport } from "./operations.js";
-import { exportOperationFolded, exportOperationPprof, exportOperationTrace, renderOperationSvg, type OperationExportOptions } from "./operation-export.js";
-import { validateEvidence } from "./core.js";
+import { exportOperationFolded, exportOperationPprof, exportOperationTrace, renderOperationBudgetSvg, renderOperationSvg, type OperationExportOptions } from "./operation-export.js";
+import { validateEvidence, validateRateCard } from "./core.js";
+import { createOperationBudget } from "./operation-budget.js";
 import { validateValuation } from "./work-items.js";
 import { validateContextReport } from "./context-report.js";
 import { importNativeOperations } from "./native-operations.js";
@@ -57,20 +58,22 @@ export async function runOperationCommand(command: string, args: string[]): Prom
     return;
   }
   if (command === "operation-export") {
-    const values = flags(args, ["--input", "--out-dir", "--svg"]);
-    const input = required(values, "--input"), directory = required(values, "--out-dir");
+    const values = flags(args, ["--input", "--out-dir", "--svg", "--rate-card"]);
+    const input = required(values, "--input"), directory = required(values, "--out-dir"), rateCardFile = values.get("--rate-card");
     const svg = values.get("--svg") ?? "false";
     if (!["true", "false"].includes(svg)) usage("--svg must be true or false");
     const report = validateOperationReport(await readJson(input));
+    const rateCard = rateCardFile === undefined ? undefined : validateRateCard(await readJson(rateCardFile));
+    const budget = createOperationBudget(report, rateCard);
     const choices: Array<[string, OperationExportOptions]> = [
       ["execution-charges", { projection: "execution", measure: "charges" }], ["execution-credits", { projection: "execution", measure: "credits" }],
       ["source-charges", { projection: "source", measure: "charges" }], ["source-credits", { projection: "source", measure: "credits" }],
       ["operations", { projection: "execution", measure: "operations" }],
     ];
-    const names = ["operation-report.json", "operations.trace.json", "export.json", ...choices.flatMap(([name]) => [`${name}.folded`, `${name}.pprof`, ...(svg === "true" ? [`${name}.svg`] : [])])];
-    await protectInputs(names.map(name => join(directory, name)), [input]);
+    const names = ["operation-report.json", "operations.trace.json", "operation-budget.json", "export.json", ...choices.flatMap(([name]) => [`${name}.folded`, `${name}.pprof`, ...(svg === "true" ? [`${name}.svg`] : [])]), ...(svg === "true" ? ["token-costs.svg"] : [])];
+    await protectInputs(names.map(name => join(directory, name)), [input, ...(rateCardFile === undefined ? [] : [rateCardFile])]);
     // Prepare all formats first: a range or renderer error must not leave a partially updated export.
-    const artifacts: Array<[string, string | Uint8Array]> = [["operation-report.json", JSON.stringify(report, null, 2) + "\n"], ["operations.trace.json", JSON.stringify(exportOperationTrace(report), null, 2) + "\n"]];
+    const artifacts: Array<[string, string | Uint8Array]> = [["operation-report.json", JSON.stringify(report, null, 2) + "\n"], ["operations.trace.json", JSON.stringify(exportOperationTrace(report), null, 2) + "\n"], ["operation-budget.json", JSON.stringify(budget, null, 2) + "\n"]];
     const skipped: string[] = [];
     for (const [name, options] of choices) {
       artifacts.push([`${name}.folded`, exportOperationFolded(report, options)], [`${name}.pprof`, exportOperationPprof(report, options)]);
@@ -79,6 +82,11 @@ export async function runOperationCommand(command: string, args: string[]): Prom
         if (rendered === null) skipped.push(`${name}.svg: zero positive width`);
         else artifacts.push([`${name}.svg`, rendered]);
       }
+    }
+    if (svg === "true") {
+      const rendered = renderOperationBudgetSvg(report, rateCard);
+      if (rendered === null) skipped.push("token-costs.svg: zero positive width");
+      else artifacts.push(["token-costs.svg", rendered]);
     }
     const manifest = { schema_version: "0.3.0", summary: report.summary, assumptions: report.assumptions, skipped,
       artifacts: Object.fromEntries(artifacts.map(([name, data]) => [name, { sha256: createHash("sha256").update(data).digest("hex") }])) };
