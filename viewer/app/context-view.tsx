@@ -35,6 +35,8 @@ import type {
 import { validateContextReport } from '@/lib/validator.js';
 import realDemo from './demo.json';
 import lifecycleDemo from './lifecycle.json';
+import { ActionTimingFields } from './action-timing';
+import { contextTiming } from '@/lib/timing';
 
 const words = (text: string) => text.replaceAll('_', ' ');
 const integer = (value: string) => BigInt(value);
@@ -417,6 +419,7 @@ export default function Home() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Request / agent</TableHead>
+                  <TableHead>Action timing</TableHead>
                   <TableHead>Input tokens</TableHead>
                   <TableHead>Cost</TableHead>
                 </TableRow>
@@ -436,8 +439,9 @@ export default function Home() {
                         </span>
                         {o.agent_id ?? o.operation}
                       </Button>
-                      <small>{o.timestamp ?? 'Time unavailable'}</small>
+                      <small>Event: {contextTiming(o).event.value}</small>
                     </TableCell>
+                    <TableCell><ActionTimingFields timing={contextTiming(o)} compact /></TableCell>
                     <TableCell>{o.usage?.input_tokens ?? 'Unknown'}</TableCell>
                     <TableCell className="amount">
                       {money(
@@ -478,6 +482,7 @@ export default function Home() {
           </div>
           <p className="muted">{current?.model ?? 'Model unknown'}</p>
           <p className="request-id">{selected}</p>
+          {current && <section aria-label="Request timing"><h3>Action timing</h3><ActionTimingFields timing={contextTiming(current)} /></section>}
           {report.context.requests.filter((r) => r.observation_id === selected)
             .length > 1 && (
             <div className="boundary-picker">

@@ -595,13 +595,15 @@ export class UsageRecorder {
 
   /** Immutable deep snapshot suitable for a report/export consumer. */
   snapshot(): UsageBundle {
+    const running = [...this.observations.values()].some(observation => observation.status === "running");
     const coverage: UsageCoverage = {
       boundary: "instrumented",
-      complete: this.dropped === 0 && this.droppedMeasurements === 0,
+      complete: this.dropped === 0 && this.droppedMeasurements === 0 && !running,
       dropped_observations: this.dropped,
       ...(this.dropped > 0 ? { dropped_by_source: { [this.sourceId]: this.dropped } } : {}),
       limitations: ["Recorder retains caller-supplied usage metadata only; provider-side work and raw prompts/responses are unknown."],
     };
+    if (running) coverage.limitations.push("Capture contains running observations with no recorded terminal state; current liveness is unknown.");
     if (this.dropped > 0 || this.droppedMeasurements > 0) coverage.limitations.push("Configured capture bounds dropped one or more events or measurements.");
     if (this.droppedMeasurements > 0) coverage.limitations.push(`${this.droppedMeasurements} measurement(s) were omitted after the per-observation measurement bound.`);
     return structuredClone({

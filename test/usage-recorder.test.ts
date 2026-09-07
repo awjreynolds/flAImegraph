@@ -218,3 +218,13 @@ test("retains typed custom meter metadata and rejects conflicting definitions", 
     measurements: { transfer: { value: "1", unit: "bytes", description: "Transfer bytes", subset_of: null, overlap: "disjoint" } },
   }), /conflicting.*(?:unit|description)/iu);
 });
+
+test("an unfinished usage scope cannot declare complete capture", () => {
+  const recorder = new UsageRecorder({ dataset_id: "unfinished-capture" });
+  const call = recorder.startModelCall({ id: "open-call" });
+  const open = recorder.snapshot();
+  assert.equal(open.coverage?.complete, false);
+  assert.match(open.coverage?.limitations.join(" ") ?? "", /running/);
+  call.end();
+  assert.equal(recorder.snapshot().coverage?.complete, true);
+});

@@ -686,3 +686,12 @@ footer a {
 .usage-scenario-editor { display: block; margin: 20px 0; }
 .usage-scenario-editor textarea { display: block; width: 100%; min-height: 250px; margin-top: 10px; border: 1px solid #475569; border-radius: 8px; padding: 16px; background: #101828; color: #dbeafe; font: .8rem/1.5 monospace; }
 @media (max-width: 700px) { .usage-benchmark-inputs { grid-template-columns: 1fr; } .usage-tabs { max-width: 100%; height: auto; flex-wrap: wrap; } .usage-flamegraph { height: 300px; } }
+
+.action-timing { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 12px 0; font-variant-numeric: tabular-nums; }
+.action-timing > div { display: grid; gap: 3px; }
+.action-timing dt { font-size: 12px; font-weight: 600; color: #9cacc1; }
+.action-timing dd { margin: 0; overflow-wrap: anywhere; font-size: 13px; }
+.action-timing small, .timing-note { color: #9cacc1; font-size: 12px; line-height: 1.5; }
+.action-timing.action-timing--compact { min-width: 195px; margin: 0; gap: 6px; }
+.action-timing.action-timing--compact > div { display: grid; grid-template-columns: 68px 1fr; gap: 8px; }
+.action-timing.action-timing--compact dd { font-size: 12px; }

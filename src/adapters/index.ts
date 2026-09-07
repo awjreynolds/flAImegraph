@@ -896,6 +896,7 @@ function codex(input: string, options?: ImportOptions): EvidenceBundle {
         continue;
       }
       seenResponses.set(identity, dedupeSignature);
+      const explicitStart = normalizeTimestamp(firstString(usageRecord.started_at, usageRecord.startedAt, record.started_at, record.startedAt), undefined, bundle.issues, `Codex start line ${item.line}`);
       const observation = addModelObservation({
         bundle,
         harness: "codex",
@@ -910,8 +911,8 @@ function codex(input: string, options?: ImportOptions): EvidenceBundle {
         grain: "operation",
         countBasis: "provider_native",
         product: "codex",
-        timestamp: firstString(usageRecord.timestamp, usageRecord.started_at, usageRecord.startedAt),
-        endTime: firstString(usageRecord.end_time, usageRecord.ended_at, usageRecord.endedAt),
+        timestamp: normalizeTimestamp(firstString(usageRecord.timestamp, record.timestamp), undefined, bundle.issues, `Codex event line ${item.line}`),
+        endTime: normalizeTimestamp(firstString(usageRecord.end_time, usageRecord.ended_at, usageRecord.endedAt, record.end_time, record.ended_at, record.endedAt), undefined, bundle.issues, `Codex end line ${item.line}`),
         agentId: firstString(usageRecord.agent_id, usageRecord.agentId),
         sessionId: firstString(usageRecord.session_id, usageRecord.sessionId, usageRecord.thread_id, usageRecord.threadId, nativeSessionId),
         turnId,
@@ -922,6 +923,7 @@ function codex(input: string, options?: ImportOptions): EvidenceBundle {
         workItemId: options?.work_item_id,
         attributes: {
           source_record_type: type,
+          ...(explicitStart ? { "flAImegraph.timing.started_at": explicitStart } : {}),
           ...(firstString(usageRecord.root_turn_id, usageRecord.rootTurnId) ? { root_turn_id: firstString(usageRecord.root_turn_id, usageRecord.rootTurnId) as string } : {}),
           ...(rawUsage && "total_tokens" in rawUsage ? { native_total_tokens: String(rawUsage.total_tokens) } : {}),
           ...(firstString(currentContext?.effort, currentContext?.reasoning_effort) ? { effort: firstString(currentContext?.effort, currentContext?.reasoning_effort) as string } : {}),
