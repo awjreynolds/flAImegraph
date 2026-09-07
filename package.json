@@ -1,6 +1,6 @@
 {
   "name": "flaimegraph",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Open usage-first AI profiling, capture and interchange; optional analysis and pricing consumers",
   "repository": {
     "type": "git",
@@ -53,7 +53,9 @@
     "tools/dogfood-native-v03.ts",
     "tools/demo-operation-routing.ts",
     "tools/verify-pi-operations.ts",
-    "tools/dogfood-usage-v04.ts"
+    "tools/dogfood-usage-v04.ts",
+    "tools/dogfood-task-usage.ts",
+    "tools/dogfood-lifecycle.ts"
   ],
   "scripts": {
     "build": "tsc",

@@ -2,7 +2,9 @@
 
 Record AI resource usage and the conditions that produced it. Visualize tokens or operations, compare accepted work, evaluate alternative model configurations, and estimate delivery runway from explicit capacity evidence.
 
-Version **0.4.0** makes usage the default. The capture SDK, interchange and reports contain no rates, currency or subscription rules. Historical or customer-specific pricing is an optional consumer through `flaimegraph/pricing` and `flaimegraph-pricing`.
+Version **0.5.0** adds opt-in durable lifecycle journals: save action starts before dispatch, recover interrupted captures, distinguish known waits from unexplained gaps, and keep failed/retried usage. The capture SDK, interchange and reports contain no rates, currency or subscription rules. Historical or customer-specific pricing is an optional consumer through `flaimegraph/pricing` and `flaimegraph-pricing`.
+
+Usage profiles now start with tasks and their operations. The viewer shows input and output with their declared cache and reasoning subsets, alongside per-task quantities. Models remain available as an explicit grouping and as observation details. Missing task associations stay unassigned.
 
 Measurements retain exact decimal quantities, UTC timing, provenance, requested versus confirmed model/tier/reasoning settings, and unknown values. Input, cache and reasoning meters remain separate with declared subset relationships. The downstream analyzer distinguishes measured findings, candidate policies and unsupported conclusions. It does not infer that a model choice was wrong from token counts alone.
 
@@ -25,7 +27,7 @@ The demo migrates **584 recorded development observations** from the existing na
 
 ```sh
 node dist/cli.js import --format codex --input session.jsonl --dataset-id work-1 --out usage.json
-node dist/cli.js report --input usage.json --group-by task,model --out report.json
+node dist/cli.js report --input usage.json --group-by task,operation --out report.json
 node dist/cli.js export --input report.json --meter output_tokens --out-dir output-profile --svg true
 node dist/cli.js benchmark --baseline examples/dogfood/v04/baseline.json --candidate examples/dogfood/v04/candidate.json --out comparison.json
 node dist/cli.js runway --input examples/dogfood/v04/runway-input.json --out runway.json
@@ -34,6 +36,7 @@ node dist/cli.js runway --input examples/dogfood/v04/runway-input.json --out run
 The [local viewer](viewer/README.md) loads sessions in the browser, inspects measurements and processing conditions, shows session findings, compares benchmark configurations and explores capacity scenarios. Existing context and monetary views remain available.
 
 - [Usage guide and SDK examples](docs/usage.md)
+- [Durable capture and interruption recovery](docs/lifecycle.md), [Lifecycle Interchange 0.5](spec/0.5/README.md)
 - [Usage Interchange 0.4](spec/0.4/README.md)
 - [Efficiency, benchmarks and runway](docs/efficiency-analysis.md)
 - [Reproducible examples and their limits](examples/dogfood/v04/README.md)

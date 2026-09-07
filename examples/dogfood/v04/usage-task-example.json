@@ -1,0 +1,1349 @@
+{
+  "schema_version": "0.4.0",
+  "dataset_id": "synthetic-task-breakdown",
+  "sources": [
+    {
+      "id": "synthetic-task-breakdown",
+      "harness": "synthetic",
+      "format": "usage-recorder",
+      "coverage": "complete",
+      "version": "1",
+      "description": "Declared task breakdown example; no provider was contacted and no live token usage is asserted."
+    }
+  ],
+  "meters": [
+    {
+      "id": "cache_read_input_tokens",
+      "unit": "tokens",
+      "description": "Input tokens reported as cache reads",
+      "subset_of": "input_tokens",
+      "overlap": "subset"
+    },
+    {
+      "id": "cache_write_input_tokens",
+      "unit": "tokens",
+      "description": "Input tokens reported as cache writes",
+      "subset_of": "input_tokens",
+      "overlap": "subset"
+    },
+    {
+      "id": "input_tokens",
+      "unit": "tokens",
+      "description": "Inclusive provider input tokens",
+      "subset_of": null,
+      "overlap": "disjoint"
+    },
+    {
+      "id": "output_tokens",
+      "unit": "tokens",
+      "description": "Provider output tokens",
+      "subset_of": null,
+      "overlap": "disjoint"
+    },
+    {
+      "id": "reasoning_output_tokens",
+      "unit": "tokens",
+      "description": "Output tokens reported as reasoning",
+      "subset_of": "output_tokens",
+      "overlap": "subset"
+    }
+  ],
+  "observations": [
+    {
+      "id": "task:investigate-failing-test",
+      "source_refs": [
+        {
+          "source_id": "synthetic-task-breakdown",
+          "record": "observation:task:investigate-failing-test"
+        }
+      ],
+      "subject": "Investigate failing test",
+      "accounting_scope": "direct",
+      "operation_id": "task:investigate-failing-test",
+      "parent_id": null,
+      "agent_id": "synthetic-agent",
+      "session_id": "synthetic-session",
+      "work_item_id": "DEMO-TASK-BREAKDOWN",
+      "task_id": "Investigate failing test",
+      "status": "ok",
+      "event_at": {
+        "value": "2026-09-07T08:00:00Z",
+        "evidence": "observed",
+        "method": "event supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:task:investigate-failing-test"
+          }
+        ]
+      },
+      "started_at": null,
+      "ended_at": null,
+      "collected_at": {
+        "value": "2026-09-07T09:00:00Z",
+        "evidence": "observed",
+        "method": "collection supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:task:investigate-failing-test"
+          }
+        ]
+      },
+      "measurements": {},
+      "dimensions": {}
+    },
+    {
+      "id": "model:investigate-failing-test:1",
+      "source_refs": [
+        {
+          "source_id": "synthetic-task-breakdown",
+          "record": "observation:model:investigate-failing-test:1"
+        }
+      ],
+      "subject": "model.response",
+      "accounting_scope": "direct",
+      "operation_id": "investigate-failing-test:model-1",
+      "parent_id": "task:investigate-failing-test",
+      "agent_id": "synthetic-agent",
+      "session_id": "synthetic-session",
+      "work_item_id": "DEMO-TASK-BREAKDOWN",
+      "task_id": "Investigate failing test",
+      "status": "ok",
+      "event_at": {
+        "value": "2026-09-07T08:00:10Z",
+        "evidence": "observed",
+        "method": "event supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:investigate-failing-test:1"
+          }
+        ]
+      },
+      "started_at": {
+        "value": "2026-09-07T08:00:10Z",
+        "evidence": "observed",
+        "method": "start supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:investigate-failing-test:1"
+          }
+        ]
+      },
+      "ended_at": {
+        "value": "2026-09-07T08:00:11Z",
+        "evidence": "observed",
+        "method": "end supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:investigate-failing-test:1"
+          }
+        ]
+      },
+      "collected_at": {
+        "value": "2026-09-07T09:00:00Z",
+        "evidence": "observed",
+        "method": "collection supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:investigate-failing-test:1"
+          }
+        ]
+      },
+      "measurements": {
+        "input_tokens": {
+          "value": "1200",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:investigate-failing-test:1:input_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "cache_read_input_tokens": {
+          "value": "450",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:investigate-failing-test:1:cache_read_input_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "cache_write_input_tokens": {
+          "value": "50",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:investigate-failing-test:1:cache_write_input_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "output_tokens": {
+          "value": "320",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:investigate-failing-test:1:output_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "reasoning_output_tokens": {
+          "value": "120",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:investigate-failing-test:1:reasoning_output_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        }
+      },
+      "dimensions": {
+        "requested_model": {
+          "value": "example/model-small",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:investigate-failing-test:1:requested-model"
+            }
+          ]
+        },
+        "actual_model": {
+          "value": "example/model-small",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:investigate-failing-test:1:actual-model"
+            }
+          ]
+        },
+        "requested_tier": {
+          "value": "standard",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:investigate-failing-test:1:requested-tier"
+            }
+          ]
+        },
+        "actual_tier": {
+          "value": "standard",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:investigate-failing-test:1:actual-tier"
+            }
+          ]
+        },
+        "requested_reasoning": {
+          "value": "medium",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:investigate-failing-test:1:requested-reasoning"
+            }
+          ]
+        },
+        "actual_reasoning": {
+          "value": "medium",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:investigate-failing-test:1:actual-reasoning"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "model:investigate-failing-test:2",
+      "source_refs": [
+        {
+          "source_id": "synthetic-task-breakdown",
+          "record": "observation:model:investigate-failing-test:2"
+        }
+      ],
+      "subject": "model.response",
+      "accounting_scope": "direct",
+      "operation_id": "investigate-failing-test:model-2",
+      "parent_id": "task:investigate-failing-test",
+      "agent_id": "synthetic-agent",
+      "session_id": "synthetic-session",
+      "work_item_id": "DEMO-TASK-BREAKDOWN",
+      "task_id": "Investigate failing test",
+      "status": "ok",
+      "event_at": {
+        "value": "2026-09-07T08:00:15Z",
+        "evidence": "observed",
+        "method": "event supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:investigate-failing-test:2"
+          }
+        ]
+      },
+      "started_at": {
+        "value": "2026-09-07T08:00:15Z",
+        "evidence": "observed",
+        "method": "start supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:investigate-failing-test:2"
+          }
+        ]
+      },
+      "ended_at": {
+        "value": "2026-09-07T08:00:16Z",
+        "evidence": "observed",
+        "method": "end supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:investigate-failing-test:2"
+          }
+        ]
+      },
+      "collected_at": {
+        "value": "2026-09-07T09:00:00Z",
+        "evidence": "observed",
+        "method": "collection supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:investigate-failing-test:2"
+          }
+        ]
+      },
+      "measurements": {
+        "input_tokens": {
+          "value": "700",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:investigate-failing-test:2:input_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "cache_read_input_tokens": {
+          "value": "250",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:investigate-failing-test:2:cache_read_input_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "output_tokens": {
+          "value": "220",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:investigate-failing-test:2:output_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "reasoning_output_tokens": {
+          "value": null,
+          "evidence": "unknown",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:investigate-failing-test:2:reasoning_output_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        }
+      },
+      "dimensions": {
+        "requested_model": {
+          "value": "example/model-small",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:investigate-failing-test:2:requested-model"
+            }
+          ]
+        },
+        "actual_model": {
+          "value": "example/model-small",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:investigate-failing-test:2:actual-model"
+            }
+          ]
+        },
+        "requested_tier": {
+          "value": "standard",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:investigate-failing-test:2:requested-tier"
+            }
+          ]
+        },
+        "actual_tier": {
+          "value": "standard",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:investigate-failing-test:2:actual-tier"
+            }
+          ]
+        },
+        "requested_reasoning": {
+          "value": "medium",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:investigate-failing-test:2:requested-reasoning"
+            }
+          ]
+        },
+        "actual_reasoning": {
+          "value": null,
+          "evidence": "unknown",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:investigate-failing-test:2:actual-reasoning"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "task:implement-fix",
+      "source_refs": [
+        {
+          "source_id": "synthetic-task-breakdown",
+          "record": "observation:task:implement-fix"
+        }
+      ],
+      "subject": "Implement fix",
+      "accounting_scope": "direct",
+      "operation_id": "task:implement-fix",
+      "parent_id": null,
+      "agent_id": "synthetic-agent",
+      "session_id": "synthetic-session",
+      "work_item_id": "DEMO-TASK-BREAKDOWN",
+      "task_id": "Implement fix",
+      "status": "ok",
+      "event_at": {
+        "value": "2026-09-07T08:00:01Z",
+        "evidence": "observed",
+        "method": "event supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:task:implement-fix"
+          }
+        ]
+      },
+      "started_at": null,
+      "ended_at": null,
+      "collected_at": {
+        "value": "2026-09-07T09:00:00Z",
+        "evidence": "observed",
+        "method": "collection supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:task:implement-fix"
+          }
+        ]
+      },
+      "measurements": {},
+      "dimensions": {}
+    },
+    {
+      "id": "model:implement-fix:1",
+      "source_refs": [
+        {
+          "source_id": "synthetic-task-breakdown",
+          "record": "observation:model:implement-fix:1"
+        }
+      ],
+      "subject": "model.response",
+      "accounting_scope": "direct",
+      "operation_id": "implement-fix:model-1",
+      "parent_id": "task:implement-fix",
+      "agent_id": "synthetic-agent",
+      "session_id": "synthetic-session",
+      "work_item_id": "DEMO-TASK-BREAKDOWN",
+      "task_id": "Implement fix",
+      "status": "ok",
+      "event_at": {
+        "value": "2026-09-07T08:00:30Z",
+        "evidence": "observed",
+        "method": "event supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:implement-fix:1"
+          }
+        ]
+      },
+      "started_at": {
+        "value": "2026-09-07T08:00:30Z",
+        "evidence": "observed",
+        "method": "start supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:implement-fix:1"
+          }
+        ]
+      },
+      "ended_at": {
+        "value": "2026-09-07T08:00:31Z",
+        "evidence": "observed",
+        "method": "end supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:implement-fix:1"
+          }
+        ]
+      },
+      "collected_at": {
+        "value": "2026-09-07T09:00:00Z",
+        "evidence": "observed",
+        "method": "collection supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:implement-fix:1"
+          }
+        ]
+      },
+      "measurements": {
+        "input_tokens": {
+          "value": "1700",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:implement-fix:1:input_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "cache_read_input_tokens": {
+          "value": "850",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:implement-fix:1:cache_read_input_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "cache_write_input_tokens": {
+          "value": "150",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:implement-fix:1:cache_write_input_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "output_tokens": {
+          "value": "480",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:implement-fix:1:output_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "reasoning_output_tokens": {
+          "value": "220",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:implement-fix:1:reasoning_output_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        }
+      },
+      "dimensions": {
+        "requested_model": {
+          "value": "example/model-large",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:implement-fix:1:requested-model"
+            }
+          ]
+        },
+        "actual_model": {
+          "value": "example/model-large",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:implement-fix:1:actual-model"
+            }
+          ]
+        },
+        "requested_tier": {
+          "value": "standard",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:implement-fix:1:requested-tier"
+            }
+          ]
+        },
+        "actual_tier": {
+          "value": "standard",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:implement-fix:1:actual-tier"
+            }
+          ]
+        },
+        "requested_reasoning": {
+          "value": "high",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:implement-fix:1:requested-reasoning"
+            }
+          ]
+        },
+        "actual_reasoning": {
+          "value": "high",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:implement-fix:1:actual-reasoning"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "model:implement-fix:2",
+      "source_refs": [
+        {
+          "source_id": "synthetic-task-breakdown",
+          "record": "observation:model:implement-fix:2"
+        }
+      ],
+      "subject": "model.response",
+      "accounting_scope": "direct",
+      "operation_id": "implement-fix:model-2",
+      "parent_id": "task:implement-fix",
+      "agent_id": "synthetic-agent",
+      "session_id": "synthetic-session",
+      "work_item_id": "DEMO-TASK-BREAKDOWN",
+      "task_id": "Implement fix",
+      "status": "ok",
+      "event_at": {
+        "value": "2026-09-07T08:00:35Z",
+        "evidence": "observed",
+        "method": "event supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:implement-fix:2"
+          }
+        ]
+      },
+      "started_at": {
+        "value": "2026-09-07T08:00:35Z",
+        "evidence": "observed",
+        "method": "start supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:implement-fix:2"
+          }
+        ]
+      },
+      "ended_at": {
+        "value": "2026-09-07T08:00:36Z",
+        "evidence": "observed",
+        "method": "end supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:implement-fix:2"
+          }
+        ]
+      },
+      "collected_at": {
+        "value": "2026-09-07T09:00:00Z",
+        "evidence": "observed",
+        "method": "collection supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:implement-fix:2"
+          }
+        ]
+      },
+      "measurements": {
+        "input_tokens": {
+          "value": "1100",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:implement-fix:2:input_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "output_tokens": {
+          "value": "330",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:implement-fix:2:output_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "reasoning_output_tokens": {
+          "value": "90",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:implement-fix:2:reasoning_output_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        }
+      },
+      "dimensions": {
+        "requested_model": {
+          "value": "example/model-large",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:implement-fix:2:requested-model"
+            }
+          ]
+        },
+        "actual_model": {
+          "value": "example/model-large",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:implement-fix:2:actual-model"
+            }
+          ]
+        },
+        "requested_tier": {
+          "value": "standard",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:implement-fix:2:requested-tier"
+            }
+          ]
+        },
+        "actual_tier": {
+          "value": "standard",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:implement-fix:2:actual-tier"
+            }
+          ]
+        },
+        "requested_reasoning": {
+          "value": "high",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:implement-fix:2:requested-reasoning"
+            }
+          ]
+        },
+        "actual_reasoning": {
+          "value": "high",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:implement-fix:2:actual-reasoning"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "task:review-change",
+      "source_refs": [
+        {
+          "source_id": "synthetic-task-breakdown",
+          "record": "observation:task:review-change"
+        }
+      ],
+      "subject": "Review change",
+      "accounting_scope": "direct",
+      "operation_id": "task:review-change",
+      "parent_id": null,
+      "agent_id": "synthetic-agent",
+      "session_id": "synthetic-session",
+      "work_item_id": "DEMO-TASK-BREAKDOWN",
+      "task_id": "Review change",
+      "status": "ok",
+      "event_at": {
+        "value": "2026-09-07T08:00:02Z",
+        "evidence": "observed",
+        "method": "event supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:task:review-change"
+          }
+        ]
+      },
+      "started_at": null,
+      "ended_at": null,
+      "collected_at": {
+        "value": "2026-09-07T09:00:00Z",
+        "evidence": "observed",
+        "method": "collection supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:task:review-change"
+          }
+        ]
+      },
+      "measurements": {},
+      "dimensions": {}
+    },
+    {
+      "id": "model:review-change:1",
+      "source_refs": [
+        {
+          "source_id": "synthetic-task-breakdown",
+          "record": "observation:model:review-change:1"
+        }
+      ],
+      "subject": "model.response",
+      "accounting_scope": "direct",
+      "operation_id": "review-change:model-1",
+      "parent_id": "task:review-change",
+      "agent_id": "synthetic-agent",
+      "session_id": "synthetic-session",
+      "work_item_id": "DEMO-TASK-BREAKDOWN",
+      "task_id": "Review change",
+      "status": "ok",
+      "event_at": {
+        "value": "2026-09-07T08:00:50Z",
+        "evidence": "observed",
+        "method": "event supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:review-change:1"
+          }
+        ]
+      },
+      "started_at": {
+        "value": "2026-09-07T08:00:50Z",
+        "evidence": "observed",
+        "method": "start supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:review-change:1"
+          }
+        ]
+      },
+      "ended_at": {
+        "value": "2026-09-07T08:00:51Z",
+        "evidence": "observed",
+        "method": "end supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:review-change:1"
+          }
+        ]
+      },
+      "collected_at": {
+        "value": "2026-09-07T09:00:00Z",
+        "evidence": "observed",
+        "method": "collection supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:review-change:1"
+          }
+        ]
+      },
+      "measurements": {
+        "input_tokens": {
+          "value": "900",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:review-change:1:input_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "cache_read_input_tokens": {
+          "value": "200",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:review-change:1:cache_read_input_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "cache_write_input_tokens": {
+          "value": "25",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:review-change:1:cache_write_input_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "output_tokens": {
+          "value": "260",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:review-change:1:output_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "reasoning_output_tokens": {
+          "value": null,
+          "evidence": "unknown",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:review-change:1:reasoning_output_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        }
+      },
+      "dimensions": {
+        "requested_model": {
+          "value": "example/model-small",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:review-change:1:requested-model"
+            }
+          ]
+        },
+        "actual_model": {
+          "value": "example/model-small",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:review-change:1:actual-model"
+            }
+          ]
+        },
+        "requested_tier": {
+          "value": "standard",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:review-change:1:requested-tier"
+            }
+          ]
+        },
+        "actual_tier": {
+          "value": "standard",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:review-change:1:actual-tier"
+            }
+          ]
+        },
+        "requested_reasoning": {
+          "value": "low",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:review-change:1:requested-reasoning"
+            }
+          ]
+        },
+        "actual_reasoning": {
+          "value": null,
+          "evidence": "unknown",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:review-change:1:actual-reasoning"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "model:review-change:2",
+      "source_refs": [
+        {
+          "source_id": "synthetic-task-breakdown",
+          "record": "observation:model:review-change:2"
+        }
+      ],
+      "subject": "model.response",
+      "accounting_scope": "direct",
+      "operation_id": "review-change:model-2",
+      "parent_id": "task:review-change",
+      "agent_id": "synthetic-agent",
+      "session_id": "synthetic-session",
+      "work_item_id": "DEMO-TASK-BREAKDOWN",
+      "task_id": "Review change",
+      "status": "ok",
+      "event_at": {
+        "value": "2026-09-07T08:00:55Z",
+        "evidence": "observed",
+        "method": "event supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:review-change:2"
+          }
+        ]
+      },
+      "started_at": {
+        "value": "2026-09-07T08:00:55Z",
+        "evidence": "observed",
+        "method": "start supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:review-change:2"
+          }
+        ]
+      },
+      "ended_at": {
+        "value": "2026-09-07T08:00:56Z",
+        "evidence": "observed",
+        "method": "end supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:review-change:2"
+          }
+        ]
+      },
+      "collected_at": {
+        "value": "2026-09-07T09:00:00Z",
+        "evidence": "observed",
+        "method": "collection supplied to recorder",
+        "source_refs": [
+          {
+            "source_id": "synthetic-task-breakdown",
+            "record": "observation:model:review-change:2"
+          }
+        ]
+      },
+      "measurements": {
+        "input_tokens": {
+          "value": "600",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:review-change:2:input_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "cache_read_input_tokens": {
+          "value": "100",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:review-change:2:cache_read_input_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "output_tokens": {
+          "value": "180",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:review-change:2:output_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "reasoning_output_tokens": {
+          "value": "60",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown quantity; no provider measurement",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:review-change:2:reasoning_output_tokens"
+            }
+          ],
+          "count_basis": "consumed",
+          "aggregation": "delta",
+          "scope": "event"
+        }
+      },
+      "dimensions": {
+        "requested_model": {
+          "value": "example/model-small",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:review-change:2:requested-model"
+            }
+          ]
+        },
+        "actual_model": {
+          "value": "example/model-small",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:review-change:2:actual-model"
+            }
+          ]
+        },
+        "requested_tier": {
+          "value": "standard",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:review-change:2:requested-tier"
+            }
+          ]
+        },
+        "actual_tier": {
+          "value": "standard",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:review-change:2:actual-tier"
+            }
+          ]
+        },
+        "requested_reasoning": {
+          "value": "low",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:review-change:2:requested-reasoning"
+            }
+          ]
+        },
+        "actual_reasoning": {
+          "value": "low",
+          "evidence": "declared",
+          "method": "Synthetic task breakdown metadata; declared scenario fact",
+          "source_refs": [
+            {
+              "source_id": "synthetic-task-breakdown",
+              "record": "observation:model:review-change:2:actual-reasoning"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "coverage": {
+    "boundary": "instrumented",
+    "complete": true,
+    "dropped_observations": 0,
+    "limitations": [
+      "Recorder retains caller-supplied usage metadata only; provider-side work and raw prompts/responses are unknown."
+    ]
+  }
+}

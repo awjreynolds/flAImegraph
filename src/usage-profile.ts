@@ -62,7 +62,7 @@ export function createUsageProfile(input: UsageReport, options: UsageProfileOpti
   if (!options || typeof options.meter_id !== "string" || Object.keys(options).some(key => !["meter_id", "group_by"].includes(key))) throw new Error("Select a meter and an optional grouping for the usage profile");
   const meter = report.bundle.meters.find(item => item.id === options.meter_id);
   if (!meter || !report.selected_meter_ids.includes(meter.id)) throw new Error("The selected meter is not present in this report");
-  const groupBy = options.group_by ?? ["work_item", "task", "model"];
+  const groupBy = options.group_by ?? ["task", "operation"];
   if (!Array.isArray(groupBy) || groupBy.some(item => !["task", "work_item", "model", "agent", "scope", "operation", "session", "execution"].includes(item)) || new Set(groupBy).size !== groupBy.length || (groupBy.includes("execution") && groupBy.length !== 1)) throw new Error("Choose unique usage groupings, or execution alone");
   const byId = new Map(report.bundle.observations.map(observation => [observation.id, observation]));
   const rows = new Map(report.observations.map(row => [row.observation_id, row]));
@@ -82,7 +82,9 @@ export function createUsageProfile(input: UsageReport, options: UsageProfileOpti
       for (const grouping of groupBy) {
         const label = dimension(observation, grouping as UsageGrouping);
         // A caller's literal work label must never collide with the missing-value label.
-        const identity = grouping === "work_item" ? observation.work_item_id : label;
+        const identity = grouping === "task" ? observation.task_id ?? observation.work_item_id
+          : grouping === "work_item" || grouping === "agent" || grouping === "operation" || grouping === "session"
+            ? observation[`${grouping}_id`] : label;
         stack.push({ id: JSON.stringify([grouping, identity]), label });
       }
       stack.push({ id: `observation:${observation.id}`, label: observation.subject ?? observation.operation_id ?? observation.id });

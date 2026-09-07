@@ -7,9 +7,13 @@
       "meter": "input_tokens",
       "total": "11993223",
       "unit": "tokens",
-      "maximum_stack_depth": 3,
+      "maximum_stack_depth": 4,
       "sha256": "ce1a9cd52eccca7aa0e72a701f6c490ffa822397a337fbad1480ef9ea1960fcc",
-      "actual_tier_observations": 0
+      "actual_tier_observations": 0,
+      "group_by": [
+        "task",
+        "operation"
+      ]
     },
     "files": {
       "observations": 5130,

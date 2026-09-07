@@ -9,17 +9,25 @@ import { exportUsageFolded, exportUsagePprof, renderUsageSvg } from "./usage-exp
 import { operationUsage } from "./usage-operations.js";
 import { importUsage } from "./usage-import.js";
 import type { UsageBundle, UsageReport, UsageGrouping } from "./usage-types.js";
+import { mergeLifecycleCaptures, projectLifecycle, validateLifecycleCapture } from "./lifecycle.js";
+import { readLifecycleJournal } from "./lifecycle-journal.js";
 
-const help = `flAImegraph — usage-first AI profiling (experimental 0.4)
+const help = `flAImegraph — usage-first AI profiling (experimental 0.5)
 
 Capture and inspect usage without rates, currency or a subscription policy:
   import --format codex|pi|openai|anthropic|gemini|otel --input FILE --dataset-id ID --out usage.json
   # Native imports can use --work-item "PROJ-142 / custom work label"
-  import --format legacy|operations|usage --input FILE --out usage.json
+  import --format legacy|operations|usage|lifecycle --input FILE --out usage.json
   merge --inputs usage-a.json,usage-b.json --out usage.json
-  report --input usage.json [--group-by task,model] --out report.json
-  export --input report.json --meter input_tokens --out-dir profile [--group-by task,model|execution] [--svg true]
+  report --input usage.json [--group-by task,operation] --out report.json
+  export --input report.json --meter input_tokens --out-dir profile [--group-by task,operation|execution] [--svg true]
   validate --kind usage|usage-report|usage-profile|efficiency-input|benchmark --input FILE
+
+Durable action capture and recovery:
+  lifecycle-recover --directory JOURNAL_DIR --dataset-id ID --out lifecycle.json
+  lifecycle-merge --inputs lifecycle-a.json,lifecycle-b.json --out lifecycle.json
+  lifecycle-report --input lifecycle.json --out lifecycle-report.json
+  validate --kind lifecycle --input lifecycle.json
 
 Optional downstream analysis:
   analyze --input report.json [--options analysis-options.json] --out analysis.json
@@ -74,16 +82,36 @@ async function exportReport(report: UsageReport, options: UsageProfileOptions, d
 export async function runUsageCommand(args: string[]): Promise<void> {
   const [command, ...rest] = args;
   if (!command || ["--help", "-h"].includes(command)) { process.stdout.write(help); return; }
+  if(command === "lifecycle-recover") {
+    const options=flags(rest,["--directory","--dataset-id","--out"]), directory=required(options,"--directory"), out=required(options,"--out");
+    // The reader owns immutable .jsonl segments. A recovery artifact must live outside them.
+    if(out.endsWith(".jsonl")) throw new Error("Recovery output must be a .json artifact, never a journal segment");
+    const capture=await readLifecycleJournal({directory,dataset_id:required(options,"--dataset-id")});
+    const report=projectLifecycle(capture);
+    await save(out,capture); output({output:out,events:capture.events.length,actions:report.actions.length,issues:report.issues.length}); return;
+  }
+  if(command === "lifecycle-merge") {
+    const options=flags(rest,["--inputs","--out"]), inputs=required(options,"--inputs").split(","), out=required(options,"--out");
+    await protectInputs([out],inputs);
+    const capture=mergeLifecycleCaptures(await Promise.all(inputs.map(async path=>validateLifecycleCapture(await json(path)))));
+    await save(out,capture); output({output:out,events:capture.events.length}); return;
+  }
+  if(command === "lifecycle-report") {
+    const options=flags(rest,["--input","--out"]), input=required(options,"--input"), out=required(options,"--out");
+    await protectInputs([out],[input]); const report=projectLifecycle(validateLifecycleCapture(await json(input)));
+    await save(out,report); output({output:out,actions:report.actions.length,issues:report.issues.length}); return;
+  }
   if (["value", "render", "conformance", "work-item"].includes(command) || command.startsWith("operation-") || command.startsWith("context-") || command === "harness-profile") throw new Error("Legacy cost/context commands are available through flaimegraph-pricing; the default command profiles usage without a valuation.");
   if (command === "import") {
     const options = flags(rest, ["--format", "--input", "--dataset-id", "--source-id", "--version", "--work-item", "--agent", "--session", "--task", "--out"]);
     const input = required(options, "--input"), out = required(options, "--out"), format = required(options, "--format");
-    if (["usage", "operations"].includes(format) && ["--work-item", "--agent", "--session", "--task", "--source-id", "--version"].some(key => options.has(key))) throw new Error("Existing usage/operation captures retain their immutable associations. Set work identifiers in the producer or when importing a native log.");
+    if (["usage", "operations", "lifecycle"].includes(format) && ["--work-item", "--agent", "--session", "--task", "--source-id", "--version"].some(key => options.has(key))) throw new Error("Existing captures retain their immutable associations. Set work identifiers in the producer or when importing a native log.");
     await protectInputs([out], [input]);
     const text = await readFile(input, "utf8");
     let bundle: UsageBundle;
     if (format === "operations") bundle = operationUsage(JSON.parse(text));
     else if (format === "usage") bundle = validateUsageBundle(JSON.parse(text));
+    else if (format === "lifecycle") bundle = projectLifecycle(validateLifecycleCapture(JSON.parse(text))).usage;
     else {
       let dataset = options.get("--dataset-id");
       if (!dataset && ["legacy", "legacy-evidence"].includes(format)) dataset = JSON.parse(text).dataset_id;
@@ -114,6 +142,7 @@ export async function runUsageCommand(args: string[]): Promise<void> {
   if (command === "validate") {
     const options = flags(rest, ["--input", "--kind"]), value = await json(required(options, "--input")), kind = options.get("--kind") ?? "usage";
     if (kind === "usage") validateUsageBundle(value);
+    else if (kind === "lifecycle") projectLifecycle(validateLifecycleCapture(value));
     else if (kind === "usage-report") validateUsageReport(value);
     else if (kind === "usage-profile") validateUsageProfile(value);
     else if (kind === "efficiency-input") (await import("./efficiency.js")).validateEfficiencyInput(value);
@@ -156,7 +185,7 @@ export async function runUsageCommand(args: string[]): Promise<void> {
   }
   if (command === "demo") {
     const options = flags(rest, ["--out-dir"]), path = fileURLToPath(new URL("../examples/dogfood/v04/native-usage.json", import.meta.url));
-    await exportReport(createUsageReport(validateUsageBundle(await json(path))), { meter_id: "input_tokens", group_by: ["model"] }, required(options, "--out-dir"), true, [path]); return;
+    await exportReport(createUsageReport(validateUsageBundle(await json(path))), { meter_id: "input_tokens" }, required(options, "--out-dir"), true, [path]); return;
   }
   if (command === "capabilities") {
     flags(rest, []);

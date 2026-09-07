@@ -89,3 +89,44 @@ test('running duration remains open and non-additive accounting does not hide a 
   assert.match(open.duration.note,/elapsed so far/);
   assert.equal(usageTiming(b.observations.find(o=>o.id==='aggregate')!,b.meters).duration.value,'0.000000003 s');
 });
+
+test('lifecycle timing uses explicit state and elapsed evidence without crossing clock epochs', () => {
+  const r=createUsageRecorder({dataset_id:'timing'});
+  r.recordEvent({id:'paused',status:'unknown',started_at:'2026-09-07T10:00:00Z',dimensions:{extensions:{
+    'flAImegraph.lifecycle.state':{value:'paused',evidence:'derived',method:'replayed lifecycle state',source_refs:[]},
+    'flAImegraph.lifecycle.known_wait_ns':{value:'3000000000',evidence:'derived',method:'closed pause intervals',source_refs:[]},
+    'flAImegraph.lifecycle.timing_qualified':{value:'true',evidence:'derived',method:'lifecycle qualification',source_refs:[]},
+    'flAImegraph.lifecycle.clock_continuity':{value:'unknown',evidence:'derived',method:'producer epoch',source_refs:[]},
+  }}});
+  r.recordEvent({id:'unobserved',status:'unknown',started_at:'2026-09-07T10:00:00Z',dimensions:{extensions:{
+    'flAImegraph.lifecycle.state':{value:'completion_unobserved',evidence:'derived',method:'replayed lifecycle state',source_refs:[]},
+    'flAImegraph.lifecycle.clock_continuity':{value:'unknown',evidence:'derived',method:'producer epoch',source_refs:[]},
+  }}});
+  r.recordEvent({id:'ended',status:'ok',started_at:'2026-09-07T10:00:00Z',ended_at:'2026-09-07T10:00:10Z',dimensions:{extensions:{
+    'flAImegraph.lifecycle.state':{value:'ok',evidence:'derived',method:'replayed lifecycle state',source_refs:[]},
+    'flAImegraph.lifecycle.elapsed_ns':{value:'2000000000',evidence:'derived',method:'difference of monotonic samples in one producer epoch; includes pre-dispatch journal acknowledgement and may include waits; not active CPU time',source_refs:[]},
+    'flAImegraph.lifecycle.known_wait_ns':{value:'3000000000',evidence:'derived',method:'closed pause intervals',source_refs:[]},
+    'flAImegraph.lifecycle.timing_qualified':{value:'true',evidence:'derived',method:'lifecycle qualification',source_refs:[]},
+    'flAImegraph.lifecycle.clock_continuity':{value:'continuous',evidence:'derived',method:'producer epoch',source_refs:[]},
+  }}});
+  r.recordEvent({id:'cross-epoch',status:'ok',started_at:'2026-09-07T10:00:00Z',ended_at:'2026-09-07T10:00:10Z',dimensions:{extensions:{
+    'flAImegraph.lifecycle.state':{value:'ok',evidence:'derived',method:'replayed lifecycle state',source_refs:[]},
+    'flAImegraph.lifecycle.clock_continuity':{value:'unknown',evidence:'derived',method:'producer epoch',source_refs:[]},
+  }}});
+  const b=r.snapshot();
+  const paused=usageTiming(b.observations.find(o=>o.id==='paused')!,b.meters);
+  assert.equal(paused.end.value,'Paused at capture');
+  assert.equal(paused.duration.value,'Not captured');
+  assert.doesNotMatch(paused.end.value,/In progress/);
+  const unobserved=usageTiming(b.observations.find(o=>o.id==='unobserved')!,b.meters);
+  assert.equal(unobserved.end.value,'Completion unobserved');
+  assert.equal(unobserved.duration.value,'Not captured');
+  const ended=usageTiming(b.observations.find(o=>o.id==='ended')!,b.meters);
+  assert.equal(ended.duration.value,'2 s');
+  assert.match(ended.duration.note,/Lifecycle elapsed/);
+  assert.match(ended.duration.note,/known wait/i);
+  assert.match(ended.duration.note,/pre-dispatch journal acknowledgement/);
+  const crossEpoch=usageTiming(b.observations.find(o=>o.id==='cross-epoch')!,b.meters);
+  assert.equal(crossEpoch.duration.value,'Not captured');
+  assert.match(crossEpoch.duration.note,/clock epoch/i);
+});

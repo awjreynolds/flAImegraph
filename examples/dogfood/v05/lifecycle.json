@@ -1,0 +1,376 @@
+{
+  "schema_version": "0.5.0",
+  "kind": "lifecycle",
+  "dataset_id": "synthetic-interruption-scenario",
+  "events": [
+    {
+      "schema_version": "0.5.0",
+      "dataset_id": "synthetic-interruption-scenario",
+      "producer_id": "illustrative-worker",
+      "epoch": "scenario-epoch",
+      "sequence": 0,
+      "event_id": "scenario-epoch:0",
+      "wall_at": "2026-09-07T00:00:00.000Z",
+      "monotonic_ns": "0",
+      "data": {
+        "kind": "epoch"
+      }
+    },
+    {
+      "schema_version": "0.5.0",
+      "dataset_id": "synthetic-interruption-scenario",
+      "producer_id": "illustrative-worker",
+      "epoch": "scenario-epoch",
+      "sequence": 1,
+      "event_id": "scenario-epoch:1",
+      "wall_at": "2026-09-07T00:00:00.100Z",
+      "monotonic_ns": "100000000",
+      "data": {
+        "kind": "start",
+        "action_id": "workflow",
+        "subject": "Synthetic workflow",
+        "work_item_id": "EXAMPLE-42"
+      }
+    },
+    {
+      "schema_version": "0.5.0",
+      "dataset_id": "synthetic-interruption-scenario",
+      "producer_id": "illustrative-worker",
+      "epoch": "scenario-epoch",
+      "sequence": 2,
+      "event_id": "scenario-epoch:2",
+      "wall_at": "2026-09-07T00:00:01.000Z",
+      "monotonic_ns": "1000000000",
+      "data": {
+        "kind": "start",
+        "action_id": "quota-wait",
+        "subject": "model.response · quota wait",
+        "parent_id": "workflow",
+        "work_item_id": "EXAMPLE-42",
+        "task_id": "illustrative-task",
+        "agent_id": "illustrative-worker"
+      }
+    },
+    {
+      "schema_version": "0.5.0",
+      "dataset_id": "synthetic-interruption-scenario",
+      "producer_id": "illustrative-worker",
+      "epoch": "scenario-epoch",
+      "sequence": 3,
+      "event_id": "scenario-epoch:3",
+      "wall_at": "2026-09-07T00:00:02.000Z",
+      "monotonic_ns": "2000000000",
+      "data": {
+        "kind": "pause",
+        "action_id": "quota-wait",
+        "reason": {
+          "code": "quota",
+          "evidence": "declared",
+          "method": "Synthetic quota wait scenario",
+          "reset_at": "2026-09-07T08:00:02Z"
+        }
+      }
+    },
+    {
+      "schema_version": "0.5.0",
+      "dataset_id": "synthetic-interruption-scenario",
+      "producer_id": "illustrative-worker",
+      "epoch": "scenario-epoch",
+      "sequence": 4,
+      "event_id": "scenario-epoch:4",
+      "wall_at": "2026-09-07T08:00:02.000Z",
+      "monotonic_ns": "28802000000000",
+      "data": {
+        "kind": "resume",
+        "action_id": "quota-wait"
+      }
+    },
+    {
+      "schema_version": "0.5.0",
+      "dataset_id": "synthetic-interruption-scenario",
+      "producer_id": "illustrative-worker",
+      "epoch": "scenario-epoch",
+      "sequence": 5,
+      "event_id": "scenario-epoch:5",
+      "wall_at": "2026-09-07T08:00:02.500Z",
+      "monotonic_ns": "28802500000000",
+      "data": {
+        "kind": "measurement",
+        "action_id": "quota-wait",
+        "meter": {
+          "id": "input_tokens",
+          "unit": "token",
+          "description": "Illustrative provider input tokens",
+          "subset_of": null,
+          "overlap": "disjoint"
+        },
+        "measurement": {
+          "value": "1200",
+          "evidence": "declared",
+          "method": "Synthetic scenario receipt; not measured provider consumption",
+          "count_basis": "provider_native",
+          "aggregation": "delta",
+          "scope": "event"
+        }
+      }
+    },
+    {
+      "schema_version": "0.5.0",
+      "dataset_id": "synthetic-interruption-scenario",
+      "producer_id": "illustrative-worker",
+      "epoch": "scenario-epoch",
+      "sequence": 6,
+      "event_id": "scenario-epoch:6",
+      "wall_at": "2026-09-07T08:00:03.000Z",
+      "monotonic_ns": "28803000000000",
+      "data": {
+        "kind": "end",
+        "action_id": "quota-wait",
+        "status": "ok"
+      }
+    },
+    {
+      "schema_version": "0.5.0",
+      "dataset_id": "synthetic-interruption-scenario",
+      "producer_id": "illustrative-worker",
+      "epoch": "scenario-epoch",
+      "sequence": 7,
+      "event_id": "scenario-epoch:7",
+      "wall_at": "2026-09-07T08:00:04.000Z",
+      "monotonic_ns": "28804000000000",
+      "data": {
+        "kind": "start",
+        "action_id": "long-read",
+        "subject": "tool.read · unexplained gap",
+        "parent_id": "workflow",
+        "work_item_id": "EXAMPLE-42",
+        "task_id": "illustrative-task",
+        "agent_id": "illustrative-worker"
+      }
+    },
+    {
+      "schema_version": "0.5.0",
+      "dataset_id": "synthetic-interruption-scenario",
+      "producer_id": "illustrative-worker",
+      "epoch": "scenario-epoch",
+      "sequence": 8,
+      "event_id": "scenario-epoch:8",
+      "wall_at": "2026-09-07T16:00:04.000Z",
+      "monotonic_ns": "57604000000000",
+      "data": {
+        "kind": "heartbeat",
+        "action_id": "long-read"
+      }
+    },
+    {
+      "schema_version": "0.5.0",
+      "dataset_id": "synthetic-interruption-scenario",
+      "producer_id": "illustrative-worker",
+      "epoch": "scenario-epoch",
+      "sequence": 9,
+      "event_id": "scenario-epoch:9",
+      "wall_at": "2026-09-07T16:00:05.000Z",
+      "monotonic_ns": "57605000000000",
+      "data": {
+        "kind": "end",
+        "action_id": "long-read",
+        "status": "ok"
+      }
+    },
+    {
+      "schema_version": "0.5.0",
+      "dataset_id": "synthetic-interruption-scenario",
+      "producer_id": "illustrative-worker",
+      "epoch": "scenario-epoch",
+      "sequence": 10,
+      "event_id": "scenario-epoch:10",
+      "wall_at": "2026-09-07T16:00:06.000Z",
+      "monotonic_ns": "57606000000000",
+      "data": {
+        "kind": "start",
+        "action_id": "failed-request",
+        "subject": "model.response · failed request",
+        "parent_id": "workflow",
+        "work_item_id": "EXAMPLE-42",
+        "task_id": "illustrative-task",
+        "agent_id": "illustrative-worker"
+      }
+    },
+    {
+      "schema_version": "0.5.0",
+      "dataset_id": "synthetic-interruption-scenario",
+      "producer_id": "illustrative-worker",
+      "epoch": "scenario-epoch",
+      "sequence": 11,
+      "event_id": "scenario-epoch:11",
+      "wall_at": "2026-09-07T16:00:06.500Z",
+      "monotonic_ns": "57606500000000",
+      "data": {
+        "kind": "measurement",
+        "action_id": "failed-request",
+        "meter": {
+          "id": "input_tokens",
+          "unit": "token",
+          "description": "Illustrative provider input tokens",
+          "subset_of": null,
+          "overlap": "disjoint"
+        },
+        "measurement": {
+          "value": "30",
+          "evidence": "declared",
+          "method": "Synthetic scenario receipt; not measured provider consumption",
+          "count_basis": "provider_native",
+          "aggregation": "delta",
+          "scope": "event"
+        }
+      }
+    },
+    {
+      "schema_version": "0.5.0",
+      "dataset_id": "synthetic-interruption-scenario",
+      "producer_id": "illustrative-worker",
+      "epoch": "scenario-epoch",
+      "sequence": 12,
+      "event_id": "scenario-epoch:12",
+      "wall_at": "2026-09-07T16:00:07.000Z",
+      "monotonic_ns": "57607000000000",
+      "data": {
+        "kind": "end",
+        "action_id": "failed-request",
+        "status": "error",
+        "reason": {
+          "code": "network",
+          "evidence": "declared",
+          "method": "Synthetic disconnected request scenario"
+        }
+      }
+    },
+    {
+      "schema_version": "0.5.0",
+      "dataset_id": "synthetic-interruption-scenario",
+      "producer_id": "illustrative-worker",
+      "epoch": "scenario-epoch",
+      "sequence": 13,
+      "event_id": "scenario-epoch:13",
+      "wall_at": "2026-09-07T16:00:08.000Z",
+      "monotonic_ns": "57608000000000",
+      "data": {
+        "kind": "start",
+        "action_id": "retry-request",
+        "subject": "model.response · retry",
+        "parent_id": "workflow",
+        "work_item_id": "EXAMPLE-42",
+        "task_id": "illustrative-task",
+        "agent_id": "illustrative-worker",
+        "retry_of": "failed-request"
+      }
+    },
+    {
+      "schema_version": "0.5.0",
+      "dataset_id": "synthetic-interruption-scenario",
+      "producer_id": "illustrative-worker",
+      "epoch": "scenario-epoch",
+      "sequence": 14,
+      "event_id": "scenario-epoch:14",
+      "wall_at": "2026-09-07T16:00:09.000Z",
+      "monotonic_ns": "57609000000000",
+      "data": {
+        "kind": "measurement",
+        "action_id": "retry-request",
+        "meter": {
+          "id": "input_tokens",
+          "unit": "token",
+          "description": "Illustrative provider input tokens",
+          "subset_of": null,
+          "overlap": "disjoint"
+        },
+        "measurement": {
+          "value": "180",
+          "evidence": "declared",
+          "method": "Synthetic scenario receipt; not measured provider consumption",
+          "count_basis": "provider_native",
+          "aggregation": "delta",
+          "scope": "event"
+        }
+      }
+    },
+    {
+      "schema_version": "0.5.0",
+      "dataset_id": "synthetic-interruption-scenario",
+      "producer_id": "illustrative-worker",
+      "epoch": "scenario-epoch",
+      "sequence": 15,
+      "event_id": "scenario-epoch:15",
+      "wall_at": "2026-09-07T16:00:10.000Z",
+      "monotonic_ns": "57610000000000",
+      "data": {
+        "kind": "end",
+        "action_id": "retry-request",
+        "status": "ok"
+      }
+    },
+    {
+      "schema_version": "0.5.0",
+      "dataset_id": "synthetic-interruption-scenario",
+      "producer_id": "illustrative-worker",
+      "epoch": "scenario-epoch",
+      "sequence": 16,
+      "event_id": "scenario-epoch:16",
+      "wall_at": "2026-09-07T16:00:11.000Z",
+      "monotonic_ns": "57611000000000",
+      "data": {
+        "kind": "start",
+        "action_id": "completion-unobserved",
+        "subject": "tool.remote · completion unobserved",
+        "parent_id": "workflow",
+        "work_item_id": "EXAMPLE-42",
+        "task_id": "illustrative-task",
+        "agent_id": "illustrative-worker"
+      }
+    },
+    {
+      "schema_version": "0.5.0",
+      "dataset_id": "synthetic-interruption-scenario",
+      "producer_id": "illustrative-worker",
+      "epoch": "scenario-epoch",
+      "sequence": 17,
+      "event_id": "scenario-epoch:17",
+      "wall_at": "2026-09-07T16:00:12.000Z",
+      "monotonic_ns": "57612000000000",
+      "data": {
+        "kind": "start",
+        "action_id": "paused-at-capture",
+        "subject": "model.response · paused at capture",
+        "parent_id": "workflow",
+        "work_item_id": "EXAMPLE-42",
+        "task_id": "illustrative-task",
+        "agent_id": "illustrative-worker"
+      }
+    },
+    {
+      "schema_version": "0.5.0",
+      "dataset_id": "synthetic-interruption-scenario",
+      "producer_id": "illustrative-worker",
+      "epoch": "scenario-epoch",
+      "sequence": 18,
+      "event_id": "scenario-epoch:18",
+      "wall_at": "2026-09-07T16:00:13.000Z",
+      "monotonic_ns": "57613000000000",
+      "data": {
+        "kind": "pause",
+        "action_id": "paused-at-capture",
+        "reason": {
+          "code": "service",
+          "evidence": "declared",
+          "method": "Synthetic service unavailable scenario"
+        }
+      }
+    }
+  ],
+  "issues": [
+    {
+      "code": "SYNTHETIC_SCENARIO",
+      "message": "This is an illustrative interruption scenario. Times, failures, waits and usage quantities are synthetic, not measured events or account data."
+    }
+  ]
+}
