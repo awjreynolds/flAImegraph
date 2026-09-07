@@ -31,8 +31,12 @@ jobs:
       - run: go tool pprof -top .local/ci-demo/cost.pprof
       - run: go run . ../../.local/ci-demo/evidence.otlp.json 784
         working-directory: tools/verify-otlp
+      - run: node dist/cli.js validate --kind operation-report --input examples/dogfood/v03/files-report.json
+      - run: node dist/cli.js validate --kind operation-report --input examples/dogfood/v03/routing-report.json
+      - run: node dist/cli.js validate --kind operation-report --input examples/dogfood/v03/native-report.json
+      - run: go tool pprof -top examples/dogfood/v03/files-operations.pprof
       - run: npm pack --pack-destination .local
-      - run: npm install --ignore-scripts --prefix .local/package-smoke .local/flaimegraph-0.2.0.tgz
+      - run: npm install --ignore-scripts --prefix .local/package-smoke .local/flaimegraph-0.3.0.tgz
       - run: node .local/package-smoke/node_modules/flaimegraph/dist/cli.js conformance
       - run: node .local/package-smoke/node_modules/flaimegraph/dist/cli.js demo --out-dir .local/package-demo
 

@@ -1,0 +1,3779 @@
+{
+  "traceEvents": [
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 0,
+      "dur": 95000,
+      "args": {
+        "operation_id": "operation:codex:3bafb0fb05712ec8ea42be02667e34de3027934191b4f28324fd52e1e0ae3ff2",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 10802000,
+      "dur": 121000,
+      "args": {
+        "operation_id": "operation:codex:d2d401e47037a41437e5063e438b63019294ec97cec3e361ee2c867cb283367c",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "spawn_agent",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 32324000,
+      "dur": 124000,
+      "args": {
+        "operation_id": "operation:codex:e4945e0772a467854c6c724eadf432f64762267626523dd986a41fb82c1cbd44",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 41981000,
+      "dur": 109000,
+      "args": {
+        "operation_id": "operation:codex:3f36557d316e2e5ea8f0c90c60646fbcf7f026b7933b7d6d35dea1b81bb52458",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "spawn_agent",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 139038000,
+      "dur": 132000,
+      "args": {
+        "operation_id": "operation:codex:a0e5fa02763b59c4c88d28f8591b9e6fed17674b0afeb61ee24debe7fc030d05",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 154445000,
+      "dur": 179000,
+      "args": {
+        "operation_id": "operation:codex:9a061c04eb75943eca0d1598c12fa62ffc85b1b4a09e12a945a3c8258806cfb6",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "write",
+      "cat": "file_write",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 242553000,
+      "dur": 1974000,
+      "args": {
+        "operation_id": "operation:codex:3695f6e21291da0ee9ac0f78299e98e20291d6ef19debbdfca2b7c38fba41ff9",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": {
+          "measurements": {
+            "read_bytes": {
+              "evidence": "unknown",
+              "method": "native structured tool fields: unavailable"
+            },
+            "returned_bytes": {
+              "evidence": "unknown",
+              "method": "native structured tool fields: unavailable"
+            },
+            "written_bytes": {
+              "evidence": "unknown",
+              "method": "native structured tool fields: unavailable"
+            },
+            "inserted_bytes": {
+              "evidence": "unknown",
+              "method": "native structured tool fields: unavailable"
+            },
+            "deleted_bytes": {
+              "evidence": "unknown",
+              "method": "native structured tool fields: unavailable"
+            },
+            "entry_count": {
+              "evidence": "unknown",
+              "method": "native structured tool fields: unavailable"
+            },
+            "examined_entries": {
+              "evidence": "unknown",
+              "method": "native structured tool fields: unavailable"
+            },
+            "content_sha256": {
+              "evidence": "unknown",
+              "method": "native structured tool fields: unavailable"
+            }
+          },
+          "resource_id": "resource:50d572551e01473047f40693e732a20543af2ae0f96d2d52efc50d71741912f5",
+          "resource_label": "file",
+          "requested_range": null,
+          "read_bytes": null,
+          "returned_bytes": null,
+          "written_bytes": null,
+          "inserted_bytes": null,
+          "deleted_bytes": null,
+          "entry_count": null,
+          "examined_entries": null,
+          "content_sha256": null
+        }
+      }
+    },
+    {
+      "name": "new_context",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 247200000,
+      "dur": 155000,
+      "args": {
+        "operation_id": "operation:codex:038932c6d8e8ec971f08033bf4e4048b535c2e31edd5f5e19430567c997aa002",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "read",
+      "cat": "file_read",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 260716000,
+      "dur": 527000,
+      "args": {
+        "operation_id": "operation:codex:77a281182134cd4c3d504113f6c4534ad792837ce2a962794a418642878240ff",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": {
+          "measurements": {
+            "read_bytes": {
+              "evidence": "unknown",
+              "method": "native structured tool fields: unavailable"
+            },
+            "returned_bytes": {
+              "evidence": "unknown",
+              "method": "native structured tool fields: unavailable"
+            },
+            "written_bytes": {
+              "evidence": "unknown",
+              "method": "native structured tool fields: unavailable"
+            },
+            "inserted_bytes": {
+              "evidence": "unknown",
+              "method": "native structured tool fields: unavailable"
+            },
+            "deleted_bytes": {
+              "evidence": "unknown",
+              "method": "native structured tool fields: unavailable"
+            },
+            "entry_count": {
+              "evidence": "unknown",
+              "method": "native structured tool fields: unavailable"
+            },
+            "examined_entries": {
+              "evidence": "unknown",
+              "method": "native structured tool fields: unavailable"
+            },
+            "content_sha256": {
+              "evidence": "unknown",
+              "method": "native structured tool fields: unavailable"
+            }
+          },
+          "resource_id": "resource:50d572551e01473047f40693e732a20543af2ae0f96d2d52efc50d71741912f5",
+          "resource_label": "file",
+          "requested_range": null,
+          "read_bytes": null,
+          "returned_bytes": null,
+          "written_bytes": null,
+          "inserted_bytes": null,
+          "deleted_bytes": null,
+          "entry_count": null,
+          "examined_entries": null,
+          "content_sha256": null
+        }
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 266644000,
+      "dur": 790000,
+      "args": {
+        "operation_id": "operation:codex:b035a050a4230d721deec2aaa4a95e23c2e188f7a36b5a1b6f6414b5e78a5073",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "list_items",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 274402000,
+      "dur": 985000,
+      "args": {
+        "operation_id": "operation:codex:8b8528bf047f54618f74637708b09b1401d410470274029b0bf4a66ff02aeb0b",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "list_agents",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 280530000,
+      "dur": 50000,
+      "args": {
+        "operation_id": "operation:codex:98840aa1f03f65b60f04905f15120ce8330a277cad9bdbd0f99f9cb13165dd87",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "send_message",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 285670000,
+      "dur": 61000,
+      "args": {
+        "operation_id": "operation:codex:b3bb896fbebe1b9018c9df95115da64c1be3679194ee1bb5346c37903ce80568",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "send_message",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 292461000,
+      "dur": 145000,
+      "args": {
+        "operation_id": "operation:codex:54c23f2c7b43fe58b5876495bc37d61bf4daa62b808f8154feb36a0038300a5b",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 300733000,
+      "dur": 7632000,
+      "args": {
+        "operation_id": "operation:codex:f9c84b50f4f054daa2261a48536c3f8efae88c93b8a220aa846d3e824914c332",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 315106000,
+      "dur": 247000,
+      "args": {
+        "operation_id": "operation:codex:1894322c806f30d7874e2e982cc74be8621ece10d439fcd26a78e9512427993e",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 321896000,
+      "dur": 170000,
+      "args": {
+        "operation_id": "operation:codex:b707ad3dff9201769464ed386e33cc4709309b41fde604e47e24936e2708254d",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 327848000,
+      "dur": 97000,
+      "args": {
+        "operation_id": "operation:codex:2b8777e5d44c330db5b9886c53ca70506246d7c6a96746b886213c3407b83cc2",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 340887000,
+      "dur": 84000,
+      "args": {
+        "operation_id": "operation:codex:3fd62e7f16bc1eda945546cfddbc3880d7c7249de82824d7ee4967551b6f29ef",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 399848000,
+      "dur": 232000,
+      "args": {
+        "operation_id": "operation:codex:48875d2e7f0c7e84a933446ba6e7ac3cc48d01e24876b96f539e33df521064de",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 409536000,
+      "dur": 177000,
+      "args": {
+        "operation_id": "operation:codex:0b18a3029f1b51f8f40abde9acb97f3039c3e898cf9d9524dd884266efd9a52d",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "spawn_agent",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 430588000,
+      "dur": 167000,
+      "args": {
+        "operation_id": "operation:codex:246e9e6493c6b5f85369dfe4093c9613679f576bab4b4011a9cab51b4f65bb2e",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "send_message",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 436078000,
+      "dur": 52000,
+      "args": {
+        "operation_id": "operation:codex:cc3bae04cf0c23b1395ba27217b5555ae6e3cbf7bf25f64e126892c132cb9de1",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "send_message",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 442571000,
+      "dur": 67000,
+      "args": {
+        "operation_id": "operation:codex:522399dcc3857f9753520b166e3124dce3bf9fa6468ce72bdd70c15c161f4979",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 460135000,
+      "dur": 176000,
+      "args": {
+        "operation_id": "operation:codex:5e8c022f358426f2907f36536fbcd5e2eecebe6444b95c80b5a7a82e8195a0c9",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "send_message",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 468053000,
+      "dur": 180000,
+      "args": {
+        "operation_id": "operation:codex:308c13480e406915ca99a17e5d1eee8b30c31f01da209a89f19914c902bd0616",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 483244000,
+      "dur": 78000,
+      "args": {
+        "operation_id": "operation:codex:7ea72a518d55605788699d5399c913f07cc1bd29eac8f17bd156f04704c73c67",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 488138000,
+      "dur": 54000,
+      "args": {
+        "operation_id": "operation:codex:da5bebf744772dd8d96ff84a0334a235571a15a7fc9409f122282f4e0460e210",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 512625000,
+      "dur": 328000,
+      "args": {
+        "operation_id": "operation:codex:191d1c4acaaa66e5a2e2d0ebcbff36b9d9559545b44cc349ef5d35811b2a99af",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 562604000,
+      "dur": 457000,
+      "args": {
+        "operation_id": "operation:codex:4a5a2f2d0ac940943247b2290c854376072561d0829a3483c580bff728c13ff9",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 594696000,
+      "dur": 531000,
+      "args": {
+        "operation_id": "operation:codex:978c40da4fcc611232915b00f5bad94881c1f232b4a1771983646cf90e3c70f9",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "send_message",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 601434000,
+      "dur": 68000,
+      "args": {
+        "operation_id": "operation:codex:c0b9c7b52935ff8e462d375012150f2b35aa66a8fbbbc061a5995c559c6668ec",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 623121000,
+      "dur": 386000,
+      "args": {
+        "operation_id": "operation:codex:19236d63dc55191d8402582d131c878e47352299f555242b58d43543bdb4cdc3",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 659767000,
+      "dur": 444000,
+      "args": {
+        "operation_id": "operation:codex:62ea839eba8308f46a0c5f9e5988669dc08b15014d0a89924b587a39b6199972",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 716734000,
+      "dur": 668000,
+      "args": {
+        "operation_id": "operation:codex:8b7ae9d2fdff5c574a2bf0671ed737480b5a1b9f3243e94783a45756136dd8fc",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "send_message",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 724338000,
+      "dur": 161000,
+      "args": {
+        "operation_id": "operation:codex:f3882a2aab028bb98da33ec509cc54d333af5345e99a19375f4f76b9ebac0ef2",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 733548000,
+      "dur": 85000,
+      "args": {
+        "operation_id": "operation:codex:377e479779f8d83eb36beacbeb2ced3b2c60b018f1b1dfb64201ba472793b4d0",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 741222000,
+      "dur": 104000,
+      "args": {
+        "operation_id": "operation:codex:debb37c4719c12359318270f700392a717632e5697681aa0be6f91bcd1d2425a",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 783228000,
+      "dur": 441000,
+      "args": {
+        "operation_id": "operation:codex:5218ef95b1e8b871cb71016218fd0f48e86bfe11c062721b02463e6cba714562",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 846110000,
+      "dur": 664000,
+      "args": {
+        "operation_id": "operation:codex:60b62df993e149774e28bc1b33564ef53885b6f0236e6781c297998d1d035625",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "list_agents",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 852668000,
+      "dur": 54000,
+      "args": {
+        "operation_id": "operation:codex:68eb4ce9b8c8df0b44a947fc0f76104afe109eb5e801a8d29b8cc980da2ac5eb",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "send_message",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 860372000,
+      "dur": 70000,
+      "args": {
+        "operation_id": "operation:codex:13b1eba403eadce53cca83622c80bf25011db6bcd6453618b0d9961c42b66d8f",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 883746000,
+      "dur": 366000,
+      "args": {
+        "operation_id": "operation:codex:27f918b3259402b8f12021835d1e5686cfaad995edb46d7407ebdd3896d0d57d",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 913617000,
+      "dur": 845000,
+      "args": {
+        "operation_id": "operation:codex:aae298af0ea9714814b55c5c7fcfd6f2f4681570a0359cb5e198f17371a83ca8",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 939487000,
+      "dur": 101000,
+      "args": {
+        "operation_id": "operation:codex:de1f7597a82a40f280c76ffad2ab8fc78947bfed4b0b435341862626feab8612",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 947689000,
+      "dur": 96000,
+      "args": {
+        "operation_id": "operation:codex:afed791c01c4ab365369cb29b9043d83fee86d5fb723500de950cf159a333f42",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "send_message",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 954530000,
+      "dur": 82000,
+      "args": {
+        "operation_id": "operation:codex:5a4450247979d74266fce57e3e275a930d9953f9fc25d1ed2d36233998ccbf03",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 991173000,
+      "dur": 750000,
+      "args": {
+        "operation_id": "operation:codex:2586910c1845cda0e344926a0cb4b4ccab1c615309b53a3fce119d4063f58a16",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1080366000,
+      "dur": 636000,
+      "args": {
+        "operation_id": "operation:codex:5110c52dee2fdc6a14b2efeae427e00e1cc222a7ee98a0ef4d9e5f126ba65fc0",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "followup_task",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1093994000,
+      "dur": 62000,
+      "args": {
+        "operation_id": "operation:codex:90511c61ea40611b3a8b1b36759e3d68e2491f8f2fb2251e5aa47b6df837b753",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1100972000,
+      "dur": 109000,
+      "args": {
+        "operation_id": "operation:codex:f6b550051c6e8f42590379fc446cae823824b0cf0b0f6d1df4fbca5b12f1de28",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1106945000,
+      "dur": 104000,
+      "args": {
+        "operation_id": "operation:codex:22906f4486830311e3bcff80d2c18fd1511fdfbb635517959bde519add694955",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "followup_task",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1136236000,
+      "dur": 65000,
+      "args": {
+        "operation_id": "operation:codex:2780c3e14ac5873a9430da2470b20aa1d0fbb77d8773028042ddc44d63926655",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1155039000,
+      "dur": 1143000,
+      "args": {
+        "operation_id": "operation:codex:4ac8762609c0102faba7ce92a3e4b534a3eb7e123163b36e3644db101f18fb79",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1177290000,
+      "dur": 372000,
+      "args": {
+        "operation_id": "operation:codex:4ab32b5f459ab434f2ccc22cb76448d35cd83d4b49d3bef69cef427ca2108c29",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1200272000,
+      "dur": 688000,
+      "args": {
+        "operation_id": "operation:codex:56b0b573e196ddaa81b15531d57711823229cbca75380ef585f8e0515de292f0",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1232380000,
+      "dur": 842000,
+      "args": {
+        "operation_id": "operation:codex:14e10d85c635adbd7f94b301dafc80289972f40f0e6830640d99ee5debb6098d",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1308248000,
+      "dur": 1682000,
+      "args": {
+        "operation_id": "operation:codex:0ee716afc66f13047d7552d88763b91b3219ce1c71111e6fe0fe93ccafad4861",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1316807000,
+      "dur": 402000,
+      "args": {
+        "operation_id": "operation:codex:c98eb28d9a23ca1ea89d5a39ba84b37431117284a203975cf44d25fe2600608c",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "send_message",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1344896000,
+      "dur": 47000,
+      "args": {
+        "operation_id": "operation:codex:699cfa09e85db5e33a4c8ea8a8dc9216b8b05fca935a31e21e692137045ffd57",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "send_message",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1350888000,
+      "dur": 80000,
+      "args": {
+        "operation_id": "operation:codex:b9972cf8e61d673cd8bc4e5c475bd2a0e0a179700c26bb14937ab3dfd84501ca",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1403954000,
+      "dur": 1651000,
+      "args": {
+        "operation_id": "operation:codex:6f2d972df3bf660184907245309526e9c8e2e9cdb0e495f800ee5c5735404922",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1446885000,
+      "dur": 1225000,
+      "args": {
+        "operation_id": "operation:codex:333a440fd96acfb8fbe8f301b2ac9f01ff9020ee275ad35f2dea189c0c843959",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "send_message",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1454880000,
+      "dur": 77000,
+      "args": {
+        "operation_id": "operation:codex:1aa8087c4bd5010f95a0572412346f0050f88d609fa9731c70ce30f4ff33cf2c",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "send_message",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1461614000,
+      "dur": 64000,
+      "args": {
+        "operation_id": "operation:codex:39d5824acc19cf97e81179c8854b3c4fe0039332a7bed55edcafa0d83a7abf67",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "send_message",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1468129000,
+      "dur": 60000,
+      "args": {
+        "operation_id": "operation:codex:8f304554da97a1f212bc6a351996f6c462b21f445a1e37a2cd189e4cb2838830",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1484570000,
+      "dur": 84000,
+      "args": {
+        "operation_id": "operation:codex:fb4a49d0e42c910b5f93b131e4f35cb6f944e710c38464d18269e20e5fa629b2",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1495618000,
+      "dur": 79000,
+      "args": {
+        "operation_id": "operation:codex:baba65a88726a9ee123c19cd4b77b973c76f3954b5a3407c710c463b3428aed4",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1502402000,
+      "dur": 90000,
+      "args": {
+        "operation_id": "operation:codex:6c6d8107521d80976ab4b5f61bcd640c283c6db35c20bc1f0e1ae4174f5fc13c",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1508282000,
+      "dur": 956000,
+      "args": {
+        "operation_id": "operation:codex:d528ab77f23d38b03c2d0831baa610ac08fbc4fa55b54be4454a1a8d89dec400",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1518327000,
+      "dur": 113000,
+      "args": {
+        "operation_id": "operation:codex:568dc39215b3152bd221ed02c314688b404295e9ecdfa936479c659ab50b7505",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1529259000,
+      "dur": 471000,
+      "args": {
+        "operation_id": "operation:codex:49f3f7c1b169090240b0e5249477d48d9db4ba81f21f134494c2f70c73a0f307",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1551764000,
+      "dur": 123000,
+      "args": {
+        "operation_id": "operation:codex:b863252993f68e9f778086633d873a67f160d353213158014f91fa327c4be6a1",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1626912000,
+      "dur": 395000,
+      "args": {
+        "operation_id": "operation:codex:6b16266573c78f1e60bcb175735198777dade831772fe4b9005509c5b1325816",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "send_message",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1635838000,
+      "dur": 76000,
+      "args": {
+        "operation_id": "operation:codex:50323ea64451fd1d2be1c36fbf1d5d381e484daadda5b9491bbdb2261b760957",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "send_message",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1646755000,
+      "dur": 81000,
+      "args": {
+        "operation_id": "operation:codex:9ade0014ba0a9c85b37f746de33daf664340a90f5140adafab676520b4c72802",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "send_message",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1653405000,
+      "dur": 105000,
+      "args": {
+        "operation_id": "operation:codex:75d67b99e1d7f464c632c084cbd8482a11e68523f1e3e843a6dbbacbc8d231fe",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1689015000,
+      "dur": 1291000,
+      "args": {
+        "operation_id": "operation:codex:9fb9f1af880a1d4cd6a7a23203703200af0e4e5be569ee28d0152d70b725ffa5",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1711320000,
+      "dur": 1527000,
+      "args": {
+        "operation_id": "operation:codex:e9133e8d1ddd92cc857e35ad9cfdd34f9f1d21417fc489a23a46df9ba9035aaa",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "send_message",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1718150000,
+      "dur": 76000,
+      "args": {
+        "operation_id": "operation:codex:629f315c995e0d30d34d0c9a733f78b9fed57742a23cdc0e5607ac3d0daa1f78",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "send_message",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1726961000,
+      "dur": 110000,
+      "args": {
+        "operation_id": "operation:codex:c254b61f64f3daff1efdee09e3224d5563860473ba9b35a09cae251cd9affc49",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1739896000,
+      "dur": 82000,
+      "args": {
+        "operation_id": "operation:codex:890ceb49ec286f76a02c326a3c5fdb25fa11b94de32d8bd029c3b07770e8143c",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1752948000,
+      "dur": 166000,
+      "args": {
+        "operation_id": "operation:codex:c9db14ccef9b0bced7bb6be16c83c40fb5794c65f7f1c0b04ffe2b86605a9cde",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 1788914000,
+      "dur": 112000,
+      "args": {
+        "operation_id": "operation:codex:846efed2928ae76db35e12f116c3d8434c532e1d2de1bf42bd618bac5f68e3e7",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 2072274000,
+      "dur": 840000,
+      "args": {
+        "operation_id": "operation:codex:88b13391bd46e6eff11a38361df440402e532054292f6d8e6e82d233a7060724",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "send_message",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 2080366000,
+      "dur": 84000,
+      "args": {
+        "operation_id": "operation:codex:c1f79c682940acd2e39326600fdde07aee14053c4bafa3fdb9b90f2e8885be5a",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 2097593000,
+      "dur": 105000,
+      "args": {
+        "operation_id": "operation:codex:9072483ac5e9246f4e5ec9e45fb6766df15af22e336602529aa502c25ac59261",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "spawn_agent",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 2202592000,
+      "dur": 129000,
+      "args": {
+        "operation_id": "operation:codex:c5b9df31a4ec1a2331e7dfd43241eb61c5dada520e6d1440573c6c1a9f59f251",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 2209783000,
+      "dur": 128000,
+      "args": {
+        "operation_id": "operation:codex:075dab2dc8114f9256e19bb71694d3597e99dabef4fdcec3bcee71a15a84e70d",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 2360166000,
+      "dur": 506000,
+      "args": {
+        "operation_id": "operation:codex:001f9fb6fdaec05beab3231c0f31c9575f90b87ff143385b3d8039b52fc8104c",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 2479954000,
+      "dur": 1311000,
+      "args": {
+        "operation_id": "operation:codex:3524a2512bdde73993a94041016bdaa9aaecc5c3a962cd8c452d2656bed8f9e9",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 2516648000,
+      "dur": 310000,
+      "args": {
+        "operation_id": "operation:codex:f6ee24aeadb6ed9d76c8e89f4465d9e4e7b647a815615bdd98e04ad4749ae450",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "followup_task",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 2534713000,
+      "dur": 113000,
+      "args": {
+        "operation_id": "operation:codex:b4e336fca6a6721587595e4011fb9bf6b37c336faabf76e5ef28649aae291685",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 2544707000,
+      "dur": 74000,
+      "args": {
+        "operation_id": "operation:codex:72a743fa51204987d2ca6637064ba877e73e60ca95b4f8e51988a783677e1b88",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 2569036000,
+      "dur": 142000,
+      "args": {
+        "operation_id": "operation:codex:62348afcf60e65613eb2914765658bf3d09014a3f305ca240651e590ba1ad9c7",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "followup_task",
+      "cat": "tool",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 2594821000,
+      "dur": 91000,
+      "args": {
+        "operation_id": "operation:codex:154220a56b6144434e31ea44b77c3ac5ec5097c7e5565ef76df84644195e6820",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 2617171000,
+      "dur": 189000,
+      "args": {
+        "operation_id": "operation:codex:6d1cac7a1eec2748f85d18cfd6ed93c6d673937aa0aeef5005f4f177216b4f0a",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 2629906000,
+      "dur": 2869000,
+      "args": {
+        "operation_id": "operation:codex:7dec5f4d4bb8bd8fbbddde499a93980d0c79ced1c3a0859ecc19ee96db75d96d",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 2672893000,
+      "dur": 1551000,
+      "args": {
+        "operation_id": "operation:codex:1e0cf681d09c1d83eb8a55451e47b62b606ba8ab0c75f8efef5c95acfebfd304",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 2687525000,
+      "dur": 93000,
+      "args": {
+        "operation_id": "operation:codex:6160d9f1d81ff0409ca701b48eedb9464f8d7b06fecd720501b8c1fba3eb0c6c",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 2715662000,
+      "dur": 7735000,
+      "args": {
+        "operation_id": "operation:codex:95d8a5feebf6ed9a9f11b7091ab470f3093aec77009b3cb06f0df5b1228443a6",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    },
+    {
+      "name": "command",
+      "cat": "command",
+      "ph": "X",
+      "pid": 1,
+      "tid": 1,
+      "ts": 2760438000,
+      "dur": 976000,
+      "args": {
+        "operation_id": "operation:codex:4c7280f28fb30708982c427bd0655e39456ab6c247a37d442978fc3fc815908b",
+        "parent_id": null,
+        "parentage": null,
+        "status": "ok",
+        "timing": {
+          "started_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "ended_at": {
+            "evidence": "observed",
+            "method": "native envelope timestamp"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "native transcript does not provide monotonic elapsed duration",
+            "clock": "unknown"
+          }
+        },
+        "duration_method": "derived from wall-clock endpoints",
+        "duration_evidence": "derived",
+        "duration_clock": "wall",
+        "observation_id": null,
+        "io": null
+      }
+    }
+  ],
+  "displayTimeUnit": "ms",
+  "missing_timing_operation_ids": [
+    "operation:codex:67aa087469134687d5d6524d1813b9f5b7125e28a22d2d22ffb702e85858fb49",
+    "operation:codex:7362d20bf199c47104ed797956d8e34eecf195ad26fb3fee7c3551b1f52530e2",
+    "operation:codex:0da2d80267a783afbbed841de35a7796834dbf4b23782241706dcf8b64b354e2",
+    "operation:codex:bd421565dee973888348d945638b128501f8d0d13f1a6d0fa394b6818d61e65d",
+    "operation:codex:15ae108700a491e8972879ecba379a5b02c7ac3233726589242d0afafe2b93fd",
+    "operation:codex:2f91e1cd3c6031d75525d1cdd9ca75c9aa1852970847b79e92e8d188a7c61f42",
+    "operation:codex:441f592cb392ee0554b8afe69fbcc04ee3c989deddbe64abbc707247c572225f",
+    "operation:codex:895c7840603aa7f97d5df6949bd112453797e8d5a5606bc4a2bfd0a2fafc75f4",
+    "operation:codex:d04908141400acc280b03f0416d1d7f28c8bb224e0681a7eca3e055e352be764",
+    "operation:codex:d1be46fc92d7bd493a616c5069ff377a29180ed5a6859cf383dfb830c07f0af5",
+    "operation:codex:e8efe0e617f9ff8110b57e4f061347b95f2f67b2e8321d77f1390201d9e11866",
+    "operation:codex:ace81dab775acf47230b0ba5bf6456eaff13e49a33942f755b6fda29330b2776",
+    "operation:codex:f7d078051b1a4b4387c14191696d4ff7d111646b3a18c70d28a2a3a2c5bbe1f6",
+    "operation:codex:c7ec0bd25658121ad5e5c424483426863d31db8aa41d277e84c28aa356941524",
+    "operation:codex:930b344e6be993076f8c130ced417b435171c71031b05f12236713a520b5ae7e",
+    "operation:codex:1b5bff00b8d927f7a0aa62b63d740489d43e94087475d22762309f26e42a29ec",
+    "operation:codex:4b08d2dd453bcfd3b0dcf5c11ae84f257c6c3e88d2bdbceddb059be6dddfa616",
+    "operation:codex:4fc3a447826370ea97bdf1cbb4165d0f7430c2d259be271c1160c0b569723f63",
+    "operation:codex:34f3e18c53cbb5bab9a154818704c44759f246af78e302d054ed39b11a1cc09c",
+    "operation:codex:4d560b57239e4e4d4254973cad5b031830911e949b2880d3a7c50d22bf6781bd",
+    "operation:codex:6526e9529684f7ef2d884d524134f6b87f1a5d788c42dcfb04b3e3a3ff411491",
+    "operation:codex:086c20fdd638427295774d0c41437c725dbcc032dd4e39b6202cd40a6ba66cda",
+    "operation:codex:491ce0f091757271cd51f9508dfb5b50ac9ff5f41737c14e8f8e7b8f0c4dd011",
+    "operation:codex:dca1925d8bac06f4ba1bd9dd09559303e12b91a39d8e8c315e6b2ad5760cf92e",
+    "operation:codex:bc2e9c3024177b07f934f236775ef0f20fe98099f7281fd767b0ac3b133e0b30",
+    "operation:codex:6663873f5fb96623f87166b4b3956d5448b1c3c50dd0e68f536dac01a2148279",
+    "operation:codex:2683b53b5f9438cde4ab8e0403e812a0efcf5a218523ac8cb780f9d4e9c7be76",
+    "operation:codex:f891d9189a0e1bc5694b3c591d6bb6dda602c29f46b4f48b93aabca39aee6fe6",
+    "operation:codex:63ba7f1b2a8f3c369f99d3c2598f404b265b7be736b56cc0c60b27c3e3b3707e",
+    "operation:codex:a7fbdf1c6d63cd73cb18130ae005188e95038d9198bf1508d8dc0412a3b4a2f2",
+    "operation:codex:524ca482f5f5ac1593fa477406c8b2fa4137c2afc980781d49f922f1cfca67de",
+    "operation:codex:3b9673fd6ddd1944fc6219a7692a3448407ced3d131ee2b0375f72550914fae8",
+    "operation:codex:09ac81b867cdcce7a2ce95b21903d0c9b49402ba32e46dd850a7420e1d171a49",
+    "operation:codex:ec0e053fdb0858140a5fe13823daf7069411450a277841c16b5f14bd2f797c4b",
+    "operation:codex:c8a753cf3dbf9d64f9bb6d1d674fc63f1c7915fe4c5e655ddd39f65a07f091ad",
+    "operation:codex:a4f1c0e51e26c7b48a45d2d00f94d3e27bdbc1d3e253d1f2eb7ff2c380ac7aa6",
+    "operation:codex:8eebc3eff65c756adc4e6b83d051059080fbc73243692a6068c40c662b871b41",
+    "operation:codex:2b93af2f66f7b6658db3bbb26556a248d88bcb99cce8fa012b8e2aa53d5da18c",
+    "operation:codex:ae4073a716bb6ce2f962a3bb158891163795040ba879269d328700056804a233",
+    "operation:codex:4287291445aefb6e70772a26f602952f73bfa932df7520b5aeae9a9c2ff54642",
+    "operation:codex:1312fc98096885072728f3535d52d6331c2e04467b8d218a4b06fc881e5a5ded",
+    "operation:codex:fbc49bc36df7c4b1d6c464af1d6db3fb665b27396781f8d6e57bf60f3ad5746a",
+    "operation:codex:aaaee768950a89934c0d99c1a6f7afa0617f477c9f50ad0b834e7607903ab60a",
+    "operation:codex:46274a0d0bca7b05267e2a03e516f8a90b96cc96195d5430d5a31a6ed3104a62",
+    "operation:codex:5d68e7bad8c6cd946a906d14153d228e543045a8f4674c66f00aefc447d4fbb9",
+    "operation:codex:09b15d75da0a07a7002a4d158198d30b7e4aaae14422cfb7b7cfb5f1e3764542",
+    "operation:codex:67769e677e4197e6e563fd25521135d06f8dfb63d3832bcfd2079ba3820e66d2",
+    "operation:codex:f684afb898fd4d94a661da7e1d683782dd662d22f368372c8445fbdda9782f94",
+    "operation:codex:3fd5b2061793ecaa3ac0b5e69263eb9b4147069d857fe1c29063b5d1fedf01bd",
+    "operation:codex:45676df20dc5268750594a8c8fca1ec469a0d5b4634efd11d4dc74eefaa3959a",
+    "operation:codex:b40b19a75beca99988fd2771ac2dfdcbb3240333746f154cd65af5db0b030235",
+    "operation:codex:9245493a7fe50df5b389a7338d4f5bc2323ead62db2547b68fdc2c5269f0fa03",
+    "operation:codex:d546bb35a031032b12b6d11ab6460cff8827ae0f5070e9116b597c4a488fd3cc",
+    "operation:codex:a19a6af782448a812fdca52ea530a0597d4d9cb16e2a82b242fe346601e16c32",
+    "operation:codex:45159d53ad3a30b60c9c3f24db00327d9a74f6a591496cdb4d9b32298cfc58c6",
+    "operation:codex:7759b4a853c920c16d2254a30339e0c07d92367c02f2f09e3be1e11b722d8c8d",
+    "operation:codex:72f888df9207fcf322a0487f14c9a211beeb9b1a5385954c48f50b90fe3db7ca",
+    "operation:codex:9e33a47067674e2caefcf8bf57572717498920e4ecb9059fdf363ce9b9388cec",
+    "operation:codex:01af731a245dde2ac52b274fc59078ee9e3230ba0c9a399880ac297453143079",
+    "operation:codex:d8e30345b1a67c5a36da232821dda8956d8f1ce6833c155df34105b3ca71ba95",
+    "operation:codex:3c1c536b6143a3105e31f8ce16796613ef39883472e5d023b68c9654a1b8a2fe",
+    "operation:codex:54695b9368086305aae224342a70664a57481cfad4504fd5ba90423b0ecd9f75",
+    "operation:codex:14110c45fcb4c42af4c9dde588d24192ae5e106b6eb16c0691c307d5f357e65a",
+    "operation:codex:6f15ea5a074d2e17defd6308b06b2ddd7bf8e16a54f5695d1bfa4fa35f2a10dd",
+    "operation:codex:f599cadecd6b8d072fced0a5e021179e4b0980b314a3ce576ae30243e93d565c",
+    "operation:codex:52e9d5317a571a619c3027b9feaf67ecd6d9402ed96b248ee93b43e5bfba721c",
+    "operation:codex:82a8cd3bb0c3036638cef79af1560806c202b43b5075762c8c33c5a89dfac044",
+    "operation:codex:7219f6c0edcdcea7fbe326fa02ddef60154651020b3d415772290689b77a83e7",
+    "operation:codex:02b6b6a8a7b087ee3ce434d6914b310087e87a548eea222446e5e1dd1c040ad7",
+    "operation:codex:ad4a7c5fefb94bbd58f1346f9a2203acddf111a214ad3c1accdcc0c39a3f91f4",
+    "operation:codex:8b9a6eedffea610b5de05eff80c7adf3483790092d8c853fcb5f6bc0adf04a1d",
+    "operation:codex:eb8b573609a377a1e34931783b500c813dc381fc11ad7107e919640e5bee441d",
+    "operation:codex:6e4733b78196d30823b15969889f53952f337e2d350423a3398e90a308ee01df",
+    "operation:codex:2cbeb32428399551d4b043d7c19a203c95d50cf8ef00898b4baf1759b48136ab",
+    "operation:codex:c1697955306fccf7510e77e9246f67949d8d31847da20b41ad04dc5c47a07992",
+    "operation:codex:957e574ce1a051e25516217147494e88534535e0cec2025a062b80a8fc534951",
+    "operation:codex:754f633f7f657b7f4e671302116a9e7c61bc836d22d3c4c1d90e673574be50d4",
+    "operation:codex:f55d779c81ffbd87dac4e417bfe49cc0e79ad24b012f9a8c0247fcfae0741f5a",
+    "operation:codex:2c3697ba7705c0ee82e6955bca6efb891ecc3272201586c33704e43863f34c11",
+    "operation:codex:239bb7f572e1980e2dcd17659454928f2b3ada00638e6af44b10e6fbb127976a",
+    "operation:codex:e94e1ec0678494958598502df39e6fb796676454d29825261a776509d1fe0cdf",
+    "operation:codex:da7d5cf46518886763ba5ae3f667fea021ae89892d3336a923ac121019ea47ff",
+    "operation:codex:089f0547b8e469746852ae67ee3e323f6e52cce314086c21e2b7a21d088e5265",
+    "operation:codex:ce5142db6b8fddeb7dd57563164df805b0b9edbd494f8c0df2b6e3703502f620",
+    "operation:codex:13224ef10f033be4196ba181de203f836a42ba5f13c59a1af81a3d0bec00a0d8",
+    "operation:codex:f1f88756c9696f7149178a5bdbe7cc26f156f34a3be400be46d1963d037f57e4",
+    "operation:codex:7814b923cdc515cb43d8fff10724f78f9c3d87c7e9546287ca2e8808d151e84f",
+    "operation:codex:714f0b260acf0774ffbbfef6fa75bb01e6caef2f1e0540d3c34e48ffa9bd6184",
+    "operation:codex:e72cefcdf07f9ff164d90e59a27e887bc43a9cb11b66b4030f19920c34470a07",
+    "operation:codex:e756d0d4c1529c0aca9fa2154d7368a10b176dc8714ed19a430e067724a22523",
+    "operation:codex:62fe16ab98c9099169420af0d219f46fb199aca9d5f5cb051d1454b392339fb8",
+    "operation:codex:0687fce55909fc3c1fd34c904a3f599911e336a1f6f583a2484e25a5e37ba6f5",
+    "operation:codex:09725d582e238e02cd88f23e7d1f89fec478d8b476bcb6774343fa360854169a",
+    "operation:codex:4b645f250d3d24367046cda4cc6cd01d09335652ff1b37319043163c99e4dfe5",
+    "operation:codex:c1d20a879af47228fefe9e2f00ae6efed7b68c444e10eca3bc9119f5d7a96452",
+    "operation:codex:f1c5d77d4abfd46106533c87029f5b1c0575268d57e73686a533cb5873e05fe7",
+    "operation:codex:96612e11f1c59f94a3318b12bc285f4993e9270b828c6adff11ad50a57fbccae",
+    "operation:codex:79f4f143eb6b13875a5e4bc9f604ad965036fe16496843aa0857b6b75fb01204",
+    "operation:codex:232a8d59f6cf65a1748afcef8256541eb7540fcc8264289b143fdf37b6509e22",
+    "operation:codex:c79fc2c1e5001b885739fe8e4a6ecda82f85839821b829ac902a4fec4f36e2d7",
+    "operation:codex:b14e9ea34e0fd3c6ee8d67201fffd44c70930ed9fe653a20f8c2c8f4d947bc99",
+    "operation:codex:032d136dd704a8b86abff762ec7392c3c58749d42271d8b2baeeb84d48fa6605",
+    "operation:codex:d4300b58781def21ec987f8ade9193bdb48bb3d275a2f130d5a5049e4686777c",
+    "operation:codex:e162fb017fe59d5e2d6f26d09690c8b0ad5ae15a02e13588625adb92e87e5005",
+    "operation:codex:302d121bcb01904bf1e83c24db9ad65054d886a69c0cb3a792b50795fc3f399a"
+  ],
+  "assumptions": [
+    "Lanes represent logical producer streams and agents, not OS threads. Asynchronous intervals can overlap.",
+    "Timeline positions use recorded wall-clock starts relative to the earliest start. Clock skew across producers is not corrected.",
+    "Trace Event time values use floating-point microseconds; exact recorded nanoseconds remain in the operation report."
+  ]
+}

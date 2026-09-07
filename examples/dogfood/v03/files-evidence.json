@@ -1,0 +1,16 @@
+{
+  "schema_version": "0.1.0",
+  "dataset_id": "operation-depth-files",
+  "sources": [
+    {
+      "id": "no-model-workload",
+      "harness": "flaimegraph",
+      "format": "controlled-workload",
+      "coverage": "complete",
+      "description": "The controlled workload invokes filesystem operations and one local test process. It has no model client or network call."
+    }
+  ],
+  "observations": [],
+  "relationships": [],
+  "issues": []
+}

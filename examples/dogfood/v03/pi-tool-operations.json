@@ -1,0 +1,3724 @@
+{
+  "schema_version": "0.3.0",
+  "dataset_id": "pi-live-verification",
+  "artifacts": [
+    {
+      "id": "operation-recorder:pi-live-verification",
+      "harness": "flaimegraph",
+      "format": "operation-recorder",
+      "version": "0.3.0",
+      "coverage": "complete",
+      "description": "Local operation recorder metadata capture"
+    }
+  ],
+  "spans": [
+    {
+      "id": "operation:84b8832a-d7a8-4429-9bec-388d2e509057",
+      "parent_id": null,
+      "parentage": null,
+      "sequence": 0,
+      "kind": "file_read",
+      "label": "read",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.exact-tool-name"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.482Z",
+      "ended_at": "2026-09-07T00:52:09.485Z",
+      "duration_ns": "2103209",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:84b8832a-d7a8-4429-9bec-388d2e509057"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "derived",
+            "method": "pi.tool.result.text-utf8-byte-length"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:39728a15c3450062a721804fa4717ae85c26a4ab3f85669fcf83efe84b3acea6",
+        "resource_label": "opaque-resource:cf83efe84b3acea6",
+        "requested_range": {
+          "start_line": 2,
+          "end_line": 2
+        },
+        "read_bytes": null,
+        "returned_bytes": "62",
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:b3f25ec1-4040-4cba-9104-20eee53918a8",
+      "parent_id": "operation:84b8832a-d7a8-4429-9bec-388d2e509057",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 1,
+      "kind": "other",
+      "label": "access",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.access"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.483Z",
+      "ended_at": "2026-09-07T00:52:09.483Z",
+      "duration_ns": "132083",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:b3f25ec1-4040-4cba-9104-20eee53918a8"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:c1c7704121a9cfb856a5d7a5e818d0cfbae7228b847040676428856d9f554a1f",
+        "resource_label": "opaque-resource:6428856d9f554a1f",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:cc1b1975-43bf-4607-b933-855ccb02514f",
+      "parent_id": "operation:84b8832a-d7a8-4429-9bec-388d2e509057",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 2,
+      "kind": "file_read",
+      "label": "read",
+      "classification": {
+        "evidence": "declared",
+        "method": "operation-recorder.run"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.484Z",
+      "ended_at": "2026-09-07T00:52:09.485Z",
+      "duration_ns": "304167",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:cc1b1975-43bf-4607-b933-855ccb02514f"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "observed",
+            "method": "pi.operations.readFile.buffer-byte-length"
+          },
+          "returned_bytes": {
+            "evidence": "observed",
+            "method": "pi.operations.readFile.buffer-byte-length"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "derived",
+            "method": "sha256-of-backing-bytes"
+          }
+        },
+        "resource_id": "hmac-sha256:c1c7704121a9cfb856a5d7a5e818d0cfbae7228b847040676428856d9f554a1f",
+        "resource_label": "opaque-resource:6428856d9f554a1f",
+        "requested_range": {
+          "start_line": 2,
+          "end_line": 2
+        },
+        "read_bytes": "30",
+        "returned_bytes": "30",
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": "2a09d44594b44f7f554e676a9111f9780320491a2c432b9c84ba5fd0a0076482"
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:ef70f3bc-c18e-4e4e-b2b0-892a2622c3f7",
+      "parent_id": null,
+      "parentage": null,
+      "sequence": 3,
+      "kind": "file_read",
+      "label": "read",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.exact-tool-name"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.485Z",
+      "ended_at": "2026-09-07T00:52:09.486Z",
+      "duration_ns": "575875",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:ef70f3bc-c18e-4e4e-b2b0-892a2622c3f7"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:490c4f62d64d8b5f5acc0caecdcf5bcb1523ec25ebdd68e3e8bc3dd09f697521",
+        "resource_label": "opaque-resource:e8bc3dd09f697521",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:dc3aafb5-9749-410e-970a-8c0b5ffeca00",
+      "parent_id": "operation:ef70f3bc-c18e-4e4e-b2b0-892a2622c3f7",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 4,
+      "kind": "other",
+      "label": "access",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.access"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.485Z",
+      "ended_at": "2026-09-07T00:52:09.486Z",
+      "duration_ns": "60209",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:dc3aafb5-9749-410e-970a-8c0b5ffeca00"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:554d6730ad183329bac1ed5123f45424aba82baf30cfa3a35d2f4e1a34534a0e",
+        "resource_label": "opaque-resource:5d2f4e1a34534a0e",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:6fc32338-9493-4244-8a97-0ab7c601ed4b",
+      "parent_id": "operation:ef70f3bc-c18e-4e4e-b2b0-892a2622c3f7",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 5,
+      "kind": "file_read",
+      "label": "read",
+      "classification": {
+        "evidence": "declared",
+        "method": "operation-recorder.run"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.486Z",
+      "ended_at": "2026-09-07T00:52:09.486Z",
+      "duration_ns": "151250",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:6fc32338-9493-4244-8a97-0ab7c601ed4b"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "observed",
+            "method": "pi.operations.readFile.buffer-byte-length"
+          },
+          "returned_bytes": {
+            "evidence": "observed",
+            "method": "pi.operations.readFile.buffer-byte-length"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "derived",
+            "method": "sha256-of-backing-bytes"
+          }
+        },
+        "resource_id": "hmac-sha256:554d6730ad183329bac1ed5123f45424aba82baf30cfa3a35d2f4e1a34534a0e",
+        "resource_label": "opaque-resource:5d2f4e1a34534a0e",
+        "requested_range": null,
+        "read_bytes": "68",
+        "returned_bytes": "68",
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": "20d4e4d370d0a97b086a2f869f6377da72fc3c79cea828c63bd6c77495422ed4"
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:89581b68-b1b6-425b-b9d4-1a4427e23005",
+      "parent_id": null,
+      "parentage": null,
+      "sequence": 6,
+      "kind": "file_read",
+      "label": "read",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.exact-tool-name"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.486Z",
+      "ended_at": "2026-09-07T00:52:09.487Z",
+      "duration_ns": "377833",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:89581b68-b1b6-425b-b9d4-1a4427e23005"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:b8f1a265d6d64bd7f542bfca9b3e0ce05423ad409fac4d814a6aefe790cb3128",
+        "resource_label": "opaque-resource:4a6aefe790cb3128",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:8850b283-2754-40ab-ba6b-ae33ceeeb3e2",
+      "parent_id": "operation:89581b68-b1b6-425b-b9d4-1a4427e23005",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 7,
+      "kind": "other",
+      "label": "access",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.access"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.486Z",
+      "ended_at": "2026-09-07T00:52:09.486Z",
+      "duration_ns": "47209",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:8850b283-2754-40ab-ba6b-ae33ceeeb3e2"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:c2ce76459c797f5b9f538e142f77f527bcb6e97d3e222eee7e1bc7fd31d40c51",
+        "resource_label": "opaque-resource:7e1bc7fd31d40c51",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:a3a357f8-6132-4b5e-aa36-1097b0bcfe27",
+      "parent_id": "operation:89581b68-b1b6-425b-b9d4-1a4427e23005",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 8,
+      "kind": "file_read",
+      "label": "read",
+      "classification": {
+        "evidence": "declared",
+        "method": "operation-recorder.run"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.486Z",
+      "ended_at": "2026-09-07T00:52:09.487Z",
+      "duration_ns": "111000",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:a3a357f8-6132-4b5e-aa36-1097b0bcfe27"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "observed",
+            "method": "pi.operations.readFile.buffer-byte-length"
+          },
+          "returned_bytes": {
+            "evidence": "observed",
+            "method": "pi.operations.readFile.buffer-byte-length"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "derived",
+            "method": "sha256-of-backing-bytes"
+          }
+        },
+        "resource_id": "hmac-sha256:c2ce76459c797f5b9f538e142f77f527bcb6e97d3e222eee7e1bc7fd31d40c51",
+        "resource_label": "opaque-resource:7e1bc7fd31d40c51",
+        "requested_range": null,
+        "read_bytes": "68",
+        "returned_bytes": "68",
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": "20d4e4d370d0a97b086a2f869f6377da72fc3c79cea828c63bd6c77495422ed4"
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:dfb25d36-b87f-4078-8de1-d2f496222b4d",
+      "parent_id": null,
+      "parentage": null,
+      "sequence": 9,
+      "kind": "file_read",
+      "label": "read",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.exact-tool-name"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.487Z",
+      "ended_at": "2026-09-07T00:52:09.487Z",
+      "duration_ns": "363750",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:dfb25d36-b87f-4078-8de1-d2f496222b4d"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "derived",
+            "method": "pi.tool.result.text-utf8-byte-length"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:faa43477580cf0a1e1825f4db9768432687b86f36862a589d63d1da610bee8a0",
+        "resource_label": "opaque-resource:d63d1da610bee8a0",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": "38",
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:2167219f-f8a7-466e-acee-407187c48cda",
+      "parent_id": "operation:dfb25d36-b87f-4078-8de1-d2f496222b4d",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 10,
+      "kind": "other",
+      "label": "access",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.access"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.487Z",
+      "ended_at": "2026-09-07T00:52:09.487Z",
+      "duration_ns": "37125",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:2167219f-f8a7-466e-acee-407187c48cda"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:aee12609b63ecbcd365c696c72a18c527d5e7c6dba0eb4417a8f389b8ab6a8af",
+        "resource_label": "opaque-resource:7a8f389b8ab6a8af",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:73640155-fca5-4e3c-83e1-8ccdf15e423d",
+      "parent_id": "operation:dfb25d36-b87f-4078-8de1-d2f496222b4d",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 11,
+      "kind": "file_read",
+      "label": "read",
+      "classification": {
+        "evidence": "declared",
+        "method": "operation-recorder.run"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.487Z",
+      "ended_at": "2026-09-07T00:52:09.487Z",
+      "duration_ns": "94625",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:73640155-fca5-4e3c-83e1-8ccdf15e423d"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "observed",
+            "method": "pi.operations.readFile.buffer-byte-length"
+          },
+          "returned_bytes": {
+            "evidence": "observed",
+            "method": "pi.operations.readFile.buffer-byte-length"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "derived",
+            "method": "sha256-of-backing-bytes"
+          }
+        },
+        "resource_id": "hmac-sha256:aee12609b63ecbcd365c696c72a18c527d5e7c6dba0eb4417a8f389b8ab6a8af",
+        "resource_label": "opaque-resource:7a8f389b8ab6a8af",
+        "requested_range": null,
+        "read_bytes": "38",
+        "returned_bytes": "38",
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": "7e4d98698e84e12234f015b42d651964fb798957ace27bb036a6eb9f557cc3f1"
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:e9d4db73-3d89-4e73-a158-594f596a993d",
+      "parent_id": null,
+      "parentage": null,
+      "sequence": 12,
+      "kind": "file_read",
+      "label": "read",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.exact-tool-name"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.488Z",
+      "ended_at": "2026-09-07T00:52:09.488Z",
+      "duration_ns": "376583",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:e9d4db73-3d89-4e73-a158-594f596a993d"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "derived",
+            "method": "pi.tool.result.text-utf8-byte-length"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:7a8b60e05196ff354f6838de8e748f535063390354d79c1a60cffe0d9f3f5027",
+        "resource_label": "opaque-resource:60cffe0d9f3f5027",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": "10",
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:9911f23a-529d-40cf-a2ad-b698fc3421c5",
+      "parent_id": "operation:e9d4db73-3d89-4e73-a158-594f596a993d",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 13,
+      "kind": "other",
+      "label": "access",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.access"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.488Z",
+      "ended_at": "2026-09-07T00:52:09.488Z",
+      "duration_ns": "39666",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:9911f23a-529d-40cf-a2ad-b698fc3421c5"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:a3a3b269ef3e48e8fed8cc31fda2ae8671072f6b5d19c189adf19818eb0da1ee",
+        "resource_label": "opaque-resource:adf19818eb0da1ee",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:10d97614-3276-44cc-9dcd-b4288d19b0eb",
+      "parent_id": "operation:e9d4db73-3d89-4e73-a158-594f596a993d",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 14,
+      "kind": "file_read",
+      "label": "read",
+      "classification": {
+        "evidence": "declared",
+        "method": "operation-recorder.run"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.488Z",
+      "ended_at": "2026-09-07T00:52:09.488Z",
+      "duration_ns": "94333",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:10d97614-3276-44cc-9dcd-b4288d19b0eb"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "observed",
+            "method": "pi.operations.readFile.buffer-byte-length"
+          },
+          "returned_bytes": {
+            "evidence": "observed",
+            "method": "pi.operations.readFile.buffer-byte-length"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "derived",
+            "method": "sha256-of-backing-bytes"
+          }
+        },
+        "resource_id": "hmac-sha256:a3a3b269ef3e48e8fed8cc31fda2ae8671072f6b5d19c189adf19818eb0da1ee",
+        "resource_label": "opaque-resource:adf19818eb0da1ee",
+        "requested_range": null,
+        "read_bytes": "8",
+        "returned_bytes": "8",
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": "4c4b6a3be1314ab86138bef4314dde022e600960d8689a2c8f8631802d20dab6"
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:f58388f7-ac3d-4cae-b6b2-a3623ce91afc",
+      "parent_id": null,
+      "parentage": null,
+      "sequence": 15,
+      "kind": "file_read",
+      "label": "read",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.exact-tool-name"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.488Z",
+      "ended_at": "2026-09-07T00:52:09.489Z",
+      "duration_ns": "378292",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:f58388f7-ac3d-4cae-b6b2-a3623ce91afc"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "derived",
+            "method": "pi.tool.result.text-utf8-byte-length"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:99a64e9992195f001512f87d75000a5561d01a666023c8dc3cbb36452c652c04",
+        "resource_label": "opaque-resource:3cbb36452c652c04",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": "55",
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:117a8de1-a639-49a7-94aa-9fa7175c3fca",
+      "parent_id": "operation:f58388f7-ac3d-4cae-b6b2-a3623ce91afc",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 16,
+      "kind": "other",
+      "label": "access",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.access"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.488Z",
+      "ended_at": "2026-09-07T00:52:09.489Z",
+      "duration_ns": "37792",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:117a8de1-a639-49a7-94aa-9fa7175c3fca"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:8c5ec1ac6414c5aa86a5dcaf773278942474e0ccfcebafd4a946242edec62ae6",
+        "resource_label": "opaque-resource:a946242edec62ae6",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:14746f5f-95e4-4699-9580-37c00700d13c",
+      "parent_id": "operation:f58388f7-ac3d-4cae-b6b2-a3623ce91afc",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 17,
+      "kind": "file_read",
+      "label": "read",
+      "classification": {
+        "evidence": "declared",
+        "method": "operation-recorder.run"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.489Z",
+      "ended_at": "2026-09-07T00:52:09.489Z",
+      "duration_ns": "137250",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:14746f5f-95e4-4699-9580-37c00700d13c"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "observed",
+            "method": "pi.operations.readFile.buffer-byte-length"
+          },
+          "returned_bytes": {
+            "evidence": "observed",
+            "method": "pi.operations.readFile.buffer-byte-length"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "derived",
+            "method": "sha256-of-backing-bytes"
+          }
+        },
+        "resource_id": "hmac-sha256:8c5ec1ac6414c5aa86a5dcaf773278942474e0ccfcebafd4a946242edec62ae6",
+        "resource_label": "opaque-resource:a946242edec62ae6",
+        "requested_range": null,
+        "read_bytes": "53",
+        "returned_bytes": "53",
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": "0764f38b2dd3a5f3d3e0c4e1361455e98260c3478ad41adf9d0fb345bcd027f4"
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:4bfc530a-486f-402a-aa0c-4cd90a66e57b",
+      "parent_id": null,
+      "parentage": null,
+      "sequence": 18,
+      "kind": "file_write",
+      "label": "write",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.exact-tool-name"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.489Z",
+      "ended_at": "2026-09-07T00:52:09.490Z",
+      "duration_ns": "431834",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:4bfc530a-486f-402a-aa0c-4cd90a66e57b"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "derived",
+            "method": "pi.tool.result.text-utf8-byte-length"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:c1dbbd11d47798d41688b3baf14711921c5bf85a095df568da44356516cbc985",
+        "resource_label": "opaque-resource:da44356516cbc985",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": "42",
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:7e38bdc3-f98d-45b6-8f42-c363ea949585",
+      "parent_id": "operation:4bfc530a-486f-402a-aa0c-4cd90a66e57b",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 19,
+      "kind": "other",
+      "label": "mkdir",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.mkdir"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.489Z",
+      "ended_at": "2026-09-07T00:52:09.489Z",
+      "duration_ns": "45916",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:7e38bdc3-f98d-45b6-8f42-c363ea949585"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:7c8a2f0b54cdc7c4278286871247a75a6e8753f3feedb8f315eb905e4f2e2d80",
+        "resource_label": "opaque-resource:15eb905e4f2e2d80",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:680c6715-5ff0-457a-be66-5e7815166d3f",
+      "parent_id": "operation:4bfc530a-486f-402a-aa0c-4cd90a66e57b",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 20,
+      "kind": "file_write",
+      "label": "write",
+      "classification": {
+        "evidence": "declared",
+        "method": "operation-recorder.run"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.489Z",
+      "ended_at": "2026-09-07T00:52:09.490Z",
+      "duration_ns": "217833",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:680c6715-5ff0-457a-be66-5e7815166d3f"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "observed",
+            "method": "pi.operations.writeFile.buffer-byte-length"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "derived",
+            "method": "sha256-of-written-bytes"
+          }
+        },
+        "resource_id": "hmac-sha256:6aad1ca890e548255274d7b8d6abd11e1d0832633b3222ed5f87a51a01936e27",
+        "resource_label": "opaque-resource:5f87a51a01936e27",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": "23",
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": "c327ff49f88f61e1282d479f38b3c1ad98d7f7af6c2692ac0d9c85d68b53ac67"
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:0f1d8839-0d47-412e-b071-b94b2e08e805",
+      "parent_id": null,
+      "parentage": null,
+      "sequence": 21,
+      "kind": "file_write",
+      "label": "edit",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.exact-tool-name"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.491Z",
+      "ended_at": "2026-09-07T00:52:09.492Z",
+      "duration_ns": "672042",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:0f1d8839-0d47-412e-b071-b94b2e08e805"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "derived",
+            "method": "pi.tool.result.text-utf8-byte-length"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:d3e176ef456cdda448a3081d950ce1bfe38e9e055e1207296db66116a0c8f3b4",
+        "resource_label": "opaque-resource:6db66116a0c8f3b4",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": "45",
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:7ed9a5c7-597f-44d9-881d-79a1bfeb5a6c",
+      "parent_id": "operation:0f1d8839-0d47-412e-b071-b94b2e08e805",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 22,
+      "kind": "other",
+      "label": "access",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.access"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.491Z",
+      "ended_at": "2026-09-07T00:52:09.491Z",
+      "duration_ns": "69875",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:7ed9a5c7-597f-44d9-881d-79a1bfeb5a6c"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:d775bfed35a9f8845d847d636fa5dce8c7b579fecb920d0e84e2ac30a9426bdd",
+        "resource_label": "opaque-resource:84e2ac30a9426bdd",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:fecd6dc0-0d83-4114-babc-cd79d2f48035",
+      "parent_id": "operation:0f1d8839-0d47-412e-b071-b94b2e08e805",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 23,
+      "kind": "file_read",
+      "label": "edit",
+      "classification": {
+        "evidence": "declared",
+        "method": "operation-recorder.run"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.491Z",
+      "ended_at": "2026-09-07T00:52:09.491Z",
+      "duration_ns": "133375",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:fecd6dc0-0d83-4114-babc-cd79d2f48035"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "observed",
+            "method": "pi.operations.readFile.buffer-byte-length"
+          },
+          "returned_bytes": {
+            "evidence": "observed",
+            "method": "pi.operations.readFile.buffer-byte-length"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "derived",
+            "method": "sha256-of-backing-bytes"
+          }
+        },
+        "resource_id": "hmac-sha256:d775bfed35a9f8845d847d636fa5dce8c7b579fecb920d0e84e2ac30a9426bdd",
+        "resource_label": "opaque-resource:84e2ac30a9426bdd",
+        "requested_range": null,
+        "read_bytes": "9",
+        "returned_bytes": "9",
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": "761ca39634e5caa7a20a8ff174b8c1adcb31b16f22a78fa58c4d501ff932b051"
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:b83e1b80-0bb8-4390-9c55-f58c2c4bafd1",
+      "parent_id": "operation:0f1d8839-0d47-412e-b071-b94b2e08e805",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 24,
+      "kind": "file_write",
+      "label": "edit",
+      "classification": {
+        "evidence": "declared",
+        "method": "operation-recorder.run"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.491Z",
+      "ended_at": "2026-09-07T00:52:09.492Z",
+      "duration_ns": "236709",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:b83e1b80-0bb8-4390-9c55-f58c2c4bafd1"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "observed",
+            "method": "pi.operations.writeFile.buffer-byte-length"
+          },
+          "inserted_bytes": {
+            "evidence": "derived",
+            "method": "common-prefix-suffix-byte-splice"
+          },
+          "deleted_bytes": {
+            "evidence": "derived",
+            "method": "common-prefix-suffix-byte-splice"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "derived",
+            "method": "sha256-of-written-bytes"
+          }
+        },
+        "resource_id": "hmac-sha256:d775bfed35a9f8845d847d636fa5dce8c7b579fecb920d0e84e2ac30a9426bdd",
+        "resource_label": "opaque-resource:84e2ac30a9426bdd",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": "11",
+        "inserted_bytes": "5",
+        "deleted_bytes": "3",
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": "737171c757476bdc6199387376dcd6124f7fbd1e56c03e605ede81e915b5f455"
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:7fc0c577-ed10-4027-ae41-2b05c24a0de7",
+      "parent_id": null,
+      "parentage": null,
+      "sequence": 25,
+      "kind": "directory_read",
+      "label": "ls",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.exact-tool-name"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.493Z",
+      "ended_at": "2026-09-07T00:52:09.494Z",
+      "duration_ns": "759792",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:7fc0c577-ed10-4027-ae41-2b05c24a0de7"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "derived",
+            "method": "pi.tool.result.text-utf8-byte-length"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:10527c0bb5a12dbb54558941972527987c7d48209b7f35cfd7a9ddb683361cb7",
+        "resource_label": "opaque-resource:d7a9ddb683361cb7",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": "111",
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:45984805-a4f7-48f9-af7e-115ffd0c0527",
+      "parent_id": "operation:7fc0c577-ed10-4027-ae41-2b05c24a0de7",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 26,
+      "kind": "other",
+      "label": "exists",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.exists"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.493Z",
+      "ended_at": "2026-09-07T00:52:09.493Z",
+      "duration_ns": "38291",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:45984805-a4f7-48f9-af7e-115ffd0c0527"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:7c8a2f0b54cdc7c4278286871247a75a6e8753f3feedb8f315eb905e4f2e2d80",
+        "resource_label": "opaque-resource:15eb905e4f2e2d80",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:560b318c-3d51-4206-a458-c3d2dc785979",
+      "parent_id": "operation:7fc0c577-ed10-4027-ae41-2b05c24a0de7",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 27,
+      "kind": "other",
+      "label": "stat",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.stat"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.493Z",
+      "ended_at": "2026-09-07T00:52:09.493Z",
+      "duration_ns": "26458",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:560b318c-3d51-4206-a458-c3d2dc785979"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:7c8a2f0b54cdc7c4278286871247a75a6e8753f3feedb8f315eb905e4f2e2d80",
+        "resource_label": "opaque-resource:15eb905e4f2e2d80",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:8387a70a-ea7f-488a-9c95-ab561875a8d2",
+      "parent_id": "operation:7fc0c577-ed10-4027-ae41-2b05c24a0de7",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 28,
+      "kind": "directory_read",
+      "label": "ls",
+      "classification": {
+        "evidence": "declared",
+        "method": "operation-recorder.run"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.493Z",
+      "ended_at": "2026-09-07T00:52:09.493Z",
+      "duration_ns": "167333",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:8387a70a-ea7f-488a-9c95-ab561875a8d2"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "observed",
+            "method": "pi.operations.readdir.entry-array-length"
+          },
+          "examined_entries": {
+            "evidence": "observed",
+            "method": "pi.operations.readdir.entry-array-length"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:7c8a2f0b54cdc7c4278286871247a75a6e8753f3feedb8f315eb905e4f2e2d80",
+        "resource_label": "opaque-resource:15eb905e4f2e2d80",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": "9",
+        "examined_entries": "9",
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:ab52bc4d-1855-4de1-9a20-dc858aa56d33",
+      "parent_id": "operation:7fc0c577-ed10-4027-ae41-2b05c24a0de7",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 29,
+      "kind": "other",
+      "label": "stat",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.stat"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.493Z",
+      "ended_at": "2026-09-07T00:52:09.493Z",
+      "duration_ns": "35625",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:ab52bc4d-1855-4de1-9a20-dc858aa56d33"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:8c5ec1ac6414c5aa86a5dcaf773278942474e0ccfcebafd4a946242edec62ae6",
+        "resource_label": "opaque-resource:a946242edec62ae6",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:b1f1b06a-77ac-4487-abcf-4da2069bc31d",
+      "parent_id": "operation:7fc0c577-ed10-4027-ae41-2b05c24a0de7",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 30,
+      "kind": "other",
+      "label": "stat",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.stat"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.493Z",
+      "ended_at": "2026-09-07T00:52:09.493Z",
+      "duration_ns": "31416",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:b1f1b06a-77ac-4487-abcf-4da2069bc31d"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:d775bfed35a9f8845d847d636fa5dce8c7b579fecb920d0e84e2ac30a9426bdd",
+        "resource_label": "opaque-resource:84e2ac30a9426bdd",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:1913fe1d-8722-4dc2-8636-b66d0a7a7c78",
+      "parent_id": "operation:7fc0c577-ed10-4027-ae41-2b05c24a0de7",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 31,
+      "kind": "other",
+      "label": "stat",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.stat"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.493Z",
+      "ended_at": "2026-09-07T00:52:09.493Z",
+      "duration_ns": "18834",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:1913fe1d-8722-4dc2-8636-b66d0a7a7c78"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:c2ce76459c797f5b9f538e142f77f527bcb6e97d3e222eee7e1bc7fd31d40c51",
+        "resource_label": "opaque-resource:7e1bc7fd31d40c51",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:ffd06a97-8c9b-43cf-847e-6cefc59c19c3",
+      "parent_id": "operation:7fc0c577-ed10-4027-ae41-2b05c24a0de7",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 32,
+      "kind": "other",
+      "label": "stat",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.stat"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.493Z",
+      "ended_at": "2026-09-07T00:52:09.493Z",
+      "duration_ns": "35041",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:ffd06a97-8c9b-43cf-847e-6cefc59c19c3"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:554d6730ad183329bac1ed5123f45424aba82baf30cfa3a35d2f4e1a34534a0e",
+        "resource_label": "opaque-resource:5d2f4e1a34534a0e",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:bb494548-661a-4304-a7af-c1b53a65c4ac",
+      "parent_id": "operation:7fc0c577-ed10-4027-ae41-2b05c24a0de7",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 33,
+      "kind": "other",
+      "label": "stat",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.stat"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.493Z",
+      "ended_at": "2026-09-07T00:52:09.493Z",
+      "duration_ns": "21500",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:bb494548-661a-4304-a7af-c1b53a65c4ac"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:aee12609b63ecbcd365c696c72a18c527d5e7c6dba0eb4417a8f389b8ab6a8af",
+        "resource_label": "opaque-resource:7a8f389b8ab6a8af",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:9a3d025c-6225-4b4c-93b1-9b05c361724b",
+      "parent_id": "operation:7fc0c577-ed10-4027-ae41-2b05c24a0de7",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 34,
+      "kind": "other",
+      "label": "stat",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.stat"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.493Z",
+      "ended_at": "2026-09-07T00:52:09.493Z",
+      "duration_ns": "19375",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:9a3d025c-6225-4b4c-93b1-9b05c361724b"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:e269c40f8852efeb5c963090f00154f7ab3e540470b82bc1ba86451ea478bf8d",
+        "resource_label": "opaque-resource:ba86451ea478bf8d",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:858d21f3-70e1-4f02-9f7d-3a325e9ec8d5",
+      "parent_id": "operation:7fc0c577-ed10-4027-ae41-2b05c24a0de7",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 35,
+      "kind": "other",
+      "label": "stat",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.stat"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.493Z",
+      "ended_at": "2026-09-07T00:52:09.493Z",
+      "duration_ns": "18500",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:858d21f3-70e1-4f02-9f7d-3a325e9ec8d5"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:c1c7704121a9cfb856a5d7a5e818d0cfbae7228b847040676428856d9f554a1f",
+        "resource_label": "opaque-resource:6428856d9f554a1f",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:664d2834-043e-430d-a899-3efd1636e6c6",
+      "parent_id": "operation:7fc0c577-ed10-4027-ae41-2b05c24a0de7",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 36,
+      "kind": "other",
+      "label": "stat",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.stat"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.493Z",
+      "ended_at": "2026-09-07T00:52:09.493Z",
+      "duration_ns": "25541",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:664d2834-043e-430d-a899-3efd1636e6c6"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:a3a3b269ef3e48e8fed8cc31fda2ae8671072f6b5d19c189adf19818eb0da1ee",
+        "resource_label": "opaque-resource:adf19818eb0da1ee",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:ae213ac0-d517-47c2-945c-9adb8a1f36aa",
+      "parent_id": "operation:7fc0c577-ed10-4027-ae41-2b05c24a0de7",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 37,
+      "kind": "other",
+      "label": "stat",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.stat"
+      },
+      "status": "ok",
+      "started_at": "2026-09-07T00:52:09.493Z",
+      "ended_at": "2026-09-07T00:52:09.493Z",
+      "duration_ns": "17708",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:ae213ac0-d517-47c2-945c-9adb8a1f36aa"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:6aad1ca890e548255274d7b8d6abd11e1d0832633b3222ed5f87a51a01936e27",
+        "resource_label": "opaque-resource:5f87a51a01936e27",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:da8596be-6e8e-46ec-8fb0-6dac7825c90c",
+      "parent_id": null,
+      "parentage": null,
+      "sequence": 38,
+      "kind": "file_read",
+      "label": "read",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.exact-tool-name"
+      },
+      "status": "error",
+      "started_at": "2026-09-07T00:52:09.494Z",
+      "ended_at": "2026-09-07T00:52:09.494Z",
+      "duration_ns": "230125",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:da8596be-6e8e-46ec-8fb0-6dac7825c90c"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:3c4ca5b5f6fb4335ceffdd9457ed91acfff51ed0b2c79571704adf9629b46296",
+        "resource_label": "opaque-resource:704adf9629b46296",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    },
+    {
+      "id": "operation:fc3043d8-6af3-4df1-a695-762a12dc288c",
+      "parent_id": "operation:da8596be-6e8e-46ec-8fb0-6dac7825c90c",
+      "parentage": {
+        "evidence": "observed",
+        "method": "runtime-scope"
+      },
+      "sequence": 39,
+      "kind": "other",
+      "label": "access",
+      "classification": {
+        "evidence": "observed",
+        "method": "pi-operation-bridge.access"
+      },
+      "status": "error",
+      "started_at": "2026-09-07T00:52:09.494Z",
+      "ended_at": "2026-09-07T00:52:09.494Z",
+      "duration_ns": "59250",
+      "timing": {
+        "started_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "ended_at": {
+          "evidence": "observed",
+          "method": "Date.now"
+        },
+        "duration_ns": {
+          "evidence": "observed",
+          "method": "process.hrtime.bigint",
+          "clock": "monotonic"
+        }
+      },
+      "agent_id": null,
+      "requesting_model": null,
+      "executing_model": null,
+      "observation_id": null,
+      "source_refs": [
+        {
+          "source_id": "operation-recorder:pi-live-verification",
+          "record": "span:operation:fc3043d8-6af3-4df1-a695-762a12dc288c"
+        }
+      ],
+      "io": {
+        "measurements": {
+          "read_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "returned_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "written_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "inserted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "deleted_bytes": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "entry_count": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "examined_entries": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          },
+          "content_sha256": {
+            "evidence": "unknown",
+            "method": "not-captured"
+          }
+        },
+        "resource_id": "hmac-sha256:7611109e3692050a13595139ad50b6269bf106870512b56674fdee6c109f1bd3",
+        "resource_label": "opaque-resource:74fdee6c109f1bd3",
+        "requested_range": null,
+        "read_bytes": null,
+        "returned_bytes": null,
+        "written_bytes": null,
+        "inserted_bytes": null,
+        "deleted_bytes": null,
+        "entry_count": null,
+        "examined_entries": null,
+        "content_sha256": null
+      },
+      "routing": null,
+      "stream_id": "pi-live-verification"
+    }
+  ],
+  "links": [],
+  "coverage": {
+    "boundary": "instrumented",
+    "complete": false,
+    "dropped_spans": 0,
+    "dropped_spans_by_stream": {},
+    "dropped_links": 0,
+    "dropped_links_by_stream": {},
+    "limitations": [
+      "Pi image MIME detection probes are outside captured readFile byte measurements"
+    ]
+  }
+}

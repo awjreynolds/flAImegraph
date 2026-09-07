@@ -1,0 +1,44 @@
+{
+  "schema_version": "0.1.0",
+  "id": "val-b60376c51bc46f5ced57d9fe59da9607905c8b00acc0ad3c8af674bbcc62eb02",
+  "dataset_id": "synthetic-summary-routing",
+  "selection_policy": "direct-only-v1",
+  "currency": "USD",
+  "basis": "enterprise_scenario",
+  "assumptions": [
+    "selection policy: direct-only-v1",
+    "recorded monetary amounts are rounded once to nano-currency using HALF_EVEN"
+  ],
+  "observations": [
+    {
+      "observation_id": "consumer-request",
+      "amount_nanos": "40000000",
+      "basis": "enterprise_scenario"
+    },
+    {
+      "observation_id": "direct-request",
+      "amount_nanos": "101000000",
+      "basis": "enterprise_scenario"
+    },
+    {
+      "observation_id": "summary-request",
+      "amount_nanos": "30000000",
+      "basis": "enterprise_scenario"
+    }
+  ],
+  "total_nanos": "171000000",
+  "complete": false,
+  "issues": [
+    {
+      "code": "SOURCE_COVERAGE_PARTIAL",
+      "message": "source synthetic-routing declares partial capture coverage",
+      "severity": "warning",
+      "source_id": "synthetic-routing"
+    },
+    {
+      "code": "SYNTHETIC",
+      "severity": "warning",
+      "message": "All usage and costs are invented illustrative values. This is not a provider rate card, actual bill or measured savings experiment."
+    }
+  ]
+}

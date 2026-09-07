@@ -1,0 +1,1983 @@
+{
+  "schema_version": "0.3.0",
+  "dataset_id": "synthetic-summary-routing",
+  "operations": {
+    "schema_version": "0.3.0",
+    "dataset_id": "synthetic-summary-routing",
+    "artifacts": [
+      {
+        "id": "synthetic-routing",
+        "harness": "illustrative-harness",
+        "format": "synthetic-walkthrough",
+        "coverage": "partial",
+        "description": "Invented operations, usage, costs and policy facts for explanation. No model requests ran."
+      }
+    ],
+    "spans": [
+      {
+        "id": "direct",
+        "parent_id": null,
+        "parentage": null,
+        "stream_id": "synthetic",
+        "sequence": 0,
+        "kind": "work",
+        "label": "Illustrative direct route · $0.101",
+        "classification": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "status": "unknown",
+        "started_at": null,
+        "ended_at": null,
+        "duration_ns": null,
+        "timing": {
+          "started_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "ended_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock",
+            "clock": "unknown"
+          }
+        },
+        "agent_id": null,
+        "requesting_model": null,
+        "executing_model": null,
+        "observation_id": null,
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "direct"
+          }
+        ],
+        "io": null,
+        "routing": null
+      },
+      {
+        "id": "direct-agent",
+        "parent_id": "direct",
+        "parentage": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "stream_id": "synthetic",
+        "sequence": 1,
+        "kind": "agent",
+        "label": "Main agent · high-cost model",
+        "classification": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "status": "unknown",
+        "started_at": null,
+        "ended_at": null,
+        "duration_ns": null,
+        "timing": {
+          "started_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "ended_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock",
+            "clock": "unknown"
+          }
+        },
+        "agent_id": "main-direct",
+        "requesting_model": null,
+        "executing_model": null,
+        "observation_id": null,
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "direct-agent"
+          }
+        ],
+        "io": null,
+        "routing": null
+      },
+      {
+        "id": "direct-read",
+        "parent_id": "direct-agent",
+        "parentage": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "stream_id": "synthetic",
+        "sequence": 2,
+        "kind": "file_read",
+        "label": "Read 400-line source",
+        "classification": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "status": "unknown",
+        "started_at": null,
+        "ended_at": null,
+        "duration_ns": null,
+        "timing": {
+          "started_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "ended_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock",
+            "clock": "unknown"
+          }
+        },
+        "agent_id": null,
+        "requesting_model": null,
+        "executing_model": null,
+        "observation_id": null,
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "direct-read"
+          }
+        ],
+        "io": {
+          "resource_id": "synthetic-file",
+          "resource_label": "Illustrative 400-line source",
+          "requested_range": {
+            "start_line": 1,
+            "end_line": 400
+          },
+          "read_bytes": null,
+          "returned_bytes": null,
+          "written_bytes": null,
+          "inserted_bytes": null,
+          "deleted_bytes": null,
+          "entry_count": null,
+          "examined_entries": null,
+          "content_sha256": null,
+          "measurements": {
+            "read_bytes": {
+              "evidence": "unknown",
+              "method": "no actual IO executed"
+            },
+            "returned_bytes": {
+              "evidence": "unknown",
+              "method": "no actual IO executed"
+            },
+            "written_bytes": {
+              "evidence": "unknown",
+              "method": "no actual IO executed"
+            },
+            "inserted_bytes": {
+              "evidence": "unknown",
+              "method": "no actual IO executed"
+            },
+            "deleted_bytes": {
+              "evidence": "unknown",
+              "method": "no actual IO executed"
+            },
+            "entry_count": {
+              "evidence": "unknown",
+              "method": "no actual IO executed"
+            },
+            "examined_entries": {
+              "evidence": "unknown",
+              "method": "no actual IO executed"
+            },
+            "content_sha256": {
+              "evidence": "unknown",
+              "method": "no actual IO executed"
+            }
+          }
+        },
+        "routing": null
+      },
+      {
+        "id": "direct-model",
+        "parent_id": "direct-agent",
+        "parentage": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "stream_id": "synthetic",
+        "sequence": 3,
+        "kind": "model",
+        "label": "High-cost model consumes source",
+        "classification": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "status": "unknown",
+        "started_at": null,
+        "ended_at": null,
+        "duration_ns": null,
+        "timing": {
+          "started_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "ended_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock",
+            "clock": "unknown"
+          }
+        },
+        "agent_id": null,
+        "requesting_model": null,
+        "executing_model": "illustrative-high",
+        "observation_id": "direct-request",
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "direct-model"
+          }
+        ],
+        "io": null,
+        "routing": null
+      },
+      {
+        "id": "summary-route",
+        "parent_id": null,
+        "parentage": null,
+        "stream_id": "synthetic",
+        "sequence": 4,
+        "kind": "work",
+        "label": "Illustrative summary route · $0.070",
+        "classification": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "status": "unknown",
+        "started_at": null,
+        "ended_at": null,
+        "duration_ns": null,
+        "timing": {
+          "started_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "ended_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock",
+            "clock": "unknown"
+          }
+        },
+        "agent_id": null,
+        "requesting_model": null,
+        "executing_model": null,
+        "observation_id": null,
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "summary-route"
+          }
+        ],
+        "io": null,
+        "routing": null
+      },
+      {
+        "id": "summary-agent",
+        "parent_id": "summary-route",
+        "parentage": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "stream_id": "synthetic",
+        "sequence": 5,
+        "kind": "agent",
+        "label": "Main agent · high-cost model",
+        "classification": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "status": "unknown",
+        "started_at": null,
+        "ended_at": null,
+        "duration_ns": null,
+        "timing": {
+          "started_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "ended_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock",
+            "clock": "unknown"
+          }
+        },
+        "agent_id": "main-summary",
+        "requesting_model": null,
+        "executing_model": null,
+        "observation_id": null,
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "summary-agent"
+          }
+        ],
+        "io": null,
+        "routing": null
+      },
+      {
+        "id": "hook",
+        "parent_id": "summary-agent",
+        "parentage": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "stream_id": "synthetic",
+        "sequence": 6,
+        "kind": "hook",
+        "label": "Read policy · more than 350 lines",
+        "classification": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "status": "unknown",
+        "started_at": null,
+        "ended_at": null,
+        "duration_ns": null,
+        "timing": {
+          "started_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "ended_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock",
+            "clock": "unknown"
+          }
+        },
+        "agent_id": null,
+        "requesting_model": null,
+        "executing_model": null,
+        "observation_id": null,
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "hook"
+          }
+        ],
+        "io": null,
+        "routing": {
+          "origin": "workload_policy",
+          "policy_id": "summarize-large-read",
+          "policy_version": "illustrative-v1",
+          "action": "redirect",
+          "facts": {
+            "requested_lines": 400,
+            "threshold_lines": 350,
+            "synthetic": true
+          },
+          "reason": "Illustrative caller policy redirects this large read through a summarizer.",
+          "requested_model": "illustrative-high",
+          "selected_model": "illustrative-low",
+          "evidence": "declared"
+        }
+      },
+      {
+        "id": "delegate",
+        "parent_id": "hook",
+        "parentage": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "stream_id": "synthetic",
+        "sequence": 7,
+        "kind": "delegation",
+        "label": "Delegate summary request",
+        "classification": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "status": "unknown",
+        "started_at": null,
+        "ended_at": null,
+        "duration_ns": null,
+        "timing": {
+          "started_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "ended_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock",
+            "clock": "unknown"
+          }
+        },
+        "agent_id": null,
+        "requesting_model": null,
+        "executing_model": null,
+        "observation_id": null,
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "delegate"
+          }
+        ],
+        "io": null,
+        "routing": null
+      },
+      {
+        "id": "summary-worker",
+        "parent_id": "delegate",
+        "parentage": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "stream_id": "synthetic",
+        "sequence": 8,
+        "kind": "agent",
+        "label": "Summary worker · low-cost model",
+        "classification": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "status": "unknown",
+        "started_at": null,
+        "ended_at": null,
+        "duration_ns": null,
+        "timing": {
+          "started_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "ended_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock",
+            "clock": "unknown"
+          }
+        },
+        "agent_id": "summary-worker",
+        "requesting_model": null,
+        "executing_model": null,
+        "observation_id": null,
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "summary-worker"
+          }
+        ],
+        "io": null,
+        "routing": null
+      },
+      {
+        "id": "summary-read",
+        "parent_id": "summary-worker",
+        "parentage": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "stream_id": "synthetic",
+        "sequence": 9,
+        "kind": "file_read",
+        "label": "Read source for summarizer",
+        "classification": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "status": "unknown",
+        "started_at": null,
+        "ended_at": null,
+        "duration_ns": null,
+        "timing": {
+          "started_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "ended_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock",
+            "clock": "unknown"
+          }
+        },
+        "agent_id": null,
+        "requesting_model": null,
+        "executing_model": null,
+        "observation_id": null,
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "summary-read"
+          }
+        ],
+        "io": {
+          "resource_id": "synthetic-file",
+          "resource_label": "Illustrative 400-line source",
+          "requested_range": {
+            "start_line": 1,
+            "end_line": 400
+          },
+          "read_bytes": null,
+          "returned_bytes": null,
+          "written_bytes": null,
+          "inserted_bytes": null,
+          "deleted_bytes": null,
+          "entry_count": null,
+          "examined_entries": null,
+          "content_sha256": null,
+          "measurements": {
+            "read_bytes": {
+              "evidence": "unknown",
+              "method": "no actual IO executed"
+            },
+            "returned_bytes": {
+              "evidence": "unknown",
+              "method": "no actual IO executed"
+            },
+            "written_bytes": {
+              "evidence": "unknown",
+              "method": "no actual IO executed"
+            },
+            "inserted_bytes": {
+              "evidence": "unknown",
+              "method": "no actual IO executed"
+            },
+            "deleted_bytes": {
+              "evidence": "unknown",
+              "method": "no actual IO executed"
+            },
+            "entry_count": {
+              "evidence": "unknown",
+              "method": "no actual IO executed"
+            },
+            "examined_entries": {
+              "evidence": "unknown",
+              "method": "no actual IO executed"
+            },
+            "content_sha256": {
+              "evidence": "unknown",
+              "method": "no actual IO executed"
+            }
+          }
+        },
+        "routing": null
+      },
+      {
+        "id": "summary-op",
+        "parent_id": "summary-worker",
+        "parentage": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "stream_id": "synthetic",
+        "sequence": 10,
+        "kind": "summary",
+        "label": "Create compact representation",
+        "classification": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "status": "unknown",
+        "started_at": null,
+        "ended_at": null,
+        "duration_ns": null,
+        "timing": {
+          "started_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "ended_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock",
+            "clock": "unknown"
+          }
+        },
+        "agent_id": null,
+        "requesting_model": null,
+        "executing_model": null,
+        "observation_id": null,
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "summary-op"
+          }
+        ],
+        "io": null,
+        "routing": null
+      },
+      {
+        "id": "summary-model",
+        "parent_id": "summary-op",
+        "parentage": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "stream_id": "synthetic",
+        "sequence": 11,
+        "kind": "model",
+        "label": "Low-cost summarizer",
+        "classification": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "status": "unknown",
+        "started_at": null,
+        "ended_at": null,
+        "duration_ns": null,
+        "timing": {
+          "started_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "ended_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock",
+            "clock": "unknown"
+          }
+        },
+        "agent_id": null,
+        "requesting_model": null,
+        "executing_model": "illustrative-low",
+        "observation_id": "summary-request",
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "summary-model"
+          }
+        ],
+        "io": null,
+        "routing": null
+      },
+      {
+        "id": "consume-summary",
+        "parent_id": "summary-agent",
+        "parentage": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "stream_id": "synthetic",
+        "sequence": 12,
+        "kind": "model",
+        "label": "High-cost model consumes summary",
+        "classification": {
+          "evidence": "declared",
+          "method": "synthetic scenario definition; not a measured execution"
+        },
+        "status": "unknown",
+        "started_at": null,
+        "ended_at": null,
+        "duration_ns": null,
+        "timing": {
+          "started_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "ended_at": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock"
+          },
+          "duration_ns": {
+            "evidence": "unknown",
+            "method": "synthetic example has no measured clock",
+            "clock": "unknown"
+          }
+        },
+        "agent_id": null,
+        "requesting_model": null,
+        "executing_model": "illustrative-high",
+        "observation_id": "consumer-request",
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "consume-summary"
+          }
+        ],
+        "io": null,
+        "routing": null
+      }
+    ],
+    "links": [
+      {
+        "from_operation_id": "summary-read",
+        "kind": "produces_context",
+        "to_operation_id": null,
+        "context_revision_id": "context-revision:91bd38ebc7496d387a514268ddc31370aa9211c9c2f4f7677a14bc401543ba59",
+        "request_id": null,
+        "occurrence_id": null,
+        "evidence": "declared",
+        "method": "synthetic explicit context boundary",
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "summary-read/produces_context"
+          }
+        ]
+      },
+      {
+        "from_operation_id": "summary-op",
+        "kind": "produces_context",
+        "to_operation_id": null,
+        "context_revision_id": "context-revision:6e9baa5cd9840a89e047a835b819766574ae2a9e38011200000a737a33a17dd2",
+        "request_id": null,
+        "occurrence_id": null,
+        "evidence": "declared",
+        "method": "synthetic explicit context boundary",
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "summary-op/produces_context"
+          }
+        ]
+      },
+      {
+        "from_operation_id": "direct-model",
+        "kind": "consumes_context",
+        "to_operation_id": null,
+        "context_revision_id": "context-revision:91bd38ebc7496d387a514268ddc31370aa9211c9c2f4f7677a14bc401543ba59",
+        "request_id": "direct-request",
+        "occurrence_id": "context-occurrence:3964ff0183221963b9f307f43586a22a205c47ada0d9aa480962c84526ce5ef8",
+        "evidence": "declared",
+        "method": "synthetic explicit context boundary",
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "direct-model/consumes_context"
+          }
+        ]
+      },
+      {
+        "from_operation_id": "summary-model",
+        "kind": "consumes_context",
+        "to_operation_id": null,
+        "context_revision_id": "context-revision:91bd38ebc7496d387a514268ddc31370aa9211c9c2f4f7677a14bc401543ba59",
+        "request_id": "summary-request",
+        "occurrence_id": "context-occurrence:183e37160f85bf4bb546174c72f3fd3c23bf1445369973e21b4e37f329410b2b",
+        "evidence": "declared",
+        "method": "synthetic explicit context boundary",
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "summary-model/consumes_context"
+          }
+        ]
+      },
+      {
+        "from_operation_id": "consume-summary",
+        "kind": "consumes_context",
+        "to_operation_id": null,
+        "context_revision_id": "context-revision:6e9baa5cd9840a89e047a835b819766574ae2a9e38011200000a737a33a17dd2",
+        "request_id": "consumer-request",
+        "occurrence_id": "context-occurrence:bd3802ea9a45f214316e69bd8e584cbb203559ff66c009792756c38a6b7ee158",
+        "evidence": "declared",
+        "method": "synthetic explicit context boundary",
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "consume-summary/consumes_context"
+          }
+        ]
+      },
+      {
+        "from_operation_id": "direct-read",
+        "kind": "produces_context",
+        "to_operation_id": null,
+        "context_revision_id": "context-revision:91bd38ebc7496d387a514268ddc31370aa9211c9c2f4f7677a14bc401543ba59",
+        "request_id": null,
+        "occurrence_id": null,
+        "evidence": "declared",
+        "method": "synthetic explicit context boundary",
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "direct-read/produces_context"
+          }
+        ]
+      }
+    ],
+    "coverage": {
+      "boundary": "instrumented",
+      "complete": false,
+      "dropped_spans": 0,
+      "dropped_spans_by_stream": {},
+      "dropped_links": 0,
+      "dropped_links_by_stream": {},
+      "limitations": [
+        "Synthetic walkthrough: no operations, model requests, bytes, latency, quality or savings were measured.",
+        "The two routes illustrate a 350-line hook and separate model usage; actual comparison requires matched tasks, outcomes, cache behavior and rework.",
+        "Both reads produce one shared source revision, so the source allocation remains ambiguous between those read operations. Summary production is uniquely linked."
+      ]
+    }
+  },
+  "evidence": {
+    "schema_version": "0.1.0",
+    "dataset_id": "synthetic-summary-routing",
+    "sources": [
+      {
+        "id": "synthetic-routing",
+        "harness": "illustrative-harness",
+        "format": "synthetic-walkthrough",
+        "coverage": "partial",
+        "description": "Invented operations, usage, costs and policy facts for explanation. No model requests ran."
+      }
+    ],
+    "observations": [
+      {
+        "id": "direct-request",
+        "kind": "model",
+        "operation": "synthetic-generation",
+        "status": "unknown",
+        "accounting_scope": "direct",
+        "model": "illustrative-high",
+        "usage": {
+          "input_tokens": "1000",
+          "output_tokens": "100",
+          "cache_read_input_tokens": "0",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": null
+        },
+        "recorded_cost": {
+          "amount": "0.101",
+          "currency": "USD",
+          "basis": "enterprise_scenario"
+        },
+        "attributes": {
+          "synthetic": true,
+          "quality_verified": false
+        },
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "direct-request"
+          }
+        ]
+      },
+      {
+        "id": "summary-request",
+        "kind": "model",
+        "operation": "synthetic-generation",
+        "status": "unknown",
+        "accounting_scope": "direct",
+        "model": "illustrative-low",
+        "usage": {
+          "input_tokens": "1000",
+          "output_tokens": "100",
+          "cache_read_input_tokens": "0",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": null
+        },
+        "recorded_cost": {
+          "amount": "0.030",
+          "currency": "USD",
+          "basis": "enterprise_scenario"
+        },
+        "attributes": {
+          "synthetic": true,
+          "quality_verified": false
+        },
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "summary-request"
+          }
+        ]
+      },
+      {
+        "id": "consumer-request",
+        "kind": "model",
+        "operation": "synthetic-generation",
+        "status": "unknown",
+        "accounting_scope": "direct",
+        "model": "illustrative-high",
+        "usage": {
+          "input_tokens": "400",
+          "output_tokens": "100",
+          "cache_read_input_tokens": "0",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": null
+        },
+        "recorded_cost": {
+          "amount": "0.040",
+          "currency": "USD",
+          "basis": "enterprise_scenario"
+        },
+        "attributes": {
+          "synthetic": true,
+          "quality_verified": false
+        },
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "consumer-request"
+          }
+        ]
+      }
+    ],
+    "relationships": [],
+    "issues": [
+      {
+        "code": "SYNTHETIC",
+        "severity": "warning",
+        "message": "All usage and costs are invented illustrative values. This is not a provider rate card, actual bill or measured savings experiment."
+      }
+    ]
+  },
+  "valuation": {
+    "schema_version": "0.1.0",
+    "id": "val-b60376c51bc46f5ced57d9fe59da9607905c8b00acc0ad3c8af674bbcc62eb02",
+    "dataset_id": "synthetic-summary-routing",
+    "selection_policy": "direct-only-v1",
+    "currency": "USD",
+    "basis": "enterprise_scenario",
+    "assumptions": [
+      "selection policy: direct-only-v1",
+      "recorded monetary amounts are rounded once to nano-currency using HALF_EVEN"
+    ],
+    "observations": [
+      {
+        "observation_id": "consumer-request",
+        "amount_nanos": "40000000",
+        "basis": "enterprise_scenario"
+      },
+      {
+        "observation_id": "direct-request",
+        "amount_nanos": "101000000",
+        "basis": "enterprise_scenario"
+      },
+      {
+        "observation_id": "summary-request",
+        "amount_nanos": "30000000",
+        "basis": "enterprise_scenario"
+      }
+    ],
+    "total_nanos": "171000000",
+    "complete": false,
+    "issues": [
+      {
+        "code": "SOURCE_COVERAGE_PARTIAL",
+        "message": "source synthetic-routing declares partial capture coverage",
+        "severity": "warning",
+        "source_id": "synthetic-routing"
+      },
+      {
+        "code": "SYNTHETIC",
+        "severity": "warning",
+        "message": "All usage and costs are invented illustrative values. This is not a provider rate card, actual bill or measured savings experiment."
+      }
+    ]
+  },
+  "context_report": {
+    "schema_version": "0.2.0",
+    "dataset_id": "synthetic-summary-routing",
+    "evidence": {
+      "schema_version": "0.1.0",
+      "dataset_id": "synthetic-summary-routing",
+      "sources": [
+        {
+          "id": "synthetic-routing",
+          "harness": "illustrative-harness",
+          "format": "synthetic-walkthrough",
+          "coverage": "partial",
+          "description": "Invented operations, usage, costs and policy facts for explanation. No model requests ran."
+        }
+      ],
+      "observations": [
+        {
+          "id": "direct-request",
+          "kind": "model",
+          "operation": "synthetic-generation",
+          "status": "unknown",
+          "accounting_scope": "direct",
+          "model": "illustrative-high",
+          "usage": {
+            "input_tokens": "1000",
+            "output_tokens": "100",
+            "cache_read_input_tokens": "0",
+            "cache_write_input_tokens": "0",
+            "reasoning_output_tokens": null
+          },
+          "recorded_cost": {
+            "amount": "0.101",
+            "currency": "USD",
+            "basis": "enterprise_scenario"
+          },
+          "attributes": {
+            "synthetic": true,
+            "quality_verified": false
+          },
+          "source_refs": [
+            {
+              "source_id": "synthetic-routing",
+              "record": "direct-request"
+            }
+          ]
+        },
+        {
+          "id": "summary-request",
+          "kind": "model",
+          "operation": "synthetic-generation",
+          "status": "unknown",
+          "accounting_scope": "direct",
+          "model": "illustrative-low",
+          "usage": {
+            "input_tokens": "1000",
+            "output_tokens": "100",
+            "cache_read_input_tokens": "0",
+            "cache_write_input_tokens": "0",
+            "reasoning_output_tokens": null
+          },
+          "recorded_cost": {
+            "amount": "0.030",
+            "currency": "USD",
+            "basis": "enterprise_scenario"
+          },
+          "attributes": {
+            "synthetic": true,
+            "quality_verified": false
+          },
+          "source_refs": [
+            {
+              "source_id": "synthetic-routing",
+              "record": "summary-request"
+            }
+          ]
+        },
+        {
+          "id": "consumer-request",
+          "kind": "model",
+          "operation": "synthetic-generation",
+          "status": "unknown",
+          "accounting_scope": "direct",
+          "model": "illustrative-high",
+          "usage": {
+            "input_tokens": "400",
+            "output_tokens": "100",
+            "cache_read_input_tokens": "0",
+            "cache_write_input_tokens": "0",
+            "reasoning_output_tokens": null
+          },
+          "recorded_cost": {
+            "amount": "0.040",
+            "currency": "USD",
+            "basis": "enterprise_scenario"
+          },
+          "attributes": {
+            "synthetic": true,
+            "quality_verified": false
+          },
+          "source_refs": [
+            {
+              "source_id": "synthetic-routing",
+              "record": "consumer-request"
+            }
+          ]
+        }
+      ],
+      "relationships": [],
+      "issues": [
+        {
+          "code": "SYNTHETIC",
+          "severity": "warning",
+          "message": "All usage and costs are invented illustrative values. This is not a provider rate card, actual bill or measured savings experiment."
+        }
+      ]
+    },
+    "valuation": {
+      "schema_version": "0.1.0",
+      "id": "val-b60376c51bc46f5ced57d9fe59da9607905c8b00acc0ad3c8af674bbcc62eb02",
+      "dataset_id": "synthetic-summary-routing",
+      "selection_policy": "direct-only-v1",
+      "currency": "USD",
+      "basis": "enterprise_scenario",
+      "assumptions": [
+        "selection policy: direct-only-v1",
+        "recorded monetary amounts are rounded once to nano-currency using HALF_EVEN"
+      ],
+      "observations": [
+        {
+          "observation_id": "consumer-request",
+          "amount_nanos": "40000000",
+          "basis": "enterprise_scenario"
+        },
+        {
+          "observation_id": "direct-request",
+          "amount_nanos": "101000000",
+          "basis": "enterprise_scenario"
+        },
+        {
+          "observation_id": "summary-request",
+          "amount_nanos": "30000000",
+          "basis": "enterprise_scenario"
+        }
+      ],
+      "total_nanos": "171000000",
+      "complete": false,
+      "issues": [
+        {
+          "code": "SOURCE_COVERAGE_PARTIAL",
+          "message": "source synthetic-routing declares partial capture coverage",
+          "severity": "warning",
+          "source_id": "synthetic-routing"
+        },
+        {
+          "code": "SYNTHETIC",
+          "severity": "warning",
+          "message": "All usage and costs are invented illustrative values. This is not a provider rate card, actual bill or measured savings experiment."
+        }
+      ]
+    },
+    "context": {
+      "artifacts": [
+        {
+          "coverage": "partial",
+          "description": "Invented operations, usage, costs and policy facts for explanation. No model requests ran.",
+          "format": "synthetic-walkthrough",
+          "harness": "illustrative-harness",
+          "id": "synthetic-routing"
+        }
+      ],
+      "dataset_id": "synthetic-summary-routing",
+      "evidence_schema_version": "0.1.0",
+      "issues": [],
+      "profiles": [
+        {
+          "artifacts": [],
+          "context_capabilities": [
+            {
+              "capture": "unknown",
+              "evidence": "unknown",
+              "note": "No capture capability has been established for this profile.",
+              "origin": "system_instruction",
+              "source_refs": []
+            },
+            {
+              "capture": "unknown",
+              "evidence": "unknown",
+              "note": "No capture capability has been established for this profile.",
+              "origin": "developer_instruction",
+              "source_refs": []
+            },
+            {
+              "capture": "unknown",
+              "evidence": "unknown",
+              "note": "No capture capability has been established for this profile.",
+              "origin": "user_prompt",
+              "source_refs": []
+            },
+            {
+              "capture": "unknown",
+              "evidence": "unknown",
+              "note": "No capture capability has been established for this profile.",
+              "origin": "repository_instruction",
+              "source_refs": []
+            },
+            {
+              "capture": "unknown",
+              "evidence": "unknown",
+              "note": "No capture capability has been established for this profile.",
+              "origin": "skill",
+              "source_refs": []
+            },
+            {
+              "capture": "unknown",
+              "evidence": "unknown",
+              "note": "No capture capability has been established for this profile.",
+              "origin": "repository_file",
+              "source_refs": []
+            },
+            {
+              "capture": "unknown",
+              "evidence": "unknown",
+              "note": "No capture capability has been established for this profile.",
+              "origin": "retrieved_document",
+              "source_refs": []
+            },
+            {
+              "capture": "unknown",
+              "evidence": "unknown",
+              "note": "No capture capability has been established for this profile.",
+              "origin": "tool_result",
+              "source_refs": []
+            },
+            {
+              "capture": "unknown",
+              "evidence": "unknown",
+              "note": "No capture capability has been established for this profile.",
+              "origin": "tool_schema",
+              "source_refs": []
+            },
+            {
+              "capture": "unknown",
+              "evidence": "unknown",
+              "note": "No capture capability has been established for this profile.",
+              "origin": "output_schema",
+              "source_refs": []
+            },
+            {
+              "capture": "unknown",
+              "evidence": "unknown",
+              "note": "No capture capability has been established for this profile.",
+              "origin": "conversation_history",
+              "source_refs": []
+            },
+            {
+              "capture": "unknown",
+              "evidence": "unknown",
+              "note": "No capture capability has been established for this profile.",
+              "origin": "assistant_output",
+              "source_refs": []
+            },
+            {
+              "capture": "unknown",
+              "evidence": "unknown",
+              "note": "No capture capability has been established for this profile.",
+              "origin": "memory",
+              "source_refs": []
+            },
+            {
+              "capture": "unknown",
+              "evidence": "unknown",
+              "note": "No capture capability has been established for this profile.",
+              "origin": "delegated_context",
+              "source_refs": []
+            },
+            {
+              "capture": "unknown",
+              "evidence": "unknown",
+              "note": "No capture capability has been established for this profile.",
+              "origin": "attachment",
+              "source_refs": []
+            },
+            {
+              "capture": "unknown",
+              "evidence": "unknown",
+              "note": "No capture capability has been established for this profile.",
+              "origin": "unknown",
+              "source_refs": []
+            }
+          ],
+          "harness": "illustrative-harness",
+          "harness_version": {
+            "evidence": "unknown",
+            "source_refs": [],
+            "value": null
+          },
+          "id": "harness-profile:03484956d78c191096058a1d87c09cf059b8371fe14d64041cf144e35811aa5c",
+          "instruction_sources": [],
+          "model": {
+            "name": {
+              "evidence": "unknown",
+              "source_refs": [],
+              "value": null
+            },
+            "provider": {
+              "evidence": "unknown",
+              "source_refs": [],
+              "value": null
+            },
+            "settings": {}
+          },
+          "name": "illustrative-harness profile",
+          "policies": {
+            "assembly": {
+              "evidence": "unknown",
+              "source_refs": [],
+              "value": null
+            },
+            "caching": {
+              "evidence": "unknown",
+              "source_refs": [],
+              "value": null
+            },
+            "compaction": {
+              "evidence": "unknown",
+              "source_refs": [],
+              "value": null
+            },
+            "truncation": {
+              "evidence": "unknown",
+              "source_refs": [],
+              "value": null
+            }
+          },
+          "profile_version": "0.2.0",
+          "schema_version": "0.2.0",
+          "tools": []
+        }
+      ],
+      "requests": [
+        {
+          "boundary": "client_request",
+          "captured_at": null,
+          "coverage": "partial",
+          "coverage_evidence": "declared",
+          "id": "consumer-request",
+          "observation_id": "consumer-request",
+          "occurrences": [
+            {
+              "id": "context-occurrence:bd3802ea9a45f214316e69bd8e584cbb203559ff66c009792756c38a6b7ee158",
+              "placement": "tool_result",
+              "revision_id": "context-revision:6e9baa5cd9840a89e047a835b819766574ae2a9e38011200000a737a33a17dd2",
+              "role": "tool",
+              "treatment": {
+                "evidence": "unknown",
+                "method": "capture-treatment-unknown-v1",
+                "source_refs": [],
+                "value": "unknown"
+              }
+            }
+          ],
+          "overrides": {},
+          "profile_id": "harness-profile:03484956d78c191096058a1d87c09cf059b8371fe14d64041cf144e35811aa5c",
+          "source_refs": [
+            {
+              "record": "consumer-request",
+              "source_id": "synthetic-routing"
+            }
+          ]
+        },
+        {
+          "boundary": "client_request",
+          "captured_at": null,
+          "coverage": "partial",
+          "coverage_evidence": "declared",
+          "id": "direct-request",
+          "observation_id": "direct-request",
+          "occurrences": [
+            {
+              "id": "context-occurrence:3964ff0183221963b9f307f43586a22a205c47ada0d9aa480962c84526ce5ef8",
+              "placement": "tool_result",
+              "revision_id": "context-revision:91bd38ebc7496d387a514268ddc31370aa9211c9c2f4f7677a14bc401543ba59",
+              "role": "tool",
+              "treatment": {
+                "evidence": "unknown",
+                "method": "capture-treatment-unknown-v1",
+                "source_refs": [],
+                "value": "unknown"
+              }
+            }
+          ],
+          "overrides": {},
+          "profile_id": "harness-profile:03484956d78c191096058a1d87c09cf059b8371fe14d64041cf144e35811aa5c",
+          "source_refs": [
+            {
+              "record": "direct-request",
+              "source_id": "synthetic-routing"
+            }
+          ]
+        },
+        {
+          "boundary": "client_request",
+          "captured_at": null,
+          "coverage": "partial",
+          "coverage_evidence": "declared",
+          "id": "summary-request",
+          "observation_id": "summary-request",
+          "occurrences": [
+            {
+              "id": "context-occurrence:183e37160f85bf4bb546174c72f3fd3c23bf1445369973e21b4e37f329410b2b",
+              "placement": "tool_result",
+              "revision_id": "context-revision:91bd38ebc7496d387a514268ddc31370aa9211c9c2f4f7677a14bc401543ba59",
+              "role": "tool",
+              "treatment": {
+                "evidence": "unknown",
+                "method": "capture-treatment-unknown-v1",
+                "source_refs": [],
+                "value": "unknown"
+              }
+            }
+          ],
+          "overrides": {},
+          "profile_id": "harness-profile:03484956d78c191096058a1d87c09cf059b8371fe14d64041cf144e35811aa5c",
+          "source_refs": [
+            {
+              "record": "summary-request",
+              "source_id": "synthetic-routing"
+            }
+          ]
+        }
+      ],
+      "revisions": [
+        {
+          "bytes": {
+            "evidence": "derived",
+            "method": "utf8-byte-length-v1",
+            "source_refs": [
+              {
+                "record": "consumer-request",
+                "source_id": "synthetic-routing"
+              }
+            ],
+            "unit": "utf8_bytes",
+            "value": "48"
+          },
+          "content_sha256": "71b8eea4dbf3c7c0d29c05fe6502fbea205b0670735f8f969dfb8eba93d15cb4",
+          "fingerprint_evidence": "derived",
+          "fingerprint_method": "sha256-utf8-content-v1",
+          "id": "context-revision:6e9baa5cd9840a89e047a835b819766574ae2a9e38011200000a737a33a17dd2",
+          "media": "text",
+          "representation": "summary",
+          "source_id": "summary-source",
+          "source_refs": [
+            {
+              "record": "consumer-request",
+              "source_id": "synthetic-routing"
+            }
+          ],
+          "tokens": {
+            "evidence": "estimated",
+            "method": "invented illustrative token weight",
+            "source_refs": [
+              {
+                "record": "consumer-request",
+                "source_id": "synthetic-routing"
+              }
+            ],
+            "unit": "tokens",
+            "value": "200"
+          }
+        },
+        {
+          "bytes": {
+            "evidence": "derived",
+            "method": "utf8-byte-length-v1",
+            "source_refs": [
+              {
+                "record": "direct-request",
+                "source_id": "synthetic-routing"
+              },
+              {
+                "record": "summary-request",
+                "source_id": "synthetic-routing"
+              }
+            ],
+            "unit": "utf8_bytes",
+            "value": "9891"
+          },
+          "content_sha256": "ee1c4d94a48eceeb1e2b9950dd0a5a512713a9473bc2162c97455d6a3d7f668f",
+          "fingerprint_evidence": "derived",
+          "fingerprint_method": "sha256-utf8-content-v1",
+          "id": "context-revision:91bd38ebc7496d387a514268ddc31370aa9211c9c2f4f7677a14bc401543ba59",
+          "media": "text",
+          "representation": "original",
+          "source_id": "original-source",
+          "source_refs": [
+            {
+              "record": "direct-request",
+              "source_id": "synthetic-routing"
+            },
+            {
+              "record": "summary-request",
+              "source_id": "synthetic-routing"
+            }
+          ],
+          "tokens": {
+            "evidence": "estimated",
+            "method": "invented illustrative token weight",
+            "source_refs": [
+              {
+                "record": "direct-request",
+                "source_id": "synthetic-routing"
+              },
+              {
+                "record": "summary-request",
+                "source_id": "synthetic-routing"
+              }
+            ],
+            "unit": "tokens",
+            "value": "800"
+          }
+        }
+      ],
+      "schema_version": "0.2.0",
+      "sources": [
+        {
+          "id": "original-source",
+          "identity_basis": "unknown",
+          "label": "Illustrative source",
+          "origin": "repository_file",
+          "origin_evidence": "declared",
+          "source_refs": [
+            {
+              "record": "direct-request",
+              "source_id": "synthetic-routing"
+            },
+            {
+              "record": "summary-request",
+              "source_id": "synthetic-routing"
+            }
+          ]
+        },
+        {
+          "id": "summary-source",
+          "identity_basis": "unknown",
+          "label": "Illustrative summary",
+          "origin": "delegated_context",
+          "origin_evidence": "declared",
+          "source_refs": [
+            {
+              "record": "consumer-request",
+              "source_id": "synthetic-routing"
+            }
+          ]
+        }
+      ],
+      "transformations": [
+        {
+          "id": "illustrative-summary-transform",
+          "kind": "summarize",
+          "from_revision_ids": [
+            "context-revision:91bd38ebc7496d387a514268ddc31370aa9211c9c2f4f7677a14bc401543ba59"
+          ],
+          "to_revision_ids": [
+            "context-revision:6e9baa5cd9840a89e047a835b819766574ae2a9e38011200000a737a33a17dd2"
+          ],
+          "evidence": "declared",
+          "method": "synthetic summary lifecycle",
+          "observation_id": "summary-request",
+          "source_refs": [
+            {
+              "source_id": "synthetic-routing",
+              "record": "summary-transform"
+            }
+          ]
+        }
+      ]
+    },
+    "allocations": [
+      {
+        "request_id": "consumer-request",
+        "observation_id": "consumer-request",
+        "method": "proportional-input-coverage-v1",
+        "evidence": "estimated",
+        "amount_nanos": "40000000",
+        "denominator_tokens": "400",
+        "unallocated_weight_tokens": "200",
+        "allocated_nanos": "20000000",
+        "unallocated_nanos": "20000000",
+        "portions": [
+          {
+            "occurrence_id": "context-occurrence:bd3802ea9a45f214316e69bd8e584cbb203559ff66c009792756c38a6b7ee158",
+            "revision_id": "context-revision:6e9baa5cd9840a89e047a835b819766574ae2a9e38011200000a737a33a17dd2",
+            "source_id": "summary-source",
+            "weight_tokens": "200",
+            "amount_nanos": "20000000"
+          }
+        ],
+        "assumptions": [
+          "This estimates a distribution of the whole selected request cost, including any output component; it is not source billing or causal savings.",
+          "Eligible occurrence token counts are weights against observed inclusive input tokens. Repeated occurrences count separately; transformation ancestors do not receive implicit weights.",
+          "Selected capture boundary: client_request; coverage: partial. Missing input weight remains unallocated.",
+          "Counterfactual and unavailable measurements are excluded. Observed, derived and estimated token measurements can supply weights without changing the allocation's estimated status."
+        ],
+        "issues": []
+      },
+      {
+        "request_id": "direct-request",
+        "observation_id": "direct-request",
+        "method": "proportional-input-coverage-v1",
+        "evidence": "estimated",
+        "amount_nanos": "101000000",
+        "denominator_tokens": "1000",
+        "unallocated_weight_tokens": "200",
+        "allocated_nanos": "80800000",
+        "unallocated_nanos": "20200000",
+        "portions": [
+          {
+            "occurrence_id": "context-occurrence:3964ff0183221963b9f307f43586a22a205c47ada0d9aa480962c84526ce5ef8",
+            "revision_id": "context-revision:91bd38ebc7496d387a514268ddc31370aa9211c9c2f4f7677a14bc401543ba59",
+            "source_id": "original-source",
+            "weight_tokens": "800",
+            "amount_nanos": "80800000"
+          }
+        ],
+        "assumptions": [
+          "This estimates a distribution of the whole selected request cost, including any output component; it is not source billing or causal savings.",
+          "Eligible occurrence token counts are weights against observed inclusive input tokens. Repeated occurrences count separately; transformation ancestors do not receive implicit weights.",
+          "Selected capture boundary: client_request; coverage: partial. Missing input weight remains unallocated.",
+          "Counterfactual and unavailable measurements are excluded. Observed, derived and estimated token measurements can supply weights without changing the allocation's estimated status."
+        ],
+        "issues": []
+      },
+      {
+        "request_id": "summary-request",
+        "observation_id": "summary-request",
+        "method": "proportional-input-coverage-v1",
+        "evidence": "estimated",
+        "amount_nanos": "30000000",
+        "denominator_tokens": "1000",
+        "unallocated_weight_tokens": "200",
+        "allocated_nanos": "24000000",
+        "unallocated_nanos": "6000000",
+        "portions": [
+          {
+            "occurrence_id": "context-occurrence:183e37160f85bf4bb546174c72f3fd3c23bf1445369973e21b4e37f329410b2b",
+            "revision_id": "context-revision:91bd38ebc7496d387a514268ddc31370aa9211c9c2f4f7677a14bc401543ba59",
+            "source_id": "original-source",
+            "weight_tokens": "800",
+            "amount_nanos": "24000000"
+          }
+        ],
+        "assumptions": [
+          "This estimates a distribution of the whole selected request cost, including any output component; it is not source billing or causal savings.",
+          "Eligible occurrence token counts are weights against observed inclusive input tokens. Repeated occurrences count separately; transformation ancestors do not receive implicit weights.",
+          "Selected capture boundary: client_request; coverage: partial. Missing input weight remains unallocated.",
+          "Counterfactual and unavailable measurements are excluded. Observed, derived and estimated token measurements can supply weights without changing the allocation's estimated status."
+        ],
+        "issues": []
+      }
+    ],
+    "summary": {
+      "requests": 3,
+      "linked_observations": 3,
+      "context_sources": 2,
+      "known_cost_nanos": "171000000",
+      "currency": "USD",
+      "valuation_complete": false,
+      "complete_context_requests": 0,
+      "partial_context_requests": 3,
+      "unknown_context_requests": 0
+    },
+    "issues": []
+  },
+  "nodes": [
+    {
+      "operation_id": "direct",
+      "depth": 1,
+      "child_count": 1,
+      "self_cost_state": "not_applicable",
+      "self_charges_nanos": "0",
+      "subtree_charges_nanos": "101000000",
+      "self_credits_nanos": "0",
+      "subtree_credits_nanos": "0",
+      "unknown_cost_observation_ids": []
+    },
+    {
+      "operation_id": "direct-agent",
+      "depth": 2,
+      "child_count": 2,
+      "self_cost_state": "not_applicable",
+      "self_charges_nanos": "0",
+      "subtree_charges_nanos": "101000000",
+      "self_credits_nanos": "0",
+      "subtree_credits_nanos": "0",
+      "unknown_cost_observation_ids": []
+    },
+    {
+      "operation_id": "direct-read",
+      "depth": 3,
+      "child_count": 0,
+      "self_cost_state": "not_applicable",
+      "self_charges_nanos": "0",
+      "subtree_charges_nanos": "0",
+      "self_credits_nanos": "0",
+      "subtree_credits_nanos": "0",
+      "unknown_cost_observation_ids": []
+    },
+    {
+      "operation_id": "direct-model",
+      "depth": 3,
+      "child_count": 0,
+      "self_cost_state": "priced",
+      "self_charges_nanos": "101000000",
+      "subtree_charges_nanos": "101000000",
+      "self_credits_nanos": "0",
+      "subtree_credits_nanos": "0",
+      "unknown_cost_observation_ids": []
+    },
+    {
+      "operation_id": "summary-route",
+      "depth": 1,
+      "child_count": 1,
+      "self_cost_state": "not_applicable",
+      "self_charges_nanos": "0",
+      "subtree_charges_nanos": "70000000",
+      "self_credits_nanos": "0",
+      "subtree_credits_nanos": "0",
+      "unknown_cost_observation_ids": []
+    },
+    {
+      "operation_id": "summary-agent",
+      "depth": 2,
+      "child_count": 2,
+      "self_cost_state": "not_applicable",
+      "self_charges_nanos": "0",
+      "subtree_charges_nanos": "70000000",
+      "self_credits_nanos": "0",
+      "subtree_credits_nanos": "0",
+      "unknown_cost_observation_ids": []
+    },
+    {
+      "operation_id": "hook",
+      "depth": 3,
+      "child_count": 1,
+      "self_cost_state": "not_applicable",
+      "self_charges_nanos": "0",
+      "subtree_charges_nanos": "30000000",
+      "self_credits_nanos": "0",
+      "subtree_credits_nanos": "0",
+      "unknown_cost_observation_ids": []
+    },
+    {
+      "operation_id": "delegate",
+      "depth": 4,
+      "child_count": 1,
+      "self_cost_state": "not_applicable",
+      "self_charges_nanos": "0",
+      "subtree_charges_nanos": "30000000",
+      "self_credits_nanos": "0",
+      "subtree_credits_nanos": "0",
+      "unknown_cost_observation_ids": []
+    },
+    {
+      "operation_id": "summary-worker",
+      "depth": 5,
+      "child_count": 2,
+      "self_cost_state": "not_applicable",
+      "self_charges_nanos": "0",
+      "subtree_charges_nanos": "30000000",
+      "self_credits_nanos": "0",
+      "subtree_credits_nanos": "0",
+      "unknown_cost_observation_ids": []
+    },
+    {
+      "operation_id": "summary-read",
+      "depth": 6,
+      "child_count": 0,
+      "self_cost_state": "not_applicable",
+      "self_charges_nanos": "0",
+      "subtree_charges_nanos": "0",
+      "self_credits_nanos": "0",
+      "subtree_credits_nanos": "0",
+      "unknown_cost_observation_ids": []
+    },
+    {
+      "operation_id": "summary-op",
+      "depth": 6,
+      "child_count": 1,
+      "self_cost_state": "not_applicable",
+      "self_charges_nanos": "0",
+      "subtree_charges_nanos": "30000000",
+      "self_credits_nanos": "0",
+      "subtree_credits_nanos": "0",
+      "unknown_cost_observation_ids": []
+    },
+    {
+      "operation_id": "summary-model",
+      "depth": 7,
+      "child_count": 0,
+      "self_cost_state": "priced",
+      "self_charges_nanos": "30000000",
+      "subtree_charges_nanos": "30000000",
+      "self_credits_nanos": "0",
+      "subtree_credits_nanos": "0",
+      "unknown_cost_observation_ids": []
+    },
+    {
+      "operation_id": "consume-summary",
+      "depth": 3,
+      "child_count": 0,
+      "self_cost_state": "priced",
+      "self_charges_nanos": "40000000",
+      "subtree_charges_nanos": "40000000",
+      "self_credits_nanos": "0",
+      "subtree_credits_nanos": "0",
+      "unknown_cost_observation_ids": []
+    }
+  ],
+  "execution_cost": [
+    {
+      "observation_id": "consumer-request",
+      "operation_ids": [
+        "summary-route",
+        "summary-agent",
+        "consume-summary"
+      ],
+      "amount_nanos": "40000000",
+      "context_source_id": null,
+      "context_revision_id": null,
+      "occurrence_id": null,
+      "request_id": null,
+      "attribution": "execution",
+      "label": "synthetic-generation"
+    },
+    {
+      "observation_id": "direct-request",
+      "operation_ids": [
+        "direct",
+        "direct-agent",
+        "direct-model"
+      ],
+      "amount_nanos": "101000000",
+      "context_source_id": null,
+      "context_revision_id": null,
+      "occurrence_id": null,
+      "request_id": null,
+      "attribution": "execution",
+      "label": "synthetic-generation"
+    },
+    {
+      "observation_id": "summary-request",
+      "operation_ids": [
+        "summary-route",
+        "summary-agent",
+        "hook",
+        "delegate",
+        "summary-worker",
+        "summary-op",
+        "summary-model"
+      ],
+      "amount_nanos": "30000000",
+      "context_source_id": null,
+      "context_revision_id": null,
+      "occurrence_id": null,
+      "request_id": null,
+      "attribution": "execution",
+      "label": "synthetic-generation"
+    }
+  ],
+  "source_cost": [
+    {
+      "observation_id": "consumer-request",
+      "operation_ids": [
+        "summary-route",
+        "summary-agent",
+        "hook",
+        "delegate",
+        "summary-worker",
+        "summary-op"
+      ],
+      "amount_nanos": "20000000",
+      "context_source_id": "summary-source",
+      "context_revision_id": "context-revision:6e9baa5cd9840a89e047a835b819766574ae2a9e38011200000a737a33a17dd2",
+      "occurrence_id": "context-occurrence:bd3802ea9a45f214316e69bd8e584cbb203559ff66c009792756c38a6b7ee158",
+      "request_id": "consumer-request",
+      "attribution": "estimated_source",
+      "label": "Illustrative summary"
+    },
+    {
+      "observation_id": "consumer-request",
+      "operation_ids": [
+        "summary-route",
+        "summary-agent",
+        "consume-summary"
+      ],
+      "amount_nanos": "20000000",
+      "context_source_id": null,
+      "context_revision_id": null,
+      "occurrence_id": null,
+      "request_id": "consumer-request",
+      "attribution": "unallocated",
+      "label": "Unallocated request cost"
+    },
+    {
+      "observation_id": "direct-request",
+      "operation_ids": [],
+      "amount_nanos": "80800000",
+      "context_source_id": "original-source",
+      "context_revision_id": "context-revision:91bd38ebc7496d387a514268ddc31370aa9211c9c2f4f7677a14bc401543ba59",
+      "occurrence_id": "context-occurrence:3964ff0183221963b9f307f43586a22a205c47ada0d9aa480962c84526ce5ef8",
+      "request_id": "direct-request",
+      "attribution": "estimated_source",
+      "label": "Illustrative source"
+    },
+    {
+      "observation_id": "direct-request",
+      "operation_ids": [
+        "direct",
+        "direct-agent",
+        "direct-model"
+      ],
+      "amount_nanos": "20200000",
+      "context_source_id": null,
+      "context_revision_id": null,
+      "occurrence_id": null,
+      "request_id": "direct-request",
+      "attribution": "unallocated",
+      "label": "Unallocated request cost"
+    },
+    {
+      "observation_id": "summary-request",
+      "operation_ids": [],
+      "amount_nanos": "24000000",
+      "context_source_id": "original-source",
+      "context_revision_id": "context-revision:91bd38ebc7496d387a514268ddc31370aa9211c9c2f4f7677a14bc401543ba59",
+      "occurrence_id": "context-occurrence:183e37160f85bf4bb546174c72f3fd3c23bf1445369973e21b4e37f329410b2b",
+      "request_id": "summary-request",
+      "attribution": "estimated_source",
+      "label": "Illustrative source"
+    },
+    {
+      "observation_id": "summary-request",
+      "operation_ids": [
+        "summary-route",
+        "summary-agent",
+        "hook",
+        "delegate",
+        "summary-worker",
+        "summary-op",
+        "summary-model"
+      ],
+      "amount_nanos": "6000000",
+      "context_source_id": null,
+      "context_revision_id": null,
+      "occurrence_id": null,
+      "request_id": "summary-request",
+      "attribution": "unallocated",
+      "label": "Unallocated request cost"
+    }
+  ],
+  "summary": {
+    "spans": 13,
+    "max_depth": 7,
+    "known_net_nanos": "171000000",
+    "charges_nanos": "171000000",
+    "credits_nanos": "0",
+    "currency": "USD",
+    "unbound_observation_ids": [],
+    "unknown_cost_observation_ids": []
+  },
+  "assumptions": [
+    "Execution paths follow recorded parent containment; dependency and context links never create execution parents.",
+    "Each direct valued observation contributes self cost once. Ancestor totals are rollups, not additional charges. Unbound cost is retained.",
+    "A file operation without a linked monetary observation has no applicable self model cost; this does not assert free infrastructure or zero downstream model cost.",
+    "Source cost is a separate estimated information-flow projection of selected request allocations, including output cost. It is not per-source billing or causal savings.",
+    "Source paths require one recorded producer and an explicit consuming request occurrence link. Missing consumption links or multiple producers leave the operation path unattributed; summaries are never back-allocated to their ancestors.",
+    "Null timing and IO quantities mean unavailable. Overlapping elapsed durations must not be summed as wall-clock time."
+  ]
+}

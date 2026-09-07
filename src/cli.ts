@@ -29,6 +29,13 @@ Context workflow (0.2 composes with frozen 0.1 cost evidence):
   context-import --harness codex|pi --input session.jsonl --evidence evidence.json --profile profile.json --source-id ID --out context.json
   context-report --evidence evidence.json --valuation valuation.json --context context.json [--allocate-requests request-a,request-b] --out report.json
 
+Operation workflow (0.3 composes with cost evidence and optional context reports):
+  operation-import --harness codex|pi --input native.jsonl --dataset-id ID --namespace ID [--evidence evidence.json] --out operations.json
+  operation-merge --inputs operations-a.json,operations-b.json --out operations.json
+  operation-report --input operations.json --evidence evidence.json --valuation valuation.json [--context-report context-report.json] --out report.json
+  operation-export --input report.json --out-dir operations [--svg true]
+  validate --kind operations|operation-report --input FILE
+
 Use --help to show this workflow. No command sends data to a provider.
 `;
 
@@ -107,9 +114,21 @@ async function main(args: string[]): Promise<void> {
     process.stdout.write(help);
     return;
   }
+  if (command.startsWith("operation-")) {
+    const { runOperationCommand } = await import("./operation-cli.js");
+    await runOperationCommand(command, rest);
+    return;
+  }
   if (command === "validate") {
     const options = flags(rest, ["--input", "--kind"]);
     const kind = options.get("--kind") ?? "evidence";
+    if (kind === "operations" || kind === "operation-report") {
+      const { validateOperationBundle, validateOperationReport } = await import("./operations.js");
+      const input = await readJson(required(options, "--input"));
+      const artifact = kind === "operations" ? validateOperationBundle(input) : validateOperationReport(input);
+      process.stdout.write(JSON.stringify({ valid: true, schema_version: artifact.schema_version, dataset_id: artifact.dataset_id }) + "\n");
+      return;
+    }
     if (kind === "capture-state") {
       const { validateCaptureState } = await import("./capture.js");
       const state = validateCaptureState(await readJson(required(options, "--input")));

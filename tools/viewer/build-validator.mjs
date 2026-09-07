@@ -8,7 +8,7 @@ import standaloneCode from 'ajv/dist/standalone/index.js';
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const output = resolve(process.argv[2] ?? '.local/browser-validator.mjs');
 const schemas = {};
-for (const [version, names] of [['0.1', ['evidence','valuation','rate-card','work-item']], ['0.2', ['context','harness-profile','context-report']]]) {
+for (const [version, names] of [['0.1', ['evidence','valuation','rate-card','work-item']], ['0.2', ['context','harness-profile','context-report']], ['0.3', ['operations']]]) {
   for (const name of names) schemas[`/spec/${version}/schemas/${name}.schema.json`] = readFileSync(resolve(root, `spec/${version}/schemas/${name}.schema.json`), 'utf8');
 }
 mkdirSync(dirname(output), { recursive: true });
@@ -23,7 +23,7 @@ Object.values(schemas).forEach((text, index) => {
 });
 const compiledSchemas = standaloneCode(ajv, validators);
 await build({
-  stdin: { contents: 'export { validateContextReport, createContextReport } from "./src/context-report.ts";', resolveDir: root, sourcefile: 'browser-validator.ts', loader: 'ts' },
+  stdin: { contents: 'export { validateContextReport, createContextReport } from "./src/context-report.ts"; export { validateOperationReport, validateOperationBundle } from "./src/operations.ts";', resolveDir: root, sourcefile: 'browser-validator.ts', loader: 'ts' },
   outfile: output, bundle: true, format: 'esm', platform: 'browser', target: 'es2022', minify: true,
   define: {'import.meta.url': JSON.stringify('https://embedded.invalid/src/context-report.js')},
   plugins: [{ name: 'offline-validator-resources', setup(builder) {

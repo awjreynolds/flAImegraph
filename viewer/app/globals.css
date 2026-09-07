@@ -2,6 +2,46 @@
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 @custom-variant dark (&:is(.dark *));
+
+.op-explorer .op-example-select { width: 19rem; }
+.op-explorer .op-kind-select { width: 14rem; flex-shrink: 0; }
+.op-panel { border: 1px solid var(--border); background: var(--card); margin-top: 1rem; overflow: hidden; }
+.op-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem; border-bottom: 1px solid var(--border); }
+.op-toolbar > input { max-width: 44rem; }
+.op-breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem; padding: .6rem; }
+.op-breadcrumb button { max-width: 100%; white-space: normal; height: auto; text-align: left; }
+.op-explorer .op-row-title { display: flex; gap: .4rem; align-items: center; }
+.op-explorer .op-inspect { justify-content: flex-start; height: auto; white-space: normal; text-align: left; padding: .35rem 0; color: #91cbe8; font-size: 1rem; max-width: 26rem; }
+.op-secondary { display: block; font-size: .875rem; color: var(--muted-foreground); margin-top: .15rem; font-weight: normal; }
+.op-id { max-width: 28rem; overflow-wrap: anywhere; white-space: normal; font-family: ui-monospace, monospace; font-size: .875rem; }
+.op-number { font-variant-numeric: tabular-nums; text-align: right; }
+.op-explorer .op-coverage-label { font-size: 1.3rem; margin: .35rem 0; }
+.op-panel > p, .op-table-note { padding: .75rem 1rem; }
+.op-notice { background: #362e1c; color: #f1ce88; padding: .9rem 1rem; font-size: .95rem; }
+.op-pagination { display: flex; align-items: center; justify-content: flex-end; gap: .75rem; padding: 1rem 0; }
+.op-pagination > span { margin-right: auto; color: var(--muted-foreground); }
+.op-coverage { padding: 1.25rem 0; border-top: 1px solid var(--border); color: var(--muted-foreground); font-size: .9rem; }
+.op-coverage h2 { color: var(--foreground); }
+.op-flamegraph { width: 100%; height: 33rem; border: 0; background: #fff; }
+.op-error { border: 1px solid #b16c62; background: #3c2323; padding: 1rem; overflow-wrap: anywhere; }
+.op-detail { overflow-y: auto; width: min(95vw, 42rem); max-width: 42rem !important; background: var(--card); }
+.op-detail-body { padding: 0 1.5rem 2rem; }
+.op-detail-body section { margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 1rem; }
+.op-detail-body dt { margin-top: .85rem; font-size: .875rem; }
+.op-detail-body dd { margin: .2rem 0 0; overflow-wrap: anywhere; }
+.op-detail-body pre { white-space: pre-wrap; overflow-wrap: anywhere; padding: .75rem; background: var(--background); font-size: .875rem; }
+.op-footer { padding: 1rem 0 2rem; border-top: 1px solid var(--border); font-size: .875rem; color: var(--muted-foreground); }
+.op-explorer a { color: #91cbe8; }
+@media (max-width: 850px) {
+  .op-explorer { padding: 0 1rem; }
+  .op-explorer header, .op-explorer .intro { flex-wrap: wrap; }
+  .op-explorer .metrics { grid-template-columns: 1fr 1fr; }
+  .op-explorer .actions { flex-wrap: wrap; }
+  .op-toolbar { flex-wrap: wrap; }
+  .op-explorer .op-example-select, .op-explorer .op-kind-select { width: 100%; }
+  .op-pagination { flex-wrap: wrap; }
+  .op-explorer [role='tablist'] { display: flex; height: auto; flex-wrap: wrap; }
+}
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

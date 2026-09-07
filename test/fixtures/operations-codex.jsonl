@@ -1,0 +1,7 @@
+{"type":"session_meta","timestamp":"2026-09-07T09:59:59.000Z","payload":{"id":"fixture-session","cwd":"/fixture/worktree"}}
+{"type":"response_item","timestamp":"2026-09-07T10:00:00.000Z","payload":{"type":"function_call","call_id":"fixture-read-1","name":"read","arguments":"{\"path\":\"/fixture/source.txt\",\"start_line\":2,\"end_line\":4}"}}
+{"type":"response_item","timestamp":"2026-09-07T10:00:01.000Z","payload":{"type":"function_call_output","call_id":"fixture-read-1","output":"sanitized fixture content"}}
+{"type":"response_item","timestamp":"2026-09-07T10:00:02.000Z","payload":{"type":"custom_tool_call","call_id":"fixture-exec-1","name":"functions.exec","input":"{\"command\":\"cat /fixture/source.txt\"}"}}
+{"type":"response_item","timestamp":"2026-09-07T10:00:03.000Z","payload":{"type":"custom_tool_call_output","call_id":"fixture-exec-1","output":"opaque fixture output"}}
+{"type":"token_usage_record","timestamp":"2026-09-07T10:00:04.000Z","payload":{"session_id":"fixture-session","response_id":"fixture-response-1","usage":{"input_tokens":"100","output_tokens":"20","cached_input_tokens":"10","cache_write_input_tokens":"0","reasoning_output_tokens":"2"},"model":"fixture-model","provider":"fixture-provider"}}
+{"type":"event_msg","timestamp":"2026-09-07T10:00:05.000Z","payload":{"type":"token_count","turn_id":"fixture-turn-1","info":{"last_token_usage":{"input_tokens":"100","output_tokens":"20","total_tokens":"120"},"total_token_usage":{"input_tokens":"100","output_tokens":"20","total_tokens":"120"}}}}

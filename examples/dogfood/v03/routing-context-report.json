@@ -1,0 +1,674 @@
+{
+  "schema_version": "0.2.0",
+  "dataset_id": "synthetic-summary-routing",
+  "evidence": {
+    "schema_version": "0.1.0",
+    "dataset_id": "synthetic-summary-routing",
+    "sources": [
+      {
+        "id": "synthetic-routing",
+        "harness": "illustrative-harness",
+        "format": "synthetic-walkthrough",
+        "coverage": "partial",
+        "description": "Invented operations, usage, costs and policy facts for explanation. No model requests ran."
+      }
+    ],
+    "observations": [
+      {
+        "id": "direct-request",
+        "kind": "model",
+        "operation": "synthetic-generation",
+        "status": "unknown",
+        "accounting_scope": "direct",
+        "model": "illustrative-high",
+        "usage": {
+          "input_tokens": "1000",
+          "output_tokens": "100",
+          "cache_read_input_tokens": "0",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": null
+        },
+        "recorded_cost": {
+          "amount": "0.101",
+          "currency": "USD",
+          "basis": "enterprise_scenario"
+        },
+        "attributes": {
+          "synthetic": true,
+          "quality_verified": false
+        },
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "direct-request"
+          }
+        ]
+      },
+      {
+        "id": "summary-request",
+        "kind": "model",
+        "operation": "synthetic-generation",
+        "status": "unknown",
+        "accounting_scope": "direct",
+        "model": "illustrative-low",
+        "usage": {
+          "input_tokens": "1000",
+          "output_tokens": "100",
+          "cache_read_input_tokens": "0",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": null
+        },
+        "recorded_cost": {
+          "amount": "0.030",
+          "currency": "USD",
+          "basis": "enterprise_scenario"
+        },
+        "attributes": {
+          "synthetic": true,
+          "quality_verified": false
+        },
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "summary-request"
+          }
+        ]
+      },
+      {
+        "id": "consumer-request",
+        "kind": "model",
+        "operation": "synthetic-generation",
+        "status": "unknown",
+        "accounting_scope": "direct",
+        "model": "illustrative-high",
+        "usage": {
+          "input_tokens": "400",
+          "output_tokens": "100",
+          "cache_read_input_tokens": "0",
+          "cache_write_input_tokens": "0",
+          "reasoning_output_tokens": null
+        },
+        "recorded_cost": {
+          "amount": "0.040",
+          "currency": "USD",
+          "basis": "enterprise_scenario"
+        },
+        "attributes": {
+          "synthetic": true,
+          "quality_verified": false
+        },
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "consumer-request"
+          }
+        ]
+      }
+    ],
+    "relationships": [],
+    "issues": [
+      {
+        "code": "SYNTHETIC",
+        "severity": "warning",
+        "message": "All usage and costs are invented illustrative values. This is not a provider rate card, actual bill or measured savings experiment."
+      }
+    ]
+  },
+  "valuation": {
+    "schema_version": "0.1.0",
+    "id": "val-b60376c51bc46f5ced57d9fe59da9607905c8b00acc0ad3c8af674bbcc62eb02",
+    "dataset_id": "synthetic-summary-routing",
+    "selection_policy": "direct-only-v1",
+    "currency": "USD",
+    "basis": "enterprise_scenario",
+    "assumptions": [
+      "selection policy: direct-only-v1",
+      "recorded monetary amounts are rounded once to nano-currency using HALF_EVEN"
+    ],
+    "observations": [
+      {
+        "observation_id": "consumer-request",
+        "amount_nanos": "40000000",
+        "basis": "enterprise_scenario"
+      },
+      {
+        "observation_id": "direct-request",
+        "amount_nanos": "101000000",
+        "basis": "enterprise_scenario"
+      },
+      {
+        "observation_id": "summary-request",
+        "amount_nanos": "30000000",
+        "basis": "enterprise_scenario"
+      }
+    ],
+    "total_nanos": "171000000",
+    "complete": false,
+    "issues": [
+      {
+        "code": "SOURCE_COVERAGE_PARTIAL",
+        "message": "source synthetic-routing declares partial capture coverage",
+        "severity": "warning",
+        "source_id": "synthetic-routing"
+      },
+      {
+        "code": "SYNTHETIC",
+        "severity": "warning",
+        "message": "All usage and costs are invented illustrative values. This is not a provider rate card, actual bill or measured savings experiment."
+      }
+    ]
+  },
+  "context": {
+    "artifacts": [
+      {
+        "coverage": "partial",
+        "description": "Invented operations, usage, costs and policy facts for explanation. No model requests ran.",
+        "format": "synthetic-walkthrough",
+        "harness": "illustrative-harness",
+        "id": "synthetic-routing"
+      }
+    ],
+    "dataset_id": "synthetic-summary-routing",
+    "evidence_schema_version": "0.1.0",
+    "issues": [],
+    "profiles": [
+      {
+        "artifacts": [],
+        "context_capabilities": [
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "system_instruction",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "developer_instruction",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "user_prompt",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "repository_instruction",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "skill",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "repository_file",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "retrieved_document",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "tool_result",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "tool_schema",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "output_schema",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "conversation_history",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "assistant_output",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "memory",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "delegated_context",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "attachment",
+            "source_refs": []
+          },
+          {
+            "capture": "unknown",
+            "evidence": "unknown",
+            "note": "No capture capability has been established for this profile.",
+            "origin": "unknown",
+            "source_refs": []
+          }
+        ],
+        "harness": "illustrative-harness",
+        "harness_version": {
+          "evidence": "unknown",
+          "source_refs": [],
+          "value": null
+        },
+        "id": "harness-profile:03484956d78c191096058a1d87c09cf059b8371fe14d64041cf144e35811aa5c",
+        "instruction_sources": [],
+        "model": {
+          "name": {
+            "evidence": "unknown",
+            "source_refs": [],
+            "value": null
+          },
+          "provider": {
+            "evidence": "unknown",
+            "source_refs": [],
+            "value": null
+          },
+          "settings": {}
+        },
+        "name": "illustrative-harness profile",
+        "policies": {
+          "assembly": {
+            "evidence": "unknown",
+            "source_refs": [],
+            "value": null
+          },
+          "caching": {
+            "evidence": "unknown",
+            "source_refs": [],
+            "value": null
+          },
+          "compaction": {
+            "evidence": "unknown",
+            "source_refs": [],
+            "value": null
+          },
+          "truncation": {
+            "evidence": "unknown",
+            "source_refs": [],
+            "value": null
+          }
+        },
+        "profile_version": "0.2.0",
+        "schema_version": "0.2.0",
+        "tools": []
+      }
+    ],
+    "requests": [
+      {
+        "boundary": "client_request",
+        "captured_at": null,
+        "coverage": "partial",
+        "coverage_evidence": "declared",
+        "id": "consumer-request",
+        "observation_id": "consumer-request",
+        "occurrences": [
+          {
+            "id": "context-occurrence:bd3802ea9a45f214316e69bd8e584cbb203559ff66c009792756c38a6b7ee158",
+            "placement": "tool_result",
+            "revision_id": "context-revision:6e9baa5cd9840a89e047a835b819766574ae2a9e38011200000a737a33a17dd2",
+            "role": "tool",
+            "treatment": {
+              "evidence": "unknown",
+              "method": "capture-treatment-unknown-v1",
+              "source_refs": [],
+              "value": "unknown"
+            }
+          }
+        ],
+        "overrides": {},
+        "profile_id": "harness-profile:03484956d78c191096058a1d87c09cf059b8371fe14d64041cf144e35811aa5c",
+        "source_refs": [
+          {
+            "record": "consumer-request",
+            "source_id": "synthetic-routing"
+          }
+        ]
+      },
+      {
+        "boundary": "client_request",
+        "captured_at": null,
+        "coverage": "partial",
+        "coverage_evidence": "declared",
+        "id": "direct-request",
+        "observation_id": "direct-request",
+        "occurrences": [
+          {
+            "id": "context-occurrence:3964ff0183221963b9f307f43586a22a205c47ada0d9aa480962c84526ce5ef8",
+            "placement": "tool_result",
+            "revision_id": "context-revision:91bd38ebc7496d387a514268ddc31370aa9211c9c2f4f7677a14bc401543ba59",
+            "role": "tool",
+            "treatment": {
+              "evidence": "unknown",
+              "method": "capture-treatment-unknown-v1",
+              "source_refs": [],
+              "value": "unknown"
+            }
+          }
+        ],
+        "overrides": {},
+        "profile_id": "harness-profile:03484956d78c191096058a1d87c09cf059b8371fe14d64041cf144e35811aa5c",
+        "source_refs": [
+          {
+            "record": "direct-request",
+            "source_id": "synthetic-routing"
+          }
+        ]
+      },
+      {
+        "boundary": "client_request",
+        "captured_at": null,
+        "coverage": "partial",
+        "coverage_evidence": "declared",
+        "id": "summary-request",
+        "observation_id": "summary-request",
+        "occurrences": [
+          {
+            "id": "context-occurrence:183e37160f85bf4bb546174c72f3fd3c23bf1445369973e21b4e37f329410b2b",
+            "placement": "tool_result",
+            "revision_id": "context-revision:91bd38ebc7496d387a514268ddc31370aa9211c9c2f4f7677a14bc401543ba59",
+            "role": "tool",
+            "treatment": {
+              "evidence": "unknown",
+              "method": "capture-treatment-unknown-v1",
+              "source_refs": [],
+              "value": "unknown"
+            }
+          }
+        ],
+        "overrides": {},
+        "profile_id": "harness-profile:03484956d78c191096058a1d87c09cf059b8371fe14d64041cf144e35811aa5c",
+        "source_refs": [
+          {
+            "record": "summary-request",
+            "source_id": "synthetic-routing"
+          }
+        ]
+      }
+    ],
+    "revisions": [
+      {
+        "bytes": {
+          "evidence": "derived",
+          "method": "utf8-byte-length-v1",
+          "source_refs": [
+            {
+              "record": "consumer-request",
+              "source_id": "synthetic-routing"
+            }
+          ],
+          "unit": "utf8_bytes",
+          "value": "48"
+        },
+        "content_sha256": "71b8eea4dbf3c7c0d29c05fe6502fbea205b0670735f8f969dfb8eba93d15cb4",
+        "fingerprint_evidence": "derived",
+        "fingerprint_method": "sha256-utf8-content-v1",
+        "id": "context-revision:6e9baa5cd9840a89e047a835b819766574ae2a9e38011200000a737a33a17dd2",
+        "media": "text",
+        "representation": "summary",
+        "source_id": "summary-source",
+        "source_refs": [
+          {
+            "record": "consumer-request",
+            "source_id": "synthetic-routing"
+          }
+        ],
+        "tokens": {
+          "evidence": "estimated",
+          "method": "invented illustrative token weight",
+          "source_refs": [
+            {
+              "record": "consumer-request",
+              "source_id": "synthetic-routing"
+            }
+          ],
+          "unit": "tokens",
+          "value": "200"
+        }
+      },
+      {
+        "bytes": {
+          "evidence": "derived",
+          "method": "utf8-byte-length-v1",
+          "source_refs": [
+            {
+              "record": "direct-request",
+              "source_id": "synthetic-routing"
+            },
+            {
+              "record": "summary-request",
+              "source_id": "synthetic-routing"
+            }
+          ],
+          "unit": "utf8_bytes",
+          "value": "9891"
+        },
+        "content_sha256": "ee1c4d94a48eceeb1e2b9950dd0a5a512713a9473bc2162c97455d6a3d7f668f",
+        "fingerprint_evidence": "derived",
+        "fingerprint_method": "sha256-utf8-content-v1",
+        "id": "context-revision:91bd38ebc7496d387a514268ddc31370aa9211c9c2f4f7677a14bc401543ba59",
+        "media": "text",
+        "representation": "original",
+        "source_id": "original-source",
+        "source_refs": [
+          {
+            "record": "direct-request",
+            "source_id": "synthetic-routing"
+          },
+          {
+            "record": "summary-request",
+            "source_id": "synthetic-routing"
+          }
+        ],
+        "tokens": {
+          "evidence": "estimated",
+          "method": "invented illustrative token weight",
+          "source_refs": [
+            {
+              "record": "direct-request",
+              "source_id": "synthetic-routing"
+            },
+            {
+              "record": "summary-request",
+              "source_id": "synthetic-routing"
+            }
+          ],
+          "unit": "tokens",
+          "value": "800"
+        }
+      }
+    ],
+    "schema_version": "0.2.0",
+    "sources": [
+      {
+        "id": "original-source",
+        "identity_basis": "unknown",
+        "label": "Illustrative source",
+        "origin": "repository_file",
+        "origin_evidence": "declared",
+        "source_refs": [
+          {
+            "record": "direct-request",
+            "source_id": "synthetic-routing"
+          },
+          {
+            "record": "summary-request",
+            "source_id": "synthetic-routing"
+          }
+        ]
+      },
+      {
+        "id": "summary-source",
+        "identity_basis": "unknown",
+        "label": "Illustrative summary",
+        "origin": "delegated_context",
+        "origin_evidence": "declared",
+        "source_refs": [
+          {
+            "record": "consumer-request",
+            "source_id": "synthetic-routing"
+          }
+        ]
+      }
+    ],
+    "transformations": [
+      {
+        "id": "illustrative-summary-transform",
+        "kind": "summarize",
+        "from_revision_ids": [
+          "context-revision:91bd38ebc7496d387a514268ddc31370aa9211c9c2f4f7677a14bc401543ba59"
+        ],
+        "to_revision_ids": [
+          "context-revision:6e9baa5cd9840a89e047a835b819766574ae2a9e38011200000a737a33a17dd2"
+        ],
+        "evidence": "declared",
+        "method": "synthetic summary lifecycle",
+        "observation_id": "summary-request",
+        "source_refs": [
+          {
+            "source_id": "synthetic-routing",
+            "record": "summary-transform"
+          }
+        ]
+      }
+    ]
+  },
+  "allocations": [
+    {
+      "request_id": "consumer-request",
+      "observation_id": "consumer-request",
+      "method": "proportional-input-coverage-v1",
+      "evidence": "estimated",
+      "amount_nanos": "40000000",
+      "denominator_tokens": "400",
+      "unallocated_weight_tokens": "200",
+      "allocated_nanos": "20000000",
+      "unallocated_nanos": "20000000",
+      "portions": [
+        {
+          "occurrence_id": "context-occurrence:bd3802ea9a45f214316e69bd8e584cbb203559ff66c009792756c38a6b7ee158",
+          "revision_id": "context-revision:6e9baa5cd9840a89e047a835b819766574ae2a9e38011200000a737a33a17dd2",
+          "source_id": "summary-source",
+          "weight_tokens": "200",
+          "amount_nanos": "20000000"
+        }
+      ],
+      "assumptions": [
+        "This estimates a distribution of the whole selected request cost, including any output component; it is not source billing or causal savings.",
+        "Eligible occurrence token counts are weights against observed inclusive input tokens. Repeated occurrences count separately; transformation ancestors do not receive implicit weights.",
+        "Selected capture boundary: client_request; coverage: partial. Missing input weight remains unallocated.",
+        "Counterfactual and unavailable measurements are excluded. Observed, derived and estimated token measurements can supply weights without changing the allocation's estimated status."
+      ],
+      "issues": []
+    },
+    {
+      "request_id": "direct-request",
+      "observation_id": "direct-request",
+      "method": "proportional-input-coverage-v1",
+      "evidence": "estimated",
+      "amount_nanos": "101000000",
+      "denominator_tokens": "1000",
+      "unallocated_weight_tokens": "200",
+      "allocated_nanos": "80800000",
+      "unallocated_nanos": "20200000",
+      "portions": [
+        {
+          "occurrence_id": "context-occurrence:3964ff0183221963b9f307f43586a22a205c47ada0d9aa480962c84526ce5ef8",
+          "revision_id": "context-revision:91bd38ebc7496d387a514268ddc31370aa9211c9c2f4f7677a14bc401543ba59",
+          "source_id": "original-source",
+          "weight_tokens": "800",
+          "amount_nanos": "80800000"
+        }
+      ],
+      "assumptions": [
+        "This estimates a distribution of the whole selected request cost, including any output component; it is not source billing or causal savings.",
+        "Eligible occurrence token counts are weights against observed inclusive input tokens. Repeated occurrences count separately; transformation ancestors do not receive implicit weights.",
+        "Selected capture boundary: client_request; coverage: partial. Missing input weight remains unallocated.",
+        "Counterfactual and unavailable measurements are excluded. Observed, derived and estimated token measurements can supply weights without changing the allocation's estimated status."
+      ],
+      "issues": []
+    },
+    {
+      "request_id": "summary-request",
+      "observation_id": "summary-request",
+      "method": "proportional-input-coverage-v1",
+      "evidence": "estimated",
+      "amount_nanos": "30000000",
+      "denominator_tokens": "1000",
+      "unallocated_weight_tokens": "200",
+      "allocated_nanos": "24000000",
+      "unallocated_nanos": "6000000",
+      "portions": [
+        {
+          "occurrence_id": "context-occurrence:183e37160f85bf4bb546174c72f3fd3c23bf1445369973e21b4e37f329410b2b",
+          "revision_id": "context-revision:91bd38ebc7496d387a514268ddc31370aa9211c9c2f4f7677a14bc401543ba59",
+          "source_id": "original-source",
+          "weight_tokens": "800",
+          "amount_nanos": "24000000"
+        }
+      ],
+      "assumptions": [
+        "This estimates a distribution of the whole selected request cost, including any output component; it is not source billing or causal savings.",
+        "Eligible occurrence token counts are weights against observed inclusive input tokens. Repeated occurrences count separately; transformation ancestors do not receive implicit weights.",
+        "Selected capture boundary: client_request; coverage: partial. Missing input weight remains unallocated.",
+        "Counterfactual and unavailable measurements are excluded. Observed, derived and estimated token measurements can supply weights without changing the allocation's estimated status."
+      ],
+      "issues": []
+    }
+  ],
+  "summary": {
+    "requests": 3,
+    "linked_observations": 3,
+    "context_sources": 2,
+    "known_cost_nanos": "171000000",
+    "currency": "USD",
+    "valuation_complete": false,
+    "complete_context_requests": 0,
+    "partial_context_requests": 3,
+    "unknown_context_requests": 0
+  },
+  "issues": []
+}
