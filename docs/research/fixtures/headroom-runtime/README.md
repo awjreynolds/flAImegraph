@@ -1,0 +1,9 @@
+# Headroom 0.37.0 mocked transport validation
+
+Run in a disposable environment with `uv sync --frozen`, then `uv run --no-sync python probe.py /absolute/output/results.json`. The lock selects the published Python/native package, not a mixture of source HEAD and a different compiled core. This package is older than the source pin in the earlier review.
+
+The probe runs real ASGI handlers, proxy methods, usage finalization and request logging. HTTP upstream uses an in-process `httpx.MockTransport`; server startup warmups and background services are excluded. A socket-connect guard forbids external network. Configuration disables compression, semantic caching, rate limits, cost tracking, memory, traffic learning and CCR injection; this is not a test of default wrapper settings or installed agent authentication.
+
+Synthetic successful Anthropic and OpenAI Responses request bodies were preserved in the tested routes. Failure handling does not meet our evidence contract: Anthropic streaming logged local estimated input (13) instead of provider input (37), an upstream 529 produced an estimated output count with null error, a partial stream produced null error, and a pre-response connection failure returned 502 without a request log. OpenAI Responses reported the expected uncached input 30 plus cached input 11 and output 3. See `results.json` for the complete observations.
+
+This is runtime evidence for the specified package/configuration only. It is not a provider test, auth test, full lifecycle certification or GA acceptance. The script reports actual observations, including failed requirements, rather than returning a misleading all-green adoption verdict. No secrets or real prompts are used. Generated runtime state uses a temporary directory; the package may retain that state until removed.

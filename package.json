@@ -55,13 +55,16 @@
     "tools/verify-pi-operations.ts",
     "tools/dogfood-usage-v04.ts",
     "tools/dogfood-task-usage.ts",
-    "tools/dogfood-lifecycle.ts"
+    "tools/dogfood-lifecycle.ts",
+    "tools/logging/verify.py",
+    "tools/logging/verify.py.lock"
   ],
   "scripts": {
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "test": "node --import tsx --test test/*.test.ts",
     "check": "npm run typecheck && npm test",
+    "schemas:check": "node --import tsx tools/logging/generate-schemas.ts --check",
     "cli": "tsx src/cli.ts"
   },
   "dependencies": {

@@ -9,10 +9,11 @@ permissions:
 
 jobs:
   conformance:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         node: [22, 24]
+        os: [ubuntu-latest, macos-latest]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
@@ -25,6 +26,7 @@ jobs:
           cache: false
       - run: npm ci --ignore-scripts
       - run: npm run check
+      - run: npm run schemas:check
       - run: npm run build
       - run: node dist/cli.js demo --out-dir .local/usage-demo
       - run: go run cmd/pprof -top .local/usage-demo/usage.pprof
@@ -44,8 +46,16 @@ jobs:
       - run: npm install --ignore-scripts --prefix .local/package-smoke .local/flaimegraph-0.5.0.tgz
       - run: node .local/package-smoke/node_modules/flaimegraph/dist/cli.js demo --out-dir .local/package-usage-demo
       - run: node .local/package-smoke/node_modules/flaimegraph/dist/cli.js validate --kind lifecycle --input examples/dogfood/v05/lifecycle.json
+      - run: node .local/package-smoke/node_modules/flaimegraph/dist/cli.js schema --kind lifecycle-event --out .local/lifecycle-event.schema.json
       - run: node .local/package-smoke/node_modules/flaimegraph/dist/pricing-cli.js conformance
       - run: node .local/package-smoke/node_modules/flaimegraph/dist/pricing-cli.js demo --out-dir .local/package-demo
+
+  portable-logging:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff # v6
+      - run: uv run --frozen tools/logging/verify.py
 
   viewer:
     runs-on: ubuntu-latest

@@ -1,0 +1,210 @@
+{
+  "schema_version": "0.4.0",
+  "dataset_id": "ga-live-pi-20260909",
+  "sources": [
+    {
+      "id": "pi-probe-source-1",
+      "harness": "pi",
+      "format": "pi-jsonl",
+      "coverage": "complete",
+      "sha256": "cc6bcfcc7467307ef3cf38b782ca12872f73699c8a4473e60018671437bd8659",
+      "description": "Metadata from a minimal live CLI probe. Identifiers were replaced for publication; source hash refers to the private raw capture."
+    }
+  ],
+  "meters": [
+    {
+      "id": "cache_read_input_tokens",
+      "unit": "tokens",
+      "description": "Input tokens reported as cache reads",
+      "subset_of": "input_tokens",
+      "overlap": "subset"
+    },
+    {
+      "id": "cache_write_input_tokens",
+      "unit": "tokens",
+      "description": "Input tokens reported as cache writes",
+      "subset_of": "input_tokens",
+      "overlap": "subset"
+    },
+    {
+      "id": "input_tokens",
+      "unit": "tokens",
+      "description": "Inclusive provider input tokens",
+      "subset_of": null,
+      "overlap": "disjoint"
+    },
+    {
+      "id": "output_tokens",
+      "unit": "tokens",
+      "description": "Provider output tokens",
+      "subset_of": null,
+      "overlap": "disjoint"
+    },
+    {
+      "id": "provider_ollama_input_exclusive",
+      "unit": "tokens",
+      "description": "Native line:16/usage/input measurement",
+      "subset_of": null,
+      "overlap": "unknown"
+    },
+    {
+      "id": "provider_ollama_totaltokens",
+      "unit": "tokens",
+      "description": "Native line:16/usage/totalTokens measurement",
+      "subset_of": null,
+      "overlap": "unknown"
+    }
+  ],
+  "observations": [
+    {
+      "id": "pi-probe-observation-1",
+      "source_refs": [
+        {
+          "source_id": "pi-probe-source-1",
+          "record": "line:16"
+        }
+      ],
+      "subject": "model.response",
+      "accounting_scope": "direct",
+      "operation_id": "pi-probe-operation_id-1",
+      "parent_id": null,
+      "agent_id": null,
+      "session_id": "pi-probe-session_id-1",
+      "work_item_id": null,
+      "task_id": null,
+      "status": "ok",
+      "event_at": {
+        "value": "2026-09-09T21:49:04.528000000Z",
+        "evidence": "observed",
+        "method": "event timestamp",
+        "source_refs": [
+          {
+            "source_id": "pi-probe-source-1",
+            "record": "line:16"
+          }
+        ]
+      },
+      "started_at": null,
+      "ended_at": null,
+      "collected_at": null,
+      "measurements": {
+        "provider_ollama_input_exclusive": {
+          "value": "72",
+          "evidence": "observed",
+          "method": "native /usage/input",
+          "source_refs": [
+            {
+              "source_id": "pi-probe-source-1",
+              "record": "line:16"
+            }
+          ],
+          "count_basis": "provider_native",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "input_tokens": {
+          "value": "72",
+          "evidence": "observed",
+          "method": "native /usage/input",
+          "source_refs": [
+            {
+              "source_id": "pi-probe-source-1",
+              "record": "line:16"
+            }
+          ],
+          "count_basis": "provider_native",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "output_tokens": {
+          "value": "8",
+          "evidence": "observed",
+          "method": "native /usage/output",
+          "source_refs": [
+            {
+              "source_id": "pi-probe-source-1",
+              "record": "line:16"
+            }
+          ],
+          "count_basis": "provider_native",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "cache_read_input_tokens": {
+          "value": "0",
+          "evidence": "observed",
+          "method": "native /usage/cacheRead",
+          "source_refs": [
+            {
+              "source_id": "pi-probe-source-1",
+              "record": "line:16"
+            }
+          ],
+          "count_basis": "provider_native",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "cache_write_input_tokens": {
+          "value": "0",
+          "evidence": "observed",
+          "method": "native /usage/cacheWrite",
+          "source_refs": [
+            {
+              "source_id": "pi-probe-source-1",
+              "record": "line:16"
+            }
+          ],
+          "count_basis": "provider_native",
+          "aggregation": "delta",
+          "scope": "event"
+        },
+        "provider_ollama_totaltokens": {
+          "value": "80",
+          "evidence": "observed",
+          "method": "native /usage/totalTokens",
+          "source_refs": [
+            {
+              "source_id": "pi-probe-source-1",
+              "record": "line:16"
+            }
+          ],
+          "count_basis": "provider_native",
+          "aggregation": "delta",
+          "scope": "event"
+        }
+      },
+      "dimensions": {
+        "provider": {
+          "value": "ollama",
+          "evidence": "observed",
+          "method": "native /pi/provider",
+          "source_refs": [
+            {
+              "source_id": "pi-probe-source-1",
+              "record": "line:16"
+            }
+          ]
+        },
+        "requested_model": {
+          "value": "gemma4",
+          "evidence": "observed",
+          "method": "native /pi/model",
+          "source_refs": [
+            {
+              "source_id": "pi-probe-source-1",
+              "record": "line:16"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "coverage": {
+    "boundary": "native_transcript",
+    "complete": false,
+    "dropped_observations": 0,
+    "limitations": [
+      "Importer coverage is limited to the supplied native/export records; hidden retries and provider-side work remain unknown."
+    ]
+  }
+}

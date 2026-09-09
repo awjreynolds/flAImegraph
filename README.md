@@ -37,6 +37,7 @@ The [local viewer](viewer/README.md) loads sessions in the browser, inspects mea
 
 - [Usage guide and SDK examples](docs/usage.md)
 - [Durable capture and interruption recovery](docs/lifecycle.md), [Lifecycle Interchange 0.5](spec/0.5/README.md)
+- [Native CLI capture and import](docs/native-capture.md), [portable logging schemas and conformance](spec/logging-conformance.md), [GA readiness evidence](docs/ga-readiness.md)
 - [Usage Interchange 0.4](spec/0.4/README.md)
 - [Efficiency, benchmarks and runway](docs/efficiency-analysis.md)
 - [Reproducible examples and their limits](examples/dogfood/v04/README.md)

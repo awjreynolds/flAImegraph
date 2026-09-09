@@ -1,0 +1,239 @@
+{
+  "package_version": "0.37.0",
+  "scope": "real ASGI route/proxy with in-process mock HTTP upstream; startup warmups excluded; no installed agent launch",
+  "network_attempts_blocked": [],
+  "results": [
+    {
+      "case": "nonstream_success",
+      "http_status": 200,
+      "response_prefix": "{\"id\":\"msg_synthetic\",\"type\":\"message\",\"role\":\"assistant\",\"content\":[{\"type\":\"text\",\"text\":\"ok\"}],\"model\":\"claude-sonnet-4-6\",\"stop_reason\":\"end_turn\"",
+      "seconds": 0.05,
+      "body_preserved": true,
+      "changed_body_keys": [],
+      "request_logs": [
+        {
+          "request_id": "hr_1788989399_000001",
+          "timestamp": "2026-09-09T21:29:59.545584+00:00",
+          "provider": "anthropic",
+          "model": "claude-sonnet-4-6",
+          "input_tokens_original": 13,
+          "input_tokens_optimized": 13,
+          "output_tokens": 2,
+          "tokens_saved": 0,
+          "savings_percent": 0.0,
+          "optimization_latency_ms": 33.754825592041016,
+          "total_latency_ms": 39.09182548522949,
+          "tags": {
+            "memory_skip_reason": "no_handler",
+            "passthrough_reason": "compression_disabled",
+            "client": "claude"
+          },
+          "cache_hit": false,
+          "transforms_applied": [],
+          "savings_breakdown": [],
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "uncached_input_tokens": 37,
+          "waste_signals": null,
+          "error": null,
+          "turn_id": "a011853bb073a77d"
+        }
+      ]
+    },
+    {
+      "case": "stream_success",
+      "http_status": 200,
+      "response_prefix": "event: message_start\ndata: {\"type\": \"message_start\", \"message\": {\"id\": \"msg_synthetic\", \"type\": \"message\", \"role\": \"assistant\", \"model\": \"claude-sonne",
+      "seconds": 0.005,
+      "body_preserved": true,
+      "changed_body_keys": [],
+      "request_logs": [
+        {
+          "request_id": "hr_1788989399_000002",
+          "timestamp": "2026-09-09T21:29:59.551369+00:00",
+          "provider": "anthropic",
+          "model": "claude-sonnet-4-6",
+          "input_tokens_original": 13,
+          "input_tokens_optimized": 13,
+          "output_tokens": 2,
+          "tokens_saved": 0,
+          "savings_percent": 0.0,
+          "optimization_latency_ms": 1.1777877807617188,
+          "total_latency_ms": 0.942230224609375,
+          "tags": {
+            "memory_skip_reason": "no_handler",
+            "passthrough_reason": "compression_disabled",
+            "output_tokens_source": "provider"
+          },
+          "cache_hit": false,
+          "transforms_applied": [],
+          "savings_breakdown": [],
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "uncached_input_tokens": 13,
+          "waste_signals": null,
+          "error": null,
+          "turn_id": "a011853bb073a77d"
+        }
+      ]
+    },
+    {
+      "case": "stream_529",
+      "http_status": 529,
+      "response_prefix": "{\"type\":\"error\",\"error\":{\"type\":\"overloaded_error\",\"message\":\"synthetic overload\"}}",
+      "seconds": 3.932,
+      "body_preserved": true,
+      "changed_body_keys": [],
+      "request_logs": [
+        {
+          "request_id": "hr_1788989399_000003",
+          "timestamp": "2026-09-09T21:30:03.477249+00:00",
+          "provider": "anthropic",
+          "model": "claude-sonnet-4-6",
+          "input_tokens_original": 13,
+          "input_tokens_optimized": 13,
+          "output_tokens": 2,
+          "tokens_saved": 0,
+          "savings_percent": 0.0,
+          "optimization_latency_ms": 1.0800361633300781,
+          "total_latency_ms": 3918.7121391296387,
+          "tags": {
+            "memory_skip_reason": "no_handler",
+            "passthrough_reason": "compression_disabled",
+            "output_tokens_source": "estimated_bytes"
+          },
+          "cache_hit": false,
+          "transforms_applied": [],
+          "savings_breakdown": [],
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "uncached_input_tokens": 13,
+          "waste_signals": null,
+          "error": null,
+          "turn_id": "a011853bb073a77d"
+        }
+      ]
+    },
+    {
+      "case": "stream_disconnect",
+      "http_status": 502,
+      "response_prefix": "event: error\ndata: {\"type\": \"error\", \"error\": {\"type\": \"connection_error\", \"message\": \"Failed to connect to upstream API: synthetic disconnect\"}}\n\n",
+      "seconds": 3.659,
+      "body_preserved": true,
+      "changed_body_keys": [],
+      "request_logs": []
+    },
+    {
+      "case": "stream_partial",
+      "http_status": 200,
+      "response_prefix": "event: message_start\ndata: {\"type\": \"message_start\", \"message\": {\"id\": \"msg_synthetic\", \"type\": \"message\", \"role\": \"assistant\", \"model\": \"claude-sonne",
+      "seconds": 0.015,
+      "body_preserved": true,
+      "changed_body_keys": [],
+      "request_logs": [
+        {
+          "request_id": "hr_1788989407_000005",
+          "timestamp": "2026-09-09T21:30:07.156599+00:00",
+          "provider": "anthropic",
+          "model": "claude-sonnet-4-6",
+          "input_tokens_original": 13,
+          "input_tokens_optimized": 13,
+          "output_tokens": 1,
+          "tokens_saved": 0,
+          "savings_percent": 0.0,
+          "optimization_latency_ms": 3.204822540283203,
+          "total_latency_ms": 2.8040409088134766,
+          "tags": {
+            "memory_skip_reason": "no_handler",
+            "passthrough_reason": "compression_disabled",
+            "output_tokens_source": "estimated_text"
+          },
+          "cache_hit": false,
+          "transforms_applied": [],
+          "savings_breakdown": [],
+          "cache_read_tokens": 0,
+          "cache_write_tokens": 0,
+          "uncached_input_tokens": 13,
+          "waste_signals": null,
+          "error": null,
+          "turn_id": "a011853bb073a77d"
+        }
+      ]
+    },
+    {
+      "case": "responses_success",
+      "http_status": 200,
+      "response_prefix": "{\"id\":\"resp_synthetic\",\"object\":\"response\",\"status\":\"completed\",\"model\":\"gpt-5\",\"output\":[{\"id\":\"msg_out\",\"type\":\"message\",\"role\":\"assistant\",\"content",
+      "seconds": 0.01,
+      "body_preserved": true,
+      "changed_body_keys": [],
+      "request_logs": [
+        {
+          "request_id": "hr_1788989407_000006",
+          "timestamp": "2026-09-09T21:30:07.166628+00:00",
+          "provider": "openai",
+          "model": "gpt-5",
+          "input_tokens_original": 3,
+          "input_tokens_optimized": 3,
+          "output_tokens": 3,
+          "tokens_saved": 0,
+          "savings_percent": 0.0,
+          "optimization_latency_ms": 4.071950912475586,
+          "total_latency_ms": 4.921913146972656,
+          "tags": {
+            "memory_skip_reason": "no_handler",
+            "auth_mode": "payg",
+            "endpoint": "responses_http",
+            "client": "codex"
+          },
+          "cache_hit": true,
+          "transforms_applied": [],
+          "savings_breakdown": [],
+          "cache_read_tokens": 11,
+          "cache_write_tokens": 30,
+          "uncached_input_tokens": 30,
+          "waste_signals": null,
+          "error": null,
+          "turn_id": null
+        }
+      ]
+    },
+    {
+      "case": "responses_stream",
+      "http_status": 200,
+      "response_prefix": "event: response.completed\ndata: {\"type\": \"response.completed\", \"response\": {\"id\": \"resp_synthetic\", \"object\": \"response\", \"status\": \"completed\", \"mode",
+      "seconds": 0.006,
+      "body_preserved": true,
+      "changed_body_keys": [],
+      "request_logs": [
+        {
+          "request_id": "hr_1788989407_000007",
+          "timestamp": "2026-09-09T21:30:07.173131+00:00",
+          "provider": "openai",
+          "model": "gpt-5",
+          "input_tokens_original": 41,
+          "input_tokens_optimized": 41,
+          "output_tokens": 3,
+          "tokens_saved": 0,
+          "savings_percent": 0.0,
+          "optimization_latency_ms": 1.2159347534179688,
+          "total_latency_ms": 1.2509822845458984,
+          "tags": {
+            "memory_skip_reason": "no_handler",
+            "output_tokens_source": "provider",
+            "client": "codex"
+          },
+          "cache_hit": true,
+          "transforms_applied": [],
+          "savings_breakdown": [],
+          "cache_read_tokens": 11,
+          "cache_write_tokens": 0,
+          "uncached_input_tokens": 30,
+          "waste_signals": null,
+          "error": null,
+          "turn_id": null
+        }
+      ]
+    }
+  ]
+}

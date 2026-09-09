@@ -1,0 +1,158 @@
+{
+  "schema_version": "0.4.0",
+  "dataset_id": "ga-live-codex-20260909",
+  "sources": [
+    {
+      "id": "codex-probe-source-1",
+      "harness": "codex",
+      "format": "codex-exec-jsonl",
+      "coverage": "complete",
+      "sha256": "df6585d26790b0c18f43e1ae7b59380ab1852d92d859b337d25f64b52bafeff1",
+      "description": "Metadata from a minimal live CLI probe. Identifiers were replaced for publication; source hash refers to the private raw capture."
+    }
+  ],
+  "meters": [
+    {
+      "id": "cache_read_input_tokens",
+      "unit": "tokens",
+      "description": "Input tokens reported as cache reads",
+      "subset_of": "input_tokens",
+      "overlap": "subset"
+    },
+    {
+      "id": "cache_write_input_tokens",
+      "unit": "tokens",
+      "description": "Input tokens reported as cache writes",
+      "subset_of": "input_tokens",
+      "overlap": "subset"
+    },
+    {
+      "id": "input_tokens",
+      "unit": "tokens",
+      "description": "Inclusive provider input tokens",
+      "subset_of": null,
+      "overlap": "disjoint"
+    },
+    {
+      "id": "output_tokens",
+      "unit": "tokens",
+      "description": "Provider output tokens",
+      "subset_of": null,
+      "overlap": "disjoint"
+    },
+    {
+      "id": "reasoning_output_tokens",
+      "unit": "tokens",
+      "description": "Output tokens reported as reasoning",
+      "subset_of": "output_tokens",
+      "overlap": "subset"
+    }
+  ],
+  "observations": [
+    {
+      "id": "codex-probe-observation-1",
+      "source_refs": [
+        {
+          "source_id": "codex-probe-source-1",
+          "record": "line:5"
+        }
+      ],
+      "subject": "model.turn_total",
+      "accounting_scope": "aggregate",
+      "operation_id": null,
+      "parent_id": null,
+      "agent_id": null,
+      "session_id": "codex-probe-session_id-1",
+      "work_item_id": null,
+      "task_id": null,
+      "status": "ok",
+      "event_at": null,
+      "started_at": null,
+      "ended_at": null,
+      "collected_at": null,
+      "measurements": {
+        "input_tokens": {
+          "value": "18367",
+          "evidence": "observed",
+          "method": "native /usage/input_tokens",
+          "source_refs": [
+            {
+              "source_id": "codex-probe-source-1",
+              "record": "line:5"
+            }
+          ],
+          "count_basis": "provider_native",
+          "aggregation": "unknown",
+          "scope": "aggregate"
+        },
+        "cache_read_input_tokens": {
+          "value": "6400",
+          "evidence": "observed",
+          "method": "native /usage/cached_input_tokens",
+          "source_refs": [
+            {
+              "source_id": "codex-probe-source-1",
+              "record": "line:5"
+            }
+          ],
+          "count_basis": "provider_native",
+          "aggregation": "unknown",
+          "scope": "aggregate"
+        },
+        "cache_write_input_tokens": {
+          "value": "0",
+          "evidence": "observed",
+          "method": "native /usage/cache_write_input_tokens",
+          "source_refs": [
+            {
+              "source_id": "codex-probe-source-1",
+              "record": "line:5"
+            }
+          ],
+          "count_basis": "provider_native",
+          "aggregation": "unknown",
+          "scope": "aggregate"
+        },
+        "output_tokens": {
+          "value": "9",
+          "evidence": "observed",
+          "method": "native /usage/output_tokens",
+          "source_refs": [
+            {
+              "source_id": "codex-probe-source-1",
+              "record": "line:5"
+            }
+          ],
+          "count_basis": "provider_native",
+          "aggregation": "unknown",
+          "scope": "aggregate"
+        },
+        "reasoning_output_tokens": {
+          "value": "0",
+          "evidence": "observed",
+          "method": "native /usage/reasoning_output_tokens",
+          "source_refs": [
+            {
+              "source_id": "codex-probe-source-1",
+              "record": "line:5"
+            }
+          ],
+          "count_basis": "provider_native",
+          "aggregation": "unknown",
+          "scope": "aggregate"
+        }
+      },
+      "dimensions": {}
+    }
+  ],
+  "coverage": {
+    "boundary": "native_transcript",
+    "complete": false,
+    "dropped_observations": 0,
+    "limitations": [
+      "Importer coverage is limited to the supplied native/export records; hidden retries and provider-side work remain unknown.",
+      "Codex exec stdout provides turn totals without provider response identities. These are aggregate checks, excluded from direct response totals; use a native rollout for response-level profiling.",
+      "Exec event identities are source-scoped; overlapping captures cannot establish cross-file receipt deduplication. Tool item details are not imported by this surface."
+    ]
+  }
+}

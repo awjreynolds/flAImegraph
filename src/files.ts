@@ -1,6 +1,32 @@
-import { mkdir, realpath, rename, rm, writeFile } from "node:fs/promises";
+import { mkdir, open, realpath, rename, rm, writeFile } from "node:fs/promises";
+import { constants } from "node:fs";
 import { randomUUID } from "node:crypto";
 import { dirname, join, resolve } from "node:path";
+
+export const DEFAULT_INPUT_BYTES = 64 * 1024 * 1024;
+
+/** Bound CLI memory use even if a native transcript grows while being read. */
+export async function readInputText(file: string, maxBytes = DEFAULT_INPUT_BYTES): Promise<string> {
+  if (!Number.isSafeInteger(maxBytes) || maxBytes < 1) throw new Error("Invalid input byte limit");
+  const handle = await open(file, constants.O_RDONLY | constants.O_NONBLOCK);
+  try {
+    const stat = await handle.stat();
+    if (!stat.isFile()) throw new Error("Input must be a regular file");
+    const bounds = () => Object.assign(new Error(`Input exceeds ${maxBytes} bytes; split the capture before importing`), { code: "INPUT_BOUNDS" });
+    if (stat.size > maxBytes) throw bounds();
+    const chunks: Buffer[] = [];
+    let size = 0;
+    while (true) {
+      const buffer = Buffer.alloc(Math.min(64 * 1024, maxBytes - size + 1));
+      const { bytesRead } = await handle.read(buffer);
+      if (bytesRead === 0) break;
+      size += bytesRead;
+      if (size > maxBytes) throw bounds();
+      chunks.push(buffer.subarray(0, bytesRead));
+    }
+    return new TextDecoder("utf-8", { fatal: true }).decode(Buffer.concat(chunks, size));
+  } finally { await handle.close(); }
+}
 
 async function canonical(file: string): Promise<string> {
   try { return await realpath(file); }

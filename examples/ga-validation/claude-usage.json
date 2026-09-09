@@ -1,0 +1,264 @@
+{
+  "schema_version": "0.4.0",
+  "dataset_id": "ga-live-claude-20260909",
+  "sources": [
+    {
+      "id": "claude-probe-source-1",
+      "harness": "claude-code",
+      "format": "claude-stream-json",
+      "coverage": "complete",
+      "sha256": "cc156bd12815934035dd97f3aa8c634ac82662cd1bce25741ebeefdd0293052a",
+      "description": "Metadata from a minimal live CLI probe. Identifiers were replaced for publication; source hash refers to the private raw capture."
+    }
+  ],
+  "meters": [
+    {
+      "id": "cache_read_input_tokens",
+      "unit": "tokens",
+      "description": "Input tokens reported as cache reads",
+      "subset_of": "input_tokens",
+      "overlap": "subset"
+    },
+    {
+      "id": "cache_write_input_tokens",
+      "unit": "tokens",
+      "description": "Input tokens reported as cache writes",
+      "subset_of": "input_tokens",
+      "overlap": "subset"
+    },
+    {
+      "id": "input_tokens",
+      "unit": "tokens",
+      "description": "Inclusive provider input tokens",
+      "subset_of": null,
+      "overlap": "disjoint"
+    },
+    {
+      "id": "output_tokens",
+      "unit": "tokens",
+      "description": "Provider output tokens",
+      "subset_of": null,
+      "overlap": "disjoint"
+    },
+    {
+      "id": "provider_anthropic_input_exclusive",
+      "unit": "tokens",
+      "description": "Native /message/usage/input measurement",
+      "subset_of": null,
+      "overlap": "unknown"
+    },
+    {
+      "id": "provider_anthropic_prompttokens",
+      "unit": "tokens",
+      "description": "Native /message/usage/promptTokens measurement",
+      "subset_of": null,
+      "overlap": "unknown"
+    }
+  ],
+  "observations": [
+    {
+      "id": "claude-probe-observation-1",
+      "source_refs": [
+        {
+          "source_id": "claude-probe-source-1",
+          "record": "line:2"
+        }
+      ],
+      "subject": "harness.retry",
+      "accounting_scope": "unknown",
+      "operation_id": null,
+      "parent_id": null,
+      "agent_id": null,
+      "session_id": "claude-probe-session_id-1",
+      "work_item_id": null,
+      "task_id": null,
+      "status": "error",
+      "event_at": null,
+      "started_at": null,
+      "ended_at": null,
+      "collected_at": null,
+      "measurements": {},
+      "dimensions": {}
+    },
+    {
+      "id": "claude-probe-observation-2",
+      "source_refs": [
+        {
+          "source_id": "claude-probe-source-1",
+          "record": "line:3"
+        }
+      ],
+      "subject": "harness.retry",
+      "accounting_scope": "unknown",
+      "operation_id": null,
+      "parent_id": null,
+      "agent_id": null,
+      "session_id": "claude-probe-session_id-1",
+      "work_item_id": null,
+      "task_id": null,
+      "status": "error",
+      "event_at": null,
+      "started_at": null,
+      "ended_at": null,
+      "collected_at": null,
+      "measurements": {},
+      "dimensions": {}
+    },
+    {
+      "id": "claude-probe-observation-3",
+      "source_refs": [
+        {
+          "source_id": "claude-probe-source-1",
+          "record": "line:4"
+        }
+      ],
+      "subject": "harness.error",
+      "accounting_scope": "direct",
+      "operation_id": "claude-probe-operation_id-1",
+      "parent_id": null,
+      "agent_id": null,
+      "session_id": "claude-probe-session_id-1",
+      "work_item_id": null,
+      "task_id": null,
+      "status": "error",
+      "event_at": null,
+      "started_at": null,
+      "ended_at": null,
+      "collected_at": null,
+      "measurements": {},
+      "dimensions": {
+        "actual_provider": {
+          "value": "anthropic",
+          "evidence": "observed",
+          "method": "native /claude/response/provider",
+          "source_refs": [
+            {
+              "source_id": "claude-probe-source-1",
+              "record": "line:4"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "claude-probe-observation-4",
+      "source_refs": [
+        {
+          "source_id": "claude-probe-source-1",
+          "record": "line:5"
+        }
+      ],
+      "subject": "model.query_total",
+      "accounting_scope": "aggregate",
+      "operation_id": "claude-probe-operation_id-2",
+      "parent_id": null,
+      "agent_id": null,
+      "session_id": "claude-probe-session_id-1",
+      "work_item_id": null,
+      "task_id": null,
+      "status": "error",
+      "event_at": null,
+      "started_at": null,
+      "ended_at": null,
+      "collected_at": null,
+      "measurements": {
+        "provider_anthropic_input_exclusive": {
+          "value": "0",
+          "evidence": "observed",
+          "method": "native /message/usage/input",
+          "source_refs": [
+            {
+              "source_id": "claude-probe-source-1",
+              "record": "line:5"
+            }
+          ],
+          "count_basis": "provider_native",
+          "aggregation": "unknown",
+          "scope": "aggregate"
+        },
+        "input_tokens": {
+          "value": "0",
+          "evidence": "observed",
+          "method": "native /message/usage/input_tokens",
+          "source_refs": [
+            {
+              "source_id": "claude-probe-source-1",
+              "record": "line:5"
+            }
+          ],
+          "count_basis": "provider_native",
+          "aggregation": "unknown",
+          "scope": "aggregate"
+        },
+        "output_tokens": {
+          "value": "0",
+          "evidence": "observed",
+          "method": "native /message/usage/output_tokens",
+          "source_refs": [
+            {
+              "source_id": "claude-probe-source-1",
+              "record": "line:5"
+            }
+          ],
+          "count_basis": "provider_native",
+          "aggregation": "unknown",
+          "scope": "aggregate"
+        },
+        "cache_write_input_tokens": {
+          "value": "0",
+          "evidence": "observed",
+          "method": "native /message/usage/cache_creation_input_tokens",
+          "source_refs": [
+            {
+              "source_id": "claude-probe-source-1",
+              "record": "line:5"
+            }
+          ],
+          "count_basis": "provider_native",
+          "aggregation": "unknown",
+          "scope": "aggregate"
+        },
+        "cache_read_input_tokens": {
+          "value": "0",
+          "evidence": "observed",
+          "method": "native /message/usage/cache_read_input_tokens",
+          "source_refs": [
+            {
+              "source_id": "claude-probe-source-1",
+              "record": "line:5"
+            }
+          ],
+          "count_basis": "provider_native",
+          "aggregation": "unknown",
+          "scope": "aggregate"
+        },
+        "provider_anthropic_prompttokens": {
+          "value": "0",
+          "evidence": "observed",
+          "method": "native /message/usage/promptTokens",
+          "source_refs": [
+            {
+              "source_id": "claude-probe-source-1",
+              "record": "line:5"
+            }
+          ],
+          "count_basis": "provider_native",
+          "aggregation": "unknown",
+          "scope": "aggregate"
+        }
+      },
+      "dimensions": {}
+    }
+  ],
+  "coverage": {
+    "boundary": "native_transcript",
+    "complete": false,
+    "dropped_observations": 0,
+    "limitations": [
+      "Importer coverage is limited to the supplied native/export records; hidden retries and provider-side work remain unknown.",
+      "A synthetic harness error message is not a provider receipt; its placeholder usage is omitted.",
+      "Claude response usage is deduplicated by provider message ID; repeated counters retain their highest reported value. Query result aggregates are separate non-additive checks, not additional response consumption.",
+      "SDK messages do not establish action start/end timestamps, complete hidden retry accounting or complete subagent coverage."
+    ]
+  }
+}

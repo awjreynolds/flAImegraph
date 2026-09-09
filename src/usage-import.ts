@@ -1,3 +1,4 @@
+import { decimalCompare } from "./usage.js";
 import type {
   UsageAccountingScope,
   UsageBundle,
@@ -23,6 +24,9 @@ import type {
 /** Formats accepted by the usage-only importer. */
 export type UsageImportFormat =
   | "codex"
+  | "codex-exec"
+  | "claude"
+  | "claude-transcript"
   | "pi"
   | "openai"
   | "anthropic"
@@ -567,6 +571,8 @@ function addUsageMeasurements(
   const seen = new Set<string>();
   const walk = (value: JsonObject, prefix: string): void => {
     for (const [key, nested] of Object.entries(value)) {
+      const normalizedKey = key.replace(/([a-z0-9])([A-Z])/gu, "$1_$2");
+      if ((sensitiveKey(key) && canonicalUsageKey(key) === null) || /(?:^|[.:/_-])(?:cost|price|currency|rate|amount)(?:$|[.:/_-])/iu.test(normalizedKey)) continue;
       const path = `${prefix}/${key}`;
       if (isObject(nested)) { walk(nested, path); continue; }
       const normalized = canonicalUsageKey(key);
@@ -822,9 +828,19 @@ function pi(input: unknown, options: UsageImportOptions): UsageBundle {
   const entries = new Map<string, JsonObject>();
   const durableUsageEntryIds = new Set<string>();
   let sourceScopedFallbacks = 0;
+  // Pi Message.timestamp is milliseconds since the Unix epoch. Generic
+  // normalization accepts explicit nanoseconds for OTLP and SDK callers.
+  const piTime = (value: unknown): unknown => typeof value === "number" && Number.isSafeInteger(value) ? BigInt(value) * 1_000_000n : value;
+  const entryFor = (record: JsonObject): JsonObject | null => {
+    if (record.type === "message_end") {
+      const message = asObject(record.message);
+      return message ? { ...record, id: firstString(message.responseId, message.response_id), message } : null;
+    }
+    return asObject(record.entry) ?? (record.type === "message" || record.kind === "message" ? record : null);
+  };
   for (const item of rows) {
     const record = item.value;
-    sessionId = firstString(record.sessionId, record.session_id, sessionId) ?? sessionId;
+    sessionId = firstString(record.sessionId, record.session_id, record.type === "session" ? record.id : null, sessionId) ?? sessionId;
     const writes = Array.isArray(record.writes) ? record.writes : [];
     for (const write of writes) {
       const object = asObject(write);
@@ -836,14 +852,14 @@ function pi(input: unknown, options: UsageImportOptions): UsageBundle {
         if (id) durableUsageEntryIds.add(id);
       }
     }
-    const entry = asObject(record.entry) ?? (record.type === "message" || record.kind === "message" ? record : null);
+    const entry = entryFor(record);
     if (entry) { const id = firstString(entry.id, entry.entryId, entry.entry_id); if (id) entries.set(id, entry); }
   }
-  const process = (raw: JsonObject, item: RecordWithPath, accounting: UsageAccountingScope, subject = "model.response", identityOverride?: string, parentOverride?: string | null): void => {
+  const process = (raw: JsonObject, item: RecordWithPath, accounting: UsageAccountingScope, subject = "model.response", identityOverride?: string, parentOverride?: string | null): string => {
     const message = asObject(raw.message) ?? raw;
     const usage = asObject(raw.usage) ?? asObject(message.usage) ?? asObject(raw.token_usage);
     const provider = firstString(message.provider, raw.provider);
-    const nativeIdentity = identityOverride ?? firstString(raw.id, raw.usageId, raw.usage_id, raw.response_id, raw.responseId, message.id);
+    const nativeIdentity = identityOverride ?? firstString(raw.id, raw.usageId, raw.usage_id, raw.response_id, raw.responseId, message.id, message.responseId, message.response_id);
     const native = nativeIdentity ?? `line:${item.line ?? item.record}`;
     const sourceScoped = nativeIdentity === null || (identityOverride !== undefined && identityOverride.startsWith("totals:"));
     const id = observationId(options, "pi", native, provider, sourceId, sourceScoped);
@@ -852,9 +868,10 @@ function pi(input: unknown, options: UsageImportOptions): UsageBundle {
     const normalizedUsage = normalizeExclusiveInput(usage, "pi", provider, sourceId, item.record, `${item.record}/usage`, measurements, meters, accounting, accounting === "snapshot" ? "snapshot" : "event", "provider_native");
     addUsageMeasurements(measurements, meters, normalizedUsage, "pi", provider, sourceId, item.record, `${item.record}/usage`, accounting, accounting === "snapshot" ? "snapshot" : "event");
     const dimensions = descriptorForRecord({ ...raw, ...message }, "pi", sourceId, item.record, "requested");
-    const observation = baseObservation({ id, sourceId, recordRef: item.record, subject, accounting, operationId: native, parentId: parentOverride ?? firstString(raw.parent_id, raw.parentId, message.parent_id, message.parentId), agentId: firstString(raw.agent_id, raw.agentId, message.agent_id, message.agentId), sessionId: firstString(raw.session_id, raw.sessionId, message.session_id, message.sessionId, sessionId), taskId: options.task_id, workItemId: workItemId(options, raw, message), status: rawStatus({ ...raw, ...message }), event: raw.timestamp ?? raw.time ?? message.timestamp, started: raw.started_at ?? raw.startedAt, ended: raw.ended_at ?? raw.endedAt, collected: options.collected_at, measurements, dimensions });
+    const observation = baseObservation({ id, sourceId, recordRef: item.record, subject, accounting, operationId: native, parentId: parentOverride ?? firstString(raw.parent_id, raw.parentId, message.parent_id, message.parentId), agentId: firstString(raw.agent_id, raw.agentId, message.agent_id, message.agentId), sessionId: firstString(raw.session_id, raw.sessionId, message.session_id, message.sessionId, sessionId), taskId: options.task_id, workItemId: workItemId(options, raw, message), status: rawStatus({ ...raw, ...message }), event: piTime(raw.timestamp ?? raw.time ?? message.timestamp), started: piTime(raw.started_at ?? raw.startedAt), ended: piTime(raw.ended_at ?? raw.endedAt), collected: options.collected_at, measurements, dimensions });
     observations.push(observation);
     nativeIds.set(native, id);
+    return id;
   };
   for (const item of rows) {
     const record = item.value;
@@ -868,7 +885,9 @@ function pi(input: unknown, options: UsageImportOptions): UsageBundle {
       const linkedEntry = row ? entries.get(firstString(row.entryId, row.entry_id) ?? "") : undefined;
       if (kind === "usage" && row) {
         workItemId(options, linkedEntry, row);
-        process({ ...linkedEntry, ...row, ...(linkedEntry ? { message: linkedEntry.message } : {}) }, item, "direct", "model.response", `usage:${firstString(row.id, row.usageId, row.usage_id, row.entryId) ?? `line:${item.line}`}`, firstString(row.parent_id, row.parentId));
+        const id = process({ ...linkedEntry, ...row, ...(linkedEntry ? { message: linkedEntry.message } : {}) }, item, "direct", "model.response", `usage:${firstString(row.id, row.usageId, row.usage_id, row.entryId) ?? `line:${item.line}`}`, firstString(row.parent_id, row.parentId));
+        const entryId = firstString(row.entryId, row.entry_id);
+        if (entryId) nativeIds.set(entryId, id);
       }
       if (object.totals && isObject(object.totals)) {
         workItemId(options, linkedEntry, object.totals);
@@ -880,21 +899,39 @@ function pi(input: unknown, options: UsageImportOptions): UsageBundle {
         if (firstString(message.role)?.toLowerCase() === "assistant" && !row && !durableUsageEntryIds.has(firstString(entry.id, entry.entryId, entry.entry_id) ?? "")) process(entry, item, "direct");
       }
     }
-    const entry = asObject(record.entry) ?? (record.type === "message" || record.kind === "message" ? record : null);
+    const entry = entryFor(record);
     if (entry) {
       const message = asObject(entry.message) ?? entry;
       const role = firstString(message.role)?.toLowerCase();
       if (role === "assistant") process(entry, item, "direct");
-      const content = Array.isArray(message.content) ? message.content : [];
-      for (const block of content) {
-        const tool = asObject(block);
-        if (!tool || !["toolcall", "tool_call", "tool_use"].includes((firstString(tool.type) ?? "").toLowerCase())) continue;
-        process({ ...tool, name: tool.name }, item, "direct", `tool.${firstString(tool.name) ?? "unknown"}`, firstString(entry.id) ?? undefined);
-      }
     }
     const type = firstString(record.type, record.kind)?.toLowerCase();
     if (type === "assistant" && !entry) process(record, item, "direct");
     if (type === "toolresult" || type === "tool_result") process(record, item, "direct", `tool.${firstString(record.tool_name, record.toolName) ?? "unknown"}`);
+  }
+  // Entries in both legacy history and durable transactions can contain tools.
+  // A tool call is distinct from its model response and from its later result.
+  for (const item of rows) {
+    const record = item.value;
+    const writes = Array.isArray(record.writes) ? record.writes : [];
+    const toolEntries = [entryFor(record), ...writes.map(write => asObject(asObject(write)?.entry))];
+    for (const entry of toolEntries) {
+      if (!entry) continue;
+      const message = asObject(entry.message) ?? entry;
+      const content = Array.isArray(message.content) ? message.content : [];
+      for (const [index, block] of content.entries()) {
+        const tool = asObject(block);
+        if (!tool || !["toolcall", "tool_call", "tool_use"].includes((firstString(tool.type) ?? "").toLowerCase())) continue;
+        const callId = firstString(tool.id, tool.toolCallId, tool.tool_call_id);
+        const entryId = firstString(entry.id, entry.entryId, entry.entry_id);
+        const identity = callId ? `tool-call:${callId}` : `tool-call:${entryId ?? `${sourceId}:${item.record}`}:${index}`;
+        process({ name: tool.name, timestamp: entry.timestamp ?? message.timestamp, status: "running", usage: { tool_calls: 1 } }, item, "direct", `tool.${firstString(tool.name) ?? "unknown"}`, identity, entryId);
+      }
+      if (["toolresult", "tool_result"].includes((firstString(message.role) ?? "").toLowerCase())) {
+        const callId = firstString(message.toolCallId, message.tool_call_id);
+        process({ ...message, timestamp: entry.timestamp ?? message.timestamp, status: message.isError === true ? "error" : message.isError === false ? "ok" : "unknown" }, item, "direct", "tool.result", `tool-result:${firstString(entry.id) ?? `${sourceId}:${item.record}`}`, callId ? `tool-call:${callId}` : null);
+      }
+    }
   }
   remapParents(observations, nativeIds);
   bundle.observations = dedupeObservations(observations);
@@ -1113,10 +1150,119 @@ export function importUsage(input: unknown, options: UsageImportOptions): UsageB
   const format = normalized.format.toLowerCase();
   if (format === "legacy" || format === "legacy-evidence") return fromLegacyEvidence(input, { ...normalized, format: format as "legacy" | "legacy-evidence" });
   if (format === "codex") return codex(input, normalized);
+  if (format === "codex-exec") return codexExec(input, normalized);
+  if (format === "claude" || format === "claude-transcript") return claude(input, normalized);
   if (format === "pi") return pi(input, normalized);
   if (format === "otel" || format === "otlp" || format === "opentelemetry") return otlp(input, normalized);
   if (format === "openai" || format === "anthropic" || format === "gemini" || format === "provider" || format === "usage") return provider(input, normalized);
   return provider(input, normalized);
+}
+
+/** The public exec stream reports turn totals, not individual provider receipts. */
+function codexExec(input: unknown, options: UsageImportOptions): UsageBundle {
+  const rows = parseJsonRecords(input);
+  const bundle = emptyBundle(input, options, "codex", "codex-exec-jsonl");
+  const sourceId = bundle.sources[0]!.id;
+  const meters = new Map<string, UsageMeter>();
+  let session: string | null = options.session_id ?? null;
+  for (const item of rows) {
+    const record = item.value;
+    if (record.type === "thread.started") session = firstString(record.thread_id, session);
+    if (!["turn.completed", "turn.failed", "error"].includes(String(record.type))) continue;
+    const measures: Record<string, UsageMeasurement> = {};
+    if (record.type === "turn.completed") addUsageMeasurements(measures, meters, asObject(record.usage), "codex", null, sourceId, item.record, "/usage", "aggregate", "aggregate");
+    bundle.observations.push(baseObservation({ id: observationId(options, "codex-exec", item.record, null, sourceId, true), sourceId, recordRef: item.record, subject: record.type === "turn.completed" ? "model.turn_total" : "harness.error", accounting: "aggregate", sessionId: session, workItemId: options.work_item_id, agentId: options.agent_id, taskId: options.task_id, collected: options.collected_at, status: record.type === "turn.completed" ? "ok" : "error", measurements: measures }));
+  }
+  bundle.meters = [...meters.values()].sort((a, b) => a.id.localeCompare(b.id));
+  bundle.coverage!.limitations.push("Codex exec stdout provides turn totals without provider response identities. These are aggregate checks, excluded from direct response totals; use a native rollout for response-level profiling.", "Exec event identities are source-scoped; overlapping captures cannot establish cross-file receipt deduplication. Tool item details are not imported by this surface.");
+  if (!bundle.observations.length && rows.length) bundle.sources[0]!.coverage = "partial";
+  return bundle;
+}
+
+/** Claude SDK envelopes repeat response receipts once per content block. */
+function claude(input: unknown, options: UsageImportOptions): UsageBundle {
+  const rows = parseJsonRecords(input);
+  const bundle = emptyBundle(input, options, "claude-code", options.format === "claude-transcript" ? "claude-transcript-jsonl" : "claude-stream-json");
+  const sourceId = bundle.sources[0]!.id;
+  const meters = new Map<string, UsageMeter>();
+  const observations: UsageObservation[] = [];
+  const responses = new Map<string, UsageObservation>();
+  let resultCount = 0, partialCount = 0;
+  const identify = (identity: string) => observationId(options, "claude", identity, "anthropic");
+  const usageKeys = ["input_tokens", "output_tokens", "cache_creation_input_tokens", "cache_read_input_tokens"];
+  const measurements = (raw: unknown, item: RecordWithPath, accounting: UsageAccountingScope) => {
+    const native = asObject(raw);
+    const selected = native ? Object.fromEntries(usageKeys.filter(key => Object.hasOwn(native, key)).map(key => [key, native[key]])) : null;
+    const result: Record<string, UsageMeasurement> = {};
+    const scope = accounting === "aggregate" ? "aggregate" : "event";
+    const normalized = normalizeExclusiveInput(selected, "anthropic", "anthropic", sourceId, item.record, "/message/usage", result, meters, accounting, scope, "provider_native");
+    addUsageMeasurements(result, meters, normalized, "anthropic", "anthropic", sourceId, item.record, "/message/usage", accounting, scope);
+    return result;
+  };
+  for (const item of rows) {
+    const record = item.value;
+    const message = asObject(record.message);
+    const session = firstString(record.session_id, record.sessionId, options.session_id);
+    const parentTool = firstString(record.parent_tool_use_id);
+    const associations = { sessionId: session, workItemId: workItemId(options, record), taskId: options.task_id, agentId: options.agent_id, collected: options.collected_at };
+    if (record.type === "system" && record.subtype === "api_retry") {
+      const native = firstString(record.uuid) ?? `${sourceId}:${item.record}`;
+      observations.push(baseObservation({ ...associations, id: identify(`retry:${native}`), sourceId, recordRef: item.record, subject: "harness.retry", accounting: "unknown", status: "error" }));
+      continue;
+    }
+    if (record.type === "stream_event") { partialCount += 1; continue; }
+    if (record.type === "result") {
+      resultCount += 1;
+      const native = firstString(record.uuid) ?? `${sourceId}:${item.record}`;
+      observations.push(baseObservation({ ...associations, id: identify(`result:${native}`), sourceId, recordRef: item.record, subject: "model.query_total", accounting: "aggregate", operationId: native, status: record.is_error === true ? "error" : record.is_error === false ? "ok" : "unknown", event: record.timestamp, measurements: measurements(record.usage, item, "aggregate") }));
+      continue;
+    }
+    if (!message || !["assistant", "user"].includes(String(record.type))) continue;
+    let response: UsageObservation | undefined;
+    if (record.type === "assistant") {
+      const native = firstString(message.id);
+      const identity = native ?? `envelope:${firstString(record.uuid) ?? `${sourceId}:${item.record}`}`;
+      const id = identify(`response:${identity}`);
+      const synthetic = message.model === "<synthetic>";
+      if (synthetic) bundle.coverage!.limitations.push("A synthetic harness error message is not a provider receipt; its placeholder usage is omitted.");
+      response = baseObservation({ ...associations, id, sourceId, recordRef: item.record, subject: synthetic ? "harness.error" : "model.response", accounting: "direct", operationId: identity, parentId: parentTool ? identify(`tool-call:${parentTool}`) : null, status: record.error ? "error" : ["end_turn", "tool_use", "max_tokens", "stop_sequence"].includes(String(message.stop_reason)) ? "ok" : "unknown", measurements: synthetic ? {} : measurements(message.usage, item, "direct"), dimensions: descriptorForRecord({ response: { model: synthetic ? undefined : message.model, provider: "anthropic" } }, "claude", sourceId, item.record, "actual") });
+      if (!native) bundle.coverage!.limitations.push("An assistant envelope lacks a provider response ID; cross-envelope deduplication is unavailable.");
+      const previous = responses.get(id);
+      if (previous) {
+        if (previous.dimensions.actual_model?.value !== response.dimensions.actual_model?.value || previous.session_id !== response.session_id || previous.parent_id !== response.parent_id) throw new Error(`Conflicting Claude response identity ${id}`);
+        previous.source_refs.push(...response.source_refs);
+        for (const [key, incoming] of Object.entries(response.measurements)) {
+          const current = previous.measurements[key];
+          if (!current || current.value === null || incoming.value !== null && decimalCompare(incoming.value, current.value) > 0) previous.measurements[key] = incoming;
+          else if (incoming.value === current.value) current.source_refs.push(...incoming.source_refs);
+        }
+        if (response.status !== "unknown") previous.status = response.status;
+        response = previous;
+      } else { responses.set(id, response); observations.push(response); }
+    }
+    const content = Array.isArray(message.content) ? message.content : [];
+    for (const [index, block] of content.entries()) {
+      const tool = asObject(block);
+      if (!tool) continue;
+      if (tool.type === "tool_use") {
+        const native = firstString(tool.id) ?? `${sourceId}:${item.record}:${index}`;
+        const counters: Record<string, UsageMeasurement> = {};
+        addMeasurement(counters, meters, "tool_calls", 1, sourceId, item.record, "/message/content/tool_use", "event", "direct", "consumed");
+        observations.push(baseObservation({ ...associations, id: identify(`tool-call:${native}`), sourceId, recordRef: item.record, subject: `tool.${firstString(tool.name) ?? "unknown"}`, accounting: "direct", operationId: native, parentId: response?.id ?? null, status: "running", measurements: counters }));
+      } else if (tool.type === "tool_result") {
+        const native = firstString(tool.tool_use_id);
+        observations.push(baseObservation({ ...associations, id: identify(`tool-result:${native ?? `${sourceId}:${item.record}:${index}`}`), sourceId, recordRef: item.record, subject: "tool.result", accounting: "direct", operationId: native, parentId: native ? identify(`tool-call:${native}`) : null, status: tool.is_error === true ? "error" : "ok" }));
+      }
+    }
+  }
+  bundle.observations = dedupeObservations(observations);
+  bundle.meters = [...meters.values()].sort((a, b) => a.id.localeCompare(b.id));
+  bundle.coverage!.limitations.push("Claude response usage is deduplicated by provider message ID; repeated counters retain their highest reported value. Query result aggregates are separate non-additive checks, not additional response consumption.", "SDK messages do not establish action start/end timestamps, complete hidden retry accounting or complete subagent coverage.");
+  if (!resultCount) bundle.coverage!.limitations.push("No final query result was observed; the supplied stream may be interrupted or a transcript export.");
+  if (partialCount) bundle.coverage!.limitations.push(`${partialCount} partial streaming envelopes were not promoted to settled response receipts.`);
+  if (options.format === "claude-transcript") bundle.coverage!.limitations.push("Claude internal transcript byte shape is not a stable public contract; only recognized assistant/user messages are imported.");
+  if (!bundle.observations.length && rows.length) bundle.sources[0]!.coverage = "partial";
+  return bundle;
 }
 
 function provider(input: unknown, options: UsageImportOptions): UsageBundle {

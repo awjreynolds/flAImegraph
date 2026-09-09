@@ -241,3 +241,9 @@ Before choosing a full Headroom dependency, require the following contract on su
 5. Decide between embedding a small transport/launch seam and depending on the full optimizer only after those checks. Keep optimization experiments separate from baseline capture and tie any savings claim to comparable accepted work.
 
 No wrapper, full proxy, live model, upstream service or UI was run; no harness configuration, credentials or personal transcripts were accessed. Seven isolated component probes executed successfully in the sense that their assertions reproduced the behaviors above; they are **not seven product acceptance passes**. Current stock Pi support, installed-version auth behavior and whole-proxy transparency remain unproven.
+
+### Executed ASGI/mock-provider follow-up
+
+The [published-package probe and locked environment](fixtures/headroom-runtime/README.md) now exercise Headroom **0.37.0** route handlers and logging with synthetic upstream responses. This is a different version boundary from the later source HEAD above. Normal/streaming Anthropic and OpenAI Responses bodies were preserved in the tested observation configuration. However, streaming Anthropic logged estimated input 13 instead of the provider's 37; a 529 and a partial stream retained null error and estimated output; a connection failure returned 502 with no request-log row. OpenAI Responses retained uncached input 30, cached input 11 and output 3 as expected. [Complete results](fixtures/headroom-runtime/results.json).
+
+Consequently Headroom's default request log is **not accepted as our authoritative capture format**. Keep transport/launcher reuse conditional on a separate evidence adapter and its conformance checks. Seven mocked-transport cases complement the earlier seven component probes; no real agent/provider/authentication or full server-startup test was performed. The probe blocked external network and observed no socket connection attempts.
