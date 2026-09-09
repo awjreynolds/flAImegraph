@@ -53,6 +53,10 @@ The static viewer was built and served on localhost. In the Codex in-app browser
 
 The default narrow viewport also exposed cramped observation columns; minimum
 column widths preserve readable text within the existing horizontal-scroll table.
+After rebuilding, a direct native Pi import in the browser retained work label
+`GA-live-probe`, input 72/output 8 and the corrected UTC event time; the updated
+table was visually checked. The final packed CLI independently passed the same
+Pi timestamp check.
 
 ## Dependencies and remaining gates
 
@@ -63,8 +67,9 @@ peer versions. A transitive `sharp` override at 0.35.4 addresses the remaining
 The subsequent install audit reported zero vulnerabilities. Lint, TypeScript and
 static export passed on the updated dependencies.
 
-The expanded remote Node 22/24 Linux/macOS matrix and final release support scope
-must be verified before declaring GA. The native snapshot wrapper and the durable
+The [remote matrix passed all six jobs](https://github.com/awjreynolds/flAImegraph/actions/runs/34411455196)
+for code commit `28a0cd1`: Node 22/24 on Linux/macOS, viewer build, and independent
+Python conformance. The final support-scope decision remains open. The native snapshot wrapper and the durable
 lifecycle journal have different persistence guarantees; documentation preserves
 that distinction. No successful Claude run, Windows support, full provider billing
 coverage, exact context attribution or accepted-work improvement is claimed.
