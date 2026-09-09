@@ -2,13 +2,17 @@
 
 Record AI resource usage and the conditions that produced it. Visualize tokens or operations, compare accepted work, evaluate alternative model configurations, and estimate delivery runway from explicit capacity evidence.
 
-Version **0.5.0** adds opt-in durable lifecycle journals: save action starts before dispatch, recover interrupted captures, distinguish known waits from unexplained gaps, and keep failed/retried usage. The capture SDK, interchange and reports contain no rates, currency or subscription rules. Historical or customer-specific pricing is an optional consumer through `flaimegraph/pricing` and `flaimegraph-pricing`.
+Version **0.6.0** provides the local logging toolchain with portable JSON Schemas, native CLI capture, validation and profile export. Codex and Pi support is bounded by the [release support matrix](docs/ga-readiness.md#release-support-matrix); Claude imports and capture remain experimental pending successful live validation. flAImegraph needs no provider account to import saved logs or generate reports.
+
+Opt-in durable lifecycle journals save action starts before dispatch, recover interrupted captures, distinguish known waits from unexplained gaps, and keep failed/retried usage. The capture SDK, interchange and reports contain no rates, currency or subscription rules. Historical or customer-specific pricing is an optional consumer through `flaimegraph/pricing` and `flaimegraph-pricing`.
 
 Usage profiles now start with tasks and their operations. The viewer shows input and output with their declared cache and reasoning subsets, alongside per-task quantities. Models remain available as an explicit grouping and as observation details. Missing task associations stay unassigned.
 
 Measurements retain exact decimal quantities, UTC timing, provenance, requested versus confirmed model/tier/reasoning settings, and unknown values. Input, cache and reasoning meters remain separate with declared subset relationships. The downstream analyzer distinguishes measured findings, candidate policies and unsupported conclusions. It does not infer that a model choice was wrong from token counts alone.
 
 ## Run locally
+
+Download the installable package or static viewer from the [v0.6.0 GitHub release](https://github.com/awjreynolds/flAImegraph/releases/tag/v0.6.0). See [installation and release assets](docs/releases/v0.6.0.md). Packages are distributed through GitHub release assets, not the npm registry.
 
 Requires Node.js 22+ and Perl for the upstream FlameGraph renderer. These commands use committed metadata-only examples; no model provider account is needed.
 

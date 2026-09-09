@@ -1,7 +1,7 @@
-# Logging toolchain release-candidate evidence
+# Logging toolchain v0.6.0 release evidence
 
 Validated locally on macOS with Node 24.14.1 on 9 September 2026. This records
-observed checks, not a general availability declaration.
+observed checks supporting the [bounded release support matrix](../ga-readiness.md#release-support-matrix).
 
 ## Portable contract and independent readers
 
@@ -69,7 +69,8 @@ static export passed on the updated dependencies.
 
 The [remote matrix passed all six jobs](https://github.com/awjreynolds/flAImegraph/actions/runs/34411455196)
 for code commit `28a0cd1`: Node 22/24 on Linux/macOS, viewer build, and independent
-Python conformance. The final support-scope decision remains open. The native snapshot wrapper and the durable
+Python conformance. The subsequent [documentation-head matrix also passed](https://github.com/awjreynolds/flAImegraph/actions/runs/34411799724).
+The v0.6.0 support scope includes the documented Codex/Pi surfaces and keeps Claude experimental. The native snapshot wrapper and the durable
 lifecycle journal have different persistence guarantees; documentation preserves
 that distinction. No successful Claude run, Windows support, full provider billing
 coverage, exact context attribution or accepted-work improvement is claimed.

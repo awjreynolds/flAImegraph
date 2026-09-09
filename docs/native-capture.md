@@ -4,6 +4,11 @@ flAImegraph runs locally and needs no account. A harness needs its usual provide
 access only when it runs a model. Importing saved logs, validating them, creating
 reports and exporting profiles need no provider credentials or network access.
 
+For v0.6.0, Codex and Pi have the supported surfaces listed in the
+[release matrix](ga-readiness.md#release-support-matrix). Both `claude` and
+`claude-transcript` are experimental; the examples below do not imply successful
+live Claude validation.
+
 Build the CLI with `npm ci --ignore-scripts && npm run build`, or use the installed
 `flaimegraph` command in place of `node dist/cli.js` below.
 

@@ -1,5 +1,11 @@
 # Native evidence adapters
 
+This page describes the legacy `importEvidence` API. For the current usage CLI
+and `importUsage`, including the separate `claude`, `claude-transcript` and
+`codex-exec` formats, see [native capture](native-capture.md) and the
+[v0.6.0 support matrix](ga-readiness.md#release-support-matrix). Legacy fixture
+coverage below is not an additional live harness support claim.
+
 `importEvidence(harness, input, options?)` is a pure parser. The caller supplies the complete JSON or JSONL string; adapters do not read local files, scan a home directory, call a provider, or export prompts and results. Each adapter returns an `EvidenceBundle` with source references, normalized observations, relationships and explicit coverage issues.
 
 Every source is marked `partial` in this experimental release. A capability entry describes the inspected format and fixture contract; it does not claim support for every installed or future product version.

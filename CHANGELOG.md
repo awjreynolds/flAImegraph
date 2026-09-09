@@ -1,6 +1,12 @@
 # Changelog
 
-## Unreleased — logging toolchain candidate
+## 0.6.0 — 9 September 2026
+
+General availability of the local logging toolchain on Linux/macOS with Node 22/24,
+within the [documented support matrix](docs/ga-readiness.md#release-support-matrix).
+Claude stream and transcript support remain experimental; successful live Claude
+validation is pending. This product release does not establish external adoption
+or industry-standard status for the interchange specifications.
 
 - Publish standalone Draft 2020-12 schemas for usage bundles, lifecycle captures,
   lifecycle events and journal frames, with an independent Python syntax check.
