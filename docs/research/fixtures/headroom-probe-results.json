@@ -1,0 +1,35 @@
+{
+  "pin": "3d3c629a9f349ed0f89102e32599aacea32e0b16",
+  "scope": "isolated actual logger plus extracted exact dataclass; not integration validation",
+  "results": [
+    {
+      "case": "default JSONL payload omission",
+      "result": "pass",
+      "unknown_output_preserved": true
+    },
+    {
+      "case": "default logger memory content",
+      "result": "retained despite log_full_messages=False"
+    },
+    {
+      "case": "append failure",
+      "result": "no exception; memory entry retained; stats has no write-failure flag"
+    },
+    {
+      "case": "same request ID logged twice",
+      "result": "two entries; no logger deduplication"
+    },
+    {
+      "case": "memory retention bound",
+      "result": "oldest of 10001 entries evicted; no durable gap marker in logger"
+    },
+    {
+      "case": "opt-in full JSONL",
+      "result": "payload persisted"
+    },
+    {
+      "case": "telemetry policy predicates",
+      "result": "local telemetry defaults off; upload beacon defaults on and remains on with TELEMETRY=off; BEACON=off disables it; no upload executed"
+    }
+  ]
+}
