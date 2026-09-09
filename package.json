@@ -43,6 +43,7 @@
     "tools/verify-otlp",
     "CONTEXT.md",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE",
     "NOTICE",
     "tools/context-producer-python",
