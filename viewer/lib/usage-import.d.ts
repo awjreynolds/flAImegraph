@@ -1,6 +1,6 @@
 import type { UsageBundle, UsageSource } from "./usage-types.js";
 /** Formats accepted by the usage-only importer. */
-export type UsageImportFormat = "codex" | "pi" | "openai" | "anthropic" | "gemini" | "otel" | "otlp" | "usage" | "legacy" | "legacy-evidence" | (string & {});
+export type UsageImportFormat = "codex" | "codex-exec" | "claude" | "claude-transcript" | "pi" | "openai" | "anthropic" | "gemini" | "otel" | "otlp" | "usage" | "legacy" | "legacy-evidence" | (string & {});
 export interface UsageImportOptions {
     format: UsageImportFormat;
     dataset_id: string;

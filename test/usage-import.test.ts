@@ -3,9 +3,41 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import { fromLegacyEvidence, importUsage, normalizeUsageTimestamp } from "../src/usage-import.js";
-import { reconcileUsageBundles } from "../src/usage.js";
+import { createUsageReport, reconcileUsageBundles, validateUsageBundle } from "../src/usage.js";
 
 const fixture = (name: string): string => readFileSync(new URL(`./fixtures/${name}`, import.meta.url), "utf8");
+
+test("Pi JSON mode imports settled messages once and omits nested price estimates", () => {
+  const message = { role: "assistant", provider: "ollama", model: "fixture", responseId: "response-one", timestamp: 1788955200000, usage: { input: 72, output: 8, cacheRead: 0, cacheWrite: 0, totalTokens: 80, cost: { input: 12, output: 34, total: 46 } }, stopReason: "stop" };
+  const bundle = validateUsageBundle(importUsage([{ type: "session", id: "pi-session" }, { type: "message_start", message }, { type: "message_update", message }, { type: "message_end", message }, { type: "turn_end", message }, { type: "agent_end", messages: [message] }], { format: "pi", dataset_id: "stdout" }));
+  assert.equal(bundle.observations.length, 1);
+  assert.equal(bundle.observations[0]!.session_id, "pi-session");
+  assert.equal(bundle.observations[0]!.operation_id, "response-one");
+  assert.equal(bundle.observations[0]!.event_at!.value, "2026-09-09T12:00:00.000000000Z");
+  assert.equal(bundle.observations[0]!.measurements.input_tokens!.value, "72");
+  assert.equal(bundle.observations[0]!.measurements.output_tokens!.value, "8");
+  assert.equal(bundle.meters.some(m => /cost|price|provider_ollama_total$/.test(m.id)), false);
+});
+
+test("Pi separates multiple tool calls, their response and a failed tool result", () => {
+  const entry = { type: "message", id: "assistant-entry", message: { role: "assistant", provider: "anthropic", model: "fixture", usage: { input: 4, output: 6, cacheRead: 8, cacheWrite: 1 }, content: [{ type: "toolCall", id: "read-a", name: "read", arguments: { secret: "DO_NOT_EXPORT" } }, { type: "toolCall", id: "read-b", name: "read", arguments: {} }] } };
+  const result = { type: "message", id: "result-entry", message: { role: "toolResult", toolCallId: "read-a", isError: true, content: [{ type: "text", text: "DO_NOT_EXPORT" }] } };
+  for (const records of [[entry, result], [{ kind: "transaction", writes: [{ kind: "entry", entry }, { kind: "usage", row: { id: "receipt-a", entryId: entry.id, usage: entry.message.usage } }] }, { kind: "transaction", writes: [{ kind: "entry", entry: result }] }]]) {
+    const bundle = validateUsageBundle(importUsage(records, { format: "pi", dataset_id: "tool-fixture" }));
+    assert.equal(bundle.observations.length, 4);
+    const response = bundle.observations.find(row => row.subject === "model.response")!;
+    const calls = bundle.observations.filter(row => row.subject === "tool.read");
+    const failed = bundle.observations.find(row => row.subject === "tool.result")!;
+    assert.equal(calls.length, 2);
+    assert.notEqual(calls[0]!.id, calls[1]!.id);
+    assert.ok(calls.every(row => row.parent_id === response.id));
+    assert.equal(failed.parent_id, calls[0]!.id);
+    assert.equal(failed.status, "error");
+    assert.equal(createUsageReport(bundle).meter_totals.find(meter => meter.meter_id === "tool_calls")!.known_total, "2");
+    assert.equal(JSON.stringify(bundle).includes("DO_NOT_EXPORT"), false);
+    assert.deepEqual(reconcileUsageBundles([bundle, bundle]).observations, reconcileUsageBundles([bundle]).observations);
+  }
+});
 
 test("imports a Codex usage stream with direct counters, request/response model facts and exact UTC time", () => {
   const bundle = importUsage(fixture("usage-codex.jsonl"), {

@@ -12,3 +12,4 @@ export * from "./usage-import.js";
 export * from "./usage-recorder.js";
 export * from "./lifecycle.js";
 export * from "./lifecycle-journal.js";
+export * from "./logging-schema.js";

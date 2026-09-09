@@ -7,6 +7,15 @@ import { spawnSync } from "node:child_process";
 
 const cli = (...args: string[]) => spawnSync(process.execPath, ["--import", "tsx", "src/cli.ts", ...args], { encoding: "utf8" });
 
+test("the CLI publishes portable schemas and rejects unsupported kinds", () => {
+  for (const kind of ["usage", "lifecycle", "lifecycle-event", "journal-frame"]) {
+    const result = cli("schema", "--kind", kind);
+    assert.equal(result.status, 0, result.stderr);
+    assert.equal(JSON.parse(result.stdout).$schema, "https://json-schema.org/draft/2020-12/schema");
+  }
+  assert.equal(cli("schema", "--kind", "unsupported").status, 1);
+});
+
 test("a native log can be assigned an arbitrary work string and grouped by ticket", async () => {
   const directory = await mkdtemp(join(tmpdir(), "usage-work-label-"));
   try {

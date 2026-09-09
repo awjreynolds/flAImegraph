@@ -1,21 +1,23 @@
-import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
-import { protectInputs, writeArtifact } from "./files.js";
+import { protectInputs, readInputText, writeArtifact } from "./files.js";
 import { createUsageReport, reconcileUsageBundles, validateUsageBundle, validateUsageReport } from "./usage.js";
 import { createUsageProfile, validateUsageProfile, type UsageProfileOptions } from "./usage-profile.js";
 import { exportUsageFolded, exportUsagePprof, renderUsageSvg } from "./usage-export.js";
 import { operationUsage } from "./usage-operations.js";
 import { importUsage } from "./usage-import.js";
 import type { UsageBundle, UsageReport, UsageGrouping } from "./usage-types.js";
-import { mergeLifecycleCaptures, projectLifecycle, validateLifecycleCapture } from "./lifecycle.js";
+import { mergeLifecycleCaptures, projectLifecycle, validateLifecycleCapture, validateLifecycleEvent } from "./lifecycle.js";
 import { readLifecycleJournal } from "./lifecycle-journal.js";
+import { getLoggingSchema, type LoggingSchemaKind } from "./logging-schema.js";
+import { captureNative, type NativeCaptureOptions } from "./native-capture.js";
 
 const help = `flAImegraph — usage-first AI profiling (experimental 0.5)
 
 Capture and inspect usage without rates, currency or a subscription policy:
-  import --format codex|pi|openai|anthropic|gemini|otel --input FILE --dataset-id ID --out usage.json
+  capture --format pi|claude|codex-exec --dataset-id ID --out usage.json [--work-item LABEL] -- COMMAND [ARGS...]
+  import --format codex|codex-exec|claude|claude-transcript|pi|openai|anthropic|gemini|otel --input FILE --dataset-id ID --out usage.json
   # Native imports can use --work-item "PROJ-142 / custom work label"
   import --format legacy|operations|usage|lifecycle --input FILE --out usage.json
   merge --inputs usage-a.json,usage-b.json --out usage.json
@@ -28,6 +30,8 @@ Durable action capture and recovery:
   lifecycle-merge --inputs lifecycle-a.json,lifecycle-b.json --out lifecycle.json
   lifecycle-report --input lifecycle.json --out lifecycle-report.json
   validate --kind lifecycle --input lifecycle.json
+  validate --kind lifecycle-event --input event.json
+  schema --kind usage|lifecycle|lifecycle-event|journal-frame [--out schema.json]
 
 Optional downstream analysis:
   analyze --input report.json [--options analysis-options.json] --out analysis.json
@@ -40,7 +44,8 @@ Demonstrations and integration coverage:
   capabilities
 
 Use the separate flaimegraph-pricing command for legacy valuation and monetary views.
-No command sends data to a model provider. Local input files are never overwritten.
+Import/report commands are offline. Capture runs the supplied harness command with its usual provider access.
+Local input files are never overwritten. Capture output must be a new path.
 `;
 
 function flags(args: string[], allowed: string[]): Map<string, string> {
@@ -57,7 +62,7 @@ function required(options: Map<string, string>, name: string): string {
   if (!value) throw new Error(`Required option: ${name}`);
   return value;
 }
-const json = async (path: string): Promise<unknown> => JSON.parse(await readFile(path, "utf8"));
+const json = async (path: string): Promise<unknown> => JSON.parse(await readInputText(path));
 const save = async (path: string, value: unknown) => writeArtifact(path, JSON.stringify(value, null, 2) + "\n");
 const output = (value: unknown) => process.stdout.write(JSON.stringify(value) + "\n");
 const asReport = (input: unknown): UsageReport => input && typeof input === "object" && "bundle" in input ? validateUsageReport(input) : createUsageReport(validateUsageBundle(input));
@@ -82,6 +87,23 @@ async function exportReport(report: UsageReport, options: UsageProfileOptions, d
 export async function runUsageCommand(args: string[]): Promise<void> {
   const [command, ...rest] = args;
   if (!command || ["--help", "-h"].includes(command)) { process.stdout.write(help); return; }
+  if (command === "capture") {
+    const separator = rest.indexOf("--");
+    if (separator < 0) throw new Error("Capture requires a command after --");
+    const options = flags(rest.slice(0, separator), ["--format", "--dataset-id", "--out", "--work-item"]);
+    const code = await captureNative({ format: required(options, "--format") as NativeCaptureOptions["format"], dataset_id: required(options, "--dataset-id"), out: required(options, "--out"), work_item_id: options.get("--work-item"), command: rest.slice(separator + 1) });
+    process.exitCode = code;
+    output({ output: required(options, "--out"), child_exit_code: code });
+    return;
+  }
+  if (command === "schema") {
+    const options = flags(rest, ["--kind", "--out"]);
+    const kind = required(options, "--kind") as LoggingSchemaKind;
+    const schema = getLoggingSchema(kind), out = options.get("--out");
+    if (out) { await save(out, schema); output({ output: out, kind }); }
+    else output(schema);
+    return;
+  }
   if(command === "lifecycle-recover") {
     const options=flags(rest,["--directory","--dataset-id","--out"]), directory=required(options,"--directory"), out=required(options,"--out");
     // The reader owns immutable .jsonl segments. A recovery artifact must live outside them.
@@ -107,7 +129,7 @@ export async function runUsageCommand(args: string[]): Promise<void> {
     const input = required(options, "--input"), out = required(options, "--out"), format = required(options, "--format");
     if (["usage", "operations", "lifecycle"].includes(format) && ["--work-item", "--agent", "--session", "--task", "--source-id", "--version"].some(key => options.has(key))) throw new Error("Existing captures retain their immutable associations. Set work identifiers in the producer or when importing a native log.");
     await protectInputs([out], [input]);
-    const text = await readFile(input, "utf8");
+    const text = await readInputText(input);
     let bundle: UsageBundle;
     if (format === "operations") bundle = operationUsage(JSON.parse(text));
     else if (format === "usage") bundle = validateUsageBundle(JSON.parse(text));
@@ -143,6 +165,7 @@ export async function runUsageCommand(args: string[]): Promise<void> {
     const options = flags(rest, ["--input", "--kind"]), value = await json(required(options, "--input")), kind = options.get("--kind") ?? "usage";
     if (kind === "usage") validateUsageBundle(value);
     else if (kind === "lifecycle") projectLifecycle(validateLifecycleCapture(value));
+    else if (kind === "lifecycle-event") validateLifecycleEvent(value);
     else if (kind === "usage-report") validateUsageReport(value);
     else if (kind === "usage-profile") validateUsageProfile(value);
     else if (kind === "efficiency-input") (await import("./efficiency.js")).validateEfficiencyInput(value);
@@ -189,7 +212,7 @@ export async function runUsageCommand(args: string[]): Promise<void> {
   }
   if (command === "capabilities") {
     flags(rest, []);
-    output({ schema_version: "0.4.0", imports: ["usage", "operations", "legacy-evidence", "codex", "pi", "openai", "anthropic", "gemini", "otel"], profiles: ["JSON", "folded stacks", "pprof", "upstream FlameGraph SVG"], analysis: ["session efficiency", "matched benchmarks", "candidate policy", "capacity runway"], limitations: ["Only recorded provider settings and usage are captured; missing facts stay unavailable.", "Benchmark conclusions depend on outcome evidence and comparable conditions.", "Pricing is a separate optional consumer."] }); return;
+    output({ schema_version: "0.4.0", imports: ["usage", "operations", "legacy-evidence", "codex", "codex-exec", "claude", "claude-transcript", "pi", "openai", "anthropic", "gemini", "otel"], profiles: ["JSON", "folded stacks", "pprof", "upstream FlameGraph SVG"], analysis: ["session efficiency", "matched benchmarks", "candidate policy", "capacity runway"], limitations: ["Only recorded provider settings and usage are captured; missing facts stay unavailable.", "Benchmark conclusions depend on outcome evidence and comparable conditions.", "Pricing is a separate optional consumer."] }); return;
   }
   throw new Error(`Unknown command: ${command}. Run flaimegraph --help.`);
 }

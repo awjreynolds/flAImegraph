@@ -36,6 +36,10 @@
 .usage-bar-track { grid-column: 1 / -1; height: .7rem; background: #26313c; border-radius: 2px; overflow: hidden; }
 .usage-bar-track > span { display: block; height: 100%; min-width: 0; }
 .usage-explorer td { font-size: .875rem; vertical-align: top; max-width: 28rem; white-space: normal; overflow-wrap: anywhere; padding: .8rem; }
+.usage-observations-table { min-width: 68rem; }
+.usage-observations-table td:first-child { min-width: 13rem; }
+.usage-observations-table td:nth-child(2) { min-width: 17rem; }
+.usage-observations-table td:nth-child(3) { min-width: 11rem; }
 .usage-explorer th { font-size: .875rem; padding: .8rem; }
 .usage-explorer td small { display: block; color: var(--muted-foreground); font-size: .875rem; margin-top: .3rem; }
 .usage-inspect { color: #91d1ea; text-align: left; cursor: pointer; font-size: 1rem; }
